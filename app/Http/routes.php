@@ -20,3 +20,13 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+
+Route::group(['prefix'=>'etravel'],function(){
+    Route::get('unknownUser',['as'=>'unknownUser','uses'=>'\App\Http\Controllers\Etravel\DashboardController@unknownUser']);
+    Route::group(['middleware'=>'checkUser'],function(){
+        Route::get('dashboard',['as'=>'dashboardPanel','uses'=>'\App\Http\Controllers\Etravel\DashboardController@index']);
+        Route::get('trip/create','\App\Http\Controllers\Etravel\TripController@create');
+        Route::get('trip/create/demostic',['as'=>'demosticCreate','uses'=>'\App\Http\Controllers\Etravel\TripController@demosticCreate']);
+    });
+});

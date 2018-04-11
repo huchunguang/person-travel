@@ -6,9 +6,10 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
-
-	use Authenticatable, CanResetPassword;
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract
+{
+    
+    use Authenticatable, CanResetPassword;
 
 	/**
 	 * The database table used by the model.
@@ -16,19 +17,25 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 * @var string
 	 */
 	protected $table = 'users';
-
 	/**
-	 * The attributes that are mass assignable.
-	 *
-	 * @var array
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
 	 */
-	protected $fillable = ['name', 'email', 'password'];
-
+	public function costcenter()
+	{
+	   return $this->belongsTo('App\Costcenter','DefaultCostCenterID','CostCenterID');    
+	}
 	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
 	 */
-	protected $hidden = ['password', 'remember_token'];
-
+	public function department() 
+	{
+	    return $this->belongsTo('App\Department','DepartmentID','DepartmentID');
+	}
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function site() 
+	{
+	    return $this->belongsTo('App\Site','SiteID','SiteID');
+	}
 }

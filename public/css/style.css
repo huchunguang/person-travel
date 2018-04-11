@@ -1,0 +1,32 @@
+.policies { background-color: rgba(102, 116, 133, 1); }
+.policies-text { color: rgba(102, 116, 133, 1); }
+.mt10 { margin-top: 10px;}
+.mb10 { margin-bottom: 10px }
+.pt20 { padding-top: 20px; }
+.pt10 { padding-top: 10px; }
+.sameheight-box { min-height: 470px; } /** put media query **/
+.form .form-section, .portlet-form .form-section { margin: 20px 0}
+.disabled.btn, [disabled].btn, fieldset[disabled] .btn { opacity: 0.25; filter: alpha(opacity=25)}
+.panel-title { font-size: 14px; }
+.dashboard-stat { margin-bottom: 10px;}
+.light.portlet > .portlet-title > .caption > .caption-subject { font-size: 15px; } 
+.portlet { margin-bottom: 10px; }
+label { font-size: 13px; }
+.page-head .page-title > h1 { font-size: 21px; }
+h2 { font-size: 22px; }
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    padding: 5px 8px;
+    font-size: 13px;
+}
+.btn, .breadcrumb { font-size: 13px; }
+html,body { font-size: 85%; }
+.portlet > .portlet-title > .caption { font-size: 16px; }
+.fc button { padding: 0.3em; }
+.fc .fc-toolbar > * > * { margin-left: 0; }
+.form-group, .form-group select, .form-group input, .form-control, output, .form-control, .input-group .form-control { font-size: 13px; margin-bottom: 5px;}
+.form-group { margin-bottom: 8px; } 
+/*.portlet > .portlet-title > .tools > a, .box.portlet > .portlet-title > .tools > a.expand { color: #666 !important}*/
+.panel-default { background: #fff; border-color: #eee;}
+.panel-default > .panel-heading{ background: #fafafa; border-color: #eee; color: #333  }
+table.sortable > thead th:not([data-defaultsort=disabled]):hover { background: #4B77BE !important }
+#btnInclude { width: 100%; margin-top: 50% }

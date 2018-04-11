@@ -1,0 +1,48 @@
+<!--
+Copyright(C)2016 A6178879
+
+All rights reserved Arkema Pte. Ltd.(international.ic.corp.local)
+Website Developed by: Eng'r Nolan F. Sunico
+Date Created: Mar 22, 2016
+Time Created: 2:55:05 PM
+Module: samplXML
+Project: Arkema-Eleave
+-->
+<?xml version="1.0" encoding="utf-8" ?>
+<entry>
+<employmentstatus>
+<employmentstatusrows>
+<EmploymentStatusID>1</EmploymentStatusID>
+<SiteID>1</SiteID>
+<EmploymentStatus>Contractual</EmploymentStatus>
+<CountryID>23</CountryID>
+<DefaultAnnualLeaveDays>0</DefaultAnnualLeaveDays>
+<RowStatus>1</RowStatus>
+</employmentstatusrows>
+<employmentstatusrows>
+<EmploymentStatusID>2</EmploymentStatusID>
+<SiteID>3</SiteID>
+<EmploymentStatus>Contractual/Internal</EmploymentStatus>
+<CountryID>23</CountryID>
+<DefaultAnnualLeaveDays>0</DefaultAnnualLeaveDays>
+<RowStatus>1</RowStatus>
+</employmentstatusrows>
+<employmentstatusrows>
+<EmploymentStatusID>3</EmploymentStatusID>
+<SiteID>1</SiteID>
+<EmploymentStatus>Provisionary</EmploymentStatus>
+<CountryID>23</CountryID>
+<DefaultAnnualLeaveDays>12</DefaultAnnualLeaveDays>
+<RowStatus>1</RowStatus>
+</employmentstatusrows>
+<employmentstatusrows>
+<EmploymentStatusID>4</EmploymentStatusID>
+<SiteID>3</SiteID>
+<EmploymentStatus>Regular</EmploymentStatus>
+<CountryID>23</CountryID>
+<DefaultAnnualLeaveDays>16</DefaultAnnualLeaveDays>
+<RowStatus>1</RowStatus>
+</employmentstatusrows>
+</employmentstatus>
+</entry>
+

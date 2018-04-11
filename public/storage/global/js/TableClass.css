@@ -1,0 +1,19 @@
+/*
+Arkema Pte Ltd
+Website Developed by: Nolan F. Sunico
+Date Created: Feb 16, 2016
+Time Created: 2:50:48 PM
+Module: TableClass
+Project: eclaim
+Author     : A6178879
+*/
+.highlightcell{
+   border: 2px solid #000!important;
+}
+.highlight{
+   background-color: #eee!important;
+   color: #000!important;
+}
+.table>tbody{
+   cursor: pointer
+}
