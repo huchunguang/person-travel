@@ -1,6 +1,8 @@
-@extends("etravel.layout.main") @section("content")
+@extends("etravel.layout.main")
+@section("content")
 <div class="page-content-inner">
-	<form role="form">
+	<form role="form" action="" method="post">
+	   {{csrf_field()}}
 		<div class="row">
 			<div class="col-md-12">
 				<div class="portlet box green">

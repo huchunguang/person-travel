@@ -17,6 +17,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 * @var string
 	 */
 	protected $table = 'users';
+	protected $primaryKey = 'UserID';
 	/**
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
 	 */
@@ -37,5 +38,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	public function site() 
 	{
 	    return $this->belongsTo('App\Site','SiteID','SiteID');
+	}
+	public function tripList()
+	{	
+		return $this->hasMany('App\Trip','user_id','UserID');
 	}
 }
