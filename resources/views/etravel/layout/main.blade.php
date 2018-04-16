@@ -74,8 +74,6 @@
 <link
 	href="{{asset('storage/global/plugins/select2-stable-3.5/select2-bootstrap.css')}}"
 	rel="stylesheet" type="text/css" />
-
-
 <link href="{{asset('storage/global/js/bootstrap-dialog/css/bootstrap-dialog.min.css')}}"
 	rel="stylesheet" type="text/css" />
 <link href="{{asset('storage/global/css/custom-glyph.css')}}" rel="stylesheet" type="text/css" />
@@ -93,45 +91,18 @@
 
 <body class="">
 	@include('etravel.layout.header')
-
-
-<div class="" style="background-color: #a5a3a312;">
-    				 @yield("content")
-   
-<!--             @include("etravel.layout.sidebar") -->
-    
-    
+<div style="background-color: #a5a3a312;">
+	@yield("content")
 </div>
+	@include("etravel.layout.footer")
 <script src="{{asset('js/jquery-1.8.3.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/wangEditor.min.js')}}"></script>
+<script src="{{asset('js/etravel/trip/demosticCreate.js')}}"></script>
 <script src="{{asset('storage/global/plugins/bootstrap-daterangepicker/moment.js')}}"></script>
 <script src="{{asset('storage/global/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 <script src="{{asset('storage/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
 </body>
 </html>
- <script type="text/javascript">
- var nowTime = '<%=DateTime.Now.ToString("HH:mm")%>';
- $(".time-input").val(nowTime).timepicker('setTime', nowTime);
- 
-	$('#daterange-btn').daterangepicker({
-        startDate: moment(),
-        endDate: moment().endOf('month'),
-        drops: "up"
-    },
-    function(start, end) {
-        $('#daterange-btn span').html(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY'));
-    }
-);
-	$('.singleDatePicker').daterangepicker({
-        startDate: moment(),
-        endDate: moment().endOf('month'),
-        drops: "up",
-        singleDatePicker:true,
-    },
-    function(start, end) {
-        $('#daterange-btn span').html(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY'));
-    }
-);
-</script>
+
 

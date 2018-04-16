@@ -14,16 +14,15 @@ class checkUserMiddleware {
 	 */
 	public function handle($request, Closure $next)
 	{
-	    $userIsExisted=false;
-	    
-	    $userName=GetWindowsUsername();
+		$userIsExisted = false;
+		$userName = GetWindowsUsername();
 	    if ($userName){
-	        $userIsExisted = User::where('UserName',$userName)->get()->toArray();
+	        $userIsExisted = User::where('UserName',$userName)->first()->toArray();
 	        if(empty($userIsExisted)){
 	            return redirect()->route('unknownUser',['userName'=>$userName]);
 	        }
 	    }
-	    $addParams = ['userName'=>$userName];
+	    $addParams = ['userName'=>$userName,'user_id'=>$userIsExisted['UserID']];
 	    $request->attributes->add($addParams);
 		return $next($request);
 	}

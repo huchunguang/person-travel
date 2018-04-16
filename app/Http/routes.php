@@ -28,6 +28,8 @@ Route::group(['prefix'=>'etravel'],function(){
         Route::get('dashboard',['as'=>'dashboardPanel','uses'=>'\App\Http\Controllers\Etravel\DashboardController@index']);
         Route::get('trip/create','\App\Http\Controllers\Etravel\TripController@create');
         Route::get('trip/create/demostic',['as'=>'demosticCreate','uses'=>'\App\Http\Controllers\Etravel\TripController@demosticCreate']);
+        Route::post('trip/store','Etravel\TripController@store');
         Route::get('{user}/triplist',['as'=>'triplist','uses'=>'Etravel\TripController@index']);
+        Route::get('triplist/{trip}','Etravel\TripController@tripDetails');
     });
 });

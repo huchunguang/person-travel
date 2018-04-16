@@ -2,7 +2,8 @@
 @section("content")
 <div class="page-content-inner">
 	<form role="form" action="" method="post">
-	   {{csrf_field()}}
+		<input type="hidden" name="_token" value="{{ csrf_token() }}">
+	
 		<div class="row">
 			<div class="col-md-12">
 				<div class="portlet box green">
@@ -72,64 +73,13 @@
 							</div>
 						</div>
 						<hr class="divider" />
-						<!-- 按钮触发模态框 -->
+						
 						<div class="row">
 							<div class="col-md-6 col-md-offset-1">
-								<button type="button" class="btn btn-default"
-									data-toggle="modal" data-target="#myModal">
+								<button id="addLineItem" type="button" class="btn btn-default">
 									<i class="glyphicon glyphicon-new-window"></i> Add Line Item
 								</button>
 							</div>
-
-							<!-- 模态框（Modal） -->
-							<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-								aria-labelledby="myModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal"
-												aria-hidden="true">×</button>
-											<h4 class="modal-title" id="myModalLabel">Add New Line Item
-												Dialog</h4>
-										</div>
-										<div class="modal-body">
-
-											<form class="form-horizontal" role="form">
-												<div class="form-group">
-													<label for="firstname" class="col-sm-2 control-label">Date</label>
-													<div class="col-sm-10">
-														<input type="text" class="form-control" id="firstname"
-															placeholder="请输入名字">
-													</div>
-												</div>
-												<div class="form-group">
-													<label for="lastname" class="col-sm-2 control-label">Time</label>
-													<div class="col-sm-10">
-														<input type="text" class="form-control" id="lastname"
-															placeholder="请输入姓">
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="col-sm-offset-2 col-sm-10">
-														<div class="checkbox">
-															<label> <input type="checkbox"> Approved
-															</label>
-														</div>
-													</div>
-												</div>
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal">close</button>
-											<button type="button" class="btn btn-primary">Submit</button>
-										</div>
-									</div>
-									<!-- /.modal-content -->
-								</div>
-								<!-- /.modal-dialog -->
-							</div>
-							<!-- /.modal -->
 						</div>
 
 						<div class="row">
@@ -141,7 +91,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-10 col-md-offset-1">
-								<table class="table table-bordered">
+								<table class="table table-bordered" id="requestTable">
 									<thead>
 										<tr class="info">
 											<th class="text-center">Date</th>
@@ -159,7 +109,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
+										<tr id="trOne">
 											<td><div style="position: relative;">
 													<input type="text" id=""
 														class="form-control singleDatePicker"> <i
@@ -193,43 +143,6 @@
 													<option>YES</option>
 													<option>NO</option>
 											</select></td>
-										</tr>
-										<tr>
-
-											<td><div style="position: relative;">
-													<input type="text" id=""
-														class="form-control singleDatePicker"> <i
-														class="glyphicon glyphicon-calendar fa fa-calendar"
-														style="position: absolute; bottom: 10px; right: 24px; top: auto; cursor: pointer;"></i>
-
-												</div></td>
-											<td>
-												<div class="input-group">
-													<input type="text" id="startTime" readonly="readonly"
-														class="form-control timepicker timepicker-default time-input"
-														placeholder=""> <span class="input-group-btn">
-														<button class="btn default" type="button">
-															<i class="fa fa-clock-o"></i>
-														</button>
-													</span>
-												</div>
-											</td>
-											<td>JPY:0</td>
-											<td>JPY:0</td>
-											<td>JPY:0</td>
-											<td><select class="form-control">
-													<option>study</option>
-													<option>like trip</option>
-
-											</select></td>
-											<td>placeholder</td>
-											<td>placeholder</td>
-											<td>placeholder</td>
-											<td><select class="form-control">
-													<option>YES</option>
-													<option>NO</option>
-											</select></td>
-
 										</tr>
 									</tbody>
 								</table>

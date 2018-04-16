@@ -43,7 +43,6 @@ class TripController extends Controller
 			$userIds = explode(',', $approvers['Approver1']);
 			$approvers = User::whereIn('UserID', $userIds)->get()->toArray();
 		}
-		// dd($approvers);
 		return view('/etravel/trip/demosticCreate')->with('userProfile', $userProfile)->with('approvers', $approvers);
 	}
     /**
@@ -56,7 +55,9 @@ class TripController extends Controller
    	 	if ($tripType){
    	 		$filter['trip_type']=$tripType;
    	 	}
-    		$tripList = $user->tripList()->where($filter)->get()->toArray();
+   	 	$tripList = $user->tripList()->where($filter)->paginate(1);
+//     		dd($tripList);
+		// $tripList=[];
     		return view('etravel/trip/index')->with('tripList',$tripList);
     }
     public function store(Request $request) 
@@ -70,10 +71,28 @@ class TripController extends Controller
     				'content' => 'required|min:20',
     			];
     		}
-    		$this->validate($request, $rules);
-    		$storeData = array_merge(request(),$user_id);
+    		$this->validate(request(), $rules);
+    		$storeData = array_merge(request(),$request->get('user_id'));
     		Trip::create($storeData);
-    		return redirect()->route('triplist',['user'=>$user_id]);
+    		return redirect()->route('triplist',['user'=>$request->get('user_id')]);
     }
+    public function tripDetails(Request $request,Trip $trip)
+    {
+    		$tripType=1;
+    		$tripType=$request->input('tripType');
+    		
+    		if ($tripType===1){
+    			$accomodationInfo = $trip->accomodation()->get();
+    			$estimateExpense = $trip->estimateExpense()->get();
+    			$flighInfo = $trip->flight()->get();
+			return view('')->with('accomodationInfo', $accomodationInfo)
+				->with('estimateExpense', $estimateExpense)
+				->with('flighInfo', $flighInfo)
+				->with('tripBasicInfo', $trip);
+    		}elseif ($tripType===2){
+    			$demosticReqs = $trip->demostic()->get();
+    			return view('')->with('trip',$trip)->with('demosticReqs',$demosticReqs);
+    		}
+    }	
     
 }
