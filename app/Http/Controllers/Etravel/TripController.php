@@ -82,36 +82,39 @@ class TripController extends Controller
     		];
     		$this->validate($request, $rules);
 //     		$storeData = array_merge($request->all(),['user_id'=>$request->get('user_id')]);
-    		$tripData=$request->only(['user_id','daterange_from','daterange_to','extras_comment','department_approver','approve_comment']);
+    		$tripData=$request->only(['user_id','daterange_from','daterange_to','extra_comment','department_approver','approver_comment']);
     		$tripData=array_merge($tripData,['user_id'=>$request->get('user_id'),'trip_type'=>2]);
-    		$tripData=[
-    			'user_id'=>347,
-    			'daterange_from'=>'fasd',
-    			'daterange_to'=>'fasdf18',
-    			'test'=>'123123'
-    		];
+//     		dd($tripData);
     		Trip::create($tripData);
-    		dd($tripData);
-    		
     		return redirect()->route('triplist',['user'=>$request->get('user_id')]);
     }
+    /**
+     * @desc show the international travel pageinfo
+     * @param Request $request
+     * @param Trip $trip
+     * @return \Illuminate\View\View
+     */
     public function tripDetails(Request $request,Trip $trip)
     {
-    		$tripType=1;
-    		$tripType=$request->input('tripType');
-    		
-    		if ($tripType===1){
-    			$accomodationInfo = $trip->accomodation()->get();
-    			$estimateExpense = $trip->estimateExpense()->get();
-    			$flighInfo = $trip->flight()->get();
-			return view('')->with('accomodationInfo', $accomodationInfo)
-				->with('estimateExpense', $estimateExpense)
-				->with('flighInfo', $flighInfo)
-				->with('tripBasicInfo', $trip);
-    		}elseif ($tripType===2){
-    			$demosticReqs = $trip->demostic()->get();
-    			return view('')->with('trip',$trip)->with('demosticReqs',$demosticReqs);
-    		}
-    }	
+		$accomodationInfo = $trip->accomodation()->get();
+		$estimateExpense = $trip->estimateExpense()->get();
+		$flighInfo = $trip->flight()->get();
+		return view('/etravel/trip/tripDetail')->with('accomodationInfo', $accomodationInfo)
+			->with('estimateExpense', $estimateExpense)
+			->with('flighInfo', $flighInfo)
+			->with('tripBasicInfo', $trip);
+	}
+
+	/**
+	 * @desc show the demostic travel pageinfo
+	 * @param Request $request
+	 * @param Trip $trip
+	 * @return \Illuminate\View\View
+	 */
+	public function tripDemosticDetails(Request $request, Trip $trip)
+    {
+		$demosticReqs = $trip->demostic()->get();
+		return view('/etravel/trip/tripDemosticDetail')->with('trip', $trip)->with('demosticReqs', $demosticReqs);
+	}
     
 }

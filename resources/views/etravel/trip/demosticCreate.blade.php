@@ -159,9 +159,9 @@
 						</div>
 						<div class="row">
 							<div class="form-group col-sm-12">
-								<label for="ApprovesComment" class="control-label col-xs-2"><strong>Extras
+								<label for="extra_comment" class="control-label col-xs-2"><strong>Extras
 										Comments</strong></label>
-								<textarea  name="extras_comment"
+								<textarea  name="extra_comment"
 									class="form-control leave-control" style="overflow-y: scroll;"
 									rows="2"></textarea>
 							</div>
@@ -184,10 +184,10 @@
 						</div>
 						<div class="row">
 							<div class="form-group col-sm-12">
-								<label for="approve_comment" class="control-label col-xs-2">
+								<label for="approver_comment" class="control-label col-xs-2">
 									<strong>Approvers Comment</strong>
 								</label>
-								<textarea  name="approves_comment"
+								<textarea  name="approver_comment"
 									class="form-control leave-control" style="overflow-y: scroll;"
 									rows="2"></textarea>
 							</div>

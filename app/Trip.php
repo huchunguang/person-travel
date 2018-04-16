@@ -4,8 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Trip extends Model {
 
-	protected $fillable = ['user_id'];
-	
+	protected $primaryKey = 'trip_id';
+	protected $guarded= [''];
 	public function accomodation() 
 	{
 		return $this->hasMany('App\Trip_accomodation','trip_id','trip_id');

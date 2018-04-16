@@ -11,11 +11,10 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+// Route::get('/', 'WelcomeController@index');
 
-Route::get('home', 'HomeController@index');
+// Route::get('home', 'HomeController@index');
 
-//Route::get('profile/{user}',['as'=>'userProfile','uses'=>'HomeController@index']);
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
@@ -25,11 +24,17 @@ Route::controllers([
 Route::group(['prefix'=>'etravel'],function(){
     Route::get('unknownUser',['as'=>'unknownUser','uses'=>'\App\Http\Controllers\Etravel\DashboardController@unknownUser']);
     Route::group(['middleware'=>'checkUser'],function(){
+    		#DashBoard
         Route::get('dashboard',['as'=>'dashboardPanel','uses'=>'\App\Http\Controllers\Etravel\DashboardController@index']);
+        #Create
         Route::get('trip/create','\App\Http\Controllers\Etravel\TripController@create');
         Route::get('trip/create/demostic',['as'=>'demosticCreate','uses'=>'\App\Http\Controllers\Etravel\TripController@demosticCreate']);
+        #Store
         Route::post('trip/store','Etravel\TripController@store');
+        #List
         Route::get('{user}/triplist',['as'=>'triplist','uses'=>'Etravel\TripController@index']);
         Route::get('triplist/{trip}','Etravel\TripController@tripDetails');
+        Route::get('tripdemosticlist/{trip}','Etravel\TripController@tripDemosticDetails');
+        
     });
 });

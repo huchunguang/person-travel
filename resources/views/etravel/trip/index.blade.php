@@ -52,11 +52,11 @@
 							@foreach($tripList as $item)
 								<tr>
 									<td>{{ $item['trip_id'] }}</td>
-									<td>{{ $item['begin_datetime'] }}</td>
-									<td>{{ $item['end_datetime'] }}</td>
-									<td>{{ $item['extra_comments'] }}</td>
+									<td>{{ $item['daterange_from'] }}</td>
+									<td>{{ $item['daterange_to'] }}</td>
+									<td>{{ $item['extra_comment'] }}</td>
 									<td>{{ $item['pre_purchase'] }}</td>
-									<td><a href="#"><span class="glyphicon glyphicon-hand-up" style="color:green"></span></a></td>
+									<td><a href="/etravel/tripdemosticlist/{{ $item['trip_id'] }}"><span class="glyphicon glyphicon-hand-up" style="color:green"></span></a></td>
 								</tr>
 							@endforeach
 						@endif
@@ -73,5 +73,6 @@
 				</div>
 			</div>
 		</div>
+</div>
 </div>
 @endsection

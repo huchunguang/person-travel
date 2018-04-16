@@ -91,11 +91,11 @@
 
 <body class="">
 	@include('etravel.layout.header')
-<div style="background-color: #a5a3a312;">
+<div style="background-color: #a5a3a312;" class="page-wrapper">
 	@yield("content")
-</div>
 	@include("etravel.layout.footer")
-<script src="{{asset('js/jquery-1.8.3.min.js')}}"></script>
+</div>
+<script src="{{asset('js/app.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/wangEditor.min.js')}}"></script>
 <script src="{{asset('js/etravel/trip/demosticCreate.js')}}"></script>
