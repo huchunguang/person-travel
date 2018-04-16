@@ -1,7 +1,8 @@
 @extends("etravel.layout.main")
 @section("content")
 <div class="page-content-inner">
-	<form role="form" action="" method="post">
+    @include('etravel.layout.error')
+	<form role="form" action="/etravel/trip/store" method="post">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	
 		<div class="row">
@@ -60,14 +61,13 @@
 									<label for="TravelFrom" style="padding-right: 0px;"
 										class="control-label col-md-4 text-right">Period of Travel
 										From:</label>
-									<div class="col-md-7">
-										<div class="input-group">
-											<button type="button" class="btn btn-default pull-right"
-												id="daterange-btn">
-												<span>Pick Range Date<i class="fa fa-calendar"></i></span> <i
-													class="fa fa-caret-down"></i>
-											</button>
-										</div>
+									<div class="col-md-4">
+											<input type="text"  name="daterange_from" class="form-control singleDatePicker"> 
+											<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+									</div>
+									<div class="col-md-4">
+											<input type="text"  name="daterange_to" class="form-control singleDatePicker"> 
+											<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
 									</div>
 								</div>
 							</div>
@@ -98,6 +98,7 @@
 											<th class="text-center">Time</th>
 											<th class="text-center">Location</th>
 											<th class="text-center">Customer Name</th>
+											<th class="text-center">Contact Name</th>
 											<th class="text-center">Purpose of Visit Category</th>
 											<th class="text-center">Purpose of Visit Description</th>
 											<th class="text-center">Estimated Travel Cost JPY</th>
@@ -110,16 +111,17 @@
 									</thead>
 									<tbody>
 										<tr id="trOne">
-											<td><div style="position: relative;">
-													<input type="text" id=""
+											<td>
+												<div style="position: relative;">
+													<input type="text"  name="datetime_date[]"
 														class="form-control singleDatePicker"> <i
 														class="glyphicon glyphicon-calendar fa fa-calendar"
-														style="position: absolute; bottom: 10px; right: 24px; top: auto; cursor: pointer;"></i>
-
-												</div></td>
+														style="position: absolute; bottom: 10px; right: 80px; top: auto; cursor: pointer;"></i>
+												</div>
+											</td>
 											<td>
 												<div class="input-group">
-													<input type="text" id="startTime" readonly="readonly"
+													<input type="text" readonly="readonly" name="datetime_time[]"
 														class="form-control timepicker timepicker-default time-input"
 														placeholder=""> <span class="input-group-btn">
 														<button class="btn default" type="button">
@@ -128,21 +130,28 @@
 													</span>
 												</div>
 											</td>
-											<td>JPY:0</td>
-											<td>JPY:0</td>
-											<td>JPY:0</td>
-											<td><select class="form-control">
-													<option>study</option>
-													<option>like trip</option>
-
-											</select></td>
-											<td>placeholder</td>
-											<td>placeholder</td>
-											<td>placeholder</td>
-											<td><select class="form-control">
+											<td><input type="text" name="location[]" id="" style="width:70px;"/></td>
+											<td><input type="text" name="customerName[]" id="" style="width:70px;"/></td>
+											<td><input type="text" name="contactName[]" id="" style="width:70px;"/></td>
+											<td>
+												<select class="form-control" name="purposeCat[]">
+													@foreach ($purposeCats as $item)
+														<option value="{{ $item['purposeId'] }}">&lt;&nbsp;{{ $item['purpose_catgory'] }}&nbsp;&gt;</option>
+													@endforeach
+												</select>
+											</td>
+											<td>
+												<input type="text" name="purposeDesc[]" style="width:120px;"/>
+											</td>
+											<td><input type="text" name="travelCost[]"  placeholder="0.00" style="width:60px;"/></td>
+											<td><input type="text" name="entertainCost[]"  placeholder="0.00" style="width:60px;"/></td>
+											<td><input type="text" name="entertainDetail[]" style="width:60px;"/></td>
+											<td>
+												<select class="form-control" name="is_approved[]">
 													<option>YES</option>
 													<option>NO</option>
-											</select></td>
+												</select>
+											</td>
 										</tr>
 									</tbody>
 								</table>
@@ -152,7 +161,7 @@
 							<div class="form-group col-sm-12">
 								<label for="ApprovesComment" class="control-label col-xs-2"><strong>Extras
 										Comments</strong></label>
-								<textarea id="ApprovesComment" name="ApprovesComment"
+								<textarea  name="extras_comment"
 									class="form-control leave-control" style="overflow-y: scroll;"
 									rows="2"></textarea>
 							</div>
@@ -163,7 +172,7 @@
 								<label for="DepartmentApprover" style="padding-right: 0px;"
 									class="control-label col-md-4 text-right">Department Approver:</label>
 								<div class="col-md-7">
-									<select id="DepartmentApprover" name="DepartmentApprover"
+									<select name="department_approver"
 										class="cboSelect2 leave-control form-control" tabindex="-1">
 											@foreach ($approvers as $item)
 												<option value="{{ $item['UserID'] }}">&lt;&nbsp;{{ $item['FirstName'] }}&nbsp;&gt;</option>
@@ -173,7 +182,24 @@
 							</div>
 
 						</div>
+						<div class="row">
+							<div class="form-group col-sm-12">
+								<label for="approve_comment" class="control-label col-xs-2">
+									<strong>Approvers Comment</strong>
+								</label>
+								<textarea  name="approves_comment"
+									class="form-control leave-control" style="overflow-y: scroll;"
+									rows="2"></textarea>
+							</div>
+						</div>
+						<div class="row form-actions text-right">
+                      		<div id="btnLeaveControl">
+                      			<button id="btnLeaveControl-Delete" type="submit" accesskey="D" class="btn red-mint"><i class="glyphicon glyphicon-new-window"></i> Submit</button>
+                      			<button id="btnLeaveControl-Print" type="button" accesskey="P" class="btn btn-primary" disabled=""><i class="glyphicon glyphicon-retweet"></i>Draft</button> 
+                      		</div>
+                    		</div>
 					</div>
+					
 				</div>
 
 			</div>

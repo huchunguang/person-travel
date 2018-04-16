@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Department_approver;
 use App\Trip;
+use App\Trip_purpose;
 
 class TripController extends Controller
 {
@@ -43,7 +44,8 @@ class TripController extends Controller
 			$userIds = explode(',', $approvers['Approver1']);
 			$approvers = User::whereIn('UserID', $userIds)->get()->toArray();
 		}
-		return view('/etravel/trip/demosticCreate')->with('userProfile', $userProfile)->with('approvers', $approvers);
+		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
+		return view('/etravel/trip/demosticCreate')->with('userProfile', $userProfile)->with('approvers', $approvers)->with('purposeCats',$purposeCategory);
 	}
     /**
      *@brief currently user trip info list
@@ -60,20 +62,37 @@ class TripController extends Controller
 		// $tripList=[];
     		return view('etravel/trip/index')->with('tripList',$tripList);
     }
+    /**
+     * @desc trip_type 1:international 2:demostic
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request) 
     {
-    		$tripType = $request->input('tripType');
-    		if ($tripType=='demostic'){
-    			$rules=[];
-    		}elseif ($tripType=='national'){
-    			$rules=[
-    				'title' => 'required|max:255|min:4',
-    				'content' => 'required|min:20',
-    			];
-    		}
-    		$this->validate(request(), $rules);
-    		$storeData = array_merge(request(),$request->get('user_id'));
-    		Trip::create($storeData);
+    		$rules=[
+    				'daterange_from'=>'required',
+    				'daterange_to'=>'required',
+    				'datetime_date'=>'required',
+    				'datetime_time'=>'required',
+    				'location'=>'required',
+    				'customerName'=>'required',
+    				'contactName'=>'required',
+    				'purposeDesc'=>'required',
+    				'department_approver'=>'required|integer'
+    		];
+    		$this->validate($request, $rules);
+//     		$storeData = array_merge($request->all(),['user_id'=>$request->get('user_id')]);
+    		$tripData=$request->only(['user_id','daterange_from','daterange_to','extras_comment','department_approver','approve_comment']);
+    		$tripData=array_merge($tripData,['user_id'=>$request->get('user_id'),'trip_type'=>2]);
+    		$tripData=[
+    			'user_id'=>347,
+    			'daterange_from'=>'fasd',
+    			'daterange_to'=>'fasdf18',
+    			'test'=>'123123'
+    		];
+    		Trip::create($tripData);
+    		dd($tripData);
+    		
     		return redirect()->route('triplist',['user'=>$request->get('user_id')]);
     }
     public function tripDetails(Request $request,Trip $trip)

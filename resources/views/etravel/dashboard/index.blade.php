@@ -41,7 +41,7 @@
 							placeholder="Insert to city name">
 					</div>
 					<center>
-						<button type="button" class="btn btn-primary">Submit</button>
+						<button id="btnLeaveControl-Delete" type="submit" accesskey="D" class="btn btn-primary"><i class="glyphicon glyphicon-new-window"></i> Submit</button>
 					</center>
 				</form>
 			</div>
