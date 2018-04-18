@@ -3,13 +3,13 @@
 @section("content")
 <div class="row">
 	<div class="col-md-3">
-		<p class="text-left lead">TRIP SEARCH</p> 
+		<p class="text-left lead" style="margin-left: 10px;">TRIP SEARCH</p> 
 	</div>
 	<div class="col-md-3">
-		<p class="text-left lead">MY TASKS</p> 
+		<p class="text-left lead portlet-title">MY TASKS</p> 
 	</div>	
 </div>
-<div class="row">
+<div class="row" style="margin:10px;">
 	<div class="col-md-3">
 		<ul id="myTab" class="nav nav-tabs">
 			<li class="active"><a href="#home" data-toggle="tab"> <span
@@ -67,7 +67,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-3"">
+	<div class="col-md-3">
 		
 		<!-- BEGIN PORTLET-->
 		<div class="portlet light sameheight-box">
@@ -88,7 +88,39 @@
 							style="height: 370px; overflow: hidden; width: auto;"
 							data-always-visible="1" data-rail-visible="0"
 							data-initialized="1">
-							<p style="color: red; text-align: center">No records found.</p>
+							<div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#transactions" href="#leaves">My Leave Transactions </a>
+                                                <!-- <a class="accordion-toggle" href="./leave-list.php?status=all">My Leave Transactions </a> -->
+                                            </h4>
+                                        </div>
+                                        <div id="leaves" class="panel-collapse collapse table-responsive">
+                                            <table class="table table-light">
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="5" class="font-dark list-title">Drafts</td>
+                                                    </tr>
+                                                    <tr><td colspan="4" style="color: red; text-align: center">No records found.</td></tr>
+                                                    <tr>
+                                                        <td colspan="5" class="font-dark list-title">Submitted</td>
+                                                    </tr>
+                                                    <tr><td colspan="4" style="color: red; text-align: center">No records found.</td></tr>
+                                                    <tr>
+                                                        <td colspan="5" class="font-dark list-title">Approved</td>
+                                                    </tr>
+                                                    <tr><td colspan="4" style="color: red; text-align: center">No records found.</td></tr>
+                                                    <tr>
+                                                        <td colspan="5" class="font-dark list-title">Rejected</td>
+                                                    </tr>
+                                                    <tr><td colspan="4" style="color: red; text-align: center">No records found.</td></tr>
+                                                    <tr>
+                                                        <td colspan="5" class="font-dark list-title">Cancelled</td>
+                                                    </tr>
+                                                    <tr><td colspan="4" style="color: red; text-align: center">No records found.</td></tr>                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
 							<table class="table table-light">
 								<tbody>
 								</tbody>
@@ -113,7 +145,7 @@
 					style="margin-bottom: 10px; font-size: 28px;">06</button>
 				<div class="caption" style="float: right; margin-right: 10px;">
 					<i class="icon-globe font-dark hide"></i> <span
-						class="caption-subject policies-text bold uppercase">Open Reports
+						class="caption-subject policies-text bold uppercase">APPROVED REQUEST
 					</span> <span class="glyphicon glyphicon-arrow-right"></span>
 				</div>
 			</div>
@@ -125,7 +157,12 @@
 							style="height: 370px; overflow: hidden; width: auto;"
 							data-always-visible="1" data-rail-visible="0"
 							data-initialized="1">
-							<p style="color: red; text-align: center">No records found.</p>
+							<h5><strong>01/23          Travel to shanghai </strong></h5>
+														<p>$3500.00 - Travel</p>
+														<h5><strong>01/23          Travel to shanghai </strong></h5>
+														<p>$3500.00 - Travel</p>
+														<h5><strong>01/23          Travel to shanghai </strong></h5>
+														<p>$3500.00 - Travel</p>
 							<table class="table table-light">
 								<tbody>
 								</tbody>
@@ -149,7 +186,7 @@
 					style="margin-bottom: 10px; font-size: 28px;">22</button>
 				<div class="caption" style="float: right; margin-right: 10px;">
 					<i class="icon-globe font-dark hide"></i> <span
-						class="caption-subject policies-text bold uppercase">Avalanche Requests
+						class="caption-subject policies-text bold uppercase">REJECTED REQUEST
 					</span> <span class="glyphicon glyphicon-arrow-right"></span>
 				</div>
 			</div>
@@ -180,7 +217,7 @@
 </div>
 <div class="row">
 	<div class="col-md-3">
-		<p class="text-left lead" style="display: inline-block;">MY TRIPS(2)</p> 
+		<p class="text-left lead" style="display: inline-block;margin-left: 10px;">MY TRIPS(2)</p> 
 		<p class="glyphicon glyphicon-arrow-right" style="display: inline-block;float:right;"></p>
 	</div>
 </div>

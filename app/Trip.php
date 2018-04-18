@@ -22,5 +22,9 @@ class Trip extends Model {
 	{
 		return $this->hasMany('App\Trip_flight','trip_id','trip_id');
 	}
+	public function costcenter() 
+	{
+		return $this->hasOne('App\Costcenter','CostCenterID','cost_center_id'); 
+	}
 	
 }

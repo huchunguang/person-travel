@@ -2,6 +2,7 @@
 
 use Closure;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class checkUserMiddleware {
 
@@ -14,15 +15,21 @@ class checkUserMiddleware {
 	 */
 	public function handle($request, Closure $next)
 	{
-		$userIsExisted = false;
+		$user = false;
 		$userName = GetWindowsUsername();
+		$userName = 'A6053995';
 	    if ($userName){
-	        $userIsExisted = User::where('UserName',$userName)->first()->toArray();
-	        if(empty($userIsExisted)){
-	            return redirect()->route('unknownUser',['userName'=>$userName]);
-	        }
-	    }
-	    $addParams = ['userName'=>$userName,'user_id'=>$userIsExisted['UserID']];
+			$user = User::where('UserName', $userName)->first();
+			if (empty($user)) {
+				return redirect()->route('unknownUser', [ 
+					'userName' => $userName
+				]);
+			}
+		}
+		
+		Auth::login($user);
+// 		dd(Auth::user()->toArray());
+	    $addParams = ['userName'=>$userName,'user_id'=>$user['UserID']];
 	    $request->attributes->add($addParams);
 		return $next($request);
 	}
