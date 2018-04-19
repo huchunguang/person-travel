@@ -34,6 +34,12 @@ Route::group(['prefix'=>'etravel'],function(){
         Route::get('{user}/triplist',['as'=>'triplist','uses'=>'Etravel\TripController@index']);
         Route::get('triplist/{trip}','Etravel\TripController@tripDetails');
         Route::get('tripdemosticlist/{trip}','Etravel\TripController@tripDemosticDetails');
-        
+        #TripPurpose
+        Route::get('purpose',['as'=>'tripPurpose','uses'=>'Etravel\PurposeController@index']);
+        Route::post('purpose','Etravel\PurposeController@store');
+        Route::get('purpose/edit/{purpose}','Etravel\PurposeController@edit');
+        Route::get('purpose/{purpose}','Etravel\PurposeController@show');
+        Route::post('purpose/{purpose}','Etravel\PurposeController@update');
+        Route::post('purpose/destroy/{purpose}','Etravel\PurposeController@destroy');
     });
 });

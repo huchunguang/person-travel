@@ -17,37 +17,20 @@ class TripController extends Controller
      */
     public function create(Request $requset) 
     {
-		$userName = $requset->get('userName');
-		$userProfile = User::with('costcenter', 'department', 'site')->where('UserName', $userName)
-			->first()
-			->toArray();
-		return view('/etravel/trip/create')->with('userProfile', $userProfile);
+    		$userProfile=User::getUserProfile();
+    		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
+    		return view('/etravel/trip/create')->with('userProfile', $userProfile['userProfile'])->with('approvers', $userProfile['approvers'])->with('purposeCats',$purposeCategory)->with('costCenters',Costcenter::getAvailableCenters());
 	}
     /**
      * @brief create demostic trip
      * @param Request $requset
      * @return \Illuminate\View\View
      */
-    public function demosticCreate(Request $requset) 
+    public function demosticCreate() 
     {
-		$departmentFilter = array ();
-		$userName = $requset->get('userName');
-		$userProfile = User::with('costcenter', 'department', 'site')->where('UserName', $userName)
-			->first()
-			->toArray();
-		if (! empty($userProfile)) {
-			$departmentFilter['SiteID'] = $userProfile['SiteID'];
-			$departmentFilter['DepartmentID'] = $userProfile['DepartmentID'];
-			$departmentFilter['CompanyID'] = $userProfile['CompanyID'];
-			$approvers = Department_approver::where($departmentFilter)->first([ 
-				'Approver1'
-			])->toArray();
-			$userIds = explode(',', $approvers['Approver1']);
-			$approvers = User::whereIn('UserID', $userIds)->get()->toArray();
-			$costCenters = Costcenter::where('CompanyID',Auth::user()->CompanyID)->orderBy('CostCenterCode')->get();
-		}
+    		$userProfile=User::getUserProfile();
 		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
-		return view('/etravel/trip/demosticCreate')->with('userProfile', $userProfile)->with('approvers', $approvers)->with('purposeCats',$purposeCategory)->with('costCenters',$costCenters);
+		return view('/etravel/trip/demosticCreate')->with('userProfile', $userProfile['userProfile'])->with('approvers', $userProfile['approvers'])->with('purposeCats',$purposeCategory)->with('costCenters',Costcenter::getAvailableCenters());
 	}
     /**
      *@brief currently user trip info list
@@ -60,8 +43,6 @@ class TripController extends Controller
    	 		$filter['trip_type']=$tripType;
    	 	}
    	 	$tripList = $user->tripList()->where($filter)->paginate(1);
-//     		dd($tripList);
-		// $tripList=[];
     		return view('etravel/trip/index')->with('tripList',$tripList);
     }
     /**
@@ -97,7 +78,7 @@ class TripController extends Controller
 			'location',
 			'customer_name',
 			'contact_name',
-			'purpose_cat',
+			'purpose_id',
 			'purpose_desc',
 			'travel_cost',
 			'entertain_cost',
@@ -135,9 +116,13 @@ class TripController extends Controller
 	 */
 	public function tripDemosticDetails(Request $request, Trip $trip)
     {
+		$userObjMdl = User::where('UserID',$trip->user_id)->firstOrFail();
+		$approver = User::find($trip->department_approver);
 		$demosticInfo = $trip->demostic()->get();
-		return view('/etravel/trip/tripDemosticDetail', [ 
+		return view('/etravel/trip/tripDemosticDetail', [
+			'userObjMdl'=>$userObjMdl,
 			'trip' => $trip,
+			'approver'=>$approver,
 			'demosticInfo' => $demosticInfo,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode
 		]);

@@ -16,12 +16,12 @@
 			data-toggle="dropdown" style="color: white;"><i class="fa fa-gears"></i>Site
 				Configuration<span class="caret"></span></a>
 			<ul class="dropdown-menu">
-				<li><a href="##">Destination</a></li>
-				<li><a href="##">Travel Purpose</a></li>
+				<li><a href="##">Travel Destination</a></li>
+				<li><a href="/etravel/purpose">Travel Purpose</a></li>
 			</ul></li>
 		<li><a href="##" style="color: white;"><span class="glyphicon glyphicon-send"></span>Travel</a></li>
-		<li><a href="##" style="color: white;">Reports</a></li>
-		<li><a href="##" style="color: white;">Delegation</a></li>
+		<li><a href="##" style="color: white;"><i class="fa fa-bar-chart"></i>Reports</a></li>
+		<li><a href="##" style="color: white;"><i class="fa fa-exchange"></i>Delegation</a></li>
 		<li class="nav navbar-nav pull-right">Victor <img alt=""
 			class="img-circle"
 			src="{{ asset('storage/global/layout3/img/avatar.png') }}">

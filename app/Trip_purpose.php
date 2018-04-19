@@ -4,6 +4,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Trip_purpose extends Model {
 
-	//
+	protected $primaryKey='purpose_id';
 
 }

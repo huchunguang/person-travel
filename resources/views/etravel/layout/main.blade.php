@@ -9,6 +9,7 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Arkema Etravel</title>
+    
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css" />
@@ -23,6 +24,8 @@
         <link href="{{ asset('assets/layouts/layout2/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/layouts/layout2/css/themes/blue.min.css') }}" rel="stylesheet" type="text/css" id="style_color" />
         <link href="{{ asset('assets/layouts/layout2/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
+<!--         <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css" /> -->
+<!--         <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css" /> -->
     
     
     
@@ -30,7 +33,6 @@
    	<link rel="stylesheet" type="text/css" href="/css/app.css">
     <link href="/css/blog.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/wangEditor.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link href="{{ asset('storage/global/css/error.min.css') }}" rel="stylesheet">
 <link
 	href="{{ asset('storage/global/plugins/font-awesome/css/font-awesome.min.css') }}"
@@ -103,6 +105,7 @@
 	type="text/css" />
 <link href="{{asset('storage/global/css/bootstrap-sortable.css')}}" rel="stylesheet"
 	type="text/css" />
+<script src="{{asset('js/jquery-1.8.3.min.js')}}"></script>
 </head>
 
 <body class="page-container-bg-solid page-header-menu-fixed" huaban_collector_injected="true">
@@ -123,7 +126,6 @@
 	@include("etravel.layout.footer")
 </div>
 </div>
-<script src="{{asset('js/jquery-1.8.3.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/wangEditor.min.js')}}"></script>
 <script src="{{asset('js/etravel/trip/demosticCreate.js')}}"></script>
@@ -147,17 +149,34 @@
             <script src="{{asset('assets/global/plugins/bootstrap-markdown/lib/markdown.js') }}" type="text/javascript"></script>
             <script src="{{asset('assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js') }}" type="text/javascript"></script>
             <!-- END PAGE LEVEL PLUGINS -->
+            
+              <!-- BEGIN PAGE LEVEL PLUGINS -->
+<!--             <script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script> -->
+<!--             <script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script> -->
+            <!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<!--             <script src="../assets/pages/scripts/ui-extended-modals.min.js" type="text/javascript"></script> -->
+            <!-- END PAGE LEVEL SCRIPTS -->
+            
             <!-- BEGIN THEME GLOBAL SCRIPTS -->
             <script src="{{asset('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
             <!-- END THEME GLOBAL SCRIPTS -->
             <!-- BEGIN PAGE LEVEL SCRIPTS -->
-            <script src="{{asset('assets/pages/scripts/form-validation.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/pages/scripts/form-validation.min.js') }}" type="text/javascript"></script>
             <!-- END PAGE LEVEL SCRIPTS -->
             <!-- BEGIN THEME LAYOUT SCRIPTS -->
-            <script src="{{asset('assets/layouts/layout2/scripts/layout.min.js') }}" type="text/javascript"></script>
-            <script src="{{asset('assets/layouts/layout2/scripts/demo.min.js') }}" type="text/javascript"></script>
-            <script src="{{asset('assets/layouts/global/scripts/quick-sidebar.min.js') }}" type="text/javascript"></script>
-            <script src="{{asset('assets/layouts/global/scripts/quick-nav.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/layouts/layout2/scripts/layout.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/layouts/layout2/scripts/demo.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/layouts/global/scripts/quick-sidebar.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/layouts/global/scripts/quick-nav.min.js') }}" type="text/javascript"></script>
+
+<script>
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+</script>
 </body>
 </html>
 

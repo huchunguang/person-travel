@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -43,4 +44,21 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	{	
 		return $this->hasMany('App\Trip','user_id','UserID');
 	}
+	public static function getUserProfile()
+	{
+		$userProfile = User::with('costcenter', 'department', 'site')->where('UserName', Auth::user()->UserName)->first();
+		$departmentFilter['SiteID'] = $userProfile['SiteID'];
+		$departmentFilter['DepartmentID'] = $userProfile['DepartmentID'];
+		$departmentFilter['CompanyID'] = $userProfile['CompanyID'];
+		$approvers = Department_approver::where($departmentFilter)->first([
+			'Approver1'
+		])->toArray();
+		$userIds = explode(',', $approvers['Approver1']);
+		$approvers = User::whereIn('UserID', $userIds)->get()->toArray();
+		return [
+			'userProfile'=>$userProfile,
+			'approvers'=>$approvers
+		];
+	}
 }
+
