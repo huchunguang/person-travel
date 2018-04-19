@@ -1,17 +1,22 @@
-@extends("etravel.layout.main") 
-@section("content")
+@extends("etravel.layout.main") @section("content")
 <div class="page-content-inner">
-	<form role="form">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="portlet box green">
-					<div class="portlet-title">
-						<div class="alert alert-info alert-dismissable" role="alert">
-							<h4>International Travel Request</h4>
-						</div>
-					</div>
-					<div class="portlet-body form">
-						<div class="form-body">
+	@include('etravel.layout.error')
+	<div class="col-md-12">
+		<!-- BEGIN VALIDATION STATES-->
+		<div class="portlet light portlet-fit portlet-form ">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bubble font-green"></i> <span
+						class="caption-subject font-green bold uppercase">DEMOSTIC REQUEST</span>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<!-- BEGIN FORM-->
+				<form action="/etravel/trip/store" method="post"
+					class="form-horizontal">
+
+					<div class="form-body">
+						
 							<div class="row">
 								<div class="form-group col-md-6 " style="margin-top: 20px;">
 									<label for="TravellerName"
@@ -75,7 +80,6 @@
 									</div>
 								</div>
 							</div>
-						</div>
 						<div class="row">
 							<div class="form-group col-md-6">
 								<label for="LeaveRecipientCompanyCode"
@@ -103,7 +107,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="form-group col-sm-12">
+							<div class="form-group col-md-10 col-md-push-1">
 								<label for="ApprovesComment" class="control-label col-xs-2"><strong>Approves
 										Comment</strong></label>
 								<textarea id="ApprovesComment" name="ApprovesComment"
@@ -111,6 +115,33 @@
 									rows="2"></textarea>
 							</div>
 						</div>
+						<div class="portlet box green">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-gift"></i> Validation States </div>
+                                    <div class="tools">
+                                        <a href="" class="collapse" data-original-title="" title=""> </a>
+                                        <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title=""> </a>
+                                        <a href="" class="reload" data-original-title="" title=""> </a>
+                                        <a href="" class="remove" data-original-title="" title=""> </a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body form">
+                                		
+							<div class="form-group col-md-6">
+								<label for="LeaveApplicantDepartment"
+									style="padding-right: 0px;"
+									class="control-label col-md-4 text-right">PURPOSE OF TRAVEL:</label>
+								<div class="col-md-7">
+									<select id="CostCenter" name="CostCenter"
+										class="cboSelect2 leave-control form-control" tabindex="-1">
+										<option value="0">&lt;&nbsp;others&nbsp;&gt;</option>
+									</select>
+								</div>
+							</div>
+						
+                                </div>
+                            </div>
 						<div class="row">
 							<div class="form-group col-md-6">
 								<label for="LeaveApplicantDepartment"
@@ -146,7 +177,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="form-group col-md-6 col-md-offset-2">
+							<div class="col-md-10 col-md-offset-1">
 								<ul class="list-group">
 									<li class="list-group-item">Notification to be sent
 										generalaffairs?: <input type="radio" name="NitifyYes"
@@ -286,7 +317,7 @@
 						</div>
 						<div class="row">
 
-							<div class="form-group col-md-6 col-md-offset-2">
+							<div class="col-md-10 col-md-offset-1">
 								<ul class="list-group">
 									<li class="list-group-item">
 										<div class="row">
@@ -407,7 +438,7 @@
 
 						</div>
 						<div class="row">
-							<div class="form-group col-sm-12">
+							<div class="form-group col-md-10 col-md-push-1">
 								<label for="ApprovesComment" class="control-label col-xs-2"><strong>Extras
 										Comments</strong></label>
 								<textarea id="ApprovesComment" name="ApprovesComment"
@@ -415,15 +446,34 @@
 									rows="2"></textarea>
 							</div>
 						</div>
+					
 					</div>
-				</div>
-
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-offset-3 col-md-9">
+								<button type="submit" class="btn green">Submit</button>
+								<button type="button" class="btn default">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- END FORM-->
 			</div>
 		</div>
-
-</div>
-
-</div>
-</form>
+		<!-- END VALIDATION STATES-->
+	</div>
 </div>
 @endsection
+
+
+
+
+
+
+									
+
+
+
+
+
+									
