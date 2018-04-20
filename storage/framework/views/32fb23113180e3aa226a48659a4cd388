@@ -33,7 +33,7 @@
 <div class="row" style=" padding: 0px;margin:0px;">
 <div class="navbar nav_title col-md-3" style="border: 0;padding: 0px;margin:0px;">
 	<a href="/etravel/dashboard">
-		<span><img src="<?php echo e(asset('storage/arkema1.png')); ?>" style="width: 240px;height:60px;padding: 0px;margin:0px;"/></span>
+		<span><img src="<?php echo e(asset('storage/arkema2.png')); ?>" style="width: 240px;height:60px;padding: 0px;"/></span>
 	</a>
 </div>
 <div class="top_nav col-md-3">
