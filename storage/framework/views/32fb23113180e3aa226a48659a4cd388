@@ -1,17 +1,8 @@
 <div class="row" style="background-color: gray; padding: 0px;">
 	<ul class="nav nav-pills"
 		style="text-align: center; margin-bottom: 0px;">
-		<li class="active"><a href="##" style="color: white;"><i
+		<li class="active"><a href="<?php echo e(route('dashboard')); ?>" style="color: white;"><i
 				class="fa fa-home"></i>DASHBOARD</a></li>
-		<li class="dropdown">
-			<a href="/etravel/trip/create" class="dropdown-toggle" style="color: white;" data-toggle="dropdown">
-				<i class="fa fa-exchange"></i>Request<span class="caret"></span>
-			</a>
-			<ul class="dropdown-menu">
-				<li><a href="/etravel/trip/create">International</a></li>
-				<li><a href="/etravel/trip/create/demostic">Demostic</a></li>
-			</ul>
-		</li>
 		<li class="dropdown"><a href="##" class="dropdown-toggle"
 			data-toggle="dropdown" style="color: white;"><i class="fa fa-gears"></i>Site
 				Configuration<span class="caret"></span></a>
@@ -42,6 +33,14 @@
 	</div>
 </div>
 </div>
+
+
+
+
+
+
+
+
 
 
 

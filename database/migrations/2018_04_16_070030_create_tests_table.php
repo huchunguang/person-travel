@@ -12,9 +12,13 @@ class CreateTestsTable extends Migration {
 	 */
 	public function up()
 	{
+		Schema::table('tests',function($table){
+			$table->string('testName','100')->nullable()->first();
+		});
 		Schema::create('tests', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->string('testName')->nullable()->first();
 			$table->timestamps();
 		});
 	}

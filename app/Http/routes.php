@@ -11,35 +11,38 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/', function (){
+	return redirect()->route('dashboard');
+});
 
-// Route::get('home', 'HomeController@index');
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
 
 
-Route::group(['prefix'=>'etravel'],function(){
-    Route::get('unknownUser',['as'=>'unknownUser','uses'=>'\App\Http\Controllers\Etravel\DashboardController@unknownUser']);
+Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
+    Route::get('unknownUser',['as'=>'unknownUser','uses'=>'DashboardController@unknownUser']);
     Route::group(['middleware'=>'checkUser'],function(){
     		#DashBoard
-        Route::get('dashboard',['as'=>'dashboardPanel','uses'=>'\App\Http\Controllers\Etravel\DashboardController@index']);
+        Route::get('dashboard',['as'=>'dashboard','uses'=>'DashboardController@index']);
+        Route::post('trip',['as'=>'tripType','uses'=>'DashboardController@trip']);
+        
         #Create
-        Route::get('trip/create','\App\Http\Controllers\Etravel\TripController@create');
-        Route::get('trip/create/demostic',['as'=>'demosticCreate','uses'=>'\App\Http\Controllers\Etravel\TripController@demosticCreate']);
+        Route::get('trip/create',['as'=>'internationalCreate','uses'=>'TripController@create']);
+        Route::get('trip/create/demostic',['as'=>'demosticCreate','uses'=>'TripController@demosticCreate']);
         #Store
-        Route::post('trip/store','Etravel\TripController@store');
+        Route::post('trip/store','TripController@store');
         #List
-        Route::get('{user}/triplist',['as'=>'triplist','uses'=>'Etravel\TripController@index']);
-        Route::get('triplist/{trip}','Etravel\TripController@tripDetails');
-        Route::get('tripdemosticlist/{trip}','Etravel\TripController@tripDemosticDetails');
+        Route::get('{user}/triplist',['as'=>'triplist','uses'=>'TripController@index']);
+        Route::get('triplist/{trip}','TripController@tripDetails');
+        Route::get('tripdemosticlist/{trip}','TripController@tripDemosticDetails');
         #TripPurpose
-        Route::get('purpose',['as'=>'tripPurpose','uses'=>'Etravel\PurposeController@index']);
-        Route::post('purpose','Etravel\PurposeController@store');
-        Route::get('purpose/edit/{purpose}','Etravel\PurposeController@edit');
-        Route::get('purpose/{purpose}','Etravel\PurposeController@show');
-        Route::post('purpose/{purpose}','Etravel\PurposeController@update');
-        Route::post('purpose/destroy/{purpose}','Etravel\PurposeController@destroy');
+        Route::get('purpose',['as'=>'tripPurpose','uses'=>'PurposeController@index']);
+        Route::post('purpose','PurposeController@store');
+        Route::get('purpose/edit/{purpose}','PurposeController@edit');
+        Route::get('purpose/{purpose}','PurposeController@show');
+        Route::post('purpose/{purpose}','PurposeController@update');
+        Route::post('purpose/destroy/{purpose}','PurposeController@destroy');
     });
 });

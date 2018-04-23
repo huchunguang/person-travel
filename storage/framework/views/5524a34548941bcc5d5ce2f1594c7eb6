@@ -5,7 +5,7 @@
         <div class="page-footer">
             <div class="container text-center"> Copyright © Arkema Corporation
                 <a target="_blank" href="#">Communication &amp; Collaboration</a>
-                All Rights Reserved 2017
+                All Rights Reserved 2018
             </div>
         </div>
         <div class="scroll-to-top" style="display: block;">

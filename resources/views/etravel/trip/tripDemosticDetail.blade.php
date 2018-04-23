@@ -1,6 +1,11 @@
 @extends("etravel.layout.main") @section("content")
+<div class="container">
+
 <div class="page-content-inner">
+<form action="" method="post" class="form-horizontal">
+<div class="row">
 	<div class="col-md-12">
+		
 		<!-- BEGIN VALIDATION STATES-->
 		<div class="portlet light portlet-fit portlet-form ">
 			<div class="portlet-title">
@@ -11,7 +16,6 @@
 			</div>
 			<div class="portlet-body">
 				<!-- BEGIN FORM-->
-				<form action="" method="post" class="form-horizontal">
 					<div class="form-body">
 						<div class="row">
 							<div class="form-group col-md-6 " style="margin-top: 20px;">
@@ -189,11 +193,14 @@
 						</div>
 
 					</div>
-				</form>
 				<!-- END FORM-->
 			</div>
 		</div>
 		<!-- END VALIDATION STATES-->
 	</div>
+	</div>
+					</form>
+	
+</div>
 </div>
 @endsection

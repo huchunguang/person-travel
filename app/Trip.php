@@ -27,4 +27,13 @@ class Trip extends Model {
 		return $this->hasOne('App\Costcenter','CostCenterID','cost_center_id'); 
 	}
 	
+	/**
+	 * @desc query  with  different itinerary status trip of currently user 
+	 * @param unknown $query
+	 * @param unknown $param
+	 */
+	public function scopeOfStatus($query,$param) 
+	{
+		return $query->where('status',$param);
+	}
 }

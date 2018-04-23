@@ -9,6 +9,7 @@ use App\Trip;
 use App\Trip_purpose;
 use Illuminate\Support\Facades\Auth;
 use App\Costcenter;
+use Illuminate\Support\Facades\DB;
 
 class TripController extends Controller
 {
@@ -126,6 +127,16 @@ class TripController extends Controller
 			'demosticInfo' => $demosticInfo,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode
 		]);
+	}
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function destroy(Trip $trip)
+	{
+		
 	}
     
 }

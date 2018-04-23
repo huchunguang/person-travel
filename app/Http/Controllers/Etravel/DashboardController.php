@@ -15,4 +15,17 @@ class DashboardController extends Controller
         
         return view('/etravel/dashboard/unknownUser')->with('userName',$request->input('userName'));
     }
+    /**
+     * @desc determine that would like to create trip type 
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function trip(Request $request) 
+    {
+		if ($request->input('trip') == 'demostic') {
+			return redirect()->route('demosticCreate');
+		} elseif ($request->input('trip') == 'international') {
+			return redirect()->route('internationalCreate');
+		}
+	}
 }
