@@ -37,6 +37,8 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         Route::get('{user}/triplist',['as'=>'triplist','uses'=>'TripController@index']);
         Route::get('triplist/{trip}','TripController@tripDetails');
         Route::get('tripdemosticlist/{trip}','TripController@tripDemosticDetails');
+        Route::get('trip/edit/{trip}','TripController@demosticEdit');
+        
         #TripPurpose
         Route::get('purpose',['as'=>'tripPurpose','uses'=>'PurposeController@index']);
         Route::post('purpose','PurposeController@store');
@@ -44,5 +46,9 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         Route::get('purpose/{purpose}','PurposeController@show');
         Route::post('purpose/{purpose}','PurposeController@update');
         Route::post('purpose/destroy/{purpose}','PurposeController@destroy');
+        #Manager Section
+        Route::get('staff/travellist','ApproverController@index');
+        Route::put('tripapproval/{trip}','ApproverController@approval');
+        
     });
 });

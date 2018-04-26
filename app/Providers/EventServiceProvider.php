@@ -14,6 +14,15 @@ class EventServiceProvider extends ServiceProvider {
 		'event.name' => [
 			'EventListener',
 		],
+		'App\Events\TripWasApproved'=>[
+			'App\Handlers\Events\EmailTripConfirmation'
+		],
+		'App\Events\TripWasPartlyApproved'=>[
+			'App\Handlers\Events\EmailPartlyApproved'
+		],
+		'App\Events\TripWasRejected'=>[
+			'App\Handlers\Events\EmailTripRejected'
+		],
 	];
 
 	/**

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 class Costcenter extends Model {
 
     protected $table = 'costcenter';
+    protected $primaryKey='CostCenterID';
     
 	public static function getAvailableCenters() 
 	{

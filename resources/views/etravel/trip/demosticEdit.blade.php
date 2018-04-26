@@ -3,7 +3,7 @@
 <div class="container">
 	<div class="page-content-inner">
 		<div class="row">
-			<form action="/etravel/tripapproval/{{$trip->trip_id}}" method="post" class="horizontal-form">
+			<form action="/etravel/trip/update" method="post" class="horizontal-form">
 		
 			@if($trip->status == 'pending' && $trip->department_approver == 346 )
 				@include('etravel.layout.approverAction')
@@ -67,7 +67,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Cost Center</label> 
-											<select name="cost_center_id" class="cboSelect2 leave-control form-control" tabindex="-1" disabled>
+											<select name="cost_center_id" class="cboSelect2 leave-control form-control" tabindex="-1">
 												<option >&lt;&nbsp;{{ $costCenterCode }}&nbsp;&gt;</option>
 											</select>
 										</div>
@@ -96,13 +96,13 @@
 											</p>
 
 											<div class="col-md-4">
-									<input type="text" name="daterange_from" disabled
+									<input type="text" name="daterange_from" 
 										class="form-control singleDatePicker"  value="{{ $trip->daterange_from }}"> <i
 										class="glyphicon glyphicon-calendar fa fa-calendar"
 										style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
 								</div>
 								<div class="col-md-4">
-									<input type="text" name="daterange_to" disabled
+									<input type="text" name="daterange_to" 
 										class="form-control singleDatePicker" value="{{ $trip->daterange_to }}"> <i
 										class="glyphicon glyphicon-calendar fa fa-calendar"
 										style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
@@ -139,9 +139,7 @@
 												<td class="text-center">Estimated Entertainment Cost</td>
 												<td class="text-center">Estimated Details</td>
 												
-												@if($trip->status == 'pending' && $trip->department_approver == 346 )
-												<td class="text-center text-danger">Approved?</td>
-												@elseif($trip->status == 'approved' || $trip->status=='partly-approved')
+												@if($trip->status == 'partly-approved')
 												<td class="text-center">Approved?</td>
 												@endif
 
@@ -149,9 +147,19 @@
 										</thead>
 										<tbody>
 											@foreach($demosticInfo as $item)
-										<tr id="trOne">
+										<tr id="trOne" >
 											<td>
+												@if($trip->status == 'partly-approved' && $item->is_approved == '0')
 												{{ $item['datetime_date'] }}
+												@elseif(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+												<div style="position: relative;">
+																<input type="text" name="datetime_date[]" value="{{ $item['datetime_date'] }}"
+																	class="form-control singleDatePicker"> <i
+																	class="glyphicon glyphicon-calendar fa fa-calendar"
+																	style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+															</div>
+												
+												@endif
 											</td>
 											<td>
 												{{ $item['datetime_time'] }}
@@ -175,25 +183,7 @@
 												{{ $item['entertain_detail'] }}
 											</td>
 											
-												@if($trip->status == 'pending' && $trip->department_approver == 346 )
-												<td>
-														<input type="hidden" name="id[]" value="{{$item['id']}}"/>
-														<div class="input-group">
-                                                                        <div class="icheck-inline">
-                                                                            <label class="">
-																		<div class="icheckbox_minimal-grey"
-																			style="position: relative;">
-																			<input type="checkbox" class="icheck" name="is_approve_{{$item['id']}}"
-																				style="position: absolute; opacity: 0;" >
-																			<ins class="iCheck-helper"
-																				style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-																		</div>YES
-																	</label>
-                                                                        </div>
-                                                                    </div>
-												</td>
-												@endif
-												@if($trip->status=='approved' || $trip->status=='partly-approved')
+												@if($trip->status=='partly-approved')
 													<td>
 														@if($item['is_approved']==1)
 															YES
@@ -202,6 +192,7 @@
 														@endif
 													</td>
 												@endif
+											
 											
 										</tr>
 									@endforeach
@@ -256,9 +247,7 @@
 										
 									</button>
 								
-                                 	<button id=TravelTypeCancel type="button" accesskey="D"  class="btn default">
-										<i class="fa fa-share"></i> <u>C</u>ancel
-									</button>
+                                 	<button id="btnLeaveControl-Delete" type="button" accesskey="D" class="btn red-mint"><i class="glyphicon glyphicon-new-window"></i> Resubmit</button>
                                 </div>
 							@endif
 					</div>

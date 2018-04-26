@@ -107,6 +107,37 @@
 <link href="{{asset('storage/global/css/bootstrap-sortable.css')}}" rel="stylesheet"
 	type="text/css" />
 <script src="{{asset('js/jquery-1.8.3.min.js')}}"></script>
+<script src="{{asset('js/bootstrap.min.js')}}"></script>
+<script src="{{asset('js/wangEditor.min.js')}}"></script>
+<script src="{{asset('js/etravel/trip/demosticCreate.js')}}"></script>
+<script src="{{asset('storage/global/plugins/bootstrap-daterangepicker/moment.js')}}"></script>
+<script src="{{asset('storage/global/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+<script src="{{asset('storage/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
+<!-- BEGIN CORE PLUGINS -->
+<script src="{{asset('assets/global/plugins/js.cookie.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/jquery.blockui.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('storage/global/js/bootstrap-sortable.js')}}"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="{{asset('assets/global/plugins/select2/js/select2.full.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/bootstrap-markdown/lib/markdown.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/icheck/icheck.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/pages/scripts/form-icheck.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/pages/scripts/form-validation.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/layouts/layout2/scripts/layout.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/layouts/layout2/scripts/demo.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/layouts/global/scripts/quick-sidebar.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/layouts/global/scripts/quick-nav.min.js') }}" type="text/javascript"></script>
 </head>
 
 <body class="page-container-bg-solid page-header-menu-fixed" huaban_collector_injected="true">
@@ -127,36 +158,7 @@
 	@include("etravel.layout.footer")
 </div>
 </div>
-<script src="{{asset('js/bootstrap.min.js')}}"></script>
-<script src="{{asset('js/wangEditor.min.js')}}"></script>
-<script src="{{asset('js/etravel/trip/demosticCreate.js')}}"></script>
-<script src="{{asset('storage/global/plugins/bootstrap-daterangepicker/moment.js')}}"></script>
-<script src="{{asset('storage/global/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
-<script src="{{asset('storage/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
-<!-- BEGIN CORE PLUGINS -->
-<script src="{{asset('assets/global/plugins/js.cookie.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/global/plugins/jquery.blockui.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}" type="text/javascript"></script>
-<!-- END CORE PLUGINS -->
-<!-- BEGIN PAGE LEVEL PLUGINS -->
-<script src="{{asset('assets/global/plugins/select2/js/select2.full.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/global/plugins/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/global/plugins/bootstrap-markdown/lib/markdown.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/global/plugins/icheck/icheck.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/pages/scripts/form-icheck.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/pages/scripts/form-validation.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/layouts/layout2/scripts/layout.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/layouts/layout2/scripts/demo.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/layouts/global/scripts/quick-sidebar.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/layouts/global/scripts/quick-nav.min.js') }}" type="text/javascript"></script>
+
 
 <script>
 $.ajaxSetup({

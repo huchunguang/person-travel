@@ -34,17 +34,21 @@ class TripController extends Controller
 		return view('/etravel/trip/demosticCreate')->with('userProfile', $userProfile['userProfile'])->with('approvers', $userProfile['approvers'])->with('purposeCats',$purposeCategory)->with('costCenters',Costcenter::getAvailableCenters());
 	}
     /**
-     *@brief currently user trip info list
+     *@brief currently user demostic trip list
      */
 	public function index(User $user,Request $request)
     {
-		$filter = [];
-   	 	$tripType= $request->input('trip_type');
-   	 	if ($tripType){
-   	 		$filter['trip_type']=$tripType;
+		$filter = [ ];
+		$status=$request->input('status');
+   	 	if ($status){
+   	 		$filter['status']=$status;
    	 	}
-   	 	$tripList = $user->tripList()->where($filter)->paginate(1);
-    		return view('etravel/trip/index')->with('tripList',$tripList);
+   	 	$tripList = $user->tripList()->where($filter)->paginate(3);
+		return view('etravel/trip/index', [ 
+			'status'=>$status?$status:'all',
+			'tripList' => $tripList,
+			'breadcrumb' => 'Demostic Travel Requests List'
+		]);
     }
     /**
      * @desc trip_type 1:international 2:demostic
@@ -86,10 +90,13 @@ class TripController extends Controller
 			'entertain_detail',
 			'is_approved'
 		]));
-		$tripObjMdl = Trip::create($tripData);
-		foreach ($demosticData as $item){
-    			$tripObjMdl->demostic()->create($item);
-    		}
+		DB::transaction(function()use($tripData,$demosticData){
+			$tripObjMdl = Trip::create($tripData);
+			foreach ($demosticData as $item){
+				$tripObjMdl->demostic()->create($item);
+			}
+		});
+		
     		return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
     }
     /**
@@ -138,5 +145,18 @@ class TripController extends Controller
 	{
 		
 	}
-    
+	
+	public function demosticEdit(Trip $trip,Request $request)
+	{
+		$userObjMdl = User::where('UserID',$trip->user_id)->firstOrFail();
+		$approver = User::find($trip->department_approver);
+		$demosticInfo = $trip->demostic()->get();
+		return view('/etravel/trip/demosticEdit', [
+			'userObjMdl'=>$userObjMdl,
+			'trip' => $trip,
+			'approver'=>$approver,
+			'demosticInfo' => $demosticInfo,
+			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode
+		]);
+	}
 }

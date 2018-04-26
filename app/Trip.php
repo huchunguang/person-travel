@@ -28,12 +28,13 @@ class Trip extends Model {
 	}
 	
 	/**
-	 * @desc query  with  different itinerary status trip of currently user 
+	 * @desc query  with  different itinerary status trip  currently user 
 	 * @param unknown $query
 	 * @param unknown $param
 	 */
 	public function scopeOfStatus($query,$param) 
 	{
+		if (empty($param)) return $query;
 		return $query->where('status',$param);
 	}
 }

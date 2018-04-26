@@ -1,8 +1,14 @@
-<div class="row" style="background-color: gray; padding: 0px;">
-	<ul class="nav nav-pills"
-		style="text-align: center; margin-bottom: 0px;">
+
+<div class="row" style="background-color: rgba(51,122,183,1);margin:0px;">
+	<div class="row" style="background-color: rgba(51,122,183,1);margin-left:10px;margin-right:10px;">
+		
+	<div class="col-md-9">
+		<ul class="nav nav-pills" style="text-align: center; margin-bottom: 0px;">
 		<li class="active"><a href="{{ route('dashboard') }}" style="color: white;"><i
-				class="fa fa-home"></i>DASHBOARD</a></li>
+				class="fa fa-home"></i>Dashboard</a></li>
+				<li><a href="##" style="color: white;"><i class="fa fa-exchange"></i>Delegation</a></li>
+		
+		<li><a href="##" style="color: white;"><i class="fa fa-bar-chart"></i>Reports</a></li>
 		<li class="dropdown"><a href="##" class="dropdown-toggle"
 			data-toggle="dropdown" style="color: white;"><i class="fa fa-gears"></i>Site
 				Configuration<span class="caret"></span></a>
@@ -10,29 +16,43 @@
 				<li><a href="##">Travel Destination</a></li>
 				<li><a href="/etravel/purpose">Travel Purpose</a></li>
 			</ul></li>
-		<li><a href="##" style="color: white;"><span class="glyphicon glyphicon-send"></span>Travel</a></li>
-		<li><a href="##" style="color: white;"><i class="fa fa-bar-chart"></i>Reports</a></li>
-		<li><a href="##" style="color: white;"><i class="fa fa-exchange"></i>Delegation</a></li>
-		<li class="nav navbar-nav pull-right">Victor <img alt=""
+		
+
+	</ul>
+	</div>
+	<div class="col-md-3">
+		<ul>
+			<li class="nav navbar-nav pull-right">{{Auth::user()->FirstName}} <img alt=""
 			class="img-circle"
 			src="{{ asset('storage/global/layout3/img/avatar.png') }}">
 
 		</li>
-
-	</ul>
-</div>
-<div class="row" style=" padding: 0px;margin:0px;">
-<div class="navbar nav_title col-md-3" style="border: 0;padding: 0px;margin:0px;">
-	<a href="/etravel/dashboard">
-		<span><img src="{{ asset('storage/arkema2.png') }}" style="width: 240px;height:60px;padding: 0px;"/></span>
-	</a>
-</div>
-<div class="top_nav col-md-3">
-	<div class="nav_menu">
-		<h2 class="app-title policies-text bold ">e-Travel Application</h2>
+		</ul>
+	</div>
+		
 	</div>
 </div>
+<div class="row"	 style="margin: 10px;margin-bottom:0px;">
+	<div class="col-md-3">
+				<ul class="nav nav-pills" style="text-align: center; margin-bottom: 0px;">
+					<li>
+						<a href="/etravel/dashboard"> <span><img
+				src="{{ asset('storage/arkema2.png') }}"
+				style="width: 160px; height: 43px;" /></span>
+		</a>
+					</li>
+				</ul>
+		
+	</div>
+	
+	<div class="top_nav col-md-3">
+		
+		<div class="nav_menu">
+			<h2 class="app-title policies-text bold">e-Travel Application</h2>
+		</div>
+	</div>
 </div>
+
 
 
 

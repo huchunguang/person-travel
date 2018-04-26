@@ -1,4 +1,5 @@
-@extends("etravel.layout.main") @section("content")
+@extends("etravel.layout.main") 
+@section("content")
 <div class="container">
 	<div class="page-content-inner">
 		<div class="row">
@@ -124,16 +125,19 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">
-												<button data-target="addNewLineModal" type="button" class="btn btn-default">
+												<button data-target="#addNewLineModal" data-toggle="modal" type="button" class="btn btn-default">
 													<i class="glyphicon glyphicon-plus-sign"></i> 
 													Add Line Item
+												</button>
+												<button id="itemDelBut" type="button" class="btn red-mint" disabled onclick="delLineItem()">
+													<i class="glyphicon glyphicon-remove-sign"></i> 
+													Delete
 												</button>
 											</label>
 										</div>
 									</div>
 								</div>
-
-
+								
 
 								<div class="row">
 									<div class="col-md-6">
@@ -144,9 +148,7 @@
 								</div>
 
 								<div class="row">
-									<table
-										class="table table-bordered table-striped table-condensed flip-content"
-										id="requestTable">
+									<table  id="ltineraryTable" class="table table-bordered table-striped table-condensed flip-content">
 										<thead>
 											<tr class="info">
 												<td class="text-center" class="">Date</td>
@@ -161,61 +163,13 @@
 												<td class="text-center" class="">Estimated Entertainment
 													Cost</td>
 												<td class="text-center" class="">Estimated Details</td>
-												<td class="text-center" class="">Approved?</td>
+<!-- 												<td class="text-center" class="">Approved?</td> -->
 
 
 											</tr>
 										</thead>
 										<tbody>
-											<tr id="trOne">
-												<td class="col-md-1">
-													<div style="position: relative;">
-														<input type="text" name="datetime_date[]"
-															class="form-control singleDatePicker"> <i
-															class="glyphicon glyphicon-calendar fa fa-calendar"
-															style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
-													</div>
-												</td>
-												<td class="col-md-2">
-													<div class="input-group">
-														<input type="text" readonly="readonly"
-															name="datetime_time[]"
-															class="form-control timepicker timepicker-default time-input"
-															placeholder=""> <span class="input-group-btn">
-															<button class="btn default" type="button">
-																<i class="fa fa-clock-o"></i>
-															</button>
-														</span>
-													</div>
-												</td>
-												<td class="col-md-1"><input type="text" name="location[]"
-													id="" style="width: 70px;" /></td>
-												<td class="col-md-1"><input type="text"
-													name="customer_name[]" id="" style="width: 70px;" /></td>
-												<td class="col-md-1"><input type="text"
-													name="contact_name[]" id="" style="width: 70px;" /></td>
-												<td class="col-md-1"><select class="form-control"
-													name="purpose_id[]"> @foreach ($purposeCats as $item)
-														<option value="{{ $item['purpose_id'] }}">
-															&lt;&nbsp;{{$item['purpose_catgory'] }}&nbsp;&gt;</option>
-														@endforeach
-												</select></td>
-												<td class="col-md-1"><textarea name="purpose_desc[]"
-														class="form-control leave-control"
-														style="overflow-y: scroll;" rows="2"></textarea></td>
-												<td class="col-md-1"><input type="text" name="travel_cost[]"
-													placeholder="0.00" style="width: 60px;" /></td>
-												<td class="col-md-1"><input type="text"
-													name="entertain_cost[]" placeholder="0.00"
-													style="width: 60px;" /></td>
-												<td class="col-md-1"><input type="text"
-													name="entertain_detail[]" style="width: 60px;" /></td>
-												<td class="col-md-1"><select class="form-control"
-													name="is_approved[]">
-														<option value="1">YES</option>
-														<option value="0">NO</option>
-												</select></td>
-											</tr>
+											
 										</tbody>
 									</table>
 								</div>
@@ -250,7 +204,7 @@
 											<label>Approver Comments</label>
 											<textarea name="approver_comment"
 												class="form-control leave-control"
-												style="overflow-y: scroll;" rows="2"></textarea>
+												style="overflow-y: scroll;" rows="2" disabled></textarea>
 										</div>
 									</div>
 
@@ -276,8 +230,144 @@
 
 	</div>
 </div>
-@endsection
 
+
+								<div class="modal fade" id="addNewLineModal" tabindex="-1" role="dialog" aria-labelledby="addNewLineModal" aria-hidden="true">
+
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">
+													<span aria-hidden="true">&times;</span><span
+														class="sr-only">Close</span>
+												</button>
+												<h4 class="modal-title">Add New Line</h4>
+											</div>
+											<div class="modal-body">
+											
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label">Date</label>
+															<div style="position: relative;">
+																<input type="text" name="datetime_date[]"
+																	class="form-control singleDatePicker"> <i
+																	class="glyphicon glyphicon-calendar fa fa-calendar"
+																	style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+															</div>
+
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label">Time</label>
+															<div class="input-group">
+																<input type="text" readonly="readonly"
+																	name="datetime_time[]"
+																	class="form-control timepicker timepicker-default time-input"
+																	placeholder=""> <span class="input-group-btn">
+																	<button class="btn default" type="button">
+																		<i class="fa fa-clock-o"></i>
+																	</button>
+																</span>
+															</div>
+
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label">Location</label>
+																<input type="text" name="location[]" class="form-control"/>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label">Customer Name</label>
+															<input type="text" name="customer_name[]" class="form-control"/>
+														</div>
+													</div>
+												</div>
+												
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label">Contact Name</label>
+															<input type="text" name="contact_name[]" class="form-control"/>
+														</div>
+														
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="">Purpose of Visit Category</label>
+															<select class="form-control" name="purpose_id[]" id="purpose_id"> 
+																@foreach ($purposeCats as $item)
+																	<option value="{{ $item['purpose_id'] }}">
+																	&lt;&nbsp;{{$item['purpose_catgory'] }}&nbsp;&gt;</option>
+																@endforeach
+															</select>
+														</div>
+													</div>
+												</div>
+												
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="">Purpose of Visit Description</label>
+															<textarea id="purpose_desc" name="purpose_desc[]" class="form-control leave-control" style="overflow-y: scroll;" rows="1"></textarea>
+														</div>
+														
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="">Estimated Travel Cost</label>
+																<input type="text" name="travel_cost[]" value="0.00" class="form-control input-number admin-non-edit"/>
+														</div>
+													</div>
+												</div>
+												
+												<div class="row">
+													
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="">Estimated Entertainment Cost</label>
+															<input type="text" name="entertain_cost[]"  value="0.00" class="form-control input-number"/>
+														</div>
+														
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="">Estimated Details</label>
+																<input type="text" name="entertain_detail[]" class="form-control"/>
+														</div>
+													</div>
+												
+												</div>
+												
+<!-- 												<div class="row"> -->
+<!-- 													<div class="col-md-12"> -->
+<!-- 														<div class="form-group"> -->
+<!-- 															<label for="">Approved?</label> -->
+<!-- 															<select class="form-control" name="is_approved[]" id="is_approved"> -->
+<!-- 																<option value="1">YES</option> -->
+<!-- 																<option value="0">NO</option> -->
+<!-- 															</select> -->
+<!-- 														</div> -->
+														
+<!-- 													</div> -->
+<!-- 												</div> -->
+											
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+												<button type="button" class="btn btn-primary" onclick="addNewLine()">Save</button>
+											</div>
+										</div>
+									</div>
+									</div>
+								
+@endsection
 
 
 

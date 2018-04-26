@@ -21,34 +21,34 @@ use App\User;
                                 <a class="btn default btn-block" href="/etravel/trip/create/demostic"><i class="fa fa-minus-circle"></i> New Demostic Travel Request </a>
                                 <hr>
                                 @if($status == 'all')
-                                <a class="btn blue-steel btn-block btn-outline active" href="?status"> All </a>
+                                <a class="btn green btn-block btn-outline active" href="?status"> All </a>
                                 @else
-                                <a class="btn blue-steel btn-block btn-outline" href="?status"> All </a>
+                                <a class="btn green btn-block btn-outline" href="?status"> All </a>
                                 @endif
                                 @if($status == 'pending')
-                                <a class="btn blue-steel btn-block btn-outline active" href="?status=pending"> Pending </a>
+                                <a class="btn green btn-block btn-outline active" href="?status=pending"> Pending </a>
                                 @else
-                                <a class="btn blue-steel btn-block btn-outline" href="?status=pending"> Pending </a>
+                                <a class="btn green btn-block btn-outline" href="?status=pending"> Pending </a>
                                 @endif
                                 @if($status == 'partly approved')
-                                <a class="btn blue-steel btn-block btn-outline active" href="?status=rejected"> Partly Approved </a>
+                                <a class="btn green btn-block btn-outline active" href="?status=rejected"> Partly Approved </a>
                                 @else
-                                <a class="btn blue-steel btn-block btn-outline " href="?status=rejected"> Partly Approved </a>
+                                <a class="btn green btn-block btn-outline " href="?status=rejected"> Partly Approved </a>
                                 @endif
                                 @if($status == 'approved')
-                                <a class="btn blue-steel btn-block btn-outline active" href="?status=approved"> Approved </a>
+                                <a class="btn green btn-block btn-outline active" href="?status=approved"> Approved </a>
                                 @else
-                                <a class="btn blue-steel btn-block btn-outline " href="?status=approved"> Approved </a>
+                                <a class="btn green btn-block btn-outline " href="?status=approved"> Approved </a>
                                 @endif
                                 @if($status == 'approved')
-                                <a class="btn blue-steel btn-block btn-outline active" href="?status=cancelled"> Cancelled </a>
+                                <a class="btn green btn-block btn-outline active" href="?status=cancelled"> Cancelled </a>
                                 @else
-                                <a class="btn blue-steel btn-block btn-outline " href="?status=cancelled"> Cancelled </a>
+                                <a class="btn green btn-block btn-outline " href="?status=cancelled"> Cancelled </a>
                                 @endif
                                 @if($status == 'rejected')
-                                <a class="btn blue-steel btn-block btn-outline active" href="?status=rejected"> Rejected </a>
+                                <a class="btn green btn-block btn-outline active" href="?status=rejected"> Rejected </a>
                                 @else
-                                <a class="btn blue-steel btn-block btn-outline " href="?status=rejected"> Rejected </a>
+                                <a class="btn green btn-block btn-outline " href="?status=rejected"> Rejected </a>
                                 @endif
                                 
                             </div>
@@ -63,7 +63,7 @@ use App\User;
                                     <div class="col-md-12 table-responsive">
                                         <h3>{{ strtoupper($status) }}</h3>
                                         <table id="tblMyList" class="table table-condensed table-hover sortable">
-                                            <thead class="btn-primary roundborder">
+                                            <thead class="btn-primary roundborder" >
                                                 <tr>
                                                     <th colspan="1" style="text-align: left" class="nosort" data-sortcolumn="0" data-sortkey="0-0">Search:</th>
                                                     <th colspan="2"><input id="txtReferenceSearch" type="text" placeholder="Search by Date #" style="color: #666; width: 100%;"></th>		
@@ -78,7 +78,7 @@ use App\User;
 												<th>Cost Center</th>
 												<th>Extra Comment</th>
 												<th>Department Approver</th>
-												<th>Status</th>
+												<th>Approver Comment</th>
 												<th>View</th>
 											</tr>
                                             </thead>
@@ -93,19 +93,13 @@ use App\User;
 														<td><?php echo Costcenter::find($item['cost_center_id'])['CostCenterCode'];?></td>
 														<td>{{ $item['extra_comment'] }}</td>
 														<td><?php echo User::find($item['department_approver'])['FirstName'];?></td>
-														<td>{{ $item['status'] }}</td>
+														<td>{{ $item['approver_comment'] }}</td>
 														<td>
 															<a href="/etravel/tripdemosticlist/{{ $item['trip_id'] }}">
-																@if($item['status']=='pending')
-																<span class="glyphicon glyphicon-hand-right" style="color: green"></span>
-																@elseif($item['status']=='approved')
-																<span class="fa fa-check-circle-o" style="color: green"></span>
-																@elseif($item['status']=='rejected')
-																<span class="glyphicon glyphicon-thumbs-down" style="color: red"></span>
-																@elseif($item['status']=='canceled')
-																<span class="fa fa-exclamation-triangle" style="color: green"></span>
-																@elseif($item['status']=='partly-approved')
-																<span class="glyphicon glyphicon-check" style="color: green"></span>
+																@if($item['status']=='rejected')
+																<span class="glyphicon glyphicon-hand-down" style="color: red"></span>
+																@else
+																<span class="glyphicon glyphicon-hand-up" style="color: green"></span>
 																@endif
 															</a>
 														</td>

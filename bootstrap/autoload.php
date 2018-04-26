@@ -2,6 +2,8 @@
 
 define('LARAVEL_START', microtime(true));
 
+define('PAGE_SIZE', 5);
+
 /*
 |--------------------------------------------------------------------------
 | Register The Composer Auto Loader
