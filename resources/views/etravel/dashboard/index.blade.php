@@ -252,11 +252,10 @@
 		<div class="portlet light sameheight-box">
 			<div class="portlet-title tabbable-line">
 				<button type="button" class="btn btn-primary"
-					style="margin-bottom: 10px; font-size: 28px;">06</button>
+					style="margin-bottom: 10px; font-size: 28px;">{{ sprintf('%02d',count($approved_request)) }}</button>
 				<div class="caption" style="float: right; margin-right: 10px;">
 					<i class="icon-globe font-dark hide"></i> <span
-						class="caption-subject policies-text bold uppercase">APPROVED
-						REQUEST </span> 
+						class="caption-subject policies-text bold uppercase">APPROVED REQUEST</span> 
 				</div>
 			</div>
 			<div class="portlet-body">
@@ -267,10 +266,13 @@
 							style="height: 370px; overflow: hidden; width: auto;"
 							data-always-visible="1" data-rail-visible="0"
 							data-initialized="1">
+							@foreach($approved_request as $request)
+							
 							<h5>
-								<strong>01/23 Travel to shanghai </strong>
+								<strong>{{$request->daterange_from}} Travel to shanghai </strong>
 							</h5>
 							<p>$3500.00 - Travel</p>
+							@endforeach
 							<h5>
 								<strong>01/23 Travel to shanghai </strong>
 							</h5>

@@ -30,17 +30,17 @@ use App\User;
                                 @else
                                 <a class="btn blue-steel btn-block btn-outline" href="?status=pending"> Pending </a>
                                 @endif
-                                @if($status == 'partly approved')
-                                <a class="btn blue-steel btn-block btn-outline active" href="?status=rejected"> Partly Approved </a>
+                                @if($status == 'partly-approved')
+                                <a class="btn blue-steel btn-block btn-outline active" href="?status=partly-approved"> Partly Approved </a>
                                 @else
-                                <a class="btn blue-steel btn-block btn-outline " href="?status=rejected"> Partly Approved </a>
+                                <a class="btn blue-steel btn-block btn-outline " href="?status=partly-approved"> Partly Approved </a>
                                 @endif
                                 @if($status == 'approved')
                                 <a class="btn blue-steel btn-block btn-outline active" href="?status=approved"> Approved </a>
                                 @else
                                 <a class="btn blue-steel btn-block btn-outline " href="?status=approved"> Approved </a>
                                 @endif
-                                @if($status == 'approved')
+                                @if($status == 'cancelled')
                                 <a class="btn blue-steel btn-block btn-outline active" href="?status=cancelled"> Cancelled </a>
                                 @else
                                 <a class="btn blue-steel btn-block btn-outline " href="?status=cancelled"> Cancelled </a>
@@ -102,10 +102,10 @@ use App\User;
 																<span class="fa fa-check-circle-o" style="color: green"></span>
 																@elseif($item['status']=='rejected')
 																<span class="glyphicon glyphicon-thumbs-down" style="color: red"></span>
-																@elseif($item['status']=='canceled')
-																<span class="fa fa-exclamation-triangle" style="color: green"></span>
+																@elseif($item['status']=='cancelled')
+																<span class="fa fa-exclamation-triangle" style="color: black"></span>
 																@elseif($item['status']=='partly-approved')
-																<span class="glyphicon glyphicon-check" style="color: green"></span>
+																<span class="glyphicon glyphicon-check" style="color: yellow"></span>
 																@endif
 															</a>
 														</td>

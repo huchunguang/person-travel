@@ -10,6 +10,8 @@ use App\Trip_purpose;
 use Illuminate\Support\Facades\Auth;
 use App\Costcenter;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Trip_demostic;
 
 class TripController extends Controller
 {
@@ -151,12 +153,85 @@ class TripController extends Controller
 		$userObjMdl = User::where('UserID',$trip->user_id)->firstOrFail();
 		$approver = User::find($trip->department_approver);
 		$demosticInfo = $trip->demostic()->get();
+		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
+// 		dd($demosticInfo->toArray());
+// 		foreach ($demosticInfo as $item){
+// 			echo $item->visitPurpose()->first()['purpose_catgory'];
+// 		}
+// 		die;
 		return view('/etravel/trip/demosticEdit', [
 			'userObjMdl'=>$userObjMdl,
 			'trip' => $trip,
+			'purposeCats'=>$purposeCategory,
 			'approver'=>$approver,
 			'demosticInfo' => $demosticInfo,
-			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode
+			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
+			'costCenters'=>Costcenter::getAvailableCenters(),
 		]);
+	}
+	/**
+	 * @desc store demostic update data by it owner creater(Resubmit)
+	 * @param Trip $trip
+	 * @param Request $request
+	 */
+	public function demosticUpdate(Trip $trip,Request $request) 
+	{
+		$rules=[
+			'cost_center_id'=>'required',
+			'daterange_from'=>'required',
+			'daterange_to'=>'required',
+			'datetime_date'=>'required',
+			'datetime_time' => 'required',
+			'location' => 'required',
+			'customer_name'=>'required',
+			'contact_name'=>'required',
+			'purpose_desc'=>'required',
+			'demostic_id'=>'required'
+		];
+		$this->validate($request, $rules);
+		$demostic_data=array_bound_key($request->only([
+			'demostic_id',
+			'datetime_date',
+			'datetime_time',
+			'location',
+			'customer_name',
+			'contact_name',
+			'purpose_desc',
+			'travel_cost',
+			'entertain_cost',
+			'entertain_detail',
+			
+		]));
+// 		dd($demostic_data);
+		DB::transaction(function()use($trip,$request,$demostic_data){
+			$trip->status=($request->input('status')=='partly-approved')?'pending':$request->input('status');
+			$trip->cost_center_id=$request->input('cost_center_id');
+			$trip->daterange_from=$request->input('daterange_from');
+			$trip->daterange_to=$request->input('daterange_to');
+			$trip->save();
+			foreach ($demostic_data as $item){
+				$demostic_trip = Trip_demostic::find($item['demostic_id']);
+				$demostic_trip->datetime_date=$item['datetime_date'];
+				$demostic_trip->datetime_time=$item['datetime_time'];
+				$demostic_trip->location=$item['location'];
+				$demostic_trip->customer_name=$item['customer_name'];
+				$demostic_trip->contact_name=$item['contact_name'];
+				$demostic_trip->purpose_desc=$item['purpose_desc'];
+				$demostic_trip->travel_cost=number_format($item['travel_cost'],2);
+				$demostic_trip->entertain_cost=number_format($item['entertain_cost'],2);
+				$demostic_trip->entertain_detail=$item['entertain_detail'];
+				$demostic_trip->save();
+			}
+		});
+		$user_id=Auth::user()->UserID;
+		return redirect('/etravel/'.$user_id.'/triplist?status=pending');
+// 		dd($request->all());
+	}
+	public function demosticCancel(Trip $trip,Request $request) 
+	{
+		$user_id=Auth::user()->UserID;
+		$trip->status='cancelled';
+		$trip->save();
+		return redirect('/etravel/'.$user_id.'/triplist?status=pending');
 	}
 }

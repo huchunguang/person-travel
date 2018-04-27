@@ -262,7 +262,7 @@
 														<div class="form-group">
 															<label class="control-label">Time</label>
 															<div class="input-group">
-																<input type="text" readonly="readonly"
+																<input type="text" 
 																	name="datetime_time[]"
 																	class="form-control timepicker timepicker-default time-input"
 																	placeholder=""> <span class="input-group-btn">

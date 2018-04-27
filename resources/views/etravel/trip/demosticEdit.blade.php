@@ -3,9 +3,9 @@
 <div class="container">
 	<div class="page-content-inner">
 		<div class="row">
-			<form action="/etravel/trip/update" method="post" class="horizontal-form">
+			<form action="/etravel/trip/update/{{$trip->trip_id}}" method="post" class="horizontal-form">
 		
-			@if($trip->status == 'pending' && $trip->department_approver == 346 )
+			@if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID )
 				@include('etravel.layout.approverAction')
 			@endif
 			@include('etravel.layout.error')
@@ -30,7 +30,7 @@
 							<div class="form-body">
 								<input type="hidden" name="_token" value="{{ csrf_token() }}">
 								<input type="hidden" name="_method" value="PUT"/>
-								<input type="hidden" name="status" value="rejected"/>
+								<input type="hidden" name="status" value="{{$trip->status}}"/>
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
 									You have some form errors. Please check below.
@@ -68,7 +68,12 @@
 										<div class="form-group">
 											<label class="control-label">Cost Center</label> 
 											<select name="cost_center_id" class="cboSelect2 leave-control form-control" tabindex="-1">
-												<option >&lt;&nbsp;{{ $costCenterCode }}&nbsp;&gt;</option>
+												@foreach($costCenters as $costItem)
+												<option value="{{ $costItem['CostCenterID'] }}">
+													&lt;&nbsp;{{ $costItem['CostCenterCode'] }}&nbsp;&gt;
+												</option>
+												@endforeach
+												<option value="{{$costCenterCode}}">&lt;&nbsp;{{ $costCenterCode }}&nbsp;&gt;</option>
 											</select>
 										</div>
 									</div>
@@ -149,38 +154,86 @@
 											@foreach($demosticInfo as $item)
 										<tr id="trOne" >
 											<td>
-												@if($trip->status == 'partly-approved' && $item->is_approved == '0')
-												{{ $item['datetime_date'] }}
-												@elseif(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+												@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+												<input type="hidden" name="demostic_id[]" value="{{$item['id']}}"/>
+												
 												<div style="position: relative;">
 																<input type="text" name="datetime_date[]" value="{{ $item['datetime_date'] }}"
 																	class="form-control singleDatePicker"> <i
 																	class="glyphicon glyphicon-calendar fa fa-calendar"
 																	style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
 															</div>
-												
+												@else
+												{{ $item['datetime_date'] }}
 												@endif
 											</td>
 											<td>
+											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+												<div class="input-group">
+																<input type="text" 
+																	name="datetime_time[]"
+																	class="form-control timepicker timepicker-default time-input"
+																	placeholder="" value="{{ $item['datetime_time'] }}"> <span class="input-group-btn">
+																	<button class="btn default" type="button">
+																		<i class="fa fa-clock-o"></i>
+																	</button>
+																</span>
+															</div>
+											@else
 												{{ $item['datetime_time'] }}
+											@endif
 											</td>
-											<td>{{ $item['location'] }}</td>
-											<td>{{ $item['customer_name'] }}</td>
-											<td>{{ $item['contact_name'] }}</td>
+											<td>
+											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+												<input type="text" name="location[]" class="form-control" value="{{ $item['location'] }}"/>
+											@else
+												{{ $item['location'] }}
+											@endif
+											</td>
+											<td>
+											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+												<input type="text" name="customer_name[]" class="form-control" value="{{ $item['customer_name'] }}"/>
+											@else
+												{{ $item['customer_name'] }}
+											@endif
+											</td>
+											<td>
+											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+												<input type="text" name="contact_name[]" class="form-control" value="{{ $item['contact_name'] }}"/>
+											@else
+												{{ $item['contact_name'] }}
+											@endif
+											</td>
 											<td>
 												{{ $item->visitPurpose()->first()['purpose_catgory'] }}
 											</td>
 											<td>
+											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+												<textarea id="purpose_desc" name="purpose_desc[]" class="form-control leave-control" style="overflow-y: scroll;" rows="1">{{ $item['purpose_desc'] }}</textarea>
+											@else
 												{{ $item['purpose_desc'] }}
+											@endif
 											</td>
 											<td>
+											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+												<input type="text" name="travel_cost[]" value="{{ $item['travel_cost'] }}" class="form-control input-number admin-non-edit"/>
+											@else
 												{{ $item['travel_cost'] }}
+											@endif
 											</td>
 											<td>
+											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+												<input type="text" name="entertain_cost[]"  value="{{ $item['entertain_cost'] }}" class="form-control input-number"/>
+											@else
 												{{ $item['entertain_cost'] }}
+											@endif
 											</td>
 											<td>
+											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+												<input type="text" name="entertain_detail[]" class="form-control" value="{{ $item['entertain_detail'] }}"/>
+											@else
 												{{ $item['entertain_detail'] }}
+											@endif
 											</td>
 											
 												@if($trip->status=='partly-approved')
@@ -203,8 +256,11 @@
 									<div class="col-md-12 ">
 										<div class="form-group">
 											<label>Extra Comments</label>
-											<textarea name="extra_comment" class="form-control" disabled
-										style="overflow-y: scroll;" rows="2">{{ $trip->extra_comment }}</textarea>
+											@if($trip->status == 'pending')
+												<textarea name="extra_comment" class="form-control" style="overflow-y: scroll;" rows="2">{{ $trip->extra_comment }}</textarea>
+											@else
+												<textarea name="extra_comment" class="form-control" disabled style="overflow-y: scroll;" rows="2">{{ $trip->extra_comment }}</textarea>
+											@endif
 										</div>
 									</div>
 								</div>
@@ -217,8 +273,9 @@
 											<select name="department_approver" class="cboSelect2 leave-control form-control" tabindex="-1" disabled>
 												<option value="">&lt;&nbsp;{{ $approver->FirstName }}&nbsp;&gt;</option> 
 											</select>
-											<span class="fa fa-thumbs-o-down"></span> <strong> Rejected by: ILANO Victor on 11/30/2017 06:23:04 PM</strong> 
-											
+											@if($trip->status == 'partly-approved')
+											<span class="fa fa-thumbs-o-down"></span> <strong> {{ ucfirst($trip->status)}} by: {{ ucfirst($approver->LastName) }} {{ $approver->FirstName }} on {{$trip->updated_at}}</strong> 
+											@endif
 										</div>
 									</div>
 								</div>
@@ -240,14 +297,10 @@
 
 							</div>
 						
-							@if($trip->user_id == Auth::user()->UserID && $trip->status == 'pending')
+							@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved'))
 								<div class="row form-actions text-right">
-									<button id="TravelTypeEdit" type="button" accesskey="I" class="btn yellow-gold leave-type-button">
-										<a href="/etravel/trip/edit/{{$trip->trip_id}}"> <i class="fa fa-pencil"></i> Ed<u>i</u>t</a>
-										
-									</button>
-								
-                                 	<button id="btnLeaveControl-Delete" type="button" accesskey="D" class="btn red-mint"><i class="glyphicon glyphicon-new-window"></i> Resubmit</button>
+                                 	<button type="submit" accesskey="D" class="btn red-mint"><i class="glyphicon glyphicon-new-window"></i> Resubmit</button>
+                                 	
                                 </div>
 							@endif
 					</div>

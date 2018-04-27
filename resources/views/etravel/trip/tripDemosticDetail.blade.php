@@ -5,7 +5,7 @@
 		<div class="row">
 			<form action="/etravel/tripapproval/{{$trip->trip_id}}" method="post" class="horizontal-form">
 		
-			@if($trip->status == 'pending' && $trip->department_approver == 346 )
+			@if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID )
 				@include('etravel.layout.approverAction')
 			@endif
 			@include('etravel.layout.error')
@@ -19,6 +19,8 @@
 				<div class="portlet box red">
 				@elseif($trip->status=='partly-approved')
 				<div class="portlet box yellow-crusta">
+				@elseif($trip->status=='cancelled')
+				<div class="portlet box grey">
 				@endif
 					<div class="portlet-title">
 						<div class="caption">
@@ -139,7 +141,7 @@
 												<td class="text-center">Estimated Entertainment Cost</td>
 												<td class="text-center">Estimated Details</td>
 												
-												@if($trip->status == 'pending' && $trip->department_approver == 346 )
+												@if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID )
 												<td class="text-center text-danger">Approved?</td>
 												@elseif($trip->status == 'approved' || $trip->status=='partly-approved')
 												<td class="text-center">Approved?</td>
@@ -175,7 +177,7 @@
 												{{ $item['entertain_detail'] }}
 											</td>
 											
-												@if($trip->status == 'pending' && $trip->department_approver == 346 )
+												@if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID )
 												<td>
 														<input type="hidden" name="id[]" value="{{$item['id']}}"/>
 														<div class="input-group">
@@ -226,7 +228,24 @@
 											<select name="department_approver" class="cboSelect2 leave-control form-control" tabindex="-1" disabled>
 												<option value="">&lt;&nbsp;{{ $approver->FirstName }}&nbsp;&gt;</option> 
 											</select>
-											<span class="fa fa-thumbs-o-down"></span> <strong> Rejected by: ILANO Victor on 11/30/2017 06:23:04 PM</strong> 
+																@if($trip->status=='pending')
+																<span class="glyphicon glyphicon-hand-right" style="color: green"></span>
+																@elseif($trip->status=='approved')
+																<span class="fa fa-check-circle-o" style="color: green"></span>
+																@elseif($trip->status=='rejected')
+																<span class="glyphicon glyphicon-thumbs-down" style="color: red"></span>
+																@elseif($trip->status=='cancelled')
+																<span class="fa fa-exclamation-triangle" style="color: black"></span>
+																@elseif($trip->status=='partly-approved')
+																<span class="glyphicon glyphicon-check" style="color: yellow"></span>
+																@endif
+											
+											<strong> {{ ucfirst($trip->status)}} by: 
+											@if($trip->status != 'cancelled')
+											{{ $approver->FirstName }} {{ ucfirst($approver->LastName) }} 
+											@else {{ ucfirst($userObjMdl->FirstName) }} {{ ucfirst($userObjMdl->LastName) }}
+											@endif 
+											 on {{$trip->updated_at}}</strong> 
 											
 										</div>
 									</div>
@@ -249,14 +268,13 @@
 
 							</div>
 						
-							@if($trip->user_id == Auth::user()->UserID && $trip->status == 'pending')
+							@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved'))
 								<div class="row form-actions text-right">
-									<button id="TravelTypeEdit" type="button" accesskey="I" class="btn yellow-gold leave-type-button">
-										<a href="/etravel/trip/edit/{{$trip->trip_id}}"> <i class="fa fa-pencil"></i> Ed<u>i</u>t</a>
-										
+									<button id="TravelTypeEdit" type="button" accesskey="I" onclick="window.location.href='/etravel/trip/edit/{{$trip->trip_id}}'" class="btn yellow-gold leave-type-button">
+									 	<i class="fa fa-pencil"></i> Ed<u>i</u>t
 									</button>
 								
-                                 	<button id=TravelTypeCancel type="button" accesskey="D"  class="btn default">
+                                 	<button id=TravelTypeCancel type="button" accesskey="D"  onclick="window.location.href='/etravel/trip/cancel/{{$trip->trip_id}}'" class="btn default">
 										<i class="fa fa-share"></i> <u>C</u>ancel
 									</button>
                                 </div>

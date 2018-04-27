@@ -30,10 +30,10 @@ use App\User;
                                 @else
                                 <a class="btn green btn-block btn-outline" href="?status=pending"> Pending </a>
                                 @endif
-                                @if($status == 'partly approved')
-                                <a class="btn green btn-block btn-outline active" href="?status=rejected"> Partly Approved </a>
+                                @if($status == 'partly-approved')
+                                <a class="btn green btn-block btn-outline active" href="?status=partly-approved"> Partly Approved </a>
                                 @else
-                                <a class="btn green btn-block btn-outline " href="?status=rejected"> Partly Approved </a>
+                                <a class="btn green btn-block btn-outline " href="?status=partly-approved"> Partly Approved </a>
                                 @endif
                                 @if($status == 'approved')
                                 <a class="btn green btn-block btn-outline active" href="?status=approved"> Approved </a>
@@ -68,7 +68,6 @@ use App\User;
                                                     <th colspan="1" style="text-align: left" class="nosort" data-sortcolumn="0" data-sortkey="0-0">Search:</th>
                                                     <th colspan="2"><input id="txtReferenceSearch" type="text" placeholder="Search by Date #" style="color: #666; width: 100%;"></th>		
                                                     <th colspan="2"><input id="txtEmployeeSearch" type="text" placeholder="Search by Cost Center" style="color: #666; width: 100%;"></th>
-                                                    <th colspan="2"><input id="txtLeaveTypeSearch" type="text" placeholder="Search by Department Approver" style="color: #666; width: 100%;"></th>
                                                     <th colspan="5"></th>
                                                 </tr>
                                                 	<tr>
@@ -77,7 +76,7 @@ use App\User;
 												<th>Time</th>
 												<th>Cost Center</th>
 												<th>Extra Comment</th>
-												<th>Department Approver</th>
+												<th>Status</th>
 												<th>Approver Comment</th>
 												<th>View</th>
 											</tr>
@@ -92,14 +91,20 @@ use App\User;
 														<td>{{ $item['daterange_to'] }}</td>
 														<td><?php echo Costcenter::find($item['cost_center_id'])['CostCenterCode'];?></td>
 														<td>{{ $item['extra_comment'] }}</td>
-														<td><?php echo User::find($item['department_approver'])['FirstName'];?></td>
+														<td>{{ $item['status'] }}</td>
 														<td>{{ $item['approver_comment'] }}</td>
 														<td>
 															<a href="/etravel/tripdemosticlist/{{ $item['trip_id'] }}">
-																@if($item['status']=='rejected')
-																<span class="glyphicon glyphicon-hand-down" style="color: red"></span>
-																@else
-																<span class="glyphicon glyphicon-hand-up" style="color: green"></span>
+																@if($item['status']=='pending')
+																<span class="glyphicon glyphicon-hand-right" style="color: green"></span>
+																@elseif($item['status']=='approved')
+																<span class="fa fa-check-circle-o" style="color: green"></span>
+																@elseif($item['status']=='rejected')
+																<span class="glyphicon glyphicon-thumbs-down" style="color: red"></span>
+																@elseif($item['status']=='cancelled')
+																<span class="fa fa-exclamation-triangle" style="color: black"></span>
+																@elseif($item['status']=='partly-approved')
+																<span class="glyphicon glyphicon-check" style="color: yellow"></span>
 																@endif
 															</a>
 														</td>

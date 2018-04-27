@@ -38,6 +38,8 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         Route::get('triplist/{trip}','TripController@tripDetails');
         Route::get('tripdemosticlist/{trip}','TripController@tripDemosticDetails');
         Route::get('trip/edit/{trip}','TripController@demosticEdit');
+        Route::get('trip/cancel/{trip}','TripController@demosticCancel');
+        Route::put('trip/update/{trip}','TripController@demosticUpdate');
         
         #TripPurpose
         Route::get('purpose',['as'=>'tripPurpose','uses'=>'PurposeController@index']);
