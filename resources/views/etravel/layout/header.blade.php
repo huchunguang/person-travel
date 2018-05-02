@@ -13,8 +13,8 @@
 			data-toggle="dropdown" style="color: white;"><i class="fa fa-gears"></i>Site
 				Configuration<span class="caret"></span></a>
 			<ul class="dropdown-menu">
-				<li><a href="##">Travel Destination</a></li>
-				<li><a href="/etravel/purpose">Travel Purpose</a></li>
+				<li><a href="/etravel/announcement">Announcement</a></li>
+				<li><a href="/etravel/purpose">Purpose</a></li>
 			</ul></li>
 		
 

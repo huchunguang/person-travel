@@ -20,6 +20,7 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
+Route::resource('site', 'SiteController');
 
 Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
     Route::get('unknownUser',['as'=>'unknownUser','uses'=>'DashboardController@unknownUser']);
@@ -51,6 +52,14 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         #Manager Section
         Route::get('staff/travellist','ApproverController@index');
         Route::put('tripapproval/{trip}','ApproverController@approval');
+        #Announcement Resource
+        Route::resource('announcement', 'AnnouncementController');
+        
         
     });
+});
+
+
+Route::group([],function(){
+	Route::get('country-sites/{country}','CountryController@sites');
 });

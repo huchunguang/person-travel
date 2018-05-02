@@ -6,5 +6,6 @@ class Site extends Model {
 
 	//
 	protected $table = 'site';
+	protected $primaryKey='SiteID';
 
 }

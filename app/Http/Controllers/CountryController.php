@@ -1,24 +1,21 @@
-<?php namespace App\Http\Controllers\Etravel;
+<?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Country;
-use App\Http\Controllers\SiteController;
-use App\Trip_announcetype;
 
-class AnnouncementController extends Controller
-{
+class CountryController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
-	 * 
+	 *
 	 * @return Response
 	 */
 	public function index()
 	{
-		return view('/etravel/announcement/index',['breadcrumb' => 'Announcements']);
+		//
 	}
 
 	/**
@@ -28,12 +25,7 @@ class AnnouncementController extends Controller
 	 */
 	public function create()
 	{
-		$countryList = array();
-		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
-		$typeList = Trip_announcetype::all();
-		// 		dd($countryList->toArray());
-		
-		return view('/etravel/announcement/create',['countryList'=>$countryList,'typeList'=>$typeList]);
+		//
 	}
 
 	/**
@@ -89,5 +81,8 @@ class AnnouncementController extends Controller
 	{
 		//
 	}
-
+	public function sites(Country $country) 
+	{
+		return response()->json($country->sites()->get());
+	}
 }

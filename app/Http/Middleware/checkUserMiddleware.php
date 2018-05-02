@@ -27,6 +27,7 @@ class checkUserMiddleware {
 				]);
 			}
 		}
+// 		echo 123;die;
 		Auth::login($user);
 // 		dd(Auth::user()->toArray());
 	    $addParams = ['userName'=>$userName,'user_id'=>$user['UserID']];

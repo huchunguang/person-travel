@@ -109,18 +109,6 @@
 								</div>
 								<hr class="divider" />
 
-<!-- 								<div class="row"> -->
-<!-- 									<div class="col-md-6"> -->
-<!-- 										<div class="form-group"> -->
-<!-- 											<label class="control-label"><button id="addLineItem" -->
-<!-- 													type="button" class="btn btn-default"> -->
-<!-- 													<i class="glyphicon glyphicon-new-window"></i> Add Line -->
-<!-- 													Item -->
-<!-- 												</button></label> -->
-<!-- 										</div> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-								
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
