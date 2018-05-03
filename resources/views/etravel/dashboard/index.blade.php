@@ -139,11 +139,10 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#transactions" href="#leaves" aria-expanded="true">My Leave Transactions </a>
-                                                <!-- <a class="accordion-toggle" href="./leave-list.php?status=all">My Leave Transactions </a> -->
+                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#transactions" href="#leaves" aria-expanded="true">My Leave Transactions </a>
                                             </h4>
                                         </div>
-                                        <div id="leaves" class="panel-collapse table-responsive collapse in" aria-expanded="true" style="">
+                                        <div id="leaves" class="panel-collapse table-responsive collapse" aria-expanded="true" style="">
                                             <table class="table table-light">
                                                 <tbody>
                                                     <tr>
@@ -355,8 +354,9 @@
 					<a title="" class="fullscreen" href="" data-original-title=""> </a>
 				</div>
 			</div>
-			<div class="portlet-body policy-content portlet-collapsed"
-				style="display: block;">No Announcement</div>
+			<div class="portlet-body policy-content portlet-collapsed"style="display: block;">
+				{!! $generalAnnouncement['announcement'] or 'No Announcement' !!}
+			</div>
 		</div>
 	</div>
 </div>

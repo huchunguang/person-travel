@@ -106,8 +106,7 @@
 	type="text/css" />
 <script src="{{asset('js/jquery-1.8.3.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
-<script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
-<script src="{{asset('js/etravel/trip/demosticCreate.js')}}"></script>
+<script src="/js/wangEditor.min.js"></script>
 <script src="{{asset('storage/global/plugins/bootstrap-daterangepicker/moment.js')}}"></script>
 <script src="{{asset('storage/global/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 <script src="{{asset('storage/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>

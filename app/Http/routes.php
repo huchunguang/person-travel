@@ -14,7 +14,7 @@
 Route::get('/', function (){
 	return redirect()->route('dashboard');
 });
-
+Route::get('home', 'HomeController@index');
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

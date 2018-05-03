@@ -45,7 +45,7 @@ class TripController extends Controller
    	 	if ($status){
    	 		$filter['status']=$status;
    	 	}
-   	 	$tripList = $user->tripList()->where($filter)->paginate(3);
+   	 	$tripList = $user->tripList()->where($filter)->orderBy('created_at','DESC')->paginate(PAGE_SIZE);
 		return view('etravel/trip/index', [ 
 			'status'=>$status?$status:'all',
 			'tripList' => $tripList,
@@ -90,7 +90,6 @@ class TripController extends Controller
 			'travel_cost',
 			'entertain_cost',
 			'entertain_detail',
-			'is_approved'
 		]));
 		DB::transaction(function()use($tripData,$demosticData){
 			$tripObjMdl = Trip::create($tripData);

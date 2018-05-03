@@ -177,8 +177,10 @@
 												{{ $item['entertain_detail'] }}
 											</td>
 											
-												@if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID )
+												@if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID)
 												<td>
+												@if($item['is_approved'] == '0')
+												
 														<input type="hidden" name="id[]" value="{{$item['id']}}"/>
 														<div class="input-group">
                                                                         <div class="icheck-inline">
@@ -193,6 +195,10 @@
 																	</label>
                                                                         </div>
                                                                     </div>
+												
+												@elseif($item['is_approved']== '1')
+													YES
+												@endif
 												</td>
 												@endif
 												@if($trip->status=='approved' || $trip->status=='partly-approved')

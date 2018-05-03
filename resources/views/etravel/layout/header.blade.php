@@ -1,4 +1,3 @@
-
 <div class="row" style="background-color: rgba(51,122,183,1);margin:0px;">
 	<div class="row" style="background-color: rgba(51,122,183,1);margin-left:10px;margin-right:10px;">
 		
@@ -22,12 +21,20 @@
 	</div>
 	<div class="col-md-3">
 		<ul>
-			<li class="nav navbar-nav pull-right">{{Auth::user()->FirstName}} <img alt=""
-			class="img-circle"
-			src="{{ asset('storage/global/layout3/img/avatar.png') }}">
-
-		</li>
-		</ul>
+				<li class="nav navbar-nav pull-right">
+				<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false" style="color: white;">
+					{{Auth::user()->FirstName}} 
+					 @if(Auth::user()->GenderID == 2) 
+					 <img alt="" class="img-circle" src="{{ asset('storage/global/layout3/img/avatar.png') }}"> 
+					 @else
+					 <img alt="" class="img-circle" src="{{ asset('storage/global/layout3/img/avatar.png') }}"> 
+					 @endif
+				</a>
+					<ul class="dropdown-menu dropdown-menu-default">
+<!-- 						<li><a href=""> <i class="icon-key"></i> Log Out </a></li> -->
+					</ul>
+				</li>
+			</ul>
 	</div>
 		
 	</div>
@@ -41,6 +48,7 @@
 				style="width: 160px; height: 43px;" /></span>
 		</a>
 					</li>
+					
 				</ul>
 		
 	</div>
@@ -52,6 +60,9 @@
 		</div>
 	</div>
 </div>
+
+
+
 
 
 

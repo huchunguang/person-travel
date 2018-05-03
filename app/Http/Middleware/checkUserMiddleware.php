@@ -15,23 +15,23 @@ class checkUserMiddleware {
 	 */
 	public function handle($request, Closure $next)
 	{
-		$user = false;
-		$userName = GetWindowsUsername();
-		$userName = 'A6053995';//Nancy
-// 		$userName = 'A0009298';//Victor
-	    if ($userName){
-			$user = User::where('UserName', $userName)->first();
-			if (empty($user)) {
-				return redirect()->route('unknownUser', [ 
-					'userName' => $userName
-				]);
+		if (!Auth::check()) {
+			$user = false;
+			$userName = GetWindowsUsername();
+			$userName = 'A6053995';//Nancy
+			// 		$userName = 'A0009298';//Victor
+			if ($userName){
+				$user = User::where('UserName', $userName)->first();
+				if (empty($user)) {
+					return redirect()->route('unknownUser', [
+						'userName' => $userName
+					]);
+				}
 			}
+			Auth::login($user);
+			$addParams = ['userName'=>$userName,'user_id'=>$user['UserID']];
+			$request->attributes->add($addParams);
 		}
-// 		echo 123;die;
-		Auth::login($user);
-// 		dd(Auth::user()->toArray());
-	    $addParams = ['userName'=>$userName,'user_id'=>$user['UserID']];
-	    $request->attributes->add($addParams);
 		return $next($request);
 	}
 

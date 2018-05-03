@@ -5,14 +5,26 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Trip;
 use Illuminate\Support\Facades\Auth;
+use App\Contacts\SystemVariable;
 
 class DashboardController extends Controller
 {
+	public function __construct(SystemVariable $system)
+	{
+		$this->system = $system;	
+	}
+	
     public function index(Request $request) 
     {
-    		$approved_request= Trip::where(['user_id'=>Auth::user()->UserID,'status'=>'approved'])->orderBy('updated_at','DESC')->limit(5)->get();
-//     		dd($approved_request);
-        return view('/etravel/dashboard/index',['approved_request'=>$approved_request]);
+    		$generalAnnouncement = $this->system->getAnnouncement();
+    		$approvedRequest= Trip::where(['user_id'=>Auth::user()->UserID,'status'=>'approved'])->orderBy('updated_at','DESC')->limit(5)->get();
+			// dd($approved_request);
+			
+		return view('/etravel/dashboard/index', [ 
+			
+			'approved_request' => $approvedRequest,
+			'generalAnnouncement' => $generalAnnouncement
+		]);
     }
     public function unknownUser(Request $request) 
     {

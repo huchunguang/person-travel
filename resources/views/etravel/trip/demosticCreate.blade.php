@@ -58,8 +58,9 @@
 												name="cost_center_id"
 												class="cboSelect2 leave-control form-control" tabindex="-1">
 												@foreach($costCenters as $costItem)
-												<option value="{{ $costItem['CostCenterID'] }}">&lt;&nbsp;{{
-													$costItem['CostCenterCode'] }}&nbsp;&gt;</option>
+												<option value="{{ $costItem['CostCenterID'] }}">
+													&lt;&nbsp;{{$costItem['CostCenterCode'] }}&nbsp;&gt;
+												</option>
 												@endforeach
 											</select>
 										</div>
@@ -151,8 +152,6 @@
 												<td class="text-center" class="">Estimated Entertainment
 													Cost</td>
 												<td class="text-center" class="">Estimated Details</td>
-<!-- 												<td class="text-center" class="">Approved?</td> -->
-
 
 											</tr>
 										</thead>
@@ -333,19 +332,6 @@
 												
 												</div>
 												
-<!-- 												<div class="row"> -->
-<!-- 													<div class="col-md-12"> -->
-<!-- 														<div class="form-group"> -->
-<!-- 															<label for="">Approved?</label> -->
-<!-- 															<select class="form-control" name="is_approved[]" id="is_approved"> -->
-<!-- 																<option value="1">YES</option> -->
-<!-- 																<option value="0">NO</option> -->
-<!-- 															</select> -->
-<!-- 														</div> -->
-														
-<!-- 													</div> -->
-<!-- 												</div> -->
-											
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -354,7 +340,7 @@
 										</div>
 									</div>
 									</div>
-								
+<script src="{{asset('js/etravel/trip/demosticCreate.js')}}"></script>
 @endsection
 
 

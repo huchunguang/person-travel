@@ -43,19 +43,17 @@ $(function(){
 
 var addnewLineNum = 0;
 function addNewLine(){
-	var datetime_date=$('input[name="datetime_date[]"]').val();
-	var datetime_time=$('input[name="datetime_time[]"]').val();
-	var location=$('input[name="location[]"]').val();
-	var customer_name=$('input[name="customer_name[]"]').val();
-	var contact_name=$('input[name="contact_name[]"]').val();
-	var purpose_id=$('#purpose_id').val();
-	var purpose_text=$('#purpose_id').find('option:selected').text();
-	var purpose_desc=$('#purpose_desc').val();
-	var travel_cost=$('input[name="travel_cost[]"]').val();
-	var entertain_cost=$('input[name="entertain_cost[]"]').val();
-	var entertain_detail=$('input[name="entertain_detail[]"]').val();
-	var is_approved=$('#is_approved').val();
-	var 	is_approved_text=$('#is_approved').find('option:selected').text();
+	var datetime_date=$('.modal input[name="datetime_date[]"]').val();
+	var datetime_time=$('.modal input[name="datetime_time[]"]').val();
+	var location=$('.modal input[name="location[]"]').val();
+	var customer_name=$('.modal input[name="customer_name[]"]').val();
+	var contact_name=$('.modal input[name="contact_name[]"]').val();
+	var purpose_id=$('.modal #purpose_id').val();
+	var purpose_text=$('.modal #purpose_id').find('option:selected').text();
+	var purpose_desc=$('.modal #purpose_desc').val();
+	var travel_cost=$('.modal input[name="travel_cost[]"]').val();
+	var entertain_cost=$('.modal input[name="entertain_cost[]"]').val();
+	var entertain_detail=$('.modal input[name="entertain_detail[]"]').val();
 	addnewLineNum++;
 
 	 var rowTem = '<tr id="tr_' + addnewLineNum + '" onclick="showItemOperate(this)">'
