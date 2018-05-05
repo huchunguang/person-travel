@@ -91,6 +91,7 @@
 
 <link href="{{asset('assets/global/plugins/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/global/plugins/select2/css/select2-bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('storage/global/js/bootstrap-dialog/css/bootstrap-dialog.min.css')}}"
 	rel="stylesheet" type="text/css" />
 <link href="{{asset('storage/global/css/custom-glyph.css')}}" rel="stylesheet" type="text/css" />
@@ -104,6 +105,7 @@
 	type="text/css" />
 <link href="{{asset('storage/global/css/bootstrap-sortable.css')}}" rel="stylesheet"
 	type="text/css" />
+	
 <script src="{{asset('js/jquery-1.8.3.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="/js/wangEditor.min.js"></script>
@@ -127,6 +129,8 @@
 <script src="{{asset('assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/bootstrap-markdown/lib/markdown.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+
 <script src="{{asset('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/pages/scripts/components-select2.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/icheck/icheck.min.js') }}" type="text/javascript"></script>
@@ -153,6 +157,7 @@
 </div>
 </div>
 
+<script src="{{asset('js/etravel/trip/demosticCreate.js')}}"></script>
 
 <script>
 $.ajaxSetup({

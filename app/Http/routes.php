@@ -34,10 +34,12 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         Route::get('trip/create/demostic',['as'=>'demosticCreate','uses'=>'TripController@demosticCreate']);
         #Store
         Route::post('trip/store','TripController@store');
+        Route::post('trip/storeNational','TripController@storeNational');
         #List
         Route::get('{user}/triplist',['as'=>'triplist','uses'=>'TripController@index']);
         Route::get('triplist/{trip}','TripController@tripDetails');
         Route::get('tripdemosticlist/{trip}','TripController@tripDemosticDetails');
+        Route::get('tripnationallist/{trip}','TripController@tripNationalDetails');
         Route::get('trip/edit/{trip}','TripController@demosticEdit');
         Route::get('trip/cancel/{trip}','TripController@demosticCancel');
         Route::put('trip/update/{trip}','TripController@demosticUpdate');
@@ -55,6 +57,8 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         #Announcement Resource
         Route::resource('announcement', 'AnnouncementController');
         
+        
+       
         
     });
 });

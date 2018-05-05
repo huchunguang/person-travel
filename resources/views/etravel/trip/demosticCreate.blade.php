@@ -9,8 +9,8 @@
 				<div class="portlet box green">
 					<div class="portlet-title">
 						<div class="caption">
-							<i class="icon-bubble"></i> <span
-								class="caption-subject bold uppercase">DEMOSTIC REQUEST</span>
+							<i class="icon-bubble"></i> 
+							<span class="caption-subject bold uppercase">DOMESTIC REQUEST</span>
 						</div>
 					</div>
 					<div class="portlet-body form">
@@ -340,7 +340,6 @@
 										</div>
 									</div>
 									</div>
-<script src="{{asset('js/etravel/trip/demosticCreate.js')}}"></script>
 @endsection
 
 

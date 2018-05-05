@@ -12,6 +12,9 @@ use App\Costcenter;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Trip_demostic;
+use App\Country;
+use App\Http\Requests\StoreNationalTripRequest;
+use Illuminate\Support\Facades\Storage;
 
 class TripController extends Controller
 {
@@ -21,8 +24,14 @@ class TripController extends Controller
     public function create(Request $requset) 
     {
     		$userProfile=User::getUserProfile();
+    		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
     		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
-    		return view('/etravel/trip/create')->with('userProfile', $userProfile['userProfile'])->with('approvers', $userProfile['approvers'])->with('purposeCats',$purposeCategory)->with('costCenters',Costcenter::getAvailableCenters());
+    		return view('/etravel/trip/create')->with('userProfile', $userProfile['userProfile'])
+			->with('approvers', $userProfile['approvers'])
+			->with('purposeCats', $purposeCategory)
+			->with('costCenters', Costcenter::getAvailableCenters())
+			->with('countryList',$countryList)
+			->with('approvers', $userProfile['approvers']);
 	}
     /**
      * @brief create demostic trip
@@ -100,6 +109,72 @@ class TripController extends Controller
 		
     		return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
     }
+    
+    public function storeNational(StoreNationalTripRequest $request) 
+    {
+    		$file=$request->file('travel_purpose');
+    		if(!$file->isValid()){
+    			exit('文件上传出错！');
+    		}
+    		
+    		$newFileName = md5(time().rand(0,10000)).'.'.$file->getClientOriginalExtension();
+    		$savePath = 'etravel/'.$newFileName;
+    		$bytes = Storage::put(
+    			$savePath,
+    			file_get_contents($file->getRealPath())
+    			);
+    		if(!Storage::exists($savePath)){
+    			exit('保存文件失败！');
+    		}
+//     		header("Content-Type: ".Storage::mimeType($savePath));
+//     		echo Storage::get($savePath);
+// 		echo $savePath;
+    		//purpose_file
+    		dd($request->all());
+    		DB::beginTransaction();
+    		try {
+    			$trip=new Trip;
+    			$trip->user_id=Auth::user()->UserID;
+    			$trip->destination_id=$request->input('destination');
+    			$trip->cost_center_id=$request->input('cost_center_id');
+    			$trip->daterange_from=$request->input('daterange_from');
+    			$trip->daterange_to=$request->input('daterange_to');
+    			$trip->department_approver=$request->input('department_approver');
+    			$trip->approver_comment=$request->input('approver_comment');
+    			$trip->extra_comment=$request->input('extra_comment');
+    			$trip->purpose_file=$savePath;
+    			$trip->flight_itinerary_prefer=$request->only(['is_sent_affairs','ticket_booker','CC']);
+    			$trip->hotel_prefer=$request->only(['rep_office','room_type','smoking','foods']);
+    			$trip->save();
+    			$flightData=$request->only(['flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
+    			$flightData=array_bound_key($flightData);
+    			$hotelData=$request->only(['hotel_name','checkin_date','checkout_date','rate']);
+    			$hotelData=array_bound_key($hotelData);
+    			$estimateExpenses=$request->only(['estimate_type','employee_annual_budget','employee_ytd_expenses','available_amount','required_amount']);
+    			$estimateExpenses=array_bound_key($estimateExpenses);
+    			
+    			foreach ($flightData as $flightItem)
+    			{
+    				$trip->flight()->create($flightItem);
+    			}
+    			foreach ($hotelData as $hotelItem)
+    			{
+    				$trip->accomodation()->create($hotelItem);
+    			}
+    			foreach ($estimateExpenses as $estimateItem)
+    			{
+    				$trip->estimateExpense()->create($estimateItem);
+    			}
+    			DB::rollBack();
+    			return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
+//     			dd($request->all());
+    		} catch (Exception $e) {
+    			DB::commit();
+    		}
+    }
+    
+    
+    
     /**
      * @desc show the international travel pageinfo
      * @param Request $request
@@ -133,6 +208,39 @@ class TripController extends Controller
 			'trip' => $trip,
 			'approver'=>$approver,
 			'demosticInfo' => $demosticInfo,
+			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode
+		]);
+	}
+	/**
+	 * @param Request $request
+	 * @param Trip $trip
+	 * @return \Illuminate\View\View
+	 * "rep_office": "12"
+  +"room_type": "king"
+  +"smoking": "1"
+  +"foods": array:2 [
+    0 => "12"
+    1 => "11"
+	 */
+	public function tripNationalDetails(Request $request,Trip $trip) 
+	{
+		$userObjMdl = User::where('UserID',$trip->user_id)->firstOrFail();
+		$approver = User::find($trip->department_approver);
+		$hotelData=$trip->accomodation()->get();
+		$estimateExpenses=$trip->estimateExpense()->get();
+		$flightData=$trip->flight()->get();
+		$destination=Country::find($trip->destination_id);
+		//flight_itinerary_prefer//hotel_prefer
+// 		dd($trip->flight_itinerary_prefer);
+// 		dd($destination->toArray());
+		return view('/etravel/trip/tripNationalDetail', [
+			'userObjMdl'=>$userObjMdl,
+			'trip' => $trip,
+			'approver'=>$approver,
+			'hotelData' => $hotelData,
+			'estimateExpenses'=>$estimateExpenses,
+			'flightData'=>$flightData,
+			'destination'=>$destination,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode
 		]);
 	}
@@ -209,17 +317,22 @@ class TripController extends Controller
 			$trip->daterange_to=$request->input('daterange_to');
 			$trip->save();
 			foreach ($demostic_data as $item){
-				$demostic_trip = Trip_demostic::find($item['demostic_id']);
-				$demostic_trip->datetime_date=$item['datetime_date'];
-				$demostic_trip->datetime_time=$item['datetime_time'];
-				$demostic_trip->location=$item['location'];
-				$demostic_trip->customer_name=$item['customer_name'];
-				$demostic_trip->contact_name=$item['contact_name'];
-				$demostic_trip->purpose_desc=$item['purpose_desc'];
-				$demostic_trip->travel_cost=number_format($item['travel_cost'],2);
-				$demostic_trip->entertain_cost=number_format($item['entertain_cost'],2);
-				$demostic_trip->entertain_detail=$item['entertain_detail'];
-				$demostic_trip->save();
+				if (!empty($item['demostic_id'])) {
+					$demostic_trip = Trip_demostic::find($item['demostic_id']);
+					$demostic_trip->datetime_date=$item['datetime_date'];
+					$demostic_trip->datetime_time=$item['datetime_time'];
+					$demostic_trip->location=$item['location'];
+					$demostic_trip->customer_name=$item['customer_name'];
+					$demostic_trip->contact_name=$item['contact_name'];
+					$demostic_trip->purpose_desc=$item['purpose_desc'];
+					$demostic_trip->travel_cost=number_format($item['travel_cost'],2);
+					$demostic_trip->entertain_cost=number_format($item['entertain_cost'],2);
+					$demostic_trip->entertain_detail=$item['entertain_detail'];
+					$demostic_trip->save();
+				}else{
+					$trip->demostic()->create($item);
+				}
+				
 			}
 		});
 		$user_id=Auth::user()->UserID;

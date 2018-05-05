@@ -4,20 +4,33 @@
 <div class="container">
 	<div class="page-content-inner">
 		<div class="row">
+		<!-- BEGIN FORM-->
+		<form action="/etravel/trip/storeNational" method="post" class="horizontal-form">
+			@if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID )
+				@include('etravel.layout.approverAction')
+			@endif
 			@include('etravel.layout.error')
 			<div class="col-md-12">
 				<!-- BEGIN VALIDATION STATES-->
+				@if($trip->status=='approved')
+				<div class="portlet box blue-steel">
+				@elseif($trip->status=='pending')
 				<div class="portlet box green">
+				@elseif($trip->status=='rejected')
+				<div class="portlet box red">
+				@elseif($trip->status=='partly-approved')
+				<div class="portlet box yellow-crusta">
+				@elseif($trip->status=='cancelled')
+				<div class="portlet box grey">
+				@endif
 					<div class="portlet-title">
 						<div class="caption">
 							<i class="icon-bubble"></i> <span
-								class="caption-subject bold uppercase">INTERNATIONAL REQUEST</span>
+								class="caption-subject bold uppercase">{{ $trip->status }}</span>
 						</div>
 					</div>
 
 					<div class="portlet-body form">
-						<!-- BEGIN FORM-->
-						<form action="/etravel/trip/storeNational" method="post" class="horizontal-form" enctype="multipart/form-data">
 							<input type="hidden" name="_token" value="{{csrf_token()}}"/>
 							<div class="form-body">
 
@@ -27,7 +40,7 @@
 										<div class="form-group">
 											<label class="control-label">Name Of Traveller</label> <input
 												disabled type="text" class="form-control"
-												placeholder="{{ $userProfile['FirstName'] }}">
+												placeholder="{{ $userObjMdl->FirstName }}">
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -35,7 +48,7 @@
 											<label class="control-label">SITE</label> 
 											<select id="Site" class="form-control input-sm select2" disabled>
 												<option>
-												{{ $userProfile['site']['Site']}}
+												{{ $userObjMdl->site()->first()['Site'] }}
 												</option>
 											</select>
 
@@ -48,24 +61,21 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Destination</label>
-											<select id="destinationSel" name="destination" class="form-control input-sm select2">
-													@foreach($countryList as $countryItem)
-                                                    		<option value="{{$countryItem['CountryID']}}">{{$countryItem['Country']}}</option>
-                                                    	@endforeach
+											<select id="destinationSel" name="destination" class="form-control input-sm select2" disabled>
+                                            		<option value="{{$destination['CountryID']}}">{{$destination['Country']}}</option>
                                             </select>
 										</div>
 									</div>
 
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">Cost Center</label> 
-											<select name="cost_center_id" class="form-control input-sm select2">
-												@foreach($costCenters as $costItem)
-												<option value="{{ $costItem['CostCenterID'] }}">
-												{{$costItem['CostCenterCode'] }}
+											<label class="control-label">Cost Center</label>
+											<select name="cost_center_id" class="form-control input-sm select2" disabled>
+												<option value="1">
+												{{$costCenterCode}}
 												</option>
-												@endforeach
-											</select>
+											</select> 
+											
 										</div>
 									</div>
 
@@ -78,14 +88,14 @@
 											</p>
 
 											<div class="col-md-4">
-												<input type="text" name="daterange_from"
-													class="form-control singleDatePicker"> <i
+												<input type="text" name="daterange_from" value="{{$trip->daterange_from}}"
+													class="form-control singleDatePicker" disabled> <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
 													style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
 											</div>
 											<div class="col-md-4">
-												<input type="text" name="daterange_to"
-													class="form-control singleDatePicker"> <i
+												<input type="text" name="daterange_to" value="{{$trip->daterange_to}}"
+													class="form-control singleDatePicker" disabled> <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
 													style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
 											</div>
@@ -99,20 +109,18 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Department Approver</label> 
-											<select id="department_approver" name="department_approver" class="form-control input-sm select2">
-												@foreach ($approvers as $item)
-												<option value="{{ $item['UserID'] }}">
-												{{$item['FirstName'] }}
+											<select id="department_approver" name="department_approver" class="form-control input-sm select2" disabled>
+												<option value="{{$approver->UserID}}">
+												{{ $approver->FirstName }}
 												</option> 
-												@endforeach
 											</select>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Overseas Approver</label> 
-											<select id="overseas_approver" name="overseas_approver" class="form-control select2" >
-												<option value="123">&lt;&nbsp;ASCO&nbsp;&gt;</option>
+											<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
+												<option value="123">David</option>
 											</select>
 										</div>
 									</div>
@@ -122,9 +130,7 @@
 									<div class="col-md-12 ">
 										<div class="form-group">
 											<label>Approver Comments</label>
-											<textarea name="approver_comment"
-												class="form-control leave-control"
-												style="overflow-y: scroll;" rows="2"></textarea>
+											<textarea disabled name="approver_comment" class="form-control leave-control" style="overflow-y: scroll;" rows="2">{{ $trip->approver_comment }}</textarea>
 										</div>
 									</div>
 
@@ -142,21 +148,10 @@
 										<div class="portlet-body form">
 
 											<div class="form-group">
-												
-                                                    <div class="fileinput fileinput-new" data-provides="fileinput" style="margin-top: 5px;">
-                                                        <div class="input-group input-large">
-                                                            <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-                                                                <i class="fa fa-file fileinput-exists"></i>&nbsp;
-                                                                <span class="fileinput-filename"> </span>
-                                                            </div>
-                                                            <span class="input-group-addon btn btn-file yellow-gold">
-                                                                <span class="fileinput-new"> Select file </span>
-                                                                <span class="fileinput-exists"> Change </span>
-                                                                <input type="file" name="travel_purpose"> </span>
-                                                            <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                                                        </div>
-                                                    </div>
-                                                
+												<select id="CostCenter" name="CostCenter"
+													class="cboSelect2 leave-control form-control" tabindex="-1">
+													<option value="0">&lt;&nbsp;others&nbsp;&gt;</option>
+												</select>
 											</div>
 										</div>
 									</div>
@@ -196,14 +191,23 @@
 												<li class="list-group-item">Notification To Be Sent General Affairs?: 
 													<label class=""> 
 													<div class="iradio_minimal-grey" style="position: relative;">
+													@if($trip->flight_itinerary_prefer['is_sent_affairs']=='1')
+													<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="1" checked >
+													@else
 													<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="1">
+													@endif
+													
 													<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
 													</div>
 													 YES 
 													 </label>
 													 <label class=""> 
 													<div class="iradio_minimal-grey" style="position: relative;">
+													@if($trip->flight_itinerary_prefer['is_sent_affairs']=='0')
+													<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="0" checked >
+													@else
 													<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="0">
+													@endif
 													<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
 													</div>
 													 NO 
@@ -211,8 +215,13 @@
 													
 												</li>
 												<li class="list-group-item">
-												<label> Ticket Booker?: 
-												<input type="checkbox" class="icheck" name="ticket_booker" style="position: absolute; opacity: 0;" value="1">France Travel
+												<label> Ticket Booker?:
+												@if($trip->flight_itinerary_prefer['ticket_booker']=='1')
+												<input type="checkbox" class="icheck" name="ticket_booker" style="position: absolute; opacity: 0;" value="1" checked>
+												@else
+												<input type="checkbox" class="icheck" name="ticket_booker" style="position: absolute; opacity: 0;" value="1">
+												@endif
+												France Travel
 												</label>
 												</li>
 												
@@ -252,54 +261,44 @@
 													</tr>
 												</thead>
 												<tbody>
+												@if(count($flightData)>0)
+													@foreach($flightData as $flightItem)
 													<tr>
 														<td>
-															<div class="col-md-8">
-																<input type="text" name="flight_date[]"
-																	class="form-control singleDatePicker"> <i
-																	class="glyphicon glyphicon-calendar fa fa-calendar"
-																	style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
-															</div>
-
+															{{$flightItem['flight_date']}}
 														</td>
 														<td>
-															<input type="text" name="flight_from[]" id="" />
+															{{$flightItem['flight_from']}}
 														</td>
 														<td>
-															<input type="text" name="flight_to[]" id="" />
+															{{$flightItem['flight_to']}}
 														</td>
 														<td>
-															<select class="form-control" name="airline_or_train[]">
-																<option value="1">airline</option>
-																<option value="0">train</option>
-															</select>
+															@if($flightItem['airline_or_train']=='1')
+															Airline
+															@elseif($flightItem['airline_or_train']=='0')
+															Train
+															@endif
 														</td>
 														<td>
-															
-																<input type="text" name="etd_time[]"class="form-control timepicker timepicker-default time-input" placeholder=""> 
-																<span class="input-group-btn">
-<!-- 																	<button class="btn default" type="button"> -->
-<!-- 																		<i class="fa fa-clock-o"></i> -->
-<!-- 																	</button> -->
-																</span>
-															
+															{{$flightItem['etd_time']}}
 														</td>
 														<td>
-																<input type="text" name="eta_time[]"class="form-control timepicker timepicker-default time-input" placeholder=""> 
-																<span class="input-group-btn">
-<!-- 																	<button class="btn default" type="button"> -->
-<!-- 																		<i class="fa fa-clock-o"></i> -->
-<!-- 																	</button> -->
-																</span>
+															{{$flightItem['eta_time']}}
 														</td>
-														<td><input type="text" name="class_flight[]" id="" /></td>
 														<td>
-															<select class="form-control" name="is_visa[]">
-																<option value="1">YES</option>
-																<option value="0">NO</option>
-															</select>
+															{{$flightItem['class_flight']}}
+														</td>
+														<td>
+															@if($flightItem['is_visa']=='1')
+															YES
+															@elseif($flightItem['is_visa']=='0')
+															NO
+															@endif
 														</td>
 													</tr>
+													@endforeach
+												@endif
 												</tbody>
 											</table>
 										</div>
@@ -328,25 +327,27 @@
 														</tr>
 													</thead>
 													<tbody>
+													@if(count($estimateExpenses)>0)
+														@foreach($estimateExpenses as $item)
 														<tr>
-															<td>Overseas Travel
-																<input type="hidden" name="estimate_type[]" value="overseas"/>
+															<td>{{$item['estimate_type']}} Travel
 															</td>
-															<td><input type="text" name="employee_annual_budget[]" id="" placeholder="0.00"/></td>
-															<td><input type="text" name="employee_ytd_expenses[]" id="" placeholder="0.00"/></td>
-															<td><input type="text" name="available_amount[]" id="" placeholder="0.00"/></td>
-															<td><input type="text" name="required_amount[]" id="" placeholder="0.00"/></td>
+															<td>
+																{{$item['employee_annual_budget']}}
+															</td>
+															<td>
+																{{$item['employee_ytd_expenses']}}
+															</td>
+															<td>
+																{{$item['available_amount']}}
+															</td>
+															<td>
+																{{$item['required_amount']}}
+															</td>
 															
 														</tr>
-														<tr>
-															<td>Entertainment
-																<input type="hidden" name="estimate_type[]" value="entertain"/>
-															</td>
-															<td><input type="text" name="employee_annual_budget[]" id="" placeholder="0.00"/></td>
-															<td><input type="text" name="employee_ytd_expenses[]" id="" placeholder="0.00"/></td>
-															<td><input type="text" name="available_amount[]" id="" placeholder="0.00"/></td>
-															<td><input type="text" name="required_amount[]" id="" placeholder="0.00"/></td>
-														</tr>
+														@endforeach
+													@endif
 													</tbody>
 												</table>
 										</div>
@@ -394,13 +395,13 @@
 															<div class="input-group">
 																<div class="icheck-inline">
 																	<label> <input type="radio" name="room_type"
-																		class="icheck" value="double"> Double
+																		class="icheck" value="double"<?php if ($trip->hotel_prefer['room_type']=='double'){echo "checked";}?>> Double
 																	</label> <label> <input type="radio" name="room_type"
-																		class="icheck" value="king"> King
+																		class="icheck" value="king" <?php if ($trip->hotel_prefer['room_type']=='king'){echo "checked";}?>> King
 																	</label> <label> <input type="radio" name="room_type"
-																		class="icheck" value="suite"> Suite
+																		class="icheck" value="suite" <?php if ($trip->hotel_prefer['room_type']=='suite'){echo "checked";}?>> Suite
 																	</label> <label> <input type="radio" name="room_type"
-																		class="icheck" value="standard"> Standard
+																		class="icheck" value="standard" <?php if ($trip->hotel_prefer['room_type']=='standard'){echo "checked";}?>> Standard
 																	</label>
 																</div>
 															</div>
@@ -409,9 +410,9 @@
 															<label>Smoking?:</label>
 															<div class="input-group">
 																<div class="icheck-inline">
-																	<label> <input type="radio" name="smoking" class="icheck" value="1"> Smoking
+																	<label> <input type="radio" name="smoking" class="icheck" value="1" <?php if($trip->hotel_prefer['smoking']=='1'){echo "checked";}?>> Smoking
 																	</label> 
-																	<label> <input type="radio" name="smoking" class="icheck" value="0"> Non Smoking
+																	<label> <input type="radio" name="smoking" class="icheck" value="0" <?php if($trip->hotel_prefer['smoking']=='0'){echo "checked";}?>> Non Smoking
 																	</label>
 																</div>
 															</div>
@@ -422,12 +423,11 @@
 														<div class="row">
 														<div class="col-md-6">
                                                                                     <div class="form-group">
-                                                                                        <label class="control-label col-md-3">Food</label>
+                                                                                        <label class="control-label col-md-3">Food:</label>
                                                                                         <div class="col-md-9">
-                                                                                            <select name="foods[]" class="form-control select2-multiple" multiple>
-                                                                                                <option value="salad">salad</option>
-                                                                                                <option value="hamburger">hamburger</option>
-                                                                                            </select>
+                                                                                            @foreach($trip->hotel_prefer['foods'] as $food)
+                                                                                            		{{$food}}
+                                                                                            @endforeach
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -445,29 +445,20 @@
 														</tr>
 													</thead>
 													<tbody>
+													@foreach($hotelData as $hotelItem)
 														<tr>
-															<td><input type="text" name="hotel_name[]" id="" /></td>
+															<td>{{$hotelItem['hotel_name']}}</td>
 															<td>
-																<div class="col-md-8">
-																	<input type="text" id="" name="checkin_date[]"
-																		class="form-control singleDatePicker"> <i
-																		class="glyphicon glyphicon-calendar fa fa-calendar"
-																		style="position: absolute; bottom: 10px; right: 24px; top: auto; cursor: pointer;"></i>
-																</div>
-	
+																{{$hotelItem['checkin_date']}}
 															</td>
 															<td>
-																<div class="col-md-8"
-																	style="position: relative;">
-																	<input type="text" id="" name="checkout_date[]"
-																		class="form-control singleDatePicker"> <i
-																		class="glyphicon glyphicon-calendar fa fa-calendar"
-																		style="position: absolute; bottom: 10px; right: 24px; top: auto; cursor: pointer;"></i>
-
-																</div>
+																{{$hotelItem['checkout_date']}}
 															</td>
-															<td><input type="text" name="rate[]" id="" /></td>
+															<td>
+																{{$hotelItem['rate']}}
+															</td>
 														</tr>
+													@endforeach
 													</tbody>
 												</table>
 										</div>
@@ -487,20 +478,22 @@
 										<div class="portlet-body form">
 											<textarea id="extra_comment" name="extra_comment"
 												class="form-control leave-control"
-												style="overflow-y: scroll;" rows="2"></textarea>
+												style="overflow-y: scroll;" rows="2" disabled>{{$trip['extra_comment']}}</textarea>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="form-actions right">
-								<div class="row">
-									<div class="col-md-offset-3 col-md-9">
-										<button type="submit" class="btn green">Submit</button>
-										<button type="button" class="btn default">Cancel</button>
-									</div>
-								</div>
-							</div>
-						</form>
+							@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved'))
+								<div class="row form-actions text-right">
+									<button id="TravelTypeEdit" type="button" accesskey="I" onclick="window.location.href='/etravel/trip/edit/{{$trip->trip_id}}'" class="btn yellow-gold leave-type-button">
+									 	<i class="fa fa-pencil"></i> Ed<u>i</u>t
+									</button>
+								
+                                 	<button id=TravelTypeCancel type="button" accesskey="D"  onclick="window.location.href='/etravel/trip/cancel/{{$trip->trip_id}}'" class="btn default">
+										<i class="fa fa-share"></i> <u>C</u>ancel
+									</button>
+                                </div>
+							@endif						
 						<!-- END FORM-->
 					</div>
 				</div>
@@ -510,9 +503,11 @@
 	</div>
 </div>
 
-
-
-
+</div>
+</form>
+</div>
+</div>
+</div>
 @endsection
 
 

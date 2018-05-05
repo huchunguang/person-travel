@@ -76,7 +76,7 @@ use App\User;
 												<th>Date</th>
 												<th>Time</th>
 												<th>Cost Center</th>
-												<th>Extra Comment</th>
+												<th>Trip Type</th>
 												<th>Department Approver</th>
 												<th>Status</th>
 												<th>View</th>
@@ -91,11 +91,21 @@ use App\User;
 														<td>{{ $item['daterange_from'] }}</td>
 														<td>{{ $item['daterange_to'] }}</td>
 														<td><?php echo Costcenter::find($item['cost_center_id'])['CostCenterCode'];?></td>
-														<td>{{ $item['extra_comment'] }}</td>
+														<td>
+															@if($item['trip_type']=='1')
+															International
+															@elseif($item['trip_type']=='2')
+															Domestic
+															@endif
+														</td>
 														<td><?php echo User::find($item['department_approver'])['FirstName'];?></td>
 														<td>{{ $item['status'] }}</td>
 														<td>
+															@if($item['trip_type']=='1')
+															<a href="/etravel/tripnationallist/{{ $item['trip_id'] }}">
+															@elseif($item['trip_type']=='2')
 															<a href="/etravel/tripdemosticlist/{{ $item['trip_id'] }}">
+															@endif
 																@if($item['status']=='pending')
 																<span class="glyphicon glyphicon-hand-right" style="color: green"></span>
 																@elseif($item['status']=='approved')
