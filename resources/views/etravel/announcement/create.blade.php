@@ -3,8 +3,8 @@
 <div class="container">
 	<div class="page-content-inner">
 		<div class="row">
-			@include('etravel.layout.error')
 			<div class="col-md-12">
+			@include('etravel.layout.error')
 				<!-- BEGIN VALIDATION STATES-->
 				<div class="portlet box green">
 					<div class="portlet-title">

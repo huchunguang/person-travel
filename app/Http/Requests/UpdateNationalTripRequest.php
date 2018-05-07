@@ -1,8 +1,10 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\Trip;
+use Illuminate\Support\Facades\Auth;
 
-class StoreNationalTripRequest extends Request {
+class UpdateNationalTripRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -11,7 +13,8 @@ class StoreNationalTripRequest extends Request {
 	 */
 	public function authorize()
 	{
-		return true;
+		$trip = $this->route('trip');
+		return Trip::where('trip_id',$trip->trip_id)->where('user_id',Auth::user()->UserID)->exists();
 	}
 
 	/**
@@ -21,6 +24,7 @@ class StoreNationalTripRequest extends Request {
 	 */
 	public function rules()
 	{
+		
 		return [
 			'destination'=>'required|integer',
 			'cost_center_id'=>'required|integer',
@@ -40,10 +44,10 @@ class StoreNationalTripRequest extends Request {
 			'class_flight'=>'array',
 			'room_type'=>'string',
 			'smoking'=>'integer',
-			'purpose_file' => 'required|mimes:txt,doc,xlsx,pdf,docx,xls,jpg,png,gif,bmp,ppt,pptx'
 			
 			
 		];
+		
 	}
 
 }

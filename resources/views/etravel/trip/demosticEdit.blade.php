@@ -8,8 +8,8 @@
 			@if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID )
 				@include('etravel.layout.approverAction')
 			@endif
-			@include('etravel.layout.error')
 			<div class="col-md-12">
+			@include('etravel.layout.error')
 				<!-- BEGIN VALIDATION STATES-->
 				@if($trip->status=='approved')
 				<div class="portlet box blue-steel">

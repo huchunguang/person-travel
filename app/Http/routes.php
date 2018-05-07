@@ -44,6 +44,10 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         Route::get('trip/cancel/{trip}','TripController@demosticCancel');
         Route::put('trip/update/{trip}','TripController@demosticUpdate');
         
+        Route::get('trip/nationalEdit/{trip}','TripController@nationalEdit');
+        Route::get('trip/nationalCancel/{trip}','TripController@nationalCancel');
+        Route::put('trip/nationalUpdate/{trip}','TripController@nationalUpdate');
+        
         #TripPurpose
         Route::get('purpose',['as'=>'tripPurpose','uses'=>'PurposeController@index']);
         Route::post('purpose','PurposeController@store');
@@ -67,3 +71,7 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
 Route::group([],function(){
 	Route::get('country-sites/{country}','CountryController@sites');
 });
+
+#Download
+Route::get('download','FileController@download');
+

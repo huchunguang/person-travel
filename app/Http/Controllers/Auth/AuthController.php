@@ -20,7 +20,10 @@ class AuthController extends Controller {
 	
 
 	use AuthenticatesAndRegistersUsers;
-	protected $redirectPath = '/etravel/dashboard';
+	
+	protected $redirectPath= '/etravel/dashboard';
+	
+	protected $redirectAfterLogout='/auth/login';
 	
 	/**
 	 * Create a new authentication controller instance.

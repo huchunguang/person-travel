@@ -146,37 +146,35 @@
 											</div>
 										</div>
 										<div class="portlet-body form">
-
+											
 											<div class="form-group">
-												<select id="CostCenter" name="CostCenter"
-													class="cboSelect2 leave-control form-control" tabindex="-1">
-													<option value="0">&lt;&nbsp;others&nbsp;&gt;</option>
-												</select>
+												<button type="button" class="btn purple" id="downloadFile" data-filename="{{$trip->purpose_file}}">Download File</button>
 											</div>
+										
 										</div>
 									</div>
 								</div>
-								<div class="row form-group col-sm-12">
+<!-- 								<div class="row form-group col-sm-12"> -->
 
-									<div class="portlet box default">
-										<div class="portlet-title">
-											<div class="caption">PRE-APPROVAL PURCHASE/REQUEST(RENT)</div>
-											<div class="tools">
-												<a href="" class="collapse" data-original-title="" title="">
-												</a>
-											</div>
-										</div>
-										<div class="portlet-body form">
-											<div class="form-group">
-												<select id="CostCenter" name="CostCenter"
-													class="cboSelect2 leave-control form-control" tabindex="-1">
-													<option value="0">&lt;&nbsp;others&nbsp;&gt;</option>
-												</select>
-											</div>
-										</div>
-									</div>
+<!-- 									<div class="portlet box default"> -->
+<!-- 										<div class="portlet-title"> -->
+<!-- 											<div class="caption">PRE-APPROVAL PURCHASE/REQUEST(RENT)</div> -->
+<!-- 											<div class="tools"> -->
+<!-- 												<a href="" class="collapse" data-original-title="" title=""> -->
+<!-- 												</a> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 										<div class="portlet-body form"> -->
+<!-- 											<div class="form-group"> -->
+<!-- 												<select id="CostCenter" name="CostCenter" -->
+<!-- 													class="cboSelect2 leave-control form-control" tabindex="-1"> -->
+<!-- 													<option value="0">&lt;&nbsp;others&nbsp;&gt;</option> -->
+<!-- 												</select> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
 
-								</div>
+<!-- 								</div> -->
 								<div class="row form-group col-sm-12">
 									<div class="portlet box default">
 										<div class="portlet-title">
@@ -485,11 +483,11 @@
 							</div>
 							@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved'))
 								<div class="row form-actions text-right">
-									<button id="TravelTypeEdit" type="button" accesskey="I" onclick="window.location.href='/etravel/trip/edit/{{$trip->trip_id}}'" class="btn yellow-gold leave-type-button">
+									<button type="button" accesskey="I" onclick="window.location.href='/etravel/trip/nationalEdit/{{$trip->trip_id}}'" class="btn yellow-gold leave-type-button">
 									 	<i class="fa fa-pencil"></i> Ed<u>i</u>t
 									</button>
 								
-                                 	<button id=TravelTypeCancel type="button" accesskey="D"  onclick="window.location.href='/etravel/trip/cancel/{{$trip->trip_id}}'" class="btn default">
+                                 	<button type="button" accesskey="C"  onclick="window.location.href='/etravel/trip/nationalCancel/{{$trip->trip_id}}'" class="btn default">
 										<i class="fa fa-share"></i> <u>C</u>ancel
 									</button>
                                 </div>
@@ -508,6 +506,7 @@
 </div>
 </div>
 </div>
+<script src="{{asset('js/etravel/trip/tripNationalDetail.js')}}"></script>
 @endsection
 
 

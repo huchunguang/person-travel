@@ -18,7 +18,9 @@ function array_bound_key($arr)
 	$newArr = [ ];
 	foreach ($arr as $key => $item) {
 		$i = 0;
+		if (!is_array($item))continue;
 		foreach ($item as $val) {
+			if (''==$val) continue 2;
 			$newArr[$i][$key] = $val;
 			$i ++;
 		}
