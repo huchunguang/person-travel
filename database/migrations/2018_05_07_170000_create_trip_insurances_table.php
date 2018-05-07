@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTripAnnouncementsTable extends Migration {
+class CreateTripInsurancesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,9 +12,14 @@ class CreateTripAnnouncementsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('trip_announcements', function(Blueprint $table)
+		Schema::create('trip_insurances', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->string('nominee_name',100);
+			$table->string('passport_fullname',50);
+			$table->string('nric_no',50);
+			$table->string('nric_num',50);
+			$table->string('elationship');
 			$table->timestamps();
 		});
 	}
@@ -26,7 +31,7 @@ class CreateTripAnnouncementsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('trip_announcements');
+		Schema::drop('trip_insurances');
 	}
 
 }

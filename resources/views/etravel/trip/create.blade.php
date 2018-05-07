@@ -104,6 +104,12 @@
 										</div>
 
 									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label">Project Code</label>
+											<input type="text" name="project_code" class="form-control"/>
+										</div>
+									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-6">
@@ -170,21 +176,7 @@
 									</div>
 								</div>
 								
-								<div class="row form-group col-sm-12" style="display: none;">
-									<ul id="myTab" class="nav nav-tabs">
-										<li class="active"><a href="#home" data-toggle="tab">FLIGHT ITINERARY</a></li>
-										<li><a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a></li>
-										<li><a href="#teana" data-toggle="tab">HOTEL ACCOMODATION</a></li>
-									</ul>
-									<div id="myTabContent" class="tab-content">
-										<div class="tab-pane fade in active" id="home"></div>
-										<div class="tab-pane fade" id="ios"></div>
-										<div class="tab-pane fade" id="teana"></div>
-									</div>
-								</div>
-								
-								
-								<div class="row form-group col-sm-12" style="display: none;">
+								<div class="row form-group col-sm-12">
 									<div class="portlet box default">
 										<div class="portlet-title">
 											<div class="caption">TRAVEL INSURANCE</div>
@@ -222,7 +214,7 @@
 														<div class="col-md-6">
 															<div class="form-group">
 																<label class="control-label col-md-3">Name of Nominee</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="nominee_name"> </div>
+																<div class="col-md-9"><input type="text" class="form-control" name="nominee_name" value="{{old('nominee_name')}}"> </div>
 															</div>
 														</div>
 													</div>
@@ -232,14 +224,14 @@
 														<div class="col-md-6">
 															<div class="form-group">
 																<label class="control-label col-md-3">Full Name as in Passport</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="passport_fullname"> </div>
+																<div class="col-md-9"><input type="text" class="form-control" name="passport_fullname" value="{{old('passport_fullname')}}"> </div>
 															</div>
 														
 														</div>
 														<div class="col-md-6">
 															<div class="form-group">
 																<label class="control-label col-md-3">NRIC/Passport No</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="nric_no"> </div>
+																<div class="col-md-9"><input type="text" class="form-control" name="nric_no" value="{{old('nric_no')}}"> </div>
 															</div>
 														</div>
 													</div>
@@ -250,13 +242,13 @@
 														<div class="col-md-6">
 															<div class="form-group">
 																<label class="control-label col-md-3">NRIC/Passport Number</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="nric_num"> </div>
+																<div class="col-md-9"><input type="text" class="form-control" name="nric_num" value="{{old('nric_num')}}"> </div>
 															</div>
 														</div>
 														<div class="col-md-6">
 															<div class="form-group">
 																<label class="control-label col-md-3">elationship</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="elationship"> </div>
+																<div class="col-md-9"><input type="text" class="form-control" name="elationship" value="{{old('elationship')}}"> </div>
 															</div>
 														</div>
 													</div>
@@ -268,37 +260,17 @@
 									</div>
 								</div>
 								
-<!-- 								<div class="row form-group col-sm-12" > -->
-
-<!-- 									<div class="portlet box default"> -->
-<!-- 										<div class="portlet-title"> -->
-<!-- 											<div class="caption">PRE-APPROVAL PURCHASE/REQUEST(RENT)</div> -->
-<!-- 											<div class="tools"> -->
-<!-- 												<a href="" class="collapse" data-original-title="" title=""> -->
-<!-- 												</a> -->
-<!-- 											</div> -->
-<!-- 										</div> -->
-<!-- 										<div class="portlet-body form"> -->
-<!-- 											<div class="form-group"> -->
-<!-- 												<select id="CostCenter" name="CostCenter" -->
-<!-- 													class="cboSelect2 leave-control form-control" tabindex="-1"> -->
-<!-- 													<option value="0">&lt;&nbsp;others&nbsp;&gt;</option> -->
-<!-- 												</select> -->
-<!-- 											</div> -->
-<!-- 										</div> -->
-<!-- 									</div> -->
-
-<!-- 								</div> -->
+								
+								
 								<div class="row form-group col-sm-12">
-									<div class="portlet box default">
-										<div class="portlet-title">
-											<div class="caption">FLIGHT ITINERARY</div>
-											<div class="tools">
-												<a href="" class="collapse" data-original-title="" title="">
-												</a>
-											</div>
-										</div>
-										<div class="portlet-body form">
+									<ul id="myTab" class="nav nav-tabs">
+										<li class="active"><a href="#home" data-toggle="tab">FLIGHT ITINERARY</a></li>
+										<li><a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a></li>
+										<li><a href="#teana" data-toggle="tab">HOTEL ACCOMODATION</a></li>
+									</ul>
+									<div id="myTabContent" class="tab-content">
+										<div class="tab-pane fade in active" id="home">
+											
 											<ul class="list-group">
 												<li class="list-group-item">Notification To Be Sent General Affairs?: 
 													<label class=""> 
@@ -409,21 +381,10 @@
 													</tr>
 												</tbody>
 											</table>
+										
 										</div>
-									</div>
-								</div>
-								<div class="row form-group col-sm-12">
-									<div class="portlet box default">
-										<div class="portlet-title">
-											<div class="caption">
-											 ESTIMATED EXPENSES
-											</div>
-											<div class="tools">
-												<a href="" class="collapse" data-original-title="" title="">
-												</a>
-											</div>
-										</div>
-										<div class="portlet-body form">
+										<div class="tab-pane fade" id="ios">
+											
 												<table class="table table-bordered table-striped table-condensed flip-content">
 													<thead>
 														<tr class="info">
@@ -456,21 +417,10 @@
 														</tr>
 													</tbody>
 												</table>
+										
 										</div>
-									</div>
-								</div>
-								<div class="row form-group col-sm-12">
-									<div class="portlet box default">
-										<div class="portlet-title">
-											<div class="caption">
-												HOTEL ACCOMODATION
-											</div>
-											<div class="tools">
-												<a href="" class="collapse" data-original-title="" title="">
-												</a>
-											</div>
-										</div>
-										<div class="portlet-body form">
+										<div class="tab-pane fade" id="teana">
+											
 												<ul class="list-group">
 													<li class="list-group-item">
 														<div class="row">
@@ -577,9 +527,32 @@
 														</tr>
 													</tbody>
 												</table>
+										
 										</div>
 									</div>
 								</div>
+								
+<!-- 								<div class="row form-group col-sm-12" > -->
+
+<!-- 									<div class="portlet box default"> -->
+<!-- 										<div class="portlet-title"> -->
+<!-- 											<div class="caption">PRE-APPROVAL PURCHASE/REQUEST(RENT)</div> -->
+<!-- 											<div class="tools"> -->
+<!-- 												<a href="" class="collapse" data-original-title="" title=""> -->
+<!-- 												</a> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 										<div class="portlet-body form"> -->
+<!-- 											<div class="form-group"> -->
+<!-- 												<select id="CostCenter" name="CostCenter" -->
+<!-- 													class="cboSelect2 leave-control form-control" tabindex="-1"> -->
+<!-- 													<option value="0">&lt;&nbsp;others&nbsp;&gt;</option> -->
+<!-- 												</select> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+
+<!-- 								</div> -->
 								<div class="row form-group col-sm-12">
 									<div class="portlet box default">
 										<div class="portlet-title">

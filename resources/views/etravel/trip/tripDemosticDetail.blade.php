@@ -91,7 +91,6 @@
 
 								<div class="row">
 									<div class="col-md-6">
-
 										<div class="form-group">
 											<p>
 												<label class="control-label">Period of Travel From</label>
@@ -113,6 +112,12 @@
 
 										</div>
 
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label">Project Code</label>
+											<input type="text" name="project_code" class="form-control" disabled value="{{ $trip->project_code }}"/>
+										</div>
 									</div>
 								</div>
 								<hr class="divider" />

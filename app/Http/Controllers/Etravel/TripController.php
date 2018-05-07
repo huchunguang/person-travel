@@ -69,7 +69,7 @@ class TripController extends Controller
 			'tripList' => $tripList,
 			'breadcrumb' => 'Demostic Travel Requests List'
 		]);
-    }
+	}
     /**
      * @desc trip_type 1:international 2:demostic
      * @param Request $request
@@ -87,10 +87,20 @@ class TripController extends Controller
     				'customer_name'=>'required',
     				'contact_name'=>'required',
     				'purpose_desc'=>'required',
-    				'department_approver'=>'required|integer'
+    				'department_approver'=>'required|integer',
+    				'project_code'=>'required',
     		];
     		$this->validate($request, $rules);
-    		$tripData=$request->only(['cost_center_id','daterange_from','daterange_to','extra_comment','department_approver','approver_comment']);
+		$tripData = $request->only([ 
+			
+			'cost_center_id',
+			'daterange_from',
+			'daterange_to',
+			'extra_comment',
+			'department_approver',
+			'approver_comment',
+			'project_code'
+		]);
 		$tripData = array_merge($tripData, [ 
 			
 			'user_id' => Auth::user()->UserID,
@@ -132,6 +142,7 @@ class TripController extends Controller
     		try {
     			$trip=new Trip;
     			$trip->user_id=Auth::user()->UserID;
+    			$trip->project_code=$request->input('project_code');
     			$trip->destination_id=$request->input('destination');
     			$trip->cost_center_id=$request->input('cost_center_id');
     			$trip->daterange_from=$request->input('daterange_from');
@@ -163,6 +174,7 @@ class TripController extends Controller
     			$hotelData=array_bound_key($hotelData);
     			$estimateExpenses=$request->only(['estimate_type','employee_annual_budget','employee_ytd_expenses','available_amount','required_amount']);
     			$estimateExpenses=array_bound_key($estimateExpenses);
+    			$insuranceData=$request->only(['insurance_type','nominee_name','passport_fullname','nric_no','nric_num','elationship']);
     			
     			foreach ($flightData as $flightItem)
     			{
@@ -176,9 +188,11 @@ class TripController extends Controller
     			{
     				$trip->estimateExpense()->create($estimateItem);
     			}
+    			if($insuranceData){
+    				$trip->insurance()->create($insuranceData);
+    			}
     			DB::commit();
     			return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
-//     			dd($request->all());
     		} catch (Exception $e) {
     			DB::rollBack();
     		}
@@ -240,11 +254,13 @@ class TripController extends Controller
 		$hotelData=$trip->accomodation()->get();
 		$estimateExpenses=$trip->estimateExpense()->get();
 		$flightData=$trip->flight()->get();
+		$insuranceData=$trip->insurance()->first();
 		$destination=Country::find($trip->destination_id);
 		//flight_itinerary_prefer//hotel_prefer
 // 		dd($trip->flight_itinerary_prefer);
 // 		dd($destination->toArray());
 // 		dd($trip->purpose_file);
+// 		dd($insuranceData);
 		return view('/etravel/trip/tripNationalDetail', [
 			'userObjMdl'=>$userObjMdl,
 			'trip' => $trip,
@@ -252,6 +268,7 @@ class TripController extends Controller
 			'hotelData' => $hotelData,
 			'estimateExpenses'=>$estimateExpenses,
 			'flightData'=>$flightData,
+			'insuranceData'=>$insuranceData,
 			'destination'=>$destination,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode
 		]);
@@ -297,6 +314,8 @@ class TripController extends Controller
 		$hotelData=$trip->accomodation()->get();
 		$estimateExpenses=$trip->estimateExpense()->get();
 		$flightData=$trip->flight()->get();
+		$insuranceData=$trip->insurance()->first();
+// 		dd($insuranceData);
 		$destination=Country::find($trip->destination_id);
 // 		dd($estimateExpenses->toArray());
 		return view('/etravel/trip/nationalEdit',[
@@ -310,6 +329,7 @@ class TripController extends Controller
 			'hotelData'=>$hotelData,
 			'estimateExpenses'=>$estimateExpenses,
 			'flightData'=>$flightData,
+			'insuranceData'=>$insuranceData,
 			'destination'=>$destination,
 			'trip'=>$trip,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode

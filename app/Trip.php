@@ -26,7 +26,10 @@ class Trip extends Model {
 	{
 		return $this->hasOne('App\Costcenter','CostCenterID','cost_center_id'); 
 	}
-	
+	public function insurance() 
+	{
+		return $this->hasMany('App\Trip_insurance','trip_id','trip_id');
+	}
 	/**
 	 * @desc query  with  different itinerary status trip  currently user 
 	 * @param unknown $query

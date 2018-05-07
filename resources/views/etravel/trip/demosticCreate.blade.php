@@ -107,6 +107,12 @@
 										</div>
 
 									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label">Project Code</label>
+											<input type="text" name="project_code" class="form-control"/>
+										</div>
+									</div>
 								</div>
 								<hr class="divider" />
 
@@ -114,7 +120,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">
-												<button data-target="#addNewLineModal" data-toggle="modal" type="button" class="btn btn-default">
+												<button data-target="#addNewLineModal" data-toggle="modal" type="button" class="btn btn-primary">
 													<i class="glyphicon glyphicon-plus-sign"></i> 
 													Add Line Item
 												</button>
