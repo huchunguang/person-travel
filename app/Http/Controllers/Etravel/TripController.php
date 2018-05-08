@@ -24,9 +24,16 @@ use App\Http\Requests\EditDomesticRequest;
 use App\Http\Requests\EditNationalRequest;
 use App\Http\Requests\TripCancelRequest;
 use App\Http\Requests\TripReadRequest;
+use App\Trip_insurance;
+use App\Company;
+use App\Contacts\SystemVariable;
 
 class TripController extends Controller
 {
+	public function __construct(SystemVariable $system) 
+	{
+		$this->system=$system;
+	}
     /**
      * @brief create trip 
      */
@@ -67,7 +74,7 @@ class TripController extends Controller
 		return view('etravel/trip/index', [ 
 			'status'=>$status?$status:'all',
 			'tripList' => $tripList,
-			'breadcrumb' => 'Demostic Travel Requests List'
+			'breadcrumb' => 'Travel Requests List'
 		]);
 	}
     /**
@@ -165,7 +172,7 @@ class TripController extends Controller
     				}
     				$trip->purpose_file=$savePath;
     			}
-    			$trip->flight_itinerary_prefer=$request->only(['is_sent_affairs','ticket_booker','CC']);
+    			$trip->flight_itinerary_prefer=$request->only(['is_sent_affairs','CC']);
     			$trip->hotel_prefer=$request->only(['rep_office','room_type','smoking','foods']);
     			$trip->save();
     			$flightData=$request->only(['flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
@@ -419,7 +426,7 @@ class TripController extends Controller
 				}
 				$trip->purpose_file=$savePath;
 			} 
-			$trip->flight_itinerary_prefer=$request->only(['is_sent_affairs','ticket_booker','CC']);
+			$trip->flight_itinerary_prefer=$request->only(['is_sent_affairs','CC']);
 			$trip->hotel_prefer=$request->only(['rep_office','room_type','smoking','foods']);
 			$trip->save();
 			$flightData=$request->only(['flight_id','flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
@@ -430,6 +437,7 @@ class TripController extends Controller
 // 			dd($hotelData);
 			$estimateExpenses=$request->only(['estimate_id','estimate_type','employee_annual_budget','employee_ytd_expenses','available_amount','required_amount']);
 			$estimateExpenses=array_bound_key($estimateExpenses);
+			$insuranceData=$request->only(['insurance_id','insurance_type','nominee_name','passport_fullname','nric_no','nric_num','elationship']);
 // 			dd($estimateExpenses);
 			foreach ($flightData as $flightItem)
 			{
@@ -444,7 +452,7 @@ class TripController extends Controller
 			foreach ($hotelData as $hotelItem)
 			{
 				if (!empty($hotelItem['hotel_id'])) {
-					Trip_accomodation::find($hotelItem['hotel_id'])->update($hotelItem,array_except($hotelItem, ['hotel_id']));
+					Trip_accomodation::find($hotelItem['hotel_id'])->update(array_except($hotelItem, ['hotel_id']));
 				}else{
 					$trip->accomodation()->create($hotelItem);
 				}
@@ -452,10 +460,14 @@ class TripController extends Controller
 			foreach ($estimateExpenses as $estimateItem)
 			{
 				if (!empty($estimateItem['estimate_id'])){
-					Trip_estimate_expense::find($estimateItem['estimate_id'])->update($estimateItem,array_except($estimateItem, ['estimate_id']));
+					Trip_estimate_expense::find($estimateItem['estimate_id'])->update(array_except($estimateItem, ['estimate_id']));
 				}else{
 					$trip->estimateExpense()->create($estimateItem);
 				}
+			}
+			if ($insuranceData && $insuranceData['insurance_id']){
+				
+				Trip_insurance::find($insuranceData['insurance_id'])->update(array_except($insuranceData, ['insurance_id']));
 			}
 			DB::commit();
 			return redirect()->route('triplist',['user'=>Auth::user()->UserID]);

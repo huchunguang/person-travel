@@ -54,12 +54,15 @@
 
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">Cost Center</label> <select
-												name="cost_center_id"
-												class="cboSelect2 leave-control form-control" tabindex="-1">
+											<label class="control-label">Cost Center</label> 
+											<select name="cost_center_id" class="form-control input-sm select2">
 												@foreach($costCenters as $costItem)
-												<option value="{{ $costItem['CostCenterID'] }}">
-													&lt;&nbsp;{{$costItem['CostCenterCode'] }}&nbsp;&gt;
+												@if(old('cost_center_id') == $costItem['CostCenterID'] || $costItem['CostCenterID']==$defaultCostCenterID)
+												<option value="{{ $costItem['CostCenterID'] }}" selected="selected">
+												@else
+												<option value="{{ $costItem['CostCenterID'] }}" >
+												@endif
+												{{$costItem['CostCenterCode'] }}
 												</option>
 												@endforeach
 											</select>
@@ -110,7 +113,15 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Project Code</label>
-											<input type="text" name="project_code" class="form-control"/>
+											<select id="project_code" name="project_code" class="form-control input-sm select2">
+												@foreach ($wbscodeList as $item)
+													@if($item['wbs_id']==old('project_code'))
+													<option value="{{$item['wbs_id']}}" selected="selected">{{$item['wbs_code']}}</option>
+													@else
+													<option value="{{$item['wbs_id']}}">{{$item['wbs_code']}}</option>
+													@endif
+												@endforeach
+											</select>
 										</div>
 									</div>
 								</div>

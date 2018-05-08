@@ -67,7 +67,7 @@
 											<label class="control-label">Cost Center</label> 
 											<select name="cost_center_id" class="form-control input-sm select2">
 												@foreach($costCenters as $costItem)
-												@if(old('cost_center_id') == $costItem['CostCenterID'])
+												@if(old('cost_center_id') == $costItem['CostCenterID'] || $costItem['CostCenterID']==$defaultCostCenterID)
 												<option value="{{ $costItem['CostCenterID'] }}" selected="selected">
 												@else
 												<option value="{{ $costItem['CostCenterID'] }}" >
@@ -107,7 +107,15 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Project Code</label>
-											<input type="text" name="project_code" class="form-control"/>
+											<select id="project_code" name="project_code" class="form-control input-sm select2">
+												@foreach ($wbscodeList as $item)
+													@if($item['wbs_id']==old('project_code'))
+													<option value="{{$item['wbs_id']}}" selected="selected">{{$item['wbs_code']}}</option>
+													@else
+													<option value="{{$item['wbs_id']}}">{{$item['wbs_code']}}</option>
+													@endif
+												@endforeach
+											</select>
 										</div>
 									</div>
 								</div>
@@ -289,11 +297,7 @@
 													 </label>
 													
 												</li>
-												<li class="list-group-item">
-												<label> Ticket Booker?: 
-												<input type="checkbox" class="icheck" name="ticket_booker" style="position: absolute; opacity: 0;" value="1">France Travel
-												</label>
-												</li>
+												
 												
 												<li class="list-group-item">
 													<div class="row">
@@ -479,11 +483,12 @@
 														<div class="row">
 														<div class="col-md-6">
                                                                                     <div class="form-group">
-                                                                                        <label class="control-label col-md-3">Food</label>
+                                                                                        <label class="control-label col-md-3">Food Restrictions</label>
                                                                                         <div class="col-md-9">
                                                                                             <select name="foods[]" class="form-control select2-multiple" multiple>
-                                                                                                <option value="salad">salad</option>
-                                                                                                <option value="hamburger">hamburger</option>
+                                                                                                <option value="Vegetarian" <?php if(in_array('Vegetarian', old('foods',[]))){echo "selected";}?>>Vegetarian</option>
+                                                                                                <option value="Halal" <?php if(in_array('Halal', old('foods',[]))){echo "selected";}?>>HALAL</option>
+                                                                                                <option value="Muslim Food" <?php if(in_array('Muslim Food', old('foods',[]))){echo "selected";}?>>Muslim Food</option>
                                                                                             </select>
                                                                                         </div>
                                                                                     </div>

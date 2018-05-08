@@ -9,11 +9,10 @@
 		
 		<li><a href="##" style="color: white;"><i class="fa fa-bar-chart"></i>Reports</a></li>
 		<li class="dropdown"><a href="##" class="dropdown-toggle"
-			data-toggle="dropdown" style="color: white;"><i class="fa fa-gears"></i>Site
-				Configuration<span class="caret"></span></a>
+			data-toggle="dropdown" style="color: white;"><i class="fa fa-gears"></i>Configuration<span class="caret"></span></a>
 			<ul class="dropdown-menu">
 				<li><a href="/etravel/announcement">Announcement</a></li>
-				<li><a href="/etravel/purpose">Purpose</a></li>
+<!-- 				<li><a href="/etravel/purpose">Purpose</a></li> -->
 			</ul></li>
 		
 

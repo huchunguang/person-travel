@@ -302,16 +302,6 @@
 													 </label>
 													
 												</li>
-												<li class="list-group-item">
-												<label> Ticket Booker?:
-												@if($trip->flight_itinerary_prefer['ticket_booker']=='1')
-												<input type="checkbox" class="icheck" name="ticket_booker" style="position: absolute; opacity: 0;" value="1" checked>
-												@else
-												<input type="checkbox" class="icheck" name="ticket_booker" style="position: absolute; opacity: 0;" value="1">
-												@endif
-												France Travel
-												</label>
-												</li>
 												
 												<li class="list-group-item">
 													<div class="row">

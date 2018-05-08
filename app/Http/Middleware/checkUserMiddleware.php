@@ -18,7 +18,7 @@ class checkUserMiddleware {
 		if (!Auth::check()) {
 			$user = false;
 			$userName = GetWindowsUsername();
-			$userName = 'A6053995';//Nancy
+			//$userName = 'A6053995';//Nancy
 			// 		$userName = 'A0009298';//Victor
 			if ($userName){
 				$user = User::where('UserName', $userName)->first();

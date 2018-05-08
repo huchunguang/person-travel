@@ -71,6 +71,10 @@ function addNewLine(){
 	 $("#ltineraryTable tbody:last").append(rowTem);
 	 $('#addNewLineModal').modal("hide");
 }
+function editNewLine(id)
+{
+	
+}
 function showItemOperate(obj){
 	thisObj=$(obj);
 	thisObj.addClass('prepareDelTr');

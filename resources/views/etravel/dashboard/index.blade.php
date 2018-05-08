@@ -11,9 +11,6 @@
 	<div class="col-md-3">
 		<ul id="myTab" class="nav nav-tabs">
 			<li class="active"><a href="#home" data-toggle="tab"> <span
-					class="glyphicon glyphicon-send"></span>
-			</a></li>
-			<li><a href="#ios" data-toggle="tab"> <span
 					class="glyphicon glyphicon-plane"></span>
 			</a></li>
 			<li><a href="#teana" data-toggle="tab"> 
@@ -46,30 +43,6 @@
 					</center>
 				</form>
 			</div>
-			<div class="tab-pane fade" id="ios">
-				
-				<form action="/etravel/trip" role="form" method="post">
-					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<div class="form-group">
-						<input type="radio" name="trip" value="international"/> <a href="javascript:;"
-							class="btn info "> <strong>International Trip</strong>  </a>
-
-					</div>
-					<div class="form-group">
-						<input type="radio" name="trip" value="demostic"/> <a href="javascript:;"
-							class="btn info "><strong>Domestic Trip</strong></a>
-
-					</div>
-
-					<center>
-						<button id="btnLeaveControl-Delete" type="submit" accesskey="S"
-							class="btn green">
-							<i class="glyphicon glyphicon-new-window"></i> <u>S</u>ubmit
-						</button>
-					</center>
-				</form>
-			
-			</div>
 			<div class="tab-pane fade" id="teana">
 				
 				<form action="/etravel/trip" role="form" method="post">
@@ -94,30 +67,7 @@
 				</form>
 			
 			</div>
-			<div class="tab-pane fade" id="camry">
-				
-				<form action="/etravel/trip" role="form" method="post">
-					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<div class="form-group">
-						<input type="radio" name="trip" value="international"/> <a href="javascript:;"
-							class="btn info "> <strong>International Trip</strong>  </a>
-
-					</div>
-					<div class="form-group">
-						<input type="radio" name="trip" value="demostic"/> <a href="javascript:;"
-							class="btn info "><strong>Domestic Trip</strong></a>
-
-					</div>
-
-					<center>
-						<button id="btnLeaveControl-Delete" type="submit" accesskey="S"
-							class="btn green">
-							<i class="glyphicon glyphicon-new-window"></i> <u>S</u>ubmit
-						</button>
-					</center>
-				</form>
-			
-			</div>
+			<div class="tab-pane fade" id="camry"></div>
 		</div>
 	</div>
 	<div class="col-md-3">
@@ -311,7 +261,7 @@
 					
 					<div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a class="accordion-toggle" href="staff/travellist"> My Staff Leave Transactions </a>
+                                            <a class="accordion-toggle" href="staff/travellist"> My Staff Travel Requests </a>
                                         </h4>
                     </div>
 				</div>

@@ -5,6 +5,7 @@ use App\Contacts\SystemVariable;
 use Illuminate\Support\Facades\Auth;
 use App\Country;
 use App\Trip_announcement;
+use App\Company;
 
 class SystemInfo implements SystemVariable{
 	protected $_user_id='';
@@ -31,12 +32,19 @@ class SystemInfo implements SystemVariable{
 		return Auth::user()->SiteID;
 		
 	}
-
+	public function getDefaultCostCenterID()
+	{
+		return Auth::user()->DefaultCostCenterID;
+	}
 	public function getAnnouncement ()
 	{
 		$curDate=date('m/d/Y',time());
 		return Trip_announcement::with('announceType')->where('site_id',$this->getSiteId())->where('date_effectivity','<=',$curDate)->where('date_expired','>=',$curDate)->first();
 	}
+	public function getWbscodeList()
+	{
+		return Company::find(Auth::user()->CompanyID)->wbscode()->orderBy('project_type','ASC')->orderBy('status','DESC')->get()?:[];
+	} 
 	public function __get($name)
 	{
 		

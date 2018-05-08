@@ -28,7 +28,7 @@ class ApproverController extends Controller {
 	public function index(Request $request,User $user)
 	{
 		$status=$request->input('status');
-		$tripList = Trip::OfStatus($status)->where(['department_approver'=>$this->user_id])->paginate(PAGE_SIZE);
+		$tripList = Trip::OfStatus($status)->where(['department_approver'=>$this->user_id])->orderBy('created_at','DESC')->paginate(PAGE_SIZE);
 // 		dd($tripList);
 		return view('etravel/approver/index', [
 			'status'=>$status?$status:'all',
