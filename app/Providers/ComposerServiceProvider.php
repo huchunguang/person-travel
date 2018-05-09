@@ -1,6 +1,7 @@
 <?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 
 class ComposerServiceProvider extends ServiceProvider {
 
@@ -11,9 +12,9 @@ class ComposerServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		view()->composer(
-		'*', 'App\Http\ViewComposers\CommonComposer'
-		);
+			view()->composer(
+				['/etravel/trip/demosticCreate','/etravel/trip/create'], 'App\Http\ViewComposers\CommonComposer'
+				);
 	}
 
 	/**

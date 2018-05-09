@@ -12,7 +12,7 @@
 			data-toggle="dropdown" style="color: white;"><i class="fa fa-gears"></i>Configuration<span class="caret"></span></a>
 			<ul class="dropdown-menu">
 				<li><a href="/etravel/announcement">Announcement</a></li>
-<!-- 				<li><a href="/etravel/purpose">Purpose</a></li> -->
+				<li><a href="/etravel/purpose">AirLine</a></li>
 			</ul></li>
 		
 

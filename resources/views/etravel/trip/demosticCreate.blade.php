@@ -3,6 +3,7 @@
 <div class="container">
 	<div class="page-content-inner">
 		<div class="row">
+		
 			<div class="col-md-12">
 			@include('etravel.layout.error')
 				<!-- BEGIN VALIDATION STATES-->
@@ -134,6 +135,9 @@
 												<button data-target="#addNewLineModal" data-toggle="modal" type="button" class="btn btn-primary">
 													<i class="glyphicon glyphicon-plus-sign"></i> 
 													Add Line Item
+												</button>
+												<button type="button" accesskey="I" onclick="window.location.href='/etravel/trip/nationalEdit/27'" class="btn yellow-gold leave-type-button">
+									 				<i class="fa fa-pencil"></i> Ed<u>i</u>t
 												</button>
 												<button id="itemDelBut" type="button" class="btn red-mint" disabled onclick="delLineItem()">
 													<i class="glyphicon glyphicon-remove-sign"></i> 

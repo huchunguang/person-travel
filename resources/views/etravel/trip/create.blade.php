@@ -48,13 +48,9 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Destination</label>
-											<select id="destinationSel" name="destination" class="form-control input-sm select2">
+											<select id="destinationSel" name="destination[]" class="form-control input-sm select2" multiple>
 													@foreach($countryList as $countryItem)
-													@if(old('destination') == $countryItem['CountryID'])
-                                                    		<option value="{{$countryItem['CountryID']}}" selected="selected">
-                                                    	@else
-                                                    		<option value="{{$countryItem['CountryID']}}">
-                                                    	@endif
+                                                    		<option value="{{$countryItem['CountryID']}}" <?php if(in_array($countryItem['CountryID'], old('destination',[]))){echo "selected";}?>>
                                                     		{{$countryItem['Country']}}
                                                     		</option>
                                                     	@endforeach
@@ -184,97 +180,13 @@
 									</div>
 								</div>
 								
-								<div class="row form-group col-sm-12">
-									<div class="portlet box default">
-										<div class="portlet-title">
-											<div class="caption">TRAVEL INSURANCE</div>
-											<div class="tools">
-												<a href="" class="collapse" data-original-title="" title="">
-												</a>
-											</div>
-										</div>
-										<div class="portlet-body form">
-											
-											<ul class="list-group">
-												<li class="list-group-item">
-													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label class="control-label col-md-3">Type: </label>
-																<div class="col-md-9">
-																	<label class=""> 
-																<div class="iradio_minimal-grey" style="position: relative;">
-																<input type="radio" name="insurance_type" class="icheck" style="position: absolute; opacity: 0;" value="adhoc">
-																<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-																</div>
-																 Adhoc 
-																 </label>
-																 <label class=""> 
-																<div class="iradio_minimal-grey" style="position: relative;">
-																<input type="radio" name="insurance_type" class="icheck" style="position: absolute; opacity: 0;" value="yearly">
-																<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-																</div>
-													 			Yearly 
-													 			</label>
-																</div>
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label class="control-label col-md-3">Name of Nominee</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="nominee_name" value="{{old('nominee_name')}}"> </div>
-															</div>
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item">
-													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label class="control-label col-md-3">Full Name as in Passport</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="passport_fullname" value="{{old('passport_fullname')}}"> </div>
-															</div>
-														
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label class="control-label col-md-3">NRIC/Passport No</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="nric_no" value="{{old('nric_no')}}"> </div>
-															</div>
-														</div>
-													</div>
-												</li>
-												
-												<li class="list-group-item">
-													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label class="control-label col-md-3">NRIC/Passport Number</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="nric_num" value="{{old('nric_num')}}"> </div>
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label class="control-label col-md-3">elationship</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="elationship" value="{{old('elationship')}}"> </div>
-															</div>
-														</div>
-													</div>
-												
-												</li>
-											</ul>
-										
-										</div>
-									</div>
-								</div>
-								
-								
 								
 								<div class="row form-group col-sm-12">
 									<ul id="myTab" class="nav nav-tabs">
 										<li class="active"><a href="#home" data-toggle="tab">FLIGHT ITINERARY</a></li>
 										<li><a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a></li>
 										<li><a href="#teana" data-toggle="tab">HOTEL ACCOMODATION</a></li>
+										<li><a href="#camry" data-toggle="tab">TRAVEL INSURANCE</a></li>
 									</ul>
 									<div id="myTabContent" class="tab-content">
 										<div class="tab-pane fade in active" id="home">
@@ -421,6 +333,79 @@
 														</tr>
 													</tbody>
 												</table>
+										
+										</div>
+										<div class="tab-pane fade" id="camry">
+											
+											
+											<ul class="list-group">
+												<li class="list-group-item">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-3">Type: </label>
+																<div class="col-md-9">
+																	<label class=""> 
+																<div class="iradio_minimal-grey" style="position: relative;">
+																<input type="radio" name="insurance_type" class="icheck" style="position: absolute; opacity: 0;" value="adhoc">
+																<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+																</div>
+																 Adhoc 
+																 </label>
+																 <label class=""> 
+																<div class="iradio_minimal-grey" style="position: relative;">
+																<input type="radio" name="insurance_type" class="icheck" style="position: absolute; opacity: 0;" value="yearly">
+																<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+																</div>
+													 			Yearly 
+													 			</label>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-3">Name of Nominee</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="nominee_name" value="{{old('nominee_name')}}"> </div>
+															</div>
+														</div>
+													</div>
+												</li>
+												<li class="list-group-item">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-3">Full Name as in Passport</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="passport_fullname" value="{{old('passport_fullname')}}"> </div>
+															</div>
+														
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-3">NRIC/Passport No</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="nric_no" value="{{old('nric_no')}}"> </div>
+															</div>
+														</div>
+													</div>
+												</li>
+												
+												<li class="list-group-item">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-3">NRIC/Passport Number</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="nric_num" value="{{old('nric_num')}}"> </div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-3">elationship</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="elationship" value="{{old('elationship')}}"> </div>
+															</div>
+														</div>
+													</div>
+												
+												</li>
+											</ul>
 										
 										</div>
 										<div class="tab-pane fade" id="teana">

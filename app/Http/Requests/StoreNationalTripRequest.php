@@ -22,7 +22,7 @@ class StoreNationalTripRequest extends Request {
 	public function rules()
 	{
 		return [
-			'destination'=>'required|integer',
+			'destination'=>'required|array',
 			'cost_center_id'=>'required|integer',
 			'daterange_from'=>'required|date',
 			'daterange_to'=>'required|date',

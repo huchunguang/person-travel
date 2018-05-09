@@ -12,6 +12,7 @@ class SystemInfo implements SystemVariable{
 	public function __construct() 
 	{
 		$this->_user_id=Auth::user()->UserID;
+		
 	}
 	/**
 	 * {@inheritDoc}

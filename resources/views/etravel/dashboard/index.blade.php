@@ -76,7 +76,7 @@
 		<div class="portlet light sameheight-box">
 			<div class="portlet-title tabbable-line">
 				<button type="button" class="btn btn-primary"
-					style="margin-bottom: 10px; font-size: 28px;">10</button>
+					style="margin-bottom: 10px; font-size: 28px;">{{ sprintf('%02d',count($pendingRequests)) }}</button>
 				<div class="caption" style="float: right; margin-right: 10px;">
 					<i class="icon-globe font-dark hide"></i> <span
 						class="caption-subject policies-text bold uppercase">Open Requests
@@ -84,113 +84,33 @@
 				</div>
 			</div>
 			<div class="portlet-body">
-			
-			<div class="panel-group accordion" id="transactions">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#transactions" href="#leaves" aria-expanded="true">My Leave Transactions </a>
-                                            </h4>
-                                        </div>
-                                        <div id="leaves" class="panel-collapse table-responsive collapse" aria-expanded="true" style="">
-                                            <table class="table table-light">
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="5" class="font-dark list-title">Drafts</td>
-                                                    </tr>
-                                                    <tr><td colspan="4" style="color: red; text-align: center">No records found.</td></tr>
-                                                    <tr>
-                                                        <td colspan="5" class="font-dark list-title">Submitted</td>
-                                                    </tr>
-                                                    <tr><td colspan="4" style="color: red; text-align: center">No records found.</td></tr>
-                                                    <tr>
-                                                        <td colspan="5" class="font-dark list-title">Approved</td>
-                                                    </tr>
-                                                    <tr><td colspan="4" style="color: red; text-align: center">No records found.</td></tr>
-                                                    <tr>
-                                                        <td colspan="5" class="font-dark list-title">Rejected</td>
-                                                    </tr>
-                                                    <tr><td colspan="4" style="color: red; text-align: center">No records found.</td></tr>
-                                                    <tr>
-                                                        <td colspan="5" class="font-dark list-title">Cancelled</td>
-                                                    </tr>
-                                                    <tr><td colspan="4" style="color: red; text-align: center">No records found.</td></tr>                                                </tbody>
-                                            </table>
-                                        </div>
+				<div class="table-scrollable">
+                                        <table class="table table-light">
+                                            <tbody>
+                                        		@if(count($pendingRequests))
+                                            		@foreach($pendingRequests as $item)
+                                                <tr>
+                                                    <td class="highlight">
+                                                        <div class="success"></div>
+                                                       	@if($item['trip_type']=='1')
+														<a href="/etravel/tripnationallist/{{ $item['trip_id'] }}">{{$item->destination_name['Country']?$item->destination_name['Country']:'Destination'}}  </a>
+														@elseif($item['trip_type']=='2')
+														<a href="/etravel/tripdemosticlist/{{ $item['trip_id'] }}">{{$item->destination_name['Country']?$item->destination_name['Country']:'Destination'}}  </a>
+														@endif
+                                                        
+                                                    </td>
+                                                    <td class="hidden-xs">{{$item->daterange_from}}</td>
+                                                    <td> {{$item->daterange_to}}</td>
+                                                </tr>
+                                             	@endforeach
+                                          	@else
+                                          		<tr>
+                                          			<td style="text-align: center;color:rgb(87,142,190);"colspan="3">No records found.</td>
+                                           	@endif
+                                          		</tr>	
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    
-                                </div>
-			
-			
-				<div class="table-scrollable table-scrollable-borderless">
-					<div class="slimScrollDiv"
-						style="position: relative; overflow: hidden; width: auto; height: 370px;">
-						<div class="scroller table-responsive"
-							style="height: 370px; overflow: hidden; width: auto;"
-							data-always-visible="1" data-rail-visible="0"
-							data-initialized="1">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a  href="/etravel/{{Auth::user()->UserID}}/triplist?status=pending">My Pending Requests </a>
-											
-										<!-- <a class="accordion-toggle" href="./leave-list.php?status=all">My Leave Transactions </a> -->
-									</h4>
-								</div>
-								<div id="leaves"
-									class="panel-collapse collapse table-responsive">
-									<table class="table table-light">
-										<tbody>
-											<tr>
-												<td colspan="5" class="font-dark list-title">Drafts</td>
-											</tr>
-											<tr>
-												<td colspan="4" style="color: red; text-align: center">No
-													records found.</td>
-											</tr>
-											<tr>
-												<td colspan="5" class="font-dark list-title">Submitted</td>
-											</tr>
-											<tr>
-												<td colspan="4" style="color: red; text-align: center">No
-													records found.</td>
-											</tr>
-											<tr>
-												<td colspan="5" class="font-dark list-title">Approved</td>
-											</tr>
-											<tr>
-												<td colspan="4" style="color: red; text-align: center">No
-													records found.</td>
-											</tr>
-											<tr>
-												<td colspan="5" class="font-dark list-title">Rejected</td>
-											</tr>
-											<tr>
-												<td colspan="4" style="color: red; text-align: center">No
-													records found.</td>
-											</tr>
-											<tr>
-												<td colspan="5" class="font-dark list-title">Cancelled</td>
-											</tr>
-											<tr>
-												<td colspan="4" style="color: red; text-align: center">No
-													records found.</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<table class="table table-light">
-								<tbody>
-								</tbody>
-							</table>
-						</div>
-						<div class="slimScrollBar"
-							style="background: rgb(187, 187, 187); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 370px;"></div>
-						<div class="slimScrollRail"
-							style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(234, 234, 234); opacity: 0.2; z-index: 90; right: 1px;"></div>
-					</div>
-				</div>
 			</div>
 		</div>
 		<!-- END PORTLET-->
@@ -208,39 +128,28 @@
 				</div>
 			</div>
 			<div class="portlet-body">
-				<div class="table-scrollable table-scrollable-borderless">
-					<div class="slimScrollDiv"
-						style="position: relative; overflow: hidden; width: auto; height: 370px;">
-						<div class="scroller table-responsive"
-							style="height: 370px; overflow: hidden; width: auto;"
-							data-always-visible="1" data-rail-visible="0"
-							data-initialized="1">
-							@foreach($approved_request as $request)
-							
-							<h5>
-								<strong>{{$request->daterange_from}} Travel to shanghai </strong>
-							</h5>
-							<p>$3500.00 - Travel</p>
-							@endforeach
-							<h5>
-								<strong>01/23 Travel to shanghai </strong>
-							</h5>
-							<p>$3500.00 - Travel</p>
-							<h5>
-								<strong>01/23 Travel to shanghai </strong>
-							</h5>
-							<p>$3500.00 - Travel</p>
-							<table class="table table-light">
-								<tbody>
-								</tbody>
-							</table>
-						</div>
-						<div class="slimScrollBar"
-							style="background: rgb(187, 187, 187); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 370px;"></div>
-						<div class="slimScrollRail"
-							style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(234, 234, 234); opacity: 0.2; z-index: 90; right: 1px;"></div>
-					</div>
-				</div>
+				<div class="table-scrollable">
+                                        <table class="table table-light">
+                                            <tbody>
+                                        		@if(count($approved_request))
+                                            		@foreach($approved_request as $item)
+                                                <tr>
+                                                    <td class="highlight">
+                                                        <div class="success"></div>
+                                                        <a href="">  {{$item->destination_name['Country']?$item->destination_name['Country']:'Destination'}}  </a>
+                                                    </td>
+                                                    <td class="hidden-xs">{{$item->daterange_from}}</td>
+                                                    <td> {{$item->daterange_to}}</td>
+                                                </tr>
+                                             	@endforeach
+                                          	@else
+                                          		<tr>
+                                          			<td style="text-align: center;color:rgb(87,142,190);"colspan="3">No records found.</td>
+                                           	@endif
+                                          		</tr>	
+                                            </tbody>
+                                        </table>
+                  </div>
 			</div>
 		</div>
 		<!-- END PORTLET-->

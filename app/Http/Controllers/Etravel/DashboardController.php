@@ -6,23 +6,31 @@ use Illuminate\Http\Request;
 use App\Trip;
 use Illuminate\Support\Facades\Auth;
 use App\Contacts\SystemVariable;
+use App\Repositories\TripRepository;
 
 class DashboardController extends Controller
 {
-	public function __construct(SystemVariable $system)
+	public function __construct(SystemVariable $system,TripRepository $trip)
 	{
 		$this->system = $system;	
+		$this->trip=$trip;
 	}
 	
     public function index(Request $request) 
     {
     		$generalAnnouncement = $this->system->getAnnouncement();
-    		$approvedRequest= Trip::where(['user_id'=>Auth::user()->UserID,'status'=>'approved'])->orderBy('updated_at','DESC')->limit(5)->get();
-			// dd($approved_request);
-			
+    		$approved_request=[];
+    		$approved_request = $this->trip->getListByStatus('approved');
+    		$pendingRequests=$this->trip->getListByStatus('pending');
+    		foreach ($pendingRequests as $item)
+    		{
+    			$item->destination_name=$this->trip->getTripDst($item);
+    		}
+//     		dd($pendingRequests->toArray());
 		return view('/etravel/dashboard/index', [ 
 			
-			'approved_request' => $approvedRequest,
+			'approved_request' => $approved_request,
+			'pendingRequests'=>$pendingRequests,
 			'generalAnnouncement' => $generalAnnouncement
 		]);
     }

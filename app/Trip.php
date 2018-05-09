@@ -49,11 +49,19 @@ class Trip extends Model {
 	{
 		$this->attributes['hotel_prefer']=json_encode($value);
 	}
+	public function setDestinationId($value)
+	{
+		$this->attributes['destination_id']=json_encode($value);
+	}
 	public function getFlightItineraryPreferAttribute($value)
 	{
 		return json_decode($value,true);
 	}
 	public function getHotelPreferAttribute($value) 
+	{
+		return json_decode($value,true);
+	}
+	public function getDestinationId($value)
 	{
 		return json_decode($value,true);
 	}

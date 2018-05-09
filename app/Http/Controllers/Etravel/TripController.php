@@ -145,12 +145,13 @@ class TripController extends Controller
     {
 //     		header("Content-Type: ".Storage::mimeType($savePath));
 //     		echo Storage::get($savePath);
+// 		dd($request->all());
     		DB::beginTransaction();
     		try {
     			$trip=new Trip;
     			$trip->user_id=Auth::user()->UserID;
     			$trip->project_code=$request->input('project_code');
-    			$trip->destination_id=$request->input('destination');
+    			$trip->destination_id=json_encode($request->input('destination'));
     			$trip->cost_center_id=$request->input('cost_center_id');
     			$trip->daterange_from=$request->input('daterange_from');
     			$trip->daterange_to=$request->input('daterange_to');
