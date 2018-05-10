@@ -22,13 +22,16 @@ class DashboardController extends Controller
     		$approved_request=[];
     		$approved_request = $this->trip->getListByStatus('approved');
     		$pendingRequests=$this->trip->getListByStatus('pending');
+    		$staffTripList=$this->trip->staffTripByStatus()->groupBy('status');
+//     		dd($staffTripList);
+//     		dd($staffTripList['pending'][0]->user()->first()['FirstName']);
     		foreach ($pendingRequests as $item)
     		{
     			$item->destination_name=$this->trip->getTripDst($item);
     		}
 //     		dd($pendingRequests->toArray());
 		return view('/etravel/dashboard/index', [ 
-			
+			'staffTripList'=>$staffTripList,
 			'approved_request' => $approved_request,
 			'pendingRequests'=>$pendingRequests,
 			'generalAnnouncement' => $generalAnnouncement

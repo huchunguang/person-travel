@@ -56,7 +56,7 @@ function addNewLine(){
 	var entertain_detail=$('.modal input[name="entertain_detail[]"]').val();
 	addnewLineNum++;
 
-	 var rowTem = '<tr id="tr_' + addnewLineNum + '" onclick="showItemOperate(this)">'
+	 var rowTem = '<tr id="tr_' + addnewLineNum + '" onclick="showItemOperate(this)" data-id="'+ addnewLineNum +'">'
      + '<td class="col-md-1"><input type="hidden" name="datetime_date[]" value="'+datetime_date+'"/>'+datetime_date+'</td>'
      + '<td class="col-md-2"><input type="hidden" name="datetime_time[]" value="'+datetime_time+'"/>'+datetime_time+'</td>'
      + '<td class="col-md-1"><input type="hidden" name="location[]" value="'+location+'"/>'+location+'</td>'
@@ -71,9 +71,30 @@ function addNewLine(){
 	 $("#ltineraryTable tbody:last").append(rowTem);
 	 $('#addNewLineModal').modal("hide");
 }
-function editNewLine(id)
+function editNewLine()
 {
+	var id=$('.prepareDelTr').data('id');
+	var datetime_date=$('#tr_'+id+' input[name="datetime_date[]"]').val();
+	var datetime_time=$('#tr_'+id+' input[name="datetime_time[]"]').val();
+	var location=$('#tr_'+id+' input[name="location[]"]').val();
+	var customer_name=$('#tr_'+id+' input[name="customer_name[]"]').val();
+	var contact_name=$('#tr_'+id+' input[name="contact_name[]"]').val();
+	var purpose_id=$('#tr_'+id+' input[name="purpose_id[]"]').val();
+	var purpose_desc=$('#tr_'+id+' input[name="purpose_desc[]"]').val();
+	var travel_cost=$('#tr_'+id+' input[name="travel_cost[]"]').val();
+	var entertain_cost=$('#tr_'+id+' input[name="entertain_cost[]"]').val();
+	var entertain_detail=$('#tr_'+id+' input[name="entertain_detail[]"]').val();
 	
+	$('.modal input[name="datetime_date[]"]').val(datetime_date);
+	$('.modal input[name="datetime_time[]"]').val(datetime_time);
+	$('.modal input[name="location[]"]').val(location);
+	$('.modal input[name="customer_name[]"]').val(customer_name);
+	$('.modal input[name="contact_name[]"]').val(contact_name);
+	$('.modal #purpose_desc option[value="'+purpose_id+'"]').attr('selected',true);
+	$('.modal input[name="travel_cost[]"]').val(travel_cost);
+	$('.modal input[name="entertain_cost[]"]').val(entertain_cost);
+	$('.modal input[name="entertain_detail[]"]').val(entertain_detail);
+	$('#addNewLineModal').modal('show');
 }
 function showItemOperate(obj){
 	thisObj=$(obj);
@@ -82,6 +103,7 @@ function showItemOperate(obj){
 		"background-color":"rgba(249,202,206,1)"
 	});
 	$('#itemDelBut').attr('disabled',false);
+	$('#itemEditBut').attr('disabled',false);
 }
 function delLineItem(){
 	$('.prepareDelTr').remove();

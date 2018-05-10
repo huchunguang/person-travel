@@ -30,6 +30,10 @@
 					 @endif
 				</a>
 					<ul class="dropdown-menu dropdown-menu-default">
+						<li><a href="/etravel/{{Auth::user()->UserID}}/triplist?status">
+                                                        <i class="fa fa-file-text-o"></i> My Travel Requests
+                                                    </a></li>
+                        <li><a href="staff/travellist"><i class="fa fa-flag-o"></i> My Staff Travel Requests</a></li>
 						<li><a href="/auth/logout"> <i class="icon-key"></i> Login Out </a></li>
 					</ul>
 				</li>

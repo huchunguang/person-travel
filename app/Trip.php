@@ -30,6 +30,14 @@ class Trip extends Model {
 	{
 		return $this->hasMany('App\Trip_insurance','trip_id','trip_id');
 	}
+	public function wbsCode() 
+	{
+		return $this->hasOne('App\Wbscode','wbs_id','project_code');
+	}
+	public function user()
+	{
+		return $this->belongsTo('App\User','user_id','UserID');
+	}
 	/**
 	 * @desc query  with  different itinerary status trip  currently user 
 	 * @param unknown $query

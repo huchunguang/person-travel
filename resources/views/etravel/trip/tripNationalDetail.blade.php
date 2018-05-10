@@ -107,7 +107,9 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Project Code</label>
-											<input type="text" name="project_code" class="form-control" disabled value="{{ $trip->project_code }}"/>
+											<select id="project_code" disabled name="project_code" class="form-control input-sm select2">
+												<option value="{{$trip->project_code}}">{{$trip->wbsCode()->first()['wbs_code']}}</option>
+											</select>
 										</div>
 									</div>
 								</div>
@@ -160,89 +162,6 @@
 										</div>
 									</div>
 								</div>
-								<div class="row form-group col-sm-12">
-									<div class="portlet box default">
-										<div class="portlet-title">
-											<div class="caption">TRAVEL INSURANCE</div>
-											<div class="tools">
-												<a href="" class="collapse" data-original-title="" title="">
-												</a>
-											</div>
-										</div>
-										<div class="portlet-body form">
-											
-											<ul class="list-group">
-												<li class="list-group-item">
-													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label class="control-label col-md-3">Type: </label>
-																<div class="col-md-9">
-																	<label class=""> 
-																<div class="iradio_minimal-grey" style="position: relative;">
-																<input type="radio" name="insurance_type" class="icheck" style="position: absolute; opacity: 0;" value="adhoc" disabled <?php if($insuranceData['insurance_type']=='adhoc'){echo 'checked';}?>>
-																<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-																</div>
-																 Adhoc 
-																 </label>
-																 <label class=""> 
-																<div class="iradio_minimal-grey" style="position: relative;">
-																<input type="radio" name="insurance_type" class="icheck" style="position: absolute; opacity: 0;" value="yearly" disabled <?php if($insuranceData['insurance_type']=='yearly'){echo 'checked';}?>>
-																<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-																</div>
-													 			Yearly 
-													 			</label>
-																</div>
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label class="control-label col-md-3">Name of Nominee</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="nominee_name" disabled value="{{$insuranceData['nominee_name']}}"> </div>
-															</div>
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item">
-													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label class="control-label col-md-3">Full Name as in Passport</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="passport_fullname" disabled value="{{$insuranceData['passport_fullname']}}"> </div>
-															</div>
-														
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label class="control-label col-md-3">NRIC/Passport No</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="nric_no" disabled value="{{$insuranceData['nric_no']}}"> </div>
-															</div>
-														</div>
-													</div>
-												</li>
-												
-												<li class="list-group-item">
-													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label class="control-label col-md-3">NRIC/Passport Number</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="nric_num" disabled value="{{$insuranceData['nric_no']}}"> </div>
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label class="control-label col-md-3">elationship</label>
-																<div class="col-md-9"><input type="text" class="form-control" name="elationship" disabled value="{{$insuranceData['nric_no']}}"> </div>
-															</div>
-														</div>
-													</div>
-												
-												</li>
-											</ul>
-										
-										</div>
-									</div>
-								</div>
 								
 <!-- 								<div class="row form-group col-sm-12"> -->
 
@@ -271,6 +190,7 @@
 										<li class="active"><a href="#home" data-toggle="tab">FLIGHT ITINERARY</a></li>
 										<li><a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a></li>
 										<li><a href="#teana" data-toggle="tab">HOTEL ACCOMODATION</a></li>
+										<li><a href="#camry" data-toggle="tab">TRAVEL INSURANCE</a></li>
 									</ul>
 									<div id="myTabContent" class="tab-content">
 										<div class="tab-pane fade in active" id="home">
@@ -479,11 +399,13 @@
 														<div class="row">
 														<div class="col-md-6">
                                                                                     <div class="form-group">
-                                                                                        <label class="control-label col-md-3">Food:</label>
+                                                                                        <label class="control-label col-md-3">Food Restrictions:</label>
                                                                                         <div class="col-md-9">
+                                                                                        @if(count($trip->hotel_prefer['foods']))
                                                                                             @foreach($trip->hotel_prefer['foods'] as $food)
                                                                                             		{{$food}}
                                                                                             @endforeach
+                                                                                         @endif
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -501,6 +423,7 @@
 														</tr>
 													</thead>
 													<tbody>
+													@if(count($hotelData))
 													@foreach($hotelData as $hotelItem)
 														<tr>
 															<td>{{$hotelItem['hotel_name']}}</td>
@@ -515,8 +438,83 @@
 															</td>
 														</tr>
 													@endforeach
+													@endif
 													</tbody>
 												</table>
+										
+										</div>
+										<div class="tab-pane fade" id="camry">
+											
+											
+											<ul class="list-group">
+												<li class="list-group-item">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-3">Type: </label>
+																<div class="col-md-9">
+																	<label class=""> 
+																<div class="iradio_minimal-grey" style="position: relative;">
+																<input type="radio" name="insurance_type" class="icheck" style="position: absolute; opacity: 0;" value="adhoc" disabled <?php if($insuranceData['insurance_type']=='adhoc'){echo 'checked';}?>>
+																<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+																</div>
+																 Adhoc 
+																 </label>
+																 <label class=""> 
+																<div class="iradio_minimal-grey" style="position: relative;">
+																<input type="radio" name="insurance_type" class="icheck" style="position: absolute; opacity: 0;" value="yearly" disabled <?php if($insuranceData['insurance_type']=='yearly'){echo 'checked';}?>>
+																<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+																</div>
+													 			Yearly 
+													 			</label>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-3">Name of Nominee</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="nominee_name" disabled value="{{$insuranceData['nominee_name']}}"> </div>
+															</div>
+														</div>
+													</div>
+												</li>
+												<li class="list-group-item">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-3">Full Name as in Passport</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="passport_fullname" disabled value="{{$insuranceData['passport_fullname']}}"> </div>
+															</div>
+														
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-3">NRIC/Passport No</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="nric_no" disabled value="{{$insuranceData['nric_no']}}"> </div>
+															</div>
+														</div>
+													</div>
+												</li>
+												
+												<li class="list-group-item">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-3">NRIC/Passport Number</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="nric_num" disabled value="{{$insuranceData['nric_no']}}"> </div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-3">elationship</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="elationship" disabled value="{{$insuranceData['nric_no']}}"> </div>
+															</div>
+														</div>
+													</div>
+												
+												</li>
+											</ul>
+										
 										
 										</div>
 									</div>

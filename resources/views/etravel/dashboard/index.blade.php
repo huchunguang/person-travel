@@ -106,8 +106,8 @@
                                           	@else
                                           		<tr>
                                           			<td style="text-align: center;color:rgb(87,142,190);"colspan="3">No records found.</td>
-                                           	@endif
-                                          		</tr>	
+                                          		</tr>
+                                          	@endif	
                                             </tbody>
                                         </table>
                                     </div>
@@ -165,15 +165,141 @@
 						class="caption-subject policies-text bold uppercase">Manager Section</span> 
 				</div>
 			</div>
-			<div class="portlet-body">
-				<div class="panel-default">
-					
-					<div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a class="accordion-toggle" href="staff/travellist"> My Staff Travel Requests </a>
-                                        </h4>
-                    </div>
-				</div>
+			
+			
+			
+			
+			<div class="portlet-body" >
+			<div class="portlet box blue-soft">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-database"></i>Staff Trips</div>
+                                    <div class="tools">
+                                        <a href="javascript:;" class="expand" data-original-title="" title=""> </a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body portlet-collapsed">
+                                    <div class="table-scrollable">
+                                        <table class="table table-light">
+                                            <tbody>
+                                            
+                                                <tr>
+                                                    <td colspan="3" class="font-dark list-title">
+                                                    	<i class="fa fa-upload">PENGING</i>
+                                                    	</td>
+                                                    	
+                                                </tr>
+                                                @if(isset($staffTripList['pending']) && count($staffTripList['pending']))
+                                                		@for ($i = 0; $i < count($staffTripList['pending']); $i++)
+                                                		@if($i<5)
+                                                			<tr>
+                                                				<td>
+															<a href="">{{$staffTripList['pending'][$i]->user()->first()['FirstName']}}</a>
+                                                				</td>
+                                                				<td>{{$staffTripList['pending'][$i]['daterange_from']}}</td>
+                                                				<td>{{$staffTripList['pending'][$i]['daterange_to']}}</td>
+                                                			</tr>
+                                                		@endif
+													@endfor
+                                                @else
+                                                	<tr>
+                                          			<td style="text-align: center;color:rgb(87,142,190);"colspan="3">No records found.</td>
+                                          		</tr>
+                                                @endif
+                                                <tr>
+                                                    <td colspan="3" class="font-dark list-title">
+                                                    	<i class="fa fa-check-square-o">APPROVED</i>
+                                                    	</td>
+                                                </tr>
+                                                @if(isset($staffTripList['approved']) && count($staffTripList['approved']))
+                                                		@for ($i = 0; $i < count($staffTripList['approved']); $i++)
+                                                		@if($i<5)
+                                                			<tr>
+                                                				<td>
+															<a href="">{{$staffTripList['approved'][$i]->user()->first()['FirstName']}}</a>
+                                                				</td>
+                                                				<td>{{$staffTripList['approved'][$i]['daterange_from']}}</td>
+                                                				<td>{{$staffTripList['approved'][$i]['daterange_to']}}</td>
+                                                			</tr>
+                                                		@endif
+													@endfor
+                                                @else
+                                                	<tr>
+                                          			<td style="text-align: center;color:rgb(87,142,190);"colspan="3">No records found.</td>
+                                          		</tr>
+                                                @endif
+                                                 <tr>
+                                                    <td colspan="3" class="font-dark list-title">
+                                                    	<i class="fa fa-check-square-o">PARTLY APPROVED</i>
+                                                    	</td>
+                                                </tr>
+                                                @if(isset($staffTripList['partly-approved']) && count($staffTripList['partly-approved']))
+                                                		@for ($i = 0; $i < count($staffTripList['partly-approved']); $i++)
+                                                		@if($i<5)
+                                                			<tr>
+                                                				<td>
+															<a href="">{{$staffTripList['partly-approved'][$i]->user()->first()['FirstName']}}</a>
+                                                				</td>
+                                                				<td>{{$staffTripList['partly-approved'][$i]['daterange_from']}}</td>
+                                                				<td>{{$staffTripList['partly-approved'][$i]['daterange_to']}}</td>
+                                                			</tr>
+                                                		@endif
+													@endfor
+                                                @else
+                                                	<tr>
+                                          			<td style="text-align: center;color:rgb(87,142,190);"colspan="3">No records found.</td>
+                                          		</tr>
+                                                @endif
+                                                <tr>
+                                                    <td colspan="3" class="font-dark list-title">
+                                                    	<i class="fa fa-thumbs-down">REJECTED</i>
+                                                    	</td>
+                                                </tr>
+                                                @if(isset($staffTripList['rejected']) && count($staffTripList['rejected']))
+                                                		@for ($i = 0; $i < count($staffTripList['rejected']); $i++)
+                                                		@if($i<5)
+                                                			<tr>
+                                                				<td>
+															<a href="">{{$staffTripList['rejected'][$i]->user()->first()['FirstName']}}</a>
+                                                				</td>
+                                                				<td>{{$staffTripList['rejected'][$i]['daterange_from']}}</td>
+                                                				<td>{{$staffTripList['rejected'][$i]['daterange_to']}}</td>
+                                                			</tr>
+                                                		@endif
+													@endfor
+                                                @else
+                                                	<tr>
+                                          			<td style="text-align: center;color:rgb(87,142,190);"colspan="3">No records found.</td>
+                                          		</tr>
+                                                @endif
+                                                <tr>
+                                                    <td colspan="3" class="font-dark list-title">
+                                                    	<i class="fa fa-times">CANCELLED</i>
+                                                    	</td>
+                                                </tr>
+                                                @if(isset($staffTripList['cancelled']) &&  count($staffTripList['cancelled']))
+                                                		@for ($i = 0; $i < count($staffTripList['cancelled']); $i++)
+                                                		@if($i<5)
+                                                			<tr>
+                                                				<td>
+															<a href="">{{$staffTripList['cancelled'][$i]->user()->first()['FirstName']}}</a>
+                                                				</td>
+                                                				<td>{{$staffTripList['cancelled'][$i]['daterange_from']}}</td>
+                                                				<td>{{$staffTripList['cancelled'][$i]['daterange_to']}}</td>
+                                                			</tr>
+                                                		@endif
+													@endfor
+                                                @else
+                                                	<tr>
+                                          			<td style="text-align: center;color:rgb(87,142,190);"colspan="3">No records found.</td>
+                                          		</tr>
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+			
 				
 			</div>
 			<div class="portlet-body">

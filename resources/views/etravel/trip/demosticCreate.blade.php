@@ -3,9 +3,7 @@
 <div class="container">
 	<div class="page-content-inner">
 		<div class="row">
-		
 			<div class="col-md-12">
-			@include('etravel.layout.error')
 				<!-- BEGIN VALIDATION STATES-->
 				<div class="portlet box green">
 					<div class="portlet-title">
@@ -136,7 +134,7 @@
 													<i class="glyphicon glyphicon-plus-sign"></i> 
 													Add Line Item
 												</button>
-												<button type="button" accesskey="I" onclick="window.location.href='/etravel/trip/nationalEdit/27'" class="btn yellow-gold leave-type-button">
+												<button id="itemEditBut" type="button" accesskey="I" onclick="editNewLine()" disabled class="btn yellow-gold leave-type-button">
 									 				<i class="fa fa-pencil"></i> Ed<u>i</u>t
 												</button>
 												<button id="itemDelBut" type="button" class="btn red-mint" disabled onclick="delLineItem()">

@@ -248,12 +248,6 @@ class TripController extends Controller
 	 * @param Request $request
 	 * @param Trip $trip
 	 * @return \Illuminate\View\View
-	 * "rep_office": "12"
-  +"room_type": "king"
-  +"smoking": "1"
-  +"foods": array:2 [
-    0 => "12"
-    1 => "11"
 	 */
 	public function tripNationalDetails(TripReadRequest $request,Trip $trip) 
 	{
@@ -263,9 +257,10 @@ class TripController extends Controller
 		$estimateExpenses=$trip->estimateExpense()->get();
 		$flightData=$trip->flight()->get();
 		$insuranceData=$trip->insurance()->first();
+// 		dd($trip->destination_id);
 		$destination=Country::find($trip->destination_id);
 		//flight_itinerary_prefer//hotel_prefer
-// 		dd($trip->flight_itinerary_prefer);
+// 				dd();
 // 		dd($destination->toArray());
 // 		dd($trip->purpose_file);
 // 		dd($insuranceData);
@@ -434,6 +429,7 @@ class TripController extends Controller
 			$flightData=array_bound_key($flightData);
 // 			dd($flightData);
 			$hotelData=$request->only(['hotel_id','hotel_name','checkin_date','checkout_date','rate']);
+// 			dd($hotelData);
 			$hotelData=array_bound_key($hotelData);
 // 			dd($hotelData);
 			$estimateExpenses=$request->only(['estimate_id','estimate_type','employee_annual_budget','employee_ytd_expenses','available_amount','required_amount']);

@@ -13,7 +13,7 @@ class ComposerServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 			view()->composer(
-				['/etravel/trip/demosticCreate','/etravel/trip/create'], 'App\Http\ViewComposers\CommonComposer'
+				['/etravel/trip/demosticCreate','/etravel/trip/create','/etravel/trip/nationalEdit'], 'App\Http\ViewComposers\CommonComposer'
 				);
 	}
 
