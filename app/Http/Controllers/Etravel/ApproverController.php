@@ -114,7 +114,12 @@ class ApproverController extends Controller {
 				Event::fire(new TripWasRejected($trip,$request));break;
 				
 		}
-		return redirect('/etravel/tripdemosticlist/'.$trip->trip_id);
+		if ($trip->trip_type=='2'){
+			return redirect('/etravel/tripdemosticlist/'.$trip->trip_id);
+		}elseif ($trip->trip_type=='1'){
+			return redirect('/etravel/tripnationallist/'.$trip->trip_id);
+		}
+		
 	}
 
 }

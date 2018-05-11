@@ -14,7 +14,8 @@ class TripReadRequest extends Request {
 	public function authorize()
 	{
 		$trip = $this->route('trip');
-		return Trip::where('trip_id',$trip->trip_id)->where('user_id',Auth::user()->UserID)->exists();
+		$user_id=Auth::user()->UserID;
+		return Trip::where('trip_id',$trip->trip_id)->where('user_id',$user_id)->orWhere('department_approver',$user_id)->exists();
 	}
 
 	/**

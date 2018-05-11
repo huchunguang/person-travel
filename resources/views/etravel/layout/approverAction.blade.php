@@ -10,13 +10,13 @@
 					<div class="btn-group btn-group-solid margin-bottom-10">
 						<button id="PartlybtnApproveValidate" type="button"
 							data-toggle="modal" data-target="#forPartlyApproval"
-							class="btn yellow-crusta" disabled="">
+							class="btn yellow-crusta" disabled>
 							<i class="fa fa-thumbs-up"></i> Partly Approve
 						</button>
 						<button id="btnApproveValidate" type="button"
 							 data-toggle="modal" data-target="#forApproval" 
 							 title="Approve Leave Request"
-							class="btn green" disabled="">
+							class="btn green" <?php if($trip->trip_type=='2'){echo 'disabled';}?>>
 							<i class="fa fa-thumbs-up"></i> Approve
 						</button>
 						<button id="btnRejectTravel" type="button"

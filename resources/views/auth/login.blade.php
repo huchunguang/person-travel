@@ -1,7 +1,5 @@
 @extends('app')
-
 @section('content')
-
 <div class="container-fluid" style="margin-top:200px;">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">

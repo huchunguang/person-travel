@@ -158,6 +158,7 @@ class TripController extends Controller
     			$trip->department_approver=$request->input('department_approver');
     			$trip->approver_comment=$request->input('approver_comment');
     			$trip->extra_comment=$request->input('extra_comment');
+    			$trip->trip_type=2;//by default international with 2
     			if ($request->hasFile('purpose_file')){
     				$file=$request->file('purpose_file');
     				if(!$file->isValid()){

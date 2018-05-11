@@ -93,9 +93,9 @@
                                                     <td class="highlight">
                                                         <div class="success"></div>
                                                        	@if($item['trip_type']=='1')
-														<a href="/etravel/tripnationallist/{{ $item['trip_id'] }}">{{$item->destination_name['Country']?$item->destination_name['Country']:'Destination'}}  </a>
+														<a href="/etravel/tripnationallist/{{ $item['trip_id'] }}">{{isset($item->destination_name['Country'])?$item->destination_name['Country']:'Destination'}}  </a>
 														@elseif($item['trip_type']=='2')
-														<a href="/etravel/tripdemosticlist/{{ $item['trip_id'] }}">{{$item->destination_name['Country']?$item->destination_name['Country']:'Destination'}}  </a>
+														<a href="/etravel/tripdemosticlist/{{ $item['trip_id'] }}">{{isset($item->destination_name['Country'])?$item->destination_name['Country']:'Destination'}}  </a>
 														@endif
                                                         
                                                     </td>
@@ -182,12 +182,10 @@
                                     <div class="table-scrollable">
                                         <table class="table table-light">
                                             <tbody>
-                                            
                                                 <tr>
                                                     <td colspan="3" class="font-dark list-title">
                                                     	<i class="fa fa-upload">PENGING</i>
-                                                    	</td>
-                                                    	
+                                                   	</td>
                                                 </tr>
                                                 @if(isset($staffTripList['pending']) && count($staffTripList['pending']))
                                                 		@for ($i = 0; $i < count($staffTripList['pending']); $i++)

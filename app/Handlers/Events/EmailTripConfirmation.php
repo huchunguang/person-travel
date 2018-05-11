@@ -32,7 +32,10 @@ class EmailTripConfirmation {
 		$trip= $event->trip;
 		DB::transaction(function()use($trip){
 			$trip->update(['status'=>'approved']);
-			$trip->demostic()->update(['is_approved'=>'1']);
+			if ($trip->trip_type=='2'){
+				$trip->demostic()->update(['is_approved'=>'1']);
+			}
+			
 		});
 		
 	}

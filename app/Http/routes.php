@@ -60,8 +60,8 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         Route::put('tripapproval/{trip}','ApproverController@approval');
         #Announcement Resource
         Route::resource('announcement', 'AnnouncementController');
-        
-        
+        Route::resource('airline', 'AirlineController');
+       	
        
         
     });

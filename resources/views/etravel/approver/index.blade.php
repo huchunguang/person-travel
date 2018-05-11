@@ -18,7 +18,7 @@ use App\User;
                     <div class="col-md-3">
                         <div class="portlet box light">
                             <div class="portlet-body">
-                                <a class="btn default btn-block" href="/etravel/trip/create/demostic"><i class="fa fa-minus-circle"></i> New Demostic Travel Request </a>
+                                <button class="btn default btn-block" type="button" data-target="#newTravel" data-toggle="modal" ><i class="fa fa-minus-circle"></i> New Travel Request </button>
                                 <hr>
                                 @if($status == 'all')
                                 <a class="btn green btn-block btn-outline active" href="?status"> All </a>
@@ -147,4 +147,5 @@ use App\User;
             </div>
         </div>
     </div>
+@include('etravel.modal.newTravel')
 @endsection

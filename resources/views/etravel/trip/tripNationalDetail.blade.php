@@ -5,7 +5,7 @@
 	<div class="page-content-inner">
 		<div class="row">
 		<!-- BEGIN FORM-->
-		<form action="/etravel/trip/storeNational" method="post" class="horizontal-form">
+		<form action="/etravel/tripapproval/{{$trip->trip_id}}" method="post" class="horizontal-form">
 			@if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID )
 				@include('etravel.layout.approverAction')
 			@endif
@@ -32,6 +32,8 @@
 
 					<div class="portlet-body form">
 							<input type="hidden" name="_token" value="{{csrf_token()}}"/>
+							<input type="hidden" name="_method" value="PUT"/>
+							<input type="hidden" name="status" value="rejected"/>
 							<div class="form-body">
 
 								<div class="row">
@@ -144,7 +146,8 @@
 
 								</div>
 
-								<div class="row form-group col-sm-12">
+								<div class="row">
+									<div class="col-md-12">
 									<div class="portlet box default">
 										<div class="portlet-title">
 											<div class="caption">PURPOSE OF TRAVEL</div>
@@ -161,31 +164,11 @@
 										
 										</div>
 									</div>
+									</div>
 								</div>
 								
-<!-- 								<div class="row form-group col-sm-12"> -->
-
-<!-- 									<div class="portlet box default"> -->
-<!-- 										<div class="portlet-title"> -->
-<!-- 											<div class="caption">PRE-APPROVAL PURCHASE/REQUEST(RENT)</div> -->
-<!-- 											<div class="tools"> -->
-<!-- 												<a href="" class="collapse" data-original-title="" title=""> -->
-<!-- 												</a> -->
-<!-- 											</div> -->
-<!-- 										</div> -->
-<!-- 										<div class="portlet-body form"> -->
-<!-- 											<div class="form-group"> -->
-<!-- 												<select id="CostCenter" name="CostCenter" -->
-<!-- 													class="cboSelect2 leave-control form-control" tabindex="-1"> -->
-<!-- 													<option value="0">&lt;&nbsp;others&nbsp;&gt;</option> -->
-<!-- 												</select> -->
-<!-- 											</div> -->
-<!-- 										</div> -->
-<!-- 									</div> -->
-
-<!-- 								</div> -->
-								<div class="row form-group col-sm-12">
-									
+								<div class="row">
+									<div class="col-sm-12">
 									<ul id="myTab" class="nav nav-tabs">
 										<li class="active"><a href="#home" data-toggle="tab">FLIGHT ITINERARY</a></li>
 										<li><a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a></li>
@@ -200,9 +183,9 @@
 													<label class=""> 
 													<div class="iradio_minimal-grey" style="position: relative;">
 													@if($trip->flight_itinerary_prefer['is_sent_affairs']=='1')
-													<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="1" checked >
+													<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="1" checked disabled>
 													@else
-													<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="1">
+													<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="1" disabled>
 													@endif
 													
 													<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
@@ -227,10 +210,8 @@
 													<div class="row">
 														<div class="col-md-6">
 															<div class="form-group">
-																<label class="control-label">CC</label> <select
-																	id="CostCenter" name="CC"
-																	class="cboSelect2 leave-control form-control"
-																	tabindex="-1">
+																<label class="control-label">CC</label> 
+																<select name="CC" class="form-control select2" disabled>
 																	<option value="1">&lt;&nbsp;1&nbsp;&gt;</option>
 																	<option value="2">&lt;&nbsp;2&nbsp;&gt;</option>
 																	<option value="3">&lt;&nbsp;3&nbsp;&gt;</option>
@@ -348,7 +329,7 @@
                                                                                     <div class="form-group">
                                                                                         <label class="control-label col-md-3">Select address from the list to inform Rep. Office</label>
                                                                                         <div class="col-md-9">
-                                                                                            <select class="form-control select2" name="rep_office">
+                                                                                            <select class="form-control select2" name="rep_office" disabled>
                                                                                                 <option value="12">Male</option>
                                                                                                 <option value="13">Female</option>
                                                                                             </select>
@@ -370,13 +351,13 @@
 															<label>Room Type:</label>
 															<div class="input-group">
 																<div class="icheck-inline">
-																	<label> <input type="radio" name="room_type"
+																	<label> <input disabled type="radio" name="room_type"
 																		class="icheck" value="double"<?php if ($trip->hotel_prefer['room_type']=='double'){echo "checked";}?>> Double
-																	</label> <label> <input type="radio" name="room_type"
+																	</label> <label> <input disabled type="radio" name="room_type"
 																		class="icheck" value="king" <?php if ($trip->hotel_prefer['room_type']=='king'){echo "checked";}?>> King
-																	</label> <label> <input type="radio" name="room_type"
+																	</label> <label> <input disabled type="radio" name="room_type"
 																		class="icheck" value="suite" <?php if ($trip->hotel_prefer['room_type']=='suite'){echo "checked";}?>> Suite
-																	</label> <label> <input type="radio" name="room_type"
+																	</label> <label> <input disabled type="radio" name="room_type"
 																		class="icheck" value="standard" <?php if ($trip->hotel_prefer['room_type']=='standard'){echo "checked";}?>> Standard
 																	</label>
 																</div>
@@ -386,9 +367,9 @@
 															<label>Smoking?:</label>
 															<div class="input-group">
 																<div class="icheck-inline">
-																	<label> <input type="radio" name="smoking" class="icheck" value="1" <?php if($trip->hotel_prefer['smoking']=='1'){echo "checked";}?>> Smoking
+																	<label> <input disabled type="radio" name="smoking" class="icheck" value="1" <?php if($trip->hotel_prefer['smoking']=='1'){echo "checked";}?>> Smoking
 																	</label> 
-																	<label> <input type="radio" name="smoking" class="icheck" value="0" <?php if($trip->hotel_prefer['smoking']=='0'){echo "checked";}?>> Non Smoking
+																	<label> <input disabled type="radio" name="smoking" class="icheck" value="0" <?php if($trip->hotel_prefer['smoking']=='0'){echo "checked";}?>> Non Smoking
 																	</label>
 																</div>
 															</div>
@@ -520,7 +501,10 @@
 									</div>
 								
 								</div>
-								<div class="row form-group col-sm-12">
+								
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
 									<div class="portlet box default">
 										<div class="portlet-title">
 											<div class="caption">
@@ -536,6 +520,7 @@
 												class="form-control leave-control"
 												style="overflow-y: scroll;" rows="2" disabled>{{$trip['extra_comment']}}</textarea>
 										</div>
+									</div>
 									</div>
 								</div>
 							</div>
@@ -564,6 +549,8 @@
 </div>
 </div>
 </div>
+@include('etravel.modal.forApproval')
+@include('etravel.modal.forPartlyApproval')
 <script src="{{asset('js/etravel/trip/tripNationalDetail.js')}}"></script>
 @endsection
 

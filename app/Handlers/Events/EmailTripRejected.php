@@ -31,8 +31,9 @@ class EmailTripRejected {
 		$approver_comment=$request->input('approver_comment');
 		DB::transaction(function()use($trip,$approver_comment){
 			$trip->update(['status'=>'rejected','approver_comment'=>$approver_comment]);
-			$trip->demostic()->update(['is_approved'=>'0']);
-			
+			if ($trip->trip_type=='2'){
+				$trip->demostic()->update(['is_approved'=>'0']);
+			}
 		});
 	}
 

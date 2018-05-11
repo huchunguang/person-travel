@@ -19,6 +19,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $table = 'users';
 	protected $primaryKey = 'UserID';
+	protected $hidden=array(
+		'Pwd','remember_token'
+	);
 	/**
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
 	 */
