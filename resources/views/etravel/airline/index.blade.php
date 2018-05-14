@@ -3,6 +3,7 @@
 	<div class="page-content-inner">
 		<div class="row">
 			<div class="col-md-12">
+			@include('etravel.layout.error')
 				<!-- BEGIN SAMPLE TABLE PORTLET-->
 				<div class="portlet box green">
 					<div class="portlet-title">
@@ -30,17 +31,17 @@
 								<tbody>
 									@if(count($airlineList)>0)
 									@foreach($airlineList as $item)
-									<tr>
+									<tr id="TableClassRowID-{{$item->id}}">
 										<td>1</td>
 										<td>{{$item['airline_name']}}</td>
 										<td>{{$item['airline_code']}}</td>
-										<td>{{$item['created_time']}}</td>
-										<td>{{$item['updated_time']}}</td>
+										<td>{{$item['created_at']}}</td>
+										<td>{{$item['updated_at']}}</td>
 										<td>
-											<button type="button" accesskey="I" onclick="EditPurposeType({{ $purposeList[$i]['purpose_id'] }})" class="btn yellow-gold">
+											<button type="button" accesskey="I" onclick="EditAirline({{ $item['id'] }})" class="btn yellow-gold">
 												<i class="fa fa-pencil"></i> Ed<u>i</u>t
 											</button>
-											<button type="button" onclick="DeletePurposeType({{ $purposeList[$i]['purpose_id'] }})" class="btn red-mint">
+											<button type="button" onclick="DeleteAirline({{ $item['id'] }})" class="btn red-mint">
 												<i class="fa fa-times"></i> <u>D</u>elete
 											</button>
 										</td>

@@ -63,7 +63,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Destination</label>
-											<select id="destinationSel" name="destination" class="form-control input-sm select2">
+											<select id="destinationSel" name="destination[]" class="form-control input-sm select2" multiple>
 												@foreach($countryList as $countryItem)
 													@if(old('destination') == $countryItem['CountryID'] || $destination['CountryID'] == $countryItem['CountryID'])
                                                     		<option value="{{$countryItem['CountryID']}}" selected="selected">
@@ -155,8 +155,10 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Overseas Approver</label> 
-											<select id="overseas_approver" name="overseas_approver" class="form-control select2">
-												<option value="123">David</option>
+											<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
+												@if($overseas_approver)
+												<option value="{{$overseas_approver['UserID']}}">{{$overseas_approver['FirstName']}}</option>
+												@endif
 											</select>
 										</div>
 									</div>
@@ -641,6 +643,8 @@
 </div>
 </div>
 <script src="{{asset('js/etravel/trip/tripNationalDetail.js')}}"></script>
+<script src="{{asset('/js/etravel/trip/create.js')}}"></script>
+
 @endsection
 
 

@@ -61,7 +61,7 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         #Announcement Resource
         Route::resource('announcement', 'AnnouncementController');
         Route::resource('airline', 'AirlineController');
-       	
+       	Route::get('approver',['uses'=>'ApproverController@getOverseasApprover','as'=>'overseasApprover']);
        
         
     });

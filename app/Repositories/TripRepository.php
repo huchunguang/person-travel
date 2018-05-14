@@ -19,7 +19,7 @@ class TripRepository extends Repository
 	
 	public function model() 
 	{
-		return Trip::class;
+		return 'App\Trip';
 	}	
 	
 	public function getListByStatus($status='approved') 

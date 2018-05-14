@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\DB;
 use App\Events\TripWasRejected;
 use App\Events\TripWasPartlyApproved;
+use App\Repositories\ApproverRepository;
 
 class ApproverController extends Controller {
 	
@@ -120,6 +121,15 @@ class ApproverController extends Controller {
 			return redirect('/etravel/tripnationallist/'.$trip->trip_id);
 		}
 		
+	}
+	public function getOverseasApprover(Request $request,ApproverRepository $approver)
+	{
+		$countryId=$request->input('countryId');
+		if ($countryId){
+			$countryId=explode(',', $countryId);
+			$generalManager=$approver->getGeneralManagerByCountryId($countryId);
+			return response()->json($generalManager);
+		}
 	}
 
 }

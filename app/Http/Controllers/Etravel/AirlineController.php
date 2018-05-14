@@ -1,11 +1,10 @@
 <?php namespace App\Http\Controllers\Etravel;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use Illuminate\Http\Request;
-use App\Contacts\SystemVariable;
 use App\Airline;
+use App\Contacts\SystemVariable;
+use Illuminate\Http\Request;
 
 class AirlineController extends Controller {
 	public function __construct(SystemVariable $system) 
@@ -23,7 +22,7 @@ class AirlineController extends Controller {
 		//
 		$airlineList=array();
 		$airlineList=Airline::orderBy('created_at','DESC')->paginate(PAGE_SIZE);
-// 		dd(123123);
+// 		dd($airlineList->toArray());
 		return view('etravel/airline/index',['airlineList'=>$airlineList,'breadcrumb' => 'List Of Airline']);
 		
 	}
@@ -43,9 +42,20 @@ class AirlineController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
-		//
+		
+		$rules=array(
+			'airline_name'=>'required',
+			'airline_code'=>'required'
+		);//
+// 		dd($request->all());
+		$this->validate($request, $rules);
+		$airline=new Airline;
+		$airline->airline_name=$request->input('airline_name');
+		$airline->airline_code=$request->input('airline_code');
+		$airline->save();
+		return redirect('/etravel/airline');
 	}
 
 	/**
@@ -54,9 +64,9 @@ class AirlineController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show(Airline $airline)
 	{
-		//
+		return view('/etravel/airline/show',['airline'=>$airline]);
 	}
 
 	/**
@@ -65,9 +75,9 @@ class AirlineController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit(Airline $airline)
 	{
-		//
+		return view('/etravel/airline/edit',['airline'=>$airline]);//
 	}
 
 	/**
@@ -76,9 +86,17 @@ class AirlineController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Request $request,Airline $airline)
 	{
-		//
+		$rules=array(
+			'airline_name'=>'required',
+			'airline_code'=>'required',
+		);
+		$this->validate($request, $rules);
+		$airline->airline_name=$request->input('airline_name');
+		$airline->airline_code=$request->input('airline_code');
+		$airline->save();
+		return view('/etravel/airline/show',['airline'=>$airline]);
 	}
 
 	/**
@@ -87,9 +105,12 @@ class AirlineController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy(Airline $airline)
 	{
-		//
+		if ($airline->delete()) {
+			return response()->json(['res_info'=>['code'=>'100000','msg'=>'']]);
+		}
+		return response()->json(['res_info'=>['code'=>'100001','msg'=>'']]);
 	}
 
 }

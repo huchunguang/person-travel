@@ -40,7 +40,7 @@ class TripController extends Controller
     public function create(Request $requset) 
     {
     		$userProfile=User::getUserProfile();
-    		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
+    		$countryList = Country::orderBy('Country')->select(['CountryID','Country','RegionID'])->get();
     		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
     		return view('/etravel/trip/create')->with('userProfile', $userProfile['userProfile'])
 			->with('approvers', $userProfile['approvers'])
@@ -151,14 +151,14 @@ class TripController extends Controller
     			$trip=new Trip;
     			$trip->user_id=Auth::user()->UserID;
     			$trip->project_code=$request->input('project_code');
-    			$trip->destination_id=json_encode($request->input('destination'));
+    			$trip->destination_id=$request->input('destination');
     			$trip->cost_center_id=$request->input('cost_center_id');
     			$trip->daterange_from=$request->input('daterange_from');
     			$trip->daterange_to=$request->input('daterange_to');
+    			$trip->overseas_approver=$request->input('overseas_approver');
     			$trip->department_approver=$request->input('department_approver');
     			$trip->approver_comment=$request->input('approver_comment');
     			$trip->extra_comment=$request->input('extra_comment');
-    			$trip->trip_type=2;//by default international with 2
     			if ($request->hasFile('purpose_file')){
     				$file=$request->file('purpose_file');
     				if(!$file->isValid()){
@@ -252,23 +252,26 @@ class TripController extends Controller
 	 */
 	public function tripNationalDetails(TripReadRequest $request,Trip $trip) 
 	{
+		$overseas_approver=[];
 		$userObjMdl = User::where('UserID',$trip->user_id)->firstOrFail();
+		if ($trip->overseas_approver){
+			$overseas_approver=User::find($trip->overseas_approver);
+		}
 		$approver = User::find($trip->department_approver);
 		$hotelData=$trip->accomodation()->get();
 		$estimateExpenses=$trip->estimateExpense()->get();
 		$flightData=$trip->flight()->get();
 		$insuranceData=$trip->insurance()->first();
 // 		dd($trip->destination_id);
-		$destination=Country::find($trip->destination_id);
-		//flight_itinerary_prefer//hotel_prefer
-// 				dd();
+		$destination=Country::whereIn('CountryID',$trip->destination_id)->get();
 // 		dd($destination->toArray());
 // 		dd($trip->purpose_file);
-// 		dd($insuranceData);
+// 		dd($destination);
 		return view('/etravel/trip/tripNationalDetail', [
 			'userObjMdl'=>$userObjMdl,
 			'trip' => $trip,
 			'approver'=>$approver,
+			'overseas_approver'=>$overseas_approver,
 			'hotelData' => $hotelData,
 			'estimateExpenses'=>$estimateExpenses,
 			'flightData'=>$flightData,
@@ -314,6 +317,9 @@ class TripController extends Controller
 		$userProfile=User::getUserProfile();
 		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
 		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
+		if ($trip->overseas_approver){
+			$overseas_approver=User::find($trip->overseas_approver);
+		}
 		$approver = User::find($trip->department_approver);
 		$hotelData=$trip->accomodation()->get();
 		$estimateExpenses=$trip->estimateExpense()->get();
@@ -324,6 +330,7 @@ class TripController extends Controller
 // 		dd($estimateExpenses->toArray());
 		return view('/etravel/trip/nationalEdit',[
 			'userObjMdl'=>$userProfile['userProfile'],
+			'overseas_approver'=>$overseas_approver,
 			'approvers'=>$userProfile['approvers'],
 			'purposeCats'=>$purposeCategory,
 			'costCenters'=>Costcenter::getAvailableCenters(),

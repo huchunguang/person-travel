@@ -2,6 +2,7 @@
 
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use App\Airline;
 
 class RouteServiceProvider extends ServiceProvider {
 
@@ -28,6 +29,8 @@ class RouteServiceProvider extends ServiceProvider {
 		$router->model('purpose', 'App\Trip_purpose');
 		$router->model('country', 'App\Country');
 		$router->model('announcement', 'App\Trip_announcement');
+		$router->model('airline', 'App\Airline');
+		
 	}
 
 	/**

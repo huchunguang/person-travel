@@ -17,10 +17,13 @@
 
 					<div class="portlet-body form">
 						<!-- BEGIN FORM-->
-						<form action="/etravel/trip/storeNational" method="post" class="horizontal-form" enctype="multipart/form-data">
+						<form action="/etravel/trip/storeNational" method="post" class="horizontal-form" enctype="multipart/form-data" id="nationTripCreate">
 							<input type="hidden" name="_token" value="{{csrf_token()}}"/>
 							<div class="form-body">
-
+						<div class="alert alert-danger display-hide">
+                                                <button class="close" data-close="alert"></button> You have some form errors. Please check below. </div>
+                                            <div class="alert alert-success display-hide">
+                                                <button class="close" data-close="alert"></button> Your form validation is successful! </div>
 								<div class="row">
 
 									<div class="col-md-6">
@@ -50,7 +53,7 @@
 											<label class="control-label">Destination</label>
 											<select id="destinationSel" name="destination[]" class="form-control input-sm select2" multiple>
 													@foreach($countryList as $countryItem)
-                                                    		<option value="{{$countryItem['CountryID']}}" <?php if(in_array($countryItem['CountryID'], old('destination',[]))){echo "selected";}?>>
+                                                    		<option data-region="{{$countryItem['RegionID']}}" value="{{$countryItem['CountryID']}}" <?php if(in_array($countryItem['CountryID'], old('destination',[]))){echo "selected";}?>>
                                                     		{{$countryItem['Country']}}
                                                     		</option>
                                                     	@endforeach
@@ -61,7 +64,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Cost Center</label> 
-											<select name="cost_center_id" class="form-control input-sm select2">
+											<select name="cost_center_id" class="form-control input-sm select2" required>
 												@foreach($costCenters as $costItem)
 												@if(old('cost_center_id') == $costItem['CostCenterID'] || $costItem['CostCenterID']==$defaultCostCenterID)
 												<option value="{{ $costItem['CostCenterID'] }}" selected="selected">
@@ -85,7 +88,7 @@
 
 											<div class="col-md-4">
 												<input type="text" name="daterange_from" value="{{old('daterange_from')}}"
-													class="form-control singleDatePicker"> <i
+													class="form-control singleDatePicker" > <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
 													style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
 											</div>
@@ -103,7 +106,8 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Project Code</label>
-											<select id="project_code" name="project_code" class="form-control input-sm select2">
+											<select id="project_code" name="project_code" class="form-control">
+												<option value="">Select...</option>
 												@foreach ($wbscodeList as $item)
 													@if($item['wbs_id']==old('project_code'))
 													<option value="{{$item['wbs_id']}}" selected="selected">{{$item['wbs_code']}}</option>
@@ -135,8 +139,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Overseas Approver</label> 
-											<select id="overseas_approver" name="overseas_approver" class="form-control select2" >
-												<option value="123">&lt;&nbsp;ASCO&nbsp;&gt;</option>
+											<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
 											</select>
 										</div>
 									</div>
@@ -258,7 +261,7 @@
 
 														</td>
 														<td>
-															<input type="text" name="flight_from[]" id="" />
+															<input type="text" name="flight_from[]" id=""/>
 														</td>
 														<td>
 															<input type="text" name="flight_to[]" id="" />
@@ -581,7 +584,7 @@
 </div>
 
 
-
+<script src="{{asset('/js/etravel/trip/create.js')}}"></script>
 
 @endsection
 

@@ -63,8 +63,12 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Destination</label>
-											<select id="destinationSel" name="destination" class="form-control input-sm select2" disabled>
-                                            		<option value="{{$destination['CountryID']}}">{{$destination['Country']}}</option>
+											<select id="destinationSel" name="destination[]" class="form-control input-sm select2" multiple disabled>
+											@if(count($destination)>0)
+												@foreach($destination as $item)
+                                            			<option value="{{$item['CountryID']}}" selected="selected">{{$item['Country']}}</option>
+                                            	@endforeach
+                                            @endif
                                             </select>
 										</div>
 									</div>
@@ -130,7 +134,11 @@
 										<div class="form-group">
 											<label class="control-label">Overseas Approver</label> 
 											<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
-												<option value="123">David</option>
+											@if($overseas_approver)
+												<option value="{{$overseas_approver->UserID}}">
+													{{ $overseas_approver->FirstName }}
+												</option> 
+											@endif
 											</select>
 										</div>
 									</div>

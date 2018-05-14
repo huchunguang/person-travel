@@ -44,7 +44,7 @@ abstract class Repository implements RepositoryInterface
 	}
 	public function findBy($attribute,$id,$columns=array('*'))
 	{
-		return $this->where($attribute,'=',$id)->first($columns);
+		return $this->model->where($attribute,'=',$id)->first($columns);
 	}
 	
 	public function makeModel() 

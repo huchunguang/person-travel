@@ -57,7 +57,7 @@ class Trip extends Model {
 	{
 		$this->attributes['hotel_prefer']=json_encode($value);
 	}
-	public function setDestinationId($value)
+	public function setDestinationIdAttribute($value)
 	{
 		$this->attributes['destination_id']=json_encode($value);
 	}
@@ -69,7 +69,7 @@ class Trip extends Model {
 	{
 		return json_decode($value,true);
 	}
-	public function getDestinationId($value)
+	public function getDestinationIdAttribute($value)
 	{
 		return json_decode($value,true);
 	}
