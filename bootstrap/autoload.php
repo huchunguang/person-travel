@@ -2,7 +2,7 @@
 
 define('LARAVEL_START', microtime(true));
 
-define('PAGE_SIZE', 5);
+define('PAGE_SIZE', 15);
 
 /*
 |--------------------------------------------------------------------------

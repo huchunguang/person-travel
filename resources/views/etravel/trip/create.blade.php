@@ -11,7 +11,7 @@
 					<div class="portlet-title">
 						<div class="caption">
 							<i class="icon-bubble"></i> <span
-								class="caption-subject bold uppercase">INTERNATIONAL REQUEST</span>
+								class="caption-subject bold uppercase">Business Travel Request</span>
 						</div>
 					</div>
 
@@ -267,7 +267,8 @@
 															<input type="text" name="flight_to[]" id="" />
 														</td>
 														<td>
-															<select class="form-control" name="airline_or_train[]">
+															<select class="form-control" name="airline_or_train[]" id="airlineSel">
+																<option value="">Select...</option>																
 																<option value="1">airline</option>
 																<option value="0">train</option>
 															</select>
@@ -583,7 +584,7 @@
 	</div>
 </div>
 
-
+@include('etravel.modal.airlineList')
 <script src="{{asset('/js/etravel/trip/create.js')}}"></script>
 
 @endsection

@@ -158,6 +158,7 @@
 </div>
 
 <script src="{{asset('js/etravel/trip/demosticCreate.js')}}"></script>
+<script src="{{asset('js/function.js')}}"></script>
 
 <script>
 $.ajaxSetup({

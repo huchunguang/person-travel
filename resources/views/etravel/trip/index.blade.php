@@ -5,15 +5,10 @@ use App\User;
 @extends("etravel.layout.main") 
 @section("content")
 	<div class="container">
-	<script src="{{asset('js/etravel/trip/index.js')}}"></script>
-	
         @include("etravel.layout.pagebar")
-
         <!-- BEGIN PAGE CONTENT INNER -->
         <div class="page-content-inner">
-
             <div class="inbox">
-            		
                 <div class="row">
                     <div class="col-md-3">
                         <div class="portlet box light">
@@ -62,13 +57,13 @@ use App\User;
                                 <div class="row inbox">
                                     <div class="col-md-12 table-responsive">
                                         <h3>{{ strtoupper($status) }}</h3>
-                                        <table id="tblMyList" class="table table-condensed table-hover sortable">
+                                        <table id="tblTravelList" class="table table-condensed table-hover sortable">
                                             <thead class="btn-primary roundborder">
                                                 <tr>
                                                     <th colspan="1" style="text-align: left" class="nosort" data-sortcolumn="0" data-sortkey="0-0">Search:</th>
-                                                    <th colspan="2"><input id="txtReferenceSearch" type="text" placeholder="Search by Date #" style="color: #666; width: 100%;"></th>		
-                                                    <th colspan="2"><input id="txtEmployeeSearch" type="text" placeholder="Search by Cost Center" style="color: #666; width: 100%;"></th>
-                                                    <th colspan="2"><input id="txtLeaveTypeSearch" type="text" placeholder="Search by Department Approver" style="color: #666; width: 100%;"></th>
+                                                    <th colspan="2"><input id="txtDateSearch" type="text" placeholder="Search by Date #" style="color: #666; width: 100%;"></th>		
+                                                    <th colspan="2"><input id="txtCostCenterSearch" type="text" placeholder="Search by Cost Center" style="color: #666; width: 100%;"></th>
+                                                    <th colspan="2"><input id="txtApproverSearch" type="text" placeholder="Search by Department Approver" style="color: #666; width: 100%;"></th>
                                                     <th colspan="5"></th>
                                                 </tr>
                                                 	<tr>
@@ -130,7 +125,7 @@ use App\User;
                                             <tfoot>
                                                 <tr class="btn-primary roundborder">
                                                     <th style="text-align:right">Total Transactions Applied:</th>
-                                                    <th style="text-align:center">{{ $tripList->total() }}</th>
+                                                    <th style="text-align:center" id="tblCounter">{{ $tripList->total() }}</th>
                                                     <th colspan="5"></th>
                                                     <th style="text-align:center"></th>
                                                 </tr>
@@ -149,4 +144,5 @@ use App\User;
         </div>
     </div>
 @include('etravel.modal.newTravel')
+<script src="{{asset('js/etravel/trip/index.js')}}"></script>
 @endsection

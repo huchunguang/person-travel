@@ -3,18 +3,20 @@
 		
 	<div class="col-md-9">
 		<ul class="nav nav-pills" style="text-align: center; margin-bottom: 0px;">
-		<li class="active"><a href="{{ route('dashboard') }}" style="color: white;"><i
-				class="fa fa-home"></i>Dashboard</a></li>
-				<li><a href="##" style="color: white;"><i class="fa fa-exchange"></i>Delegation</a></li>
-		
+		<li class="active"><a href="{{ route('dashboard') }}" style="color: white;">
+			<i class="fa fa-home"></i>Dashboard</a></li>
+		<li><a href="##" style="color: white;"><i class="fa fa-exchange"></i>Delegation</a></li>
 		<li><a href="##" style="color: white;"><i class="fa fa-bar-chart"></i>Reports</a></li>
-		<li class="dropdown"><a href="##" class="dropdown-toggle"
-			data-toggle="dropdown" style="color: white;"><i class="fa fa-gears"></i>Configuration<span class="caret"></span></a>
+		<li class="dropdown">
+			<a href="##" class="dropdown-toggle" data-toggle="dropdown" style="color: white;">
+				<i class="fa fa-gears"></i>Configuration<span class="caret"></span>
+			</a>
 			<ul class="dropdown-menu">
 				<li><a href="/etravel/announcement">Announcement</a></li>
 				<li><a href="/etravel/airline">AirLine</a></li>
-			</ul></li>
-		
+			</ul>
+		</li>
+		<li><a href="##" style="color: white;"><i class="fa fa-book"></i>Admin</a></li>
 
 	</ul>
 	</div>

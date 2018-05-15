@@ -111,4 +111,7 @@ function delLineItem(){
 	if(remainTrNum==0){
 		$('#itemDelBut').attr('disabled',true);
 	}
+	
+
+	
 }

@@ -32,7 +32,7 @@
 									@if(count($airlineList)>0)
 									@foreach($airlineList as $item)
 									<tr id="TableClassRowID-{{$item->id}}">
-										<td>1</td>
+										<td>{{$item['id']}}</td>
 										<td>{{$item['airline_name']}}</td>
 										<td>{{$item['airline_code']}}</td>
 										<td>{{$item['created_at']}}</td>

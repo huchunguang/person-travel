@@ -4,16 +4,17 @@
 	<div class="page-content-inner">
 		<div class="row">
 			<div class="col-md-12">
+			@include('etravel.layout.error')
 				<!-- BEGIN VALIDATION STATES-->
 				<div class="portlet box green">
 					<div class="portlet-title">
 						<div class="caption">
 							<i class="icon-bubble"></i> 
-							<span class="caption-subject bold uppercase">DOMESTIC REQUEST</span>
+							<span class="caption-subject bold uppercase">Business Domestic Itinerary Request</span>
 						</div>
 					</div>
 					<div class="portlet-body form">
-						<form action="/etravel/trip/store" method="post" class="horizontal-form">
+						<form action="/etravel/trip/store" method="post" class="horizontal-form" id="demosticTripCreate">
 							<div class="form-body">
 								<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -112,7 +113,8 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Project Code</label>
-											<select id="project_code" name="project_code" class="form-control input-sm select2">
+											<select id="project_code" name="project_code" class="form-control input-sm">
+													<option value="">Select...</option>
 												@foreach ($wbscodeList as $item)
 													@if($item['wbs_id']==old('project_code'))
 													<option value="{{$item['wbs_id']}}" selected="selected">{{$item['wbs_code']}}</option>
@@ -192,9 +194,9 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">Department Approver</label> <select
-												name="department_approver"
-												class="cboSelect2 leave-control form-control" tabindex="-1">
+											<label class="control-label">Department Approver</label> 
+											<select name="department_approver" class="form-control">
+												<option value="">Select...</option>
 												@foreach ($approvers as $item)
 												<option value="{{ $item['UserID'] }}">&lt;&nbsp;{{
 													$item['FirstName'] }}&nbsp;&gt;</option> @endforeach
@@ -236,129 +238,8 @@
 
 	</div>
 </div>
-
-
-								<div class="modal fade" id="addNewLineModal" tabindex="-1" role="dialog" aria-labelledby="addNewLineModal" aria-hidden="true">
-
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal">
-													<span aria-hidden="true">&times;</span><span
-														class="sr-only">Close</span>
-												</button>
-												<h4 class="modal-title">Add New Line</h4>
-											</div>
-											<div class="modal-body">
-											
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Date</label>
-															<div style="position: relative;">
-																<input type="text" name="datetime_date[]"
-																	class="form-control singleDatePicker"> <i
-																	class="glyphicon glyphicon-calendar fa fa-calendar"
-																	style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
-															</div>
-
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Time</label>
-															<div class="input-group">
-																<input type="text" 
-																	name="datetime_time[]"
-																	class="form-control timepicker timepicker-default time-input"
-																	placeholder=""> <span class="input-group-btn">
-																	<button class="btn default" type="button">
-																		<i class="fa fa-clock-o"></i>
-																	</button>
-																</span>
-															</div>
-
-														</div>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Location</label>
-																<input type="text" name="location[]" class="form-control"/>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Customer Name</label>
-															<input type="text" name="customer_name[]" class="form-control"/>
-														</div>
-													</div>
-												</div>
-												
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Contact Name</label>
-															<input type="text" name="contact_name[]" class="form-control"/>
-														</div>
-														
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="">Purpose of Visit Category</label>
-															<select class="form-control" name="purpose_id[]" id="purpose_id"> 
-																@foreach ($purposeCats as $item)
-																	<option value="{{ $item['purpose_id'] }}">
-																	&lt;&nbsp;{{$item['purpose_catgory'] }}&nbsp;&gt;</option>
-																@endforeach
-															</select>
-														</div>
-													</div>
-												</div>
-												
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="">Purpose of Visit Description</label>
-															<textarea id="purpose_desc" name="purpose_desc[]" class="form-control leave-control" style="overflow-y: scroll;" rows="1"></textarea>
-														</div>
-														
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="">Estimated Travel Cost</label>
-																<input type="text" name="travel_cost[]" value="0.00" class="form-control input-number admin-non-edit"/>
-														</div>
-													</div>
-												</div>
-												
-												<div class="row">
-													
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="">Estimated Entertainment Cost</label>
-															<input type="text" name="entertain_cost[]"  value="0.00" class="form-control input-number"/>
-														</div>
-														
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="">Estimated Details</label>
-																<input type="text" name="entertain_detail[]" class="form-control"/>
-														</div>
-													</div>
-												
-												</div>
-												
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-												<button type="button" class="btn btn-primary" onclick="addNewLine()">Save</button>
-											</div>
-										</div>
-									</div>
-									</div>
+@include('etravel.modal.newItinerary')
+<script src="{{asset('js/etravel/trip/demosticFormValidate.js')}}"></script>
 @endsection
 
 

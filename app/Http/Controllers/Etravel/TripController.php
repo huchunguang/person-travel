@@ -27,6 +27,7 @@ use App\Http\Requests\TripReadRequest;
 use App\Trip_insurance;
 use App\Company;
 use App\Contacts\SystemVariable;
+use App\Airline;
 
 class TripController extends Controller
 {
@@ -42,12 +43,14 @@ class TripController extends Controller
     		$userProfile=User::getUserProfile();
     		$countryList = Country::orderBy('Country')->select(['CountryID','Country','RegionID'])->get();
     		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
+    		$airlineList = Airline::all();
     		return view('/etravel/trip/create')->with('userProfile', $userProfile['userProfile'])
 			->with('approvers', $userProfile['approvers'])
 			->with('purposeCats', $purposeCategory)
 			->with('costCenters', Costcenter::getAvailableCenters())
 			->with('countryList',$countryList)
-			->with('approvers', $userProfile['approvers']);
+			->with('approvers', $userProfile['approvers'])
+    		->with('airlineList',$airlineList);
 	}
     /**
      * @brief create demostic trip
@@ -145,7 +148,7 @@ class TripController extends Controller
     {
 //     		header("Content-Type: ".Storage::mimeType($savePath));
 //     		echo Storage::get($savePath);
-// 		dd($request->all());
+		dd($request->all());
     		DB::beginTransaction();
     		try {
     			$trip=new Trip;

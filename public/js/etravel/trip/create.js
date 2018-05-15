@@ -40,7 +40,7 @@ var FormValidation = function () {
             form1.validate({
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block help-block-error', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+//                focusInvalid: false, // do not focus the last invalid input
                 ignore: "",  // validate all fields including form hidden input
                 messages: {
                     select_multi: {
@@ -62,6 +62,18 @@ var FormValidation = function () {
                     },
                     project_code: {
                     	required: true
+                    },
+                    "employee_annual_budget[]": {
+                    	number:true
+                    },
+                    "employee_ytd_expenses[]": {
+                    	number:true
+                    },
+                    "available_amount[]": {
+                    	number:true
+                    },
+                    "required_amount[]": {
+                    	number:true
                     },
                     
                 },
@@ -95,6 +107,7 @@ var FormValidation = function () {
                 submitHandler: function (form) {
                     success1.show();
                     error1.hide();
+                    form.submit();
                 }
 
             });
@@ -116,5 +129,15 @@ var FormValidation = function () {
 jQuery(document).ready(function() {
     FormValidation.init();
 });
+$('#airlineSel').on('change',function(){
+	var selVal=$(this).val();
+	if(selVal == '1'){
+		$('#airlineList').modal('show');
+		
+	}
+	
+});
+
+
 
 
