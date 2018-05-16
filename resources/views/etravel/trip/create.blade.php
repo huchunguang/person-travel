@@ -82,17 +82,17 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<p>
+											<p style="margin-bottom: 0px;">
 												<label class="control-label">Period of Travel From</label>
 											</p>
 
-											<div class="col-md-4">
+											<div class="col-md-6" style="margin-left: 0px;padding:0px;">
 												<input type="text" name="daterange_from" value="{{old('daterange_from')}}"
 													class="form-control singleDatePicker" > <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
 													style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-6">
 												<input type="text" name="daterange_to" value="{{old('daterange_to')}}"
 													class="form-control singleDatePicker"> <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
@@ -191,11 +191,11 @@
 										<li><a href="#teana" data-toggle="tab">HOTEL ACCOMODATION</a></li>
 										<li><a href="#camry" data-toggle="tab">TRAVEL INSURANCE</a></li>
 									</ul>
-									<div id="myTabContent" class="tab-content">
+									<div id="myTabContent" class="tab-content" style="border: 2px #dddddd solid;">
 										<div class="tab-pane fade in active" id="home">
-											
 											<ul class="list-group">
-												<li class="list-group-item">Notification To Be Sent General Affairs?: 
+												<li class="list-group-item">
+												Notification To Be Sent General Affairs?: 
 													<label class=""> 
 													<div class="iradio_minimal-grey" style="position: relative;">
 													<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="1">
@@ -267,9 +267,9 @@
 															<input type="text" name="flight_to[]" id="" />
 														</td>
 														<td>
-															<select class="form-control" name="airline_or_train[]" id="airlineSel">
+															<select class="form-control airlineSel" name="airline_or_train[]">
 																<option value="">Select...</option>																
-																<option value="1">airline</option>
+																<option value="1" data-id="">airline</option>
 																<option value="0">train</option>
 															</select>
 														</td>
@@ -317,7 +317,7 @@
 													</thead>
 													<tbody>
 														<tr>
-															<td>Overseas Travel
+															<td class="text-center">Overseas Travel
 																<input type="hidden" name="estimate_type[]" value="overseas"/>
 															</td>
 															<td><input type="text" name="employee_annual_budget[]" id="" placeholder="0.00"/></td>
@@ -327,7 +327,7 @@
 															
 														</tr>
 														<tr>
-															<td>Entertainment
+															<td class="text-center">Entertainment
 																<input type="hidden" name="estimate_type[]" value="entertain"/>
 															</td>
 															<td><input type="text" name="employee_annual_budget[]" id="" placeholder="0.00"/></td>
@@ -337,7 +337,16 @@
 														</tr>
 													</tbody>
 												</table>
-										
+												<div class="row">
+												<div class="form-group">
+													<div class="col-md-2 text-center" style="padding-right: 0px;">Entertainment Details</div>
+												
+													<div class="col-md-7" style="margin:0px;padding:0px;">
+														<textarea id="entertainment_details" name="entertainment_details" class="form-control" rows="1" style="overflow-y: scroll;">{{old('entertainment_details')}}</textarea>
+													</div>
+												</div>
+												</div>
+												
 										</div>
 										<div class="tab-pane fade" id="camry">
 											
@@ -417,10 +426,10 @@
 												<ul class="list-group">
 													<li class="list-group-item">
 														<div class="row">
-														<div class="col-md-6">
+														<div class="col-md-7">
                                                                                     <div class="form-group">
-                                                                                        <label class="control-label col-md-3">Select address from the list to inform Rep. Office</label>
-                                                                                        <div class="col-md-9">
+                                                                                        <label class="control-label col-md-7">Select address from the list to inform Rep. Office</label>
+                                                                                        <div class="col-md-5">
                                                                                             <select class="form-control select2" name="rep_office">
                                                                                                 <option value="12">Male</option>
                                                                                                 <option value="13">Female</option>
@@ -559,8 +568,7 @@
 											</div>
 										</div>
 										<div class="portlet-body form">
-											<textarea id="extra_comment" name="extra_comment"
-												class="form-control leave-control"
+											<textarea id="extra_comment" name="extra_comment" class="form-control"
 												style="overflow-y: scroll;" rows="2">{{old('extra_comment')}}</textarea>
 										</div>
 									</div>

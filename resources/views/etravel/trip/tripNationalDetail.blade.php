@@ -89,17 +89,17 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<p>
+											<p style="margin-bottom: 0px;">
 												<label class="control-label">Period of Travel From</label>
 											</p>
 
-											<div class="col-md-4">
+											<div class="col-md-6" style="margin-left: 0px;padding:0px;">
 												<input type="text" name="daterange_from" value="{{$trip->daterange_from}}"
 													class="form-control singleDatePicker" disabled> <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
 													style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-6" style="margin-left: 0px;padding:0px;">
 												<input type="text" name="daterange_to" value="{{$trip->daterange_to}}"
 													class="form-control singleDatePicker" disabled> <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
@@ -183,7 +183,7 @@
 										<li><a href="#teana" data-toggle="tab">HOTEL ACCOMODATION</a></li>
 										<li><a href="#camry" data-toggle="tab">TRAVEL INSURANCE</a></li>
 									</ul>
-									<div id="myTabContent" class="tab-content">
+									<div id="myTabContent" class="tab-content" style="border: 2px #dddddd solid;">
 										<div class="tab-pane fade in active" id="home">
 											
 											<ul class="list-group">
@@ -306,7 +306,7 @@
 													@if(count($estimateExpenses)>0)
 														@foreach($estimateExpenses as $item)
 														<tr>
-															<td>{{$item['estimate_type']}} Travel
+															<td class="text-center">{{$item['estimate_type']}} Travel
 															</td>
 															<td>
 																{{$item['employee_annual_budget']}}
@@ -326,17 +326,26 @@
 													@endif
 													</tbody>
 												</table>
-										
+												<div class="row">
+												<div class="form-group">
+													<div class="col-md-2 text-center" style="padding-right: 0px;">Entertainment Details</div>
+												
+													<div class="col-md-7" style="margin:0px;padding:0px;">
+														<textarea id="entertainment_details" class="form-control" rows="1" style="overflow-y: scroll;" disabled>{{$trip->entertainment_details}}</textarea>
+													</div>
+												</div>
+												</div>
+																						
 										</div>
 										<div class="tab-pane fade" id="teana">
 											
 												<ul class="list-group">
 													<li class="list-group-item">
 														<div class="row">
-														<div class="col-md-6">
+														<div class="col-md-7">
                                                                                     <div class="form-group">
-                                                                                        <label class="control-label col-md-3">Select address from the list to inform Rep. Office</label>
-                                                                                        <div class="col-md-9">
+                                                                                        <label class="control-label col-md-7">Select address from the list to inform Rep. Office</label>
+                                                                                        <div class="col-md-5">
                                                                                             <select class="form-control select2" name="rep_office" disabled>
                                                                                                 <option value="12">Male</option>
                                                                                                 <option value="13">Female</option>

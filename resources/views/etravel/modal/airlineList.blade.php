@@ -8,7 +8,7 @@
 			<div class="modal-body">
 			<label for="">Select Carrier from the list</label>
 			@if(count($airlineList))
-				<select name="airlineSel" id="" class="form-control" multiple size="3">
+				<select name="airlineSel" id="aircodeSel" class="form-control" multiple size="3">
 					@foreach($airlineList as $item)
 						<option value="{{$item['id']}}" data-code="{{$item['airline_code']}}">{{$item['airline_name']}}</option>
 					@endforeach
@@ -18,7 +18,7 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel
 				</button>
-				<button type="button" class="btn btn-primary">
+				<button type="button" class="btn btn-primary" id="checkAirlineBtn">
 					OK
 				</button>
 			</div>

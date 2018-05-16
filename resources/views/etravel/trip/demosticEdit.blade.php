@@ -95,18 +95,18 @@
 								<div class="row">
 									<div class="col-md-6">
 
-										<div class="form-group">
+										<div class="form-group" style="margin-bottom: 0px;">
 											<p>
 												<label class="control-label">Period of Travel From</label>
 											</p>
 
-											<div class="col-md-4">
+											<div class="col-md-6" style="margin-left: 0px;padding:0px;">
 									<input type="text" name="daterange_from" 
 										class="form-control singleDatePicker"  value="{{ $trip->daterange_from }}"> <i
 										class="glyphicon glyphicon-calendar fa fa-calendar"
 										style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-6">
 									<input type="text" name="daterange_to" 
 										class="form-control singleDatePicker" value="{{ $trip->daterange_to }}"> <i
 										class="glyphicon glyphicon-calendar fa fa-calendar"

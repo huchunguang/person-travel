@@ -148,7 +148,7 @@ class TripController extends Controller
     {
 //     		header("Content-Type: ".Storage::mimeType($savePath));
 //     		echo Storage::get($savePath);
-		dd($request->all());
+// 			dd($request->all());
     		DB::beginTransaction();
     		try {
     			$trip=new Trip;
@@ -162,6 +162,7 @@ class TripController extends Controller
     			$trip->department_approver=$request->input('department_approver');
     			$trip->approver_comment=$request->input('approver_comment');
     			$trip->extra_comment=$request->input('extra_comment');
+    			$trip->entertainment_details=$request->input('entertainment_details');
     			if ($request->hasFile('purpose_file')){
     				$file=$request->file('purpose_file');
     				if(!$file->isValid()){
@@ -317,6 +318,7 @@ class TripController extends Controller
 	}
 	public function nationalEdit(EditNationalRequest $request,Trip $trip)
 	{
+		$overseas_approver=[];
 		$userProfile=User::getUserProfile();
 		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
 		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
@@ -328,8 +330,9 @@ class TripController extends Controller
 		$estimateExpenses=$trip->estimateExpense()->get();
 		$flightData=$trip->flight()->get();
 		$insuranceData=$trip->insurance()->first();
-// 		dd($insuranceData);
-		$destination=Country::find($trip->destination_id);
+// 		dd($trip->destination_id);
+		$destination=Country::find($trip->destination_id)->keyBy('CountryID')->keys()->toArray();
+// 		dd($destination);
 // 		dd($estimateExpenses->toArray());
 		return view('/etravel/trip/nationalEdit',[
 			'userObjMdl'=>$userProfile['userProfile'],

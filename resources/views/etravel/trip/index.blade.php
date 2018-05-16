@@ -143,6 +143,6 @@ use App\User;
             </div>
         </div>
     </div>
-@include('etravel.modal.newTravel')
+
 <script src="{{asset('js/etravel/trip/index.js')}}"></script>
 @endsection

@@ -1,8 +1,7 @@
 <div class="modal fade" id="newAirlineModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form action="/etravel/airline" id="" class="form-horizontal"
-				method="post" novalidate="novalidate">
+			<form action="/etravel/airline" id="" class="form-horizontal" method="post">
 
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 				<div class="modal-header">
@@ -32,7 +31,7 @@
 							<div class="col-md-10">
 								<div class="input-icon right">
 									<i class="fa"></i> <input type="text" class="form-control"
-										name="airline_name">
+										name="airline_name" required>
 								</div>
 							</div>
 						</div>
@@ -44,7 +43,7 @@
 							<div class="col-md-10">
 								<div class="input-icon right">
 									<i class="fa"></i> 
-									<input type="text" class="form-control" name="airline_code">
+									<input type="text" class="form-control" name="airline_code" required>
 								</div>
 							</div>
 						</div>

@@ -15,7 +15,7 @@ class PurposeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('/etravel/purpose/index',['purposeList'=>Trip_purpose::all()]);
+		return view('/etravel/purpose/index',['purposeList'=>Trip_purpose::orderBy('created_at','DESC')->paginate(PAGE_SIZE)]);
 	}
 
 	/**

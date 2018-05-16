@@ -1,6 +1,5 @@
-
 <td style="text-align: left; display: table-cell;">{{ $purpose['purpose_id'] }}</td>
-<td style="text-align: center; display: table-cell;">{{ $purpose['purpose_catgory'] }}</td>
+<td style="text-align: left; display: table-cell;">{{ $purpose['purpose_catgory'] }}</td>
 <td style="text-align: left; display: table-cell;">{{ $purpose['purpose_desc'] }}</td>
 <td style="text-align: left; display: table-cell;">
 	<button id="LeaveTypeEdit" type="button" accesskey="I"

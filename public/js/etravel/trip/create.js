@@ -129,14 +129,23 @@ var FormValidation = function () {
 jQuery(document).ready(function() {
     FormValidation.init();
 });
-$('#airlineSel').on('change',function(){
+$('.airlineSel').on('change',function(){
 	var selVal=$(this).val();
 	if(selVal == '1'){
+		var trInd=$(this).closest("tr").index();
+//		alert($('#flightLtinerary tbody>tr').eq(trInd).find('td').eq(3).html())
 		$('#airlineList').modal('show');
+		$('#checkAirlineBtn').on('click',function(){
+			var airlineCode = $("#aircodeSel").find('option:selected').data('code');
+//			alert(airlineCode);
+			$('#flightLtinerary tbody>tr').eq(trInd).find('td').eq(3).html(airlineCode);
+			$('#airlineList').modal('hide');
+		});
 		
 	}
 	
 });
+
 
 
 

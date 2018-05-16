@@ -75,8 +75,7 @@
 								<label for="">Purpose of Visit Category</label> <select
 									class="form-control" name="purpose_id[]" id="purpose_id">
 									@foreach ($purposeCats as $item)
-									<option value="{{ $item['purpose_id'] }}">
-										&lt;&nbsp;{{$item['purpose_catgory'] }}&nbsp;&gt;</option>
+									<option value="{{ $item['purpose_id'] }}">{{$item['purpose_catgory'] }}</option>
 									@endforeach
 								</select>
 							</div>

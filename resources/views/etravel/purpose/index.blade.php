@@ -1,13 +1,16 @@
 @extends("etravel.layout.main") 
 @section("content")
 <script src="{{asset('js/etravel/purpose/index.js')}}" type="text/javascript"></script>
-<div class="page-content-inner">
+<div class="container">
+	<div class="page-content-inner">
+		<div class="row">
+			
 	<div class="col-md-12">
 		<!-- BEGIN SAMPLE TABLE PORTLET-->
 		<div class="portlet box green">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-comments"></i>Travel Purpose Settings
+					<i class="fa fa-comments"></i>Travel Purpose List Category
 				</div>
 				<div class="actions">
 					<div class="btn-group btn-group-devided" data-toggle="modal" data-target="#newPurposeModal" accessKey="N">
@@ -33,7 +36,7 @@
 								class="highlight">
 								<td style="text-align: left; display: table-cell;">{{
 									$purposeList[$i]['purpose_id'] }}</td>
-								<td style="text-align: center; display: table-cell;">{{
+								<td style="text-align: left; display: table-cell;">{{
 									$purposeList[$i]['purpose_catgory'] }}</td>
 								<td style="text-align: left; display: table-cell;">{{
 									$purposeList[$i]['purpose_desc'] }}</td>
@@ -55,10 +58,14 @@
 							@endfor
 						</tbody>
 					</table>
+					 <?php echo $purposeList->render();?>
 				</div>
 			</div>
 		</div>
 		<!-- END SAMPLE TABLE PORTLET-->
+	</div>
+			
+		</div>
 	</div>
 </div>
 </div>

@@ -25,8 +25,8 @@
 				<form action="/etravel/trip" role="form" method="post">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<div class="form-group">
-						<input type="radio" name="trip" value="international" id="internationalTrip"/> 
-						<a href="javascript:;" class="btn info "><label for="internationalTrip"><strong>International Trip</strong></label></a>
+						<input type="radio" name="trip" value="international" id="tabInternationalTrip"/> 
+						<a href="javascript:;" class="btn info "><label for="tabInternationalTrip"><strong>International Trip</strong></label></a>
 
 					</div>
 					<div class="form-group">

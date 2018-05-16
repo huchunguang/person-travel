@@ -153,6 +153,7 @@
 					</div>
 			</div>
 	</div>
+	@include('etravel.modal.newTravel')
 	@include("etravel.layout.footer")
 </div>
 </div>

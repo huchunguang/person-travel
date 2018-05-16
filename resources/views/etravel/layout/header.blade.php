@@ -12,8 +12,9 @@
 				<i class="fa fa-gears"></i>Configuration<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu">
-				<li><a href="/etravel/announcement">Announcement</a></li>
 				<li><a href="/etravel/airline">AirLine</a></li>
+				<li><a href="/etravel/announcement">Announcement</a></li>
+				<li><a href="/etravel/purpose">Purpose List Category</a></li>
 			</ul>
 		</li>
 		<li><a href="##" style="color: white;"><i class="fa fa-book"></i>Admin</a></li>
@@ -32,6 +33,10 @@
 					 @endif
 				</a>
 					<ul class="dropdown-menu dropdown-menu-default">
+						<li>
+							<a href="#newTravel" data-toggle="modal"><i class="fa fa-calendar-plus-o"></i>New Travel Request</a>
+						</li>
+						<li class="divider"></li>
 						<li>
 							<a href="/etravel/{{Auth::user()->UserID}}/triplist?status">
 								<i class="fa fa-file-text-o"></i> My Travel Requests

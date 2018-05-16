@@ -1,15 +1,14 @@
 <div class="modal fade" id="newPurposeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form action="#" id="form_sample_2" class="form-horizontal"
-				method="post" novalidate="novalidate">
+			<form action="/etravel/purpose" id="newPurpose" class="form-horizontal" method="post">
 
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">×</button>
 					<h4 class="modal-title" id="myModalLabel">
-						<span class="caption-subject bold uppercase"> New Travel Purpose</span>
+						<span class="caption-subject bold uppercase"> New Purpose Category</span>
 					</h4>
 				</div>
 				<div class="modal-body">
@@ -32,7 +31,7 @@
 							<div class="col-md-10">
 								<div class="input-icon right">
 									<i class="fa"></i> <input type="text" class="form-control"
-										name="purpose_catgory">
+										name="purpose_catgory" required>
 								</div>
 							</div>
 						</div>
@@ -45,7 +44,7 @@
 							<div class="col-md-10">
 								<div class="input-icon right">
 									<i class="fa"></i> <input type="text" class="form-control"
-										name="purpose_desc ">
+										name="purpose_desc" required>
 								</div>
 							</div>
 						</div>

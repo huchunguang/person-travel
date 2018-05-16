@@ -1,5 +1,5 @@
 <td style="text-align: left; display: table-cell;">{{ $purpose['purpose_id'] }}</td>
-<td style="text-align: center; display: table-cell;">
+<td style="text-align: left; display: table-cell;">
 <div class="form-group form-md-line-input has-info">
 <input type="text" class="form-control" name="purpose_catgory" id="purpose_catgory" value="{{ $purpose['purpose_catgory'] }}">
 <div class="form-control-focus"> </div>
