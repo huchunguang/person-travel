@@ -12,4 +12,8 @@ class Company extends Model {
 	{
 		return $this->hasMany('App\Wbscode','company_id','CompanyID');
 	}
+	public function department()
+	{
+		return $this->belongsToMany('App\Department','company_department','CompanyID','DepartmentID');
+	}
 }

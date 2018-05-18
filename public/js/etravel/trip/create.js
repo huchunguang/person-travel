@@ -23,7 +23,12 @@ $('#destinationSel').on('change',function(){
 	}
 	
 });
-
+//to check whether sent a notify to the affairs
+$(':radio[name="is_sent_affairs"]').on('ifChecked',function(event){
+	var isChecked=parseInt($(this).val());
+	localStorage.setItem('name','Item');
+	$('#CC').prop('disabled',!Boolean(isChecked));
+});
 
 //Form validation
 var FormValidation = function () {
@@ -133,7 +138,6 @@ $('.airlineSel').on('change',function(){
 	var selVal=$(this).val();
 	if(selVal == '1'){
 		var trInd=$(this).closest("tr").index();
-//		alert($('#flightLtinerary tbody>tr').eq(trInd).find('td').eq(3).html())
 		$('#airlineList').modal('show');
 		$('#checkAirlineBtn').on('click',function(){
 			var airlineCode = $("#aircodeSel").find('option:selected').data('code');

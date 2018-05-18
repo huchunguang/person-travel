@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -142,7 +141,7 @@
 <script src="{{asset('assets/layouts/global/scripts/quick-nav.min.js') }}" type="text/javascript"></script>
 </head>
 
-<body class="page-container-bg-solid page-header-menu-fixed" huaban_collector_injected="true">
+<body class="page-container-bg-solid page-header-menu-fixed">
 <div class="page-wrapper">
 	@include('etravel.layout.header')
 <div style="background-color: rgba(165,163,163,0.07);" class="page-wrapper">

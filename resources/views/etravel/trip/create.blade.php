@@ -195,7 +195,7 @@
 										<div class="tab-pane fade in active" id="home">
 											<ul class="list-group">
 												<li class="list-group-item">
-												Notification To Be Sent General Affairs?: 
+												Notification To Be Sent General Affairs?:
 													<label class=""> 
 													<div class="iradio_minimal-grey" style="position: relative;">
 													<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="1">
@@ -218,14 +218,11 @@
 													<div class="row">
 														<div class="col-md-6">
 															<div class="form-group">
-																<label class="control-label">CC</label> <select
-																	id="CostCenter" name="CC"
-																	class="cboSelect2 leave-control form-control"
-																	tabindex="-1">
+																<label class="control-label">CC</label> 
+																<select id="CC" name="CC" class="form-control" disabled>
 																	<option value="1">&lt;&nbsp;1&nbsp;&gt;</option>
 																	<option value="2">&lt;&nbsp;2&nbsp;&gt;</option>
 																	<option value="3">&lt;&nbsp;3&nbsp;&gt;</option>
-
 																</select>
 															</div>
 														</div>

@@ -63,7 +63,10 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         Route::resource('airline', 'AirlineController');
        	Route::get('approver',['uses'=>'ApproverController@getOverseasApprover','as'=>'overseasApprover']);
        
-        
+       	Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
+        	Route::get('hr-listing','TriplistController@index');
+        	
+        });
     });
 });
 

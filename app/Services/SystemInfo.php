@@ -8,10 +8,10 @@ use App\Trip_announcement;
 use App\Company;
 
 class SystemInfo implements SystemVariable{
-	protected $_user_id='';
+	public $user_id='';
 	public function __construct() 
 	{
-		$this->_user_id=Auth::user()->UserID;
+		$this->user_id=Auth::user()->UserID;
 		
 	}
 	/**
@@ -33,6 +33,7 @@ class SystemInfo implements SystemVariable{
 		return Auth::user()->SiteID;
 		
 	}
+
 	public function getDefaultCostCenterID()
 	{
 		return Auth::user()->DefaultCostCenterID;
@@ -46,6 +47,7 @@ class SystemInfo implements SystemVariable{
 	{
 		return Company::find(Auth::user()->CompanyID)->wbscode()->orderBy('project_type','ASC')->orderBy('status','DESC')->get()?:[];
 	} 
+	
 	public function __get($name)
 	{
 		
@@ -56,15 +58,14 @@ class SystemInfo implements SystemVariable{
 		}
 		if (property_exists($this, $name))
 		{
-			if (! empty($this->$name))
-			{
-				return $this->$name;
-			}
-			else
-			{
-				return null;
-			}
+			return $this->name;
 		}
+		if (Auth::user()->$name!==null)
+		{
+			return Auth::user()->$name;
+		}
+		return null;
 		
 	}
+	
 }

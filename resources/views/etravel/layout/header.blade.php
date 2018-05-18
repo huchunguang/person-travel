@@ -1,6 +1,5 @@
 <div class="row" style="background-color: rgba(51,122,183,1);margin:0px;">
 	<div class="row" style="background-color: rgba(51,122,183,1);margin-left:10px;margin-right:10px;">
-		
 	<div class="col-md-9">
 		<ul class="nav nav-pills" style="text-align: center; margin-bottom: 0px;">
 		<li class="active"><a href="{{ route('dashboard') }}" style="color: white;">
@@ -17,7 +16,14 @@
 				<li><a href="/etravel/purpose">Purpose List Category</a></li>
 			</ul>
 		</li>
-		<li><a href="##" style="color: white;"><i class="fa fa-book"></i>Admin</a></li>
+		<li class="dropdown">
+			<a href="##" class="dropdown-toggle" data-toggle="dropdown" style="color: white;">
+				<i class="fa fa-book"></i>Admin<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu">
+				<li><a href="/etravel/admin/hr-listing">Travel Listing</a></li>
+			</ul>
+		</li>
 
 	</ul>
 	</div>
@@ -54,25 +60,15 @@
 		
 	</div>
 </div>
-<div class="row"	 style="margin: 10px;margin-bottom:0px;">
+<div class="row" style="margin: 10px;margin-bottom:0px;">
 	<div class="col-md-3">
-				<ul class="nav nav-pills" style="text-align: center; margin-bottom: 0px;">
-					<li>
-						<a href="/etravel/dashboard"> <span><img
-				src="{{ asset('storage/arkema2.png') }}"
-				style="width: 160px; height: 43px;" /></span>
-		</a>
-					</li>
-					
-				</ul>
-		
+		<figure>
+			<img src="{{ asset('storage/arkema2.png') }}" style="width: 160px; height: 43px;" alt=""/>
+		</figure>
 	</div>
 	
-	<div class="top_nav col-md-3">
-		
-		<div class="nav_menu">
-			<h2 class="app-title policies-text bold">e-Travel Application</h2>
-		</div>
+	<div class="col-md-3" style="margin-bottom: ">
+			<span class="app-title policies-text bold" style="font-size: 20px;">e-Travel Application</span>
 	</div>
 </div>
 

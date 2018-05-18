@@ -1,4 +1,5 @@
-@extends("etravel.layout.main") @section("content")
+@extends("etravel.layout.main") 
+@section("content")
 <div class="row" style="margin: 10px;">
 	<div class="col-md-3">
 		<p class="text-left lead" style="margin-left: 10px;">TRIP SEARCH</p>
