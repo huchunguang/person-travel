@@ -130,6 +130,10 @@ class TripController extends Controller
 			'entertain_detail',
 		]));
 		DB::transaction(function()use($tripData,$demosticData){
+			$tripData['department_id']=$this->system->DepartmentID;
+			$tripData['country_id']=$this->system->CountryAssignedID;
+			$tripData['site_id']=$this->system->SiteID;
+			$tripData['company_id']=$this->system->CompanyID;
 			$tripObjMdl = Trip::create($tripData);
 			foreach ($demosticData as $item){
 				$tripObjMdl->demostic()->create($item);
@@ -153,6 +157,10 @@ class TripController extends Controller
     		try {
     			$trip=new Trip;
     			$trip->user_id=Auth::user()->UserID;
+    			$trip->department_id=$this->system->DepartmentID;
+    			$trip->country_id=$this->system->CountryAssignedID;
+    			$trip->site_id=$this->system->SiteID;
+    			$trip->company_id=$this->system->CompanyID;
     			$trip->project_code=$request->input('project_code');
     			$trip->destination_id=$request->input('destination');
     			$trip->cost_center_id=$request->input('cost_center_id');

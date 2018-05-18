@@ -62,9 +62,9 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         Route::resource('announcement', 'AnnouncementController');
         Route::resource('airline', 'AirlineController');
        	Route::get('approver',['uses'=>'ApproverController@getOverseasApprover','as'=>'overseasApprover']);
-       
+       	
        	Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
-        	Route::get('hr-listing','TriplistController@index');
+       		Route::match(['get','post'],'hr-listing','TriplistController@index');
         	
         });
     });
@@ -73,6 +73,9 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
 
 Route::group([],function(){
 	Route::get('country-sites/{country}','CountryController@sites');
+	#Company
+	Route::get('site-companys/{site_id}','CompanyController@getSiteCompanys');
+	Route::get('site-company-departments/{site_id}/{company_id}','DepartmentController@getDepListBySiteIdCpId');
 });
 
 #Download

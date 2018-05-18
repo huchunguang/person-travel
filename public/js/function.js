@@ -2088,3 +2088,38 @@ function RejectCancelLeaveRequest() {
         }
     });
 }
+
+
+
+function getSiteOptByCountry(countryId){
+	var siteStr='<option value="">Select...</option>';
+	$.get('/country-sites/'+countryId,function(siteList){
+		for(var i=0;i<siteList.length;i++){
+			siteStr+="<option value="+siteList[i].SiteID+">"+siteList[i].Site+"</option>";
+		}
+		$('#site_id').append(siteStr);
+		
+	});
+}
+
+function getCompanyBySiteId(siteId){
+	var companyStr='<option value="">Select...</option>';
+	$.get('/site-companys/'+siteId,function(companyList){
+		$.each(companyList,function(index,company){
+			companyStr+="<option value="+company.CompanyID+">"+company.CompanyCode+"-"+company.CompanyName+"</option>";
+		});
+		$('#company_id').append(companyStr);
+		
+		
+	});
+}
+function getDepBySiteCompany(siteId,companyId){
+	var departmentStr='<option value="">Select...</option>';
+	$.get('/site-company-departments/'+siteId+'/'+companyId,function(departmentList){
+		$.each(departmentList,function(index,department){
+			departmentStr+="<option value="+department.DepartmentID+">"+department.Department+"</option>";
+		});
+		$('#department_id').append(departmentStr);
+	});
+	
+}

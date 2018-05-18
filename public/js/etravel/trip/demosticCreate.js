@@ -1,17 +1,7 @@
-$(function(){
 	function initializeDateSettings(){
 		var nowTime = '<%=DateTime.Now.ToString("HH:mm")%>';
 		 $(".time-input").val(nowTime).timepicker('setTime', nowTime);
-		 
-			$('#daterange-btn').daterangepicker({
-		        startDate: moment(),
-		        endDate: moment().endOf('month'),
-		        drops: "up"
-		    },
-		    function(start, end) {
-		        $('#daterange-btn').val(start.format('MM/DD') + ' - ' + end.format('MM/DD'));
-		    }
-		);
+	
 			$('.singleDatePicker').daterangepicker({
 		        startDate: moment(),
 		        endDate: moment().endOf('month'),
@@ -39,7 +29,6 @@ $(function(){
 		 initializeDateSettings();
 		 return true;
 	});
-});
 
 var addnewLineNum = 0;
 function addNewLine(){

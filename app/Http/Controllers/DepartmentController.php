@@ -1,12 +1,10 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
-use App\Site;
+use App\Http\Controllers\Etravel\Admin\AdminController;
 
-class SiteController extends Controller {
+class DepartmentController extends AdminController {
 
 	/**
 	 * Display a listing of the resource.
@@ -44,9 +42,9 @@ class SiteController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show(Request $request,$id)
+	public function show($id)
 	{
-		return Site::find($id)->toJson();
+		//
 	}
 
 	/**
@@ -81,5 +79,16 @@ class SiteController extends Controller {
 	{
 		//
 	}
-
+	/**
+	 * @desc get the list of departments be charge with site and company
+	 * @param integer $site_id
+	 * @param integer $company_id
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function getDepListBySiteIdCpId(Request $request,$site_id,$company_id)
+	{
+		$return = [];
+		$return = $this->getDepByCompanySite($site_id, $company_id);
+		return response()->json($return);
+	}
 }

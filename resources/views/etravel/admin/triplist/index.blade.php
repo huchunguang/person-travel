@@ -1,3 +1,6 @@
+<?php
+use Carbon\Carbon;
+?>
 @extends("etravel.layout.main") @section("content")
 <div class="container">
 	@include("etravel.layout.pagebar")
@@ -7,7 +10,8 @@
 				<!-- BEGIN SAMPLE TABLE PORTLET-->
 				<div class="portlet box default">
 					<div class="portlet-body" style="display: block;">
-						<form action="" method="get" name="HRForm" class="" role="form">
+						<form action="{{url('/etravel/admin/hr-listing')}}" method="post" name="adminTravelform" role="form">
+							<input type="hidden" name="_token" value="{{csrf_token()}}"/>
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
@@ -15,13 +19,14 @@
 										<div class="input-group">
 											<select id="country_id" name="country_id"
 												class="form-control input-sm select2">
-												<option value="">Select...</option> @foreach($countryList as
-												$countryItem) @if($CountryAssignedID &&
-												$CountryAssignedID==$countryItem['CountryID'])
-												<option value="{{$countryItem['CountryID']}}" selected>{{$countryItem['Country']}}</option>
-												@else
-												<option value="{{$countryItem['CountryID']}}">{{$countryItem['Country']}}</option>
-												@endif @endforeach
+												<option value="">Select...</option> 
+												@foreach($countryList as $countryItem) 
+													@if($CountryAssignedID && $CountryAssignedID==$countryItem['CountryID'])
+													<option value="{{$countryItem['CountryID']}}" selected>{{$countryItem['Country']}}</option>
+													@else
+													<option value="{{$countryItem['CountryID']}}">{{$countryItem['Country']}}</option>
+													@endif
+												@endforeach
 											</select>
 										</div>
 									</div>
@@ -30,14 +35,15 @@
 									<div class="form-group">
 										<lavel class="control-label">Site</lavel>
 										<div class="input-group">
-											<select id="site_id" name="site_id"
-												class="form-control input-sm select2">
-												<option value="">Select...</option> @foreach($siteList as
-												$siteItem) @if($SiteID==$siteItem['SiteID'])
-												<option value="{{$siteItem['SiteID']}}" selected>{{$siteItem['Site']}}</option>
-												@else
-												<option value="{{$siteItem['SiteID']}}">{{$siteItem['Site']}}</option>
-												@endif @endforeach
+											<select id="site_id" name="site_id" class="form-control input-sm select2">
+												<option value="">Select...</option> 
+												@foreach($siteList as $siteItem) 
+													@if($SiteID==$siteItem['SiteID'])
+													<option value="{{$siteItem['SiteID']}}" selected>{{$siteItem['Site']}}</option>
+													@else
+													<option value="{{$siteItem['SiteID']}}">{{$siteItem['Site']}}</option>
+													@endif 
+												@endforeach
 											</select>
 										</div>
 									</div>
@@ -50,16 +56,16 @@
 									<div class="form-group">
 										<lavel class="control-label">Company</lavel>
 										<div class="input-group">
-											<select id="company_id" name="company_id"
-												class="form-control input-sm select2">
-												<option value="">Select...</option> @foreach($companyList as
-												$company) @if($CompanyID ==
-												$company['company']['CompanyID'])
+											<select id="company_id" name="company_id" class="form-control input-sm select2">
+												<option value="">Select...</option> 
+												@foreach($companyList as $company) 
+												@if($CompanyID == $company['company']['CompanyID'])
 												<option value="{{$company['company']['CompanyID']}}"
 													selected>{{$company['company']['CompanyCode']}}-{{$company['company']['CompanyName']}}</option>
 												@else
 												<option value="{{$company['company']['CompanyID']}}">{{$company['company']['CompanyCode']}}-{{$company['company']['CompanyName']}}</option>
-												@endif @endforeach
+												@endif 
+												@endforeach
 											</select>
 										</div>
 									</div>
@@ -68,11 +74,10 @@
 									<div class="form-group">
 										<lavel class="control-label">Department</lavel>
 										<div class="input-group">
-											<select id="siteSel" name="site_id"
-												class="form-control input-sm select2">
-												<option value="">Select...</option> @foreach($departmentList
-												as $department)
-												<option value="{{$department['DepartmentID']}}">{{$department['Department']}}</option>
+											<select id="department_id" name="department_id" class="form-control input-sm select2">
+												<option value="">Select...</option> 
+												@foreach($departmentList as $department)
+													<option value="{{$department['DepartmentID']}}">{{$department['Department']}}</option>
 												@endforeach
 											</select>
 										</div>
@@ -86,8 +91,7 @@
 									<div class="form-group">
 										<lavel class="control-label">Travel Type</lavel>
 										<div class="input-group">
-											<select id="trip_type" name="trip_type"
-												class="form-control input-sm select2">
+											<select id="trip_type" name="trip_type" class="form-control input-sm select2">
 												<option value="">Select...</option>
 												<option value="1">INTERNATIONAL</option>
 												<option value="2">DOMESTIC</option>
@@ -100,9 +104,12 @@
 									<div class="form-group">
 										<lavel class="control-label">Status</lavel>
 										<div class="input-group">
-											<select id="status" name="status"
-												class="form-control input-sm select2">
+											<select id="status" name="status" class="form-control input-sm select2">
 												<option value="">Select...</option>
+												<option value="pending">pending</option>
+												<option value="approved">approved</option>
+												<option value="cancelled">cancelled</option>
+												<option value="rejected">rejected</option>
 											</select>
 										</div>
 									</div>
@@ -114,11 +121,11 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<lavel class="control-label">From</lavel>
-										<input type="text" name="daterange_from"
-											value="{{old('daterange_from')}}"
+										<input id="hr_daterange_from" type="text" name="daterange_from"
+											value="{{Carbon::now()->firstOfMonth()->format('m/d/Y')}}"
 											class="form-control singleDatePicker"> <i
 											class="glyphicon glyphicon-calendar fa fa-calendar"
-											style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+											style="position: absolute; bottom: 20px; right: 20px; top: auto; cursor: pointer;"></i>
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -126,11 +133,11 @@
 									<div class="form-group">
 										<lavel class="control-label">To</lavel>
 
-										<input type="text" name="daterange_from"
-											value="{{old('daterange_from')}}"
+										<input id="hr_daterange_from" type="text" name="daterange_to"
+											value="{{Carbon::now()->format('m/d/Y')}}"
 											class="form-control singleDatePicker"> <i
 											class="glyphicon glyphicon-calendar fa fa-calendar"
-											style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+											style="position: absolute; bottom: 20px; right: 20px; top: auto; cursor: pointer;"></i>
 
 									</div>
 
@@ -153,13 +160,12 @@
 							<div class="form-group col-md-12">
 								<div class="panel panel-default" style="margin-bottom: 0px">
 									<div class="panel-heading" style="height: 35px;">
-										<span id="CompanySiteLabel">{{ $status or 'Approved' }} List</span><span
-											id="CompanySiteExpand"
-											class="expander glyphicon glyphicon-plus"></span>
+										<span id="CompanySiteLabel" class="bold">{{ $status or 'Approved' }} List</span>
+										<span id="CompanySiteExpand" class="expander glyphicon glyphicon-plus"></span>
 									</div>
 									<div id="" class="panel-body" style="padding: 0 0 0 0">
-										<div class="table-scrollable">
-											<table class="table table-striped table-hover">
+										<div class="table-scrollable" id="BalanceDetailsDiv" style="overflow-y:auto; height:260px; padding-left:0px">
+											<table class="table table-striped table-hover sortable">
 
 												<thead>
 													<tr class="btn-info roundborder">
@@ -183,7 +189,7 @@
 													</tr>
 												</thead>
 												<tbody>
-													@if(isset($tripList) && count($tripList)>1)
+													@if(isset($tripList) && count($tripList)>0)
 														@foreach($tripList as $trip)
 														<tr>
 															<td>{{$trip['trip_id']}}</td>
@@ -228,7 +234,7 @@
 												<tfoot>
 													<tr class="btn-info roundborder">
 														<th colspan="2" style="text-align: right">Total List:</th>
-														<th id="tblCounter" style="text-align: left"></th>
+														<th id="tblCounter" style="text-align: left">{{$tripList->total()}}</th>
 														<th style="text-align: center; ></th>
 														<th></th>
 														<th></th>
@@ -240,6 +246,7 @@
 												</tfoot>
 
 											</table>
+											<?php echo $tripList->render();?>
 										</div>
 
 
@@ -255,4 +262,52 @@
 		</div>
 	</div>
 </div>
+<script>
+var Expand=false;
+$("#CompanySiteExpand").click(function () {
+    try {
+        Expand = !Expand;
+        if (Expand) {
+            $("#BalanceDetailsDiv").css('height', 'auto');
+            $("#CompanySiteExpand").removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        } else {
+            $("#BalanceDetailsDiv").css('height', '260px');
+            $("#CompanySiteExpand").removeClass('glyphicon-minus').addClass('glyphicon-plus');
+        }
+    } catch (err) {
+        alert(err.message);
+    }
+});
+$('#country_id').change(function(){
+	$('#site_id').empty();
+	$('#company_id').empty();
+	$('#department_id').empty();
+	getSiteOptByCountry($(this).val());
+});
+$('#site_id').change(function(){
+	var siteId=$(this).val();
+	$('#company_id').empty();
+	$('#department_id').empty();
+	getCompanyBySiteId(siteId);
+});
+$('#company_id').change(function(){
+	var companyId=$(this).val();
+	var siteId=$('#site_id option:selected').val();
+	$('#department_id').empty();
+	getDepBySiteCompany(siteId,companyId);
+});
+$('#trip_type').change(function(event){
+	var trip_type = parseInt($(this).val());
+	if(trip_type==1){
+		$('<option value="partly-approved">partly-approved</option>').insertAfter('#status option:last');
+	}else if(trip_type==2){
+		var lastVal=$('#status option:last').val();
+		if(lastVal=='partly-approved'){
+			$('#status option:last').empty();
+		}
+	}
+		
+});
+
+</script>
 @endsection

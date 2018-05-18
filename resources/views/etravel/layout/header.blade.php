@@ -6,6 +6,7 @@
 			<i class="fa fa-home"></i>Dashboard</a></li>
 		<li><a href="##" style="color: white;"><i class="fa fa-exchange"></i>Delegation</a></li>
 		<li><a href="##" style="color: white;"><i class="fa fa-bar-chart"></i>Reports</a></li>
+		@if(Auth::user()->UserTypeID=='1' || Auth::user()->UserTypeID=='5')
 		<li class="dropdown">
 			<a href="##" class="dropdown-toggle" data-toggle="dropdown" style="color: white;">
 				<i class="fa fa-gears"></i>Configuration<span class="caret"></span>
@@ -16,6 +17,9 @@
 				<li><a href="/etravel/purpose">Purpose List Category</a></li>
 			</ul>
 		</li>
+		@endif
+		
+		@if(Auth::user()->UserTypeID=='1' || Auth::user()->UserTypeID=='5')
 		<li class="dropdown">
 			<a href="##" class="dropdown-toggle" data-toggle="dropdown" style="color: white;">
 				<i class="fa fa-book"></i>Admin<span class="caret"></span>
@@ -24,7 +28,7 @@
 				<li><a href="/etravel/admin/hr-listing">Travel Listing</a></li>
 			</ul>
 		</li>
-
+		@endif
 	</ul>
 	</div>
 	<div class="col-md-3">

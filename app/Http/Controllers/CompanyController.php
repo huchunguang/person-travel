@@ -4,9 +4,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use App\Site;
+use App\Http\Controllers\Etravel\Admin\AdminController;
 
-class SiteController extends Controller {
+class CompanyController extends AdminController {
 
 	/**
 	 * Display a listing of the resource.
@@ -44,9 +44,9 @@ class SiteController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show(Request $request,$id)
+	public function show($id)
 	{
-		return Site::find($id)->toJson();
+		//
 	}
 
 	/**
@@ -81,5 +81,18 @@ class SiteController extends Controller {
 	{
 		//
 	}
-
+	/**
+	 * @desc get the charge of companys by the site identity
+	 * @param Request $request
+	 * @param integer $site_id
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function getSiteCompanys(Request  $request,$site_id) 
+	{
+		$return = [];
+		$return = $this->getCompanyListHRSecurity($site_id)->map(function($item,$key){
+			return $item['company'];
+		});
+		return response()->json($return);
+	}
 }
