@@ -51,7 +51,6 @@ use Carbon\Carbon;
 
 							</div>
 							<div class="row">
-
 								<div class="col-md-6">
 									<div class="form-group">
 										<lavel class="control-label">Company</lavel>
@@ -83,8 +82,6 @@ use Carbon\Carbon;
 										</div>
 									</div>
 								</div>
-
-
 							</div>
 							<div class="row">
 								<div class="col-md-6">
@@ -165,18 +162,21 @@ use Carbon\Carbon;
 									</div>
 									<div id="" class="panel-body" style="padding: 0 0 0 0">
 										<div class="table-scrollable" id="BalanceDetailsDiv" style="overflow-y:auto; height:260px; padding-left:0px">
-											<table class="table table-striped table-hover sortable">
-
+											<table id="adminTripListTbl" class="table table-striped table-hover sortable">
+											
 												<thead>
 													<tr class="btn-info roundborder">
 														<th style="display: none"></th>
 														<th style="text-align: right">Search:</th>
-														<th colspan="2"><input id="txtReferenceSearch" type="text"
-															placeholder="Search by Employee" style="color: black"></th>
-														<th colspan="2"><input id="txtEmployeeSearch" type="text"
-															placeholder="Search By Start Date" style="color: black"></th>
-														<th colspan="2"><input id="txtLeaveTypeSearch" type="text"
-															placeholder="Search by End Date" style="color: black"></th>
+														<th colspan="2">
+															<input id="txtEmployeeSearch" type="text" placeholder="Search by Employee" style="color: black">
+														</th>
+														<th colspan="2">
+															<input id="txtStartDateSearch" type="text" placeholder="Search By Start Date" style="color: black">
+														</th>
+														<th colspan="2">
+															<input id="txtEndDateSearch" type="text" placeholder="Search by End Date" style="color: black">
+														</th>
 													</tr>
 													<tr class="btn-info roundborder">
 														<th>#</th>
@@ -188,6 +188,7 @@ use Carbon\Carbon;
 														<th>View</th>
 													</tr>
 												</thead>
+												
 												<tbody>
 													@if(isset($tripList) && count($tripList)>0)
 														@foreach($tripList as $trip)
@@ -204,11 +205,13 @@ use Carbon\Carbon;
 															</td>
 															<td>{{$trip['daterange_from']}}</td>
 															<td>{{$trip['daterange_to']}}</td>
-															<td>@if($trip['trip_type']=='1') 
+															<td>
+																@if($trip['trip_type']=='1') 
 																<a href="/etravel/tripnationallist/{{ $trip['trip_id'] }}">
 																@elseif($trip['trip_type']=='2') 
 																<a href="/etravel/tripdemosticlist/{{ $trip['trip_id'] }}">
 																@endif 
+																
 																@if($trip['status']=='pending') 
 																	<span class="glyphicon glyphicon-hand-right" style="color: green"></span>
 																@elseif($trip['status']=='approved') 
@@ -220,7 +223,8 @@ use Carbon\Carbon;
 																@elseif($trip['status']=='partly-approved') 
 																	<span class="glyphicon glyphicon-check" style="color: yellow"></span>
 																@endif
-															</a></td>
+																</a>
+															</td>
 														</tr>
 														@endforeach 
 													@else
@@ -248,66 +252,15 @@ use Carbon\Carbon;
 											</table>
 											<?php echo $tripList->render();?>
 										</div>
-
-
 									</div>
 								</div>
 							</div>
-
 						</div>
 					</div>
 				</div>
-				<!-- END SAMPLE TABLE PORTLET-->
 			</div>
 		</div>
 	</div>
 </div>
-<script>
-var Expand=false;
-$("#CompanySiteExpand").click(function () {
-    try {
-        Expand = !Expand;
-        if (Expand) {
-            $("#BalanceDetailsDiv").css('height', 'auto');
-            $("#CompanySiteExpand").removeClass('glyphicon-plus').addClass('glyphicon-minus');
-        } else {
-            $("#BalanceDetailsDiv").css('height', '260px');
-            $("#CompanySiteExpand").removeClass('glyphicon-minus').addClass('glyphicon-plus');
-        }
-    } catch (err) {
-        alert(err.message);
-    }
-});
-$('#country_id').change(function(){
-	$('#site_id').empty();
-	$('#company_id').empty();
-	$('#department_id').empty();
-	getSiteOptByCountry($(this).val());
-});
-$('#site_id').change(function(){
-	var siteId=$(this).val();
-	$('#company_id').empty();
-	$('#department_id').empty();
-	getCompanyBySiteId(siteId);
-});
-$('#company_id').change(function(){
-	var companyId=$(this).val();
-	var siteId=$('#site_id option:selected').val();
-	$('#department_id').empty();
-	getDepBySiteCompany(siteId,companyId);
-});
-$('#trip_type').change(function(event){
-	var trip_type = parseInt($(this).val());
-	if(trip_type==1){
-		$('<option value="partly-approved">partly-approved</option>').insertAfter('#status option:last');
-	}else if(trip_type==2){
-		var lastVal=$('#status option:last').val();
-		if(lastVal=='partly-approved'){
-			$('#status option:last').empty();
-		}
-	}
-		
-});
-
-</script>
+<script src="{{asset('js/etravel/admin/triplist/index.js')}}"></script>
 @endsection

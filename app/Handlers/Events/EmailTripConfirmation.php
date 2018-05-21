@@ -30,8 +30,16 @@ class EmailTripConfirmation {
 	public function handle(TripWasApproved $event)
 	{
 		$trip= $event->trip;
-		DB::transaction(function()use($trip){
-			$trip->update(['status'=>'approved']);
+		$user_id=Auth::user()->UserID;
+		DB::transaction(function()use($trip,$user_id){
+			if ($trip->trip_type=='1'){
+				if ($user_id == $trip->overseas_approver){
+					$trip->update(['status'=>'approved']);
+				}elseif ($user_id == $trip->department_approver){
+					$trip->update(['is_depart_approved'=>'1']);
+				}
+			}
+			
 			if ($trip->trip_type=='2'){
 				$trip->demostic()->update(['is_approved'=>'1']);
 			}

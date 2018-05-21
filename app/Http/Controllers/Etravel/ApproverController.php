@@ -29,7 +29,10 @@ class ApproverController extends Controller {
 	public function index(Request $request,User $user)
 	{
 		$status=$request->input('status');
-		$tripList = Trip::OfStatus($status)->where(['department_approver'=>$this->user_id])->orderBy('created_at','DESC')->paginate(PAGE_SIZE);
+		$tripList = Trip::OfStatus($status)->where(['department_approver'=>$this->user_id])->orWhere(function($query){
+			$query->where(['overseas_approver'=>$this->user_id])
+			->where(['is_depart_approved'=>'1']);
+		})->orderBy('created_at','DESC')->paginate(PAGE_SIZE);
 // 		dd($tripList);
 		return view('etravel/approver/index', [
 			'status'=>$status?$status:'all',
@@ -115,9 +118,12 @@ class ApproverController extends Controller {
 				Event::fire(new TripWasRejected($trip,$request));break;
 				
 		}
+		
 		if ($trip->trip_type=='2'){
+			Event::fire(new TripNotify($trip, $request, 'Domestic Trip '.$status));
 			return redirect('/etravel/tripdemosticlist/'.$trip->trip_id);
 		}elseif ($trip->trip_type=='1'){
+			Event::fire(new TripNotify($trip, $request, 'National Trip '.$status));
 			return redirect('/etravel/tripnationallist/'.$trip->trip_id);
 		}
 		

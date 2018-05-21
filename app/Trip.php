@@ -38,6 +38,10 @@ class Trip extends Model {
 	{
 		return $this->belongsTo('App\User','user_id','UserID');
 	}
+	public function overseasApprover()
+	{
+		return $this->belongsTo('App\User','overseas_approver','UserID');
+	}
 	/**
 	 * @desc query  with  different itinerary status trip  currently user 
 	 * @param unknown $query

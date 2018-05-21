@@ -5,8 +5,8 @@
 	<div class="page-content-inner">
 		<div class="row">
 		<!-- BEGIN FORM-->
-		<form action="/etravel/tripapproval/{{$trip->trip_id}}" method="post" class="horizontal-form">
-			@if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID )
+		<form action="/etravel/tripapproval/{{$trip->trip_id}}" method="post" class="horizontal-form" id="national_approval">
+			@if($trip->status == 'pending' && ($trip->department_approver == Auth::user()->UserID || $trip->overseas_approver == Auth::user()->UserID) && $trip->is_depart_approved!='1')
 				@include('etravel.layout.approverAction')
 			@endif
 			@include('etravel.layout.error')
@@ -26,7 +26,7 @@
 					<div class="portlet-title">
 						<div class="caption">
 							<i class="icon-bubble"></i> <span
-								class="caption-subject bold uppercase">{{ $trip->status }}</span>
+								class="caption-subject bold uppercase">{{ $trip->status }} @if($trip->is_depart_approved) TO {{$trip->overseasApprover()->first()['FirstName']}} @endif</span>
 						</div>
 					</div>
 

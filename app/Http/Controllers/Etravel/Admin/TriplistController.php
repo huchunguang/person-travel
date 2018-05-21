@@ -11,6 +11,7 @@ class TriplistController extends AdminController
 	public function index(Request $request)
 	{
 		$breadcrumb='Travel Requests';
+		$status = $request->input('status');
 		$country_id = $request->input('country_id');
 		$site_id = $request->input('site_id');
 		$company_id = $request->input('company_id');
@@ -24,13 +25,12 @@ class TriplistController extends AdminController
 			$betweenFilter=array_only($searchFilter, ['daterange_from','daterange_to']);
 			unset($searchFilter);
 			$tripList = Trip::where($baseFilter)->whereBetween('daterange_from',$betweenFilter)->whereBetween('daterange_to',$betweenFilter)->paginate(PAGE_SIZE);
-			
 // 			dd($tripList->toArray());
 		}
 		if ($request->isMethod('get')){
 			$tripList=Trip::paginate(PAGE_SIZE);
 		}
-		return view('/etravel/admin/triplist/index', compact('countryList', 'siteList', 'companyList','departmentList','breadcrumb','tripList'));
+		return view('/etravel/admin/triplist/index', compact('countryList', 'siteList', 'companyList','departmentList','breadcrumb','tripList','status'));
 	}
 	protected function prepareSearchFilter(Request $request)
 	{

@@ -28,6 +28,7 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
     		#DashBoard
         Route::get('dashboard',['as'=>'dashboard','uses'=>'DashboardController@index']);
         Route::post('trip',['as'=>'tripType','uses'=>'DashboardController@trip']);
+        Route::get('trip/send','TripController@test');
         
         #Create
         Route::get('trip/create',['as'=>'internationalCreate','uses'=>'TripController@create']);

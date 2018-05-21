@@ -5,10 +5,9 @@ $('#downloadFile').on('click',function(){
 
 $('#approveBtn').on('click',function(){
 	$('input[name="status"]').val('approved');
-	
-	$('form').submit();
+	$('#national_approval').submit();
 });
 
 $('#btnRejectTravel').on('click',function(){
-	$('form').submit();
+	$('#national_approval').submit();
 });

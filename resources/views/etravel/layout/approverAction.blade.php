@@ -8,11 +8,13 @@
 			<div class="form-body text-center">
 				<div class="row">
 					<div class="btn-group btn-group-solid margin-bottom-10">
+						@if($trip->trip_type == 2)
 						<button id="PartlybtnApproveValidate" type="button"
 							data-toggle="modal" data-target="#forPartlyApproval"
 							class="btn yellow-crusta" disabled>
 							<i class="fa fa-thumbs-up"></i> Partly Approve
 						</button>
+						@endif
 						<button id="btnApproveValidate" type="button"
 							 data-toggle="modal" data-target="#forApproval" 
 							 title="Approve Leave Request"

@@ -68,7 +68,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 			$approvers = Department_approver::where($departmentFilter)->first([
 				'Approver2'
 			])->toArray();
-			
+					
 			$userIds = explode(',', $approvers['Approver2']);
 			if(in_array($user_id, $userIds))
 			{

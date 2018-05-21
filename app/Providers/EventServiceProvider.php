@@ -23,6 +23,9 @@ class EventServiceProvider extends ServiceProvider {
 		'App\Events\TripWasRejected'=>[
 			'App\Handlers\Events\EmailTripRejected'
 		],
+		'App\Events\TripNotify'=>[
+			'App\Handlers\Events\EmailTripNotify'
+		],
 	];
 
 	/**

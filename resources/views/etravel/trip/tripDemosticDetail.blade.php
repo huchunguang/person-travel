@@ -3,7 +3,7 @@
 <div class="container">
 	<div class="page-content-inner">
 		<div class="row">
-			<form action="/etravel/tripapproval/{{$trip->trip_id}}" method="post" class="horizontal-form">
+			<form action="/etravel/tripapproval/{{$trip->trip_id}}" method="post" class="horizontal-form" id="domestic_approval">
 		
 			@if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID )
 				@include('etravel.layout.approverAction')
@@ -305,13 +305,13 @@
 <script>
 var total_approved_num = {{ count($demosticInfo) }};
 $('#approveBtn').on('click',function(){
-	$('form').submit();
+	$('#domestic_approval').submit();
 });
 $('#partlyApproveBtn').on('click',function(){
-	$('form').submit();
+	$('#domestic_approval').submit();
 });
 $('#btnRejectTravel').on('click',function(){
-	$('form').submit();
+	$('#domestic_approval').submit();
 });
 
 $('input').on('ifChanged', function(event){

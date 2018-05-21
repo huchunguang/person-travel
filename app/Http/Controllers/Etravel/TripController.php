@@ -7,6 +7,8 @@ use App\User;
 use App\Department_approver;
 use App\Trip;
 use App\Trip_purpose;
+use Illuminate\Support\Facades\Event;
+
 use Illuminate\Support\Facades\Auth;
 use App\Costcenter;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +30,9 @@ use App\Trip_insurance;
 use App\Company;
 use App\Contacts\SystemVariable;
 use App\Airline;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Mail\Message;
+use App\Events\TripNotify;
 
 class TripController extends Controller
 {
@@ -59,7 +64,7 @@ class TripController extends Controller
      */
     public function demosticCreate() 
     {
-    		$userProfile=User::getUserProfile();
+    	$userProfile=User::getUserProfile();
 		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
 		return view('/etravel/trip/demosticCreate')->with('userProfile', $userProfile['userProfile'])->with('approvers', $userProfile['approvers'])->with('purposeCats',$purposeCategory)->with('costCenters',Costcenter::getAvailableCenters());
 	}
@@ -129,7 +134,7 @@ class TripController extends Controller
 			'entertain_cost',
 			'entertain_detail',
 		]));
-		DB::transaction(function()use($tripData,$demosticData){
+		DB::transaction(function()use($tripData,$demosticData,$request){
 			$tripData['department_id']=$this->system->DepartmentID;
 			$tripData['country_id']=$this->system->CountryAssignedID;
 			$tripData['site_id']=$this->system->SiteID;
@@ -138,9 +143,10 @@ class TripController extends Controller
 			foreach ($demosticData as $item){
 				$tripObjMdl->demostic()->create($item);
 			}
+			Event::fire(new TripNotify($tripObjMdl, $request, 'Domestic Trip Created'));
 		});
 		
-    		return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
+    	return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
     }
     
     /**
@@ -156,6 +162,7 @@ class TripController extends Controller
     		DB::beginTransaction();
     		try {
     			$trip=new Trip;
+    			$trip->trip_type=1;
     			$trip->user_id=Auth::user()->UserID;
     			$trip->department_id=$this->system->DepartmentID;
     			$trip->country_id=$this->system->CountryAssignedID;
@@ -213,6 +220,7 @@ class TripController extends Controller
     				$trip->insurance()->create($insuranceData);
     			}
     			DB::commit();
+    			Event::fire(new TripNotify($trip, $request, 'National Trip Created'));
     			return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
     		} catch (Exception $e) {
     			DB::rollBack();
@@ -274,6 +282,7 @@ class TripController extends Controller
 		$estimateExpenses=$trip->estimateExpense()->get();
 		$flightData=$trip->flight()->get();
 		$insuranceData=$trip->insurance()->first();
+// 		dd($trip->overseasApprover()->first()['FirstName']);
 // 		dd($trip->destination_id);
 		$destination=Country::whereIn('CountryID',$trip->destination_id)->get();
 // 		dd($destination->toArray());
@@ -405,6 +414,8 @@ class TripController extends Controller
 				}
 				
 			}
+			Event::fire(new TripNotify($trip, $request, 'Domestic Trip Cancelled'));
+			
 		});
 		$user_id=Auth::user()->UserID;
 		return redirect('/etravel/'.$user_id.'/triplist?status=pending');
@@ -446,6 +457,9 @@ class TripController extends Controller
 			} 
 			$trip->flight_itinerary_prefer=$request->only(['is_sent_affairs','CC']);
 			$trip->hotel_prefer=$request->only(['rep_office','room_type','smoking','foods']);
+			if($trip->is_depart_approved=='1'){
+				$trip->is_depart_approved='0';
+			}
 			$trip->save();
 			$flightData=$request->only(['flight_id','flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
 			$flightData=array_bound_key($flightData);
@@ -484,11 +498,16 @@ class TripController extends Controller
 					$trip->estimateExpense()->create($estimateItem);
 				}
 			}
-			if ($insuranceData && $insuranceData['insurance_id']){
+			if ($insuranceData && $insuranceData['insurance_id']) {
 				
-				Trip_insurance::find($insuranceData['insurance_id'])->update(array_except($insuranceData, ['insurance_id']));
+				Trip_insurance::find($insuranceData['insurance_id'])->update(array_except($insuranceData, [ 
+					
+					'insurance_id'
+				]));
 			}
 			DB::commit();
+			Event::fire(new TripNotify($trip, $request, 'National Trip Updated'));
+			
 			return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
 		} catch (Exception $e) {
 			DB::rollBack();
@@ -499,6 +518,7 @@ class TripController extends Controller
 		$user_id=Auth::user()->UserID;
 		$trip->status='cancelled';
 		$trip->save();
+		Event::fire(new TripNotify($trip, $request, 'Domestic Trip Cancelled'));
 		return redirect('/etravel/'.$user_id.'/triplist?status=cancelled');
 	}
 	public function nationalCancel(TripCancelRequest $request,Trip $trip)
@@ -506,7 +526,12 @@ class TripController extends Controller
 		$user_id=Auth::user()->UserID;
 		$trip->status='cancelled';
 		$trip->save();
+		Event::fire(new TripNotify($trip, $request, 'National Trip Cancelled'));
 		return redirect('/etravel/'.$user_id.'/triplist?status=cancelled');
 	}
-	
+// 	public function test(Request $request)
+// 	{
+// 		$trip=Trip::find('1231');
+// 		Event::fire(new TripNotify($trip, $request, 'actionTypeVar'));
+// 	}
 }
