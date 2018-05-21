@@ -27,7 +27,7 @@ $('#destinationSel').on('change',function(){
 $(':radio[name="is_sent_affairs"]').on('ifChecked',function(event){
 	var isChecked=parseInt($(this).val());
 	localStorage.setItem('name','Item');
-	$('#CC').prop('disabled',!Boolean(isChecked));
+	$('#cc').prop('disabled',!Boolean(isChecked));
 });
 
 //Form validation

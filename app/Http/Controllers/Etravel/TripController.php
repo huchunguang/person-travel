@@ -45,6 +45,7 @@ class TripController extends Controller
      */
     public function create(Request $requset) 
     {
+    		$userList = User::all(['Email','FirstName','LastName']);
     		$userProfile=User::getUserProfile();
     		$countryList = Country::orderBy('Country')->select(['CountryID','Country','RegionID'])->get();
     		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
@@ -55,7 +56,8 @@ class TripController extends Controller
 			->with('costCenters', Costcenter::getAvailableCenters())
 			->with('countryList',$countryList)
 			->with('approvers', $userProfile['approvers'])
-    		->with('airlineList',$airlineList);
+    		->with('airlineList',$airlineList)
+    		->with('userList',$userList);
 	}
     /**
      * @brief create demostic trip
@@ -163,6 +165,7 @@ class TripController extends Controller
     		try {
     			$trip=new Trip;
     			$trip->trip_type=1;
+    			$trip->cc=$request->input('cc');
     			$trip->user_id=Auth::user()->UserID;
     			$trip->department_id=$this->system->DepartmentID;
     			$trip->country_id=$this->system->CountryAssignedID;

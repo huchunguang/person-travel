@@ -218,11 +218,12 @@
 													<div class="row">
 														<div class="col-md-6">
 															<div class="form-group">
-																<label class="control-label">CC</label> 
-																<select id="CC" name="CC" class="form-control" disabled>
-																	<option value="1">&lt;&nbsp;1&nbsp;&gt;</option>
-																	<option value="2">&lt;&nbsp;2&nbsp;&gt;</option>
-																	<option value="3">&lt;&nbsp;3&nbsp;&gt;</option>
+																<label class="control-label" for="cc">CC</label>
+																<select id="cc" name="cc[]" class="form-control select2" multiple disabled>
+																<option value="">Select an option</option>
+																@foreach($userList as $user)
+																	<option value="{{$user['Email']}}">{{$user['LastName']}} {{$user['FirstName']}}</option>
+																@endforeach
 																</select>
 															</div>
 														</div>

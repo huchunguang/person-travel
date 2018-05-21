@@ -77,4 +77,12 @@ class Trip extends Model {
 	{
 		return json_decode($value,true);
 	}
+	public function setCcAttribute($value)
+	{
+		$this->attributes['cc']=json_encode($value);
+	}
+	public function getCcAttribute($value)
+	{
+		return json_decode($value,true);
+	}
 }

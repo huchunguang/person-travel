@@ -29,7 +29,6 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         Route::get('dashboard',['as'=>'dashboard','uses'=>'DashboardController@index']);
         Route::post('trip',['as'=>'tripType','uses'=>'DashboardController@trip']);
         Route::get('trip/send','TripController@test');
-        
         #Create
         Route::get('trip/create',['as'=>'internationalCreate','uses'=>'TripController@create']);
         Route::get('trip/create/demostic',['as'=>'demosticCreate','uses'=>'TripController@demosticCreate']);
@@ -73,6 +72,8 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
 
 
 Route::group([],function(){
+	Route::get('user/search','UserController@search');
+	
 	Route::get('country-sites/{country}','CountryController@sites');
 	#Company
 	Route::get('site-companys/{site_id}','CompanyController@getSiteCompanys');
