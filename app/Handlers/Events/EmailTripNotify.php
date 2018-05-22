@@ -30,6 +30,7 @@ class EmailTripNotify {
 	{
 		$actionType=$event->actionType;
 		$trip=$event->trip;
+		$tripCreater = User::find($trip->user_id);
 		$request=$event->request;
 		if ($trip->trip_type==1){
 			$travelType='INTERNATIONAL';
@@ -57,11 +58,13 @@ class EmailTripNotify {
 			'actionType' => $actionType,
 			'viewDetailUrl'=>$viewDetailUrl,
 		];
-		// 		dd($variables);
+		// 		dd($tripCreater);
 		// 		echo view('emails.workflowNotify',$variables);die
-		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject) {
+		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject,$manager,$trip,$tripCreater) {
 			$to = '383702275@qq.com';
-			$message->to($to)
+// 			$cc = $trip->cc;
+// 			$to = $manager->Email;
+			$message->to([$to,$tripCreater->Email])
 				->cc([ 
 				'huchunguang123@gmail.com','15152364392@163.com'])->subject($subject);
 		});
