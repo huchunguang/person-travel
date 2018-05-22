@@ -10,6 +10,7 @@
 			</div>
 			<div class="modal-body">
 				<form action="#" method="post" class="horizontal-form"id="demosticItineraryCreate">
+					<input type="hidden" name="tr_id" value=""/>
 					<div class="alert alert-danger display-hide">
 						<button class="close" data-close="alert"></button>
 						You have some form errors. Please check below.

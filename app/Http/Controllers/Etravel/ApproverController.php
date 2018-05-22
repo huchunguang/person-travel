@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Events\TripWasRejected;
 use App\Events\TripWasPartlyApproved;
 use App\Repositories\ApproverRepository;
+use App\Events\TripNotify;
 
 class ApproverController extends Controller {
 	

@@ -92,31 +92,28 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<p>
+											<p style="margin-bottom: 0px;">
 												<label class="control-label">Period of Travel From</label>
 											</p>
-
-											<div class="col-md-4">
-									<input type="text" name="daterange_from" disabled
-										class="form-control singleDatePicker"  value="{{ $trip->daterange_from }}"> <i
-										class="glyphicon glyphicon-calendar fa fa-calendar"
-										style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
-								</div>
-								<div class="col-md-4">
-									<input type="text" name="daterange_to" disabled
-										class="form-control singleDatePicker" value="{{ $trip->daterange_to }}"> <i
-										class="glyphicon glyphicon-calendar fa fa-calendar"
-										style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
-								</div>
-
-
+											<div class="col-md-6" style="margin-left: 0px;padding:0px;">
+												<input type="text" name="daterange_from" disabled value="{{ $trip->daterange_from }}"
+													class="form-control singleDatePicker"> <i
+													class="glyphicon glyphicon-calendar fa fa-calendar"
+													style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+											</div>
+											<div class="col-md-6">
+												<input type="text" name="daterange_to" disabled value="{{ $trip->daterange_to }}"
+													class="form-control singleDatePicker"> <i
+													class="glyphicon glyphicon-calendar fa fa-calendar"
+													style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+											</div>
 										</div>
 
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Project Code</label>
-											<input type="text" name="project_code" class="form-control" disabled value="{{ $trip->project_code }}"/>
+											<input type="text" name="project_code" class="form-control" disabled value="{{ $trip->wbsCode()->first()['wbs_code'] }}"/>
 										</div>
 									</div>
 								</div>
@@ -132,6 +129,8 @@
 								</div>
 
 								<div class="row">
+									<div class="col-md-12">
+										
 									<table  id="ltineraryTable" class="table table-bordered table-striped table-condensed flip-content">
 										<thead>
 											<tr class="info">
@@ -199,7 +198,7 @@
 																		</div>YES
 																	</label>
                                                                         </div>
-                                                                    </div>
+                                                         </div>
 												
 												@elseif($item['is_approved']== '1')
 													YES
@@ -220,6 +219,8 @@
 									@endforeach
 										</tbody>
 									</table>
+								
+									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-12 ">

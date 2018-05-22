@@ -147,6 +147,8 @@
 								</div>
 
 								<div class="row">
+									<div class="col-md-12">
+										
 									<table  id="ltineraryTable" class="table table-bordered table-striped table-condensed flip-content">
 										<thead>
 											<tr class="info">
@@ -268,6 +270,8 @@
 									@endforeach
 										</tbody>
 									</table>
+								
+									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-12 ">

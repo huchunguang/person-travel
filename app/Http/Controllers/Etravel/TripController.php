@@ -532,9 +532,9 @@ class TripController extends Controller
 		Event::fire(new TripNotify($trip, $request, 'National Trip Cancelled'));
 		return redirect('/etravel/'.$user_id.'/triplist?status=cancelled');
 	}
-// 	public function test(Request $request)
-// 	{
-// 		$trip=Trip::find('1231');
-// 		Event::fire(new TripNotify($trip, $request, 'actionTypeVar'));
-// 	}
+	public function test(Request $request)
+	{
+		$trip=Trip::find('1231');
+		Event::fire(new TripNotify($trip, $request, 'actionTypeVar'));
+	}
 }

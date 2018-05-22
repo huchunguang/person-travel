@@ -57,9 +57,31 @@ function addNewLine(){
      + '<td class="col-md-1"><input type="hidden" name="entertain_cost[]" value="'+entertain_cost+'"/>'+entertain_cost+'</td>'
      + '<td class="col-md-1"><input type="hidden" name="entertain_detail[]" value="'+entertain_detail+'"/>'+entertain_detail+'</td>'
      + '</tr>';
-	 $("#ltineraryTable tbody:last").append(rowTem);
+	 var editId=$('.modal input[name="tr_id"]').val();
+	 if(editId){
+		 rowTem = '<td class="col-md-1"><input type="hidden" name="datetime_date[]" value="'+datetime_date+'"/>'+datetime_date+'</td>'
+	     + '<td class="col-md-2"><input type="hidden" name="datetime_time[]" value="'+datetime_time+'"/>'+datetime_time+'</td>'
+	     + '<td class="col-md-1"><input type="hidden" name="location[]" value="'+location+'"/>'+location+'</td>'
+	     + '<td class="col-md-1"><input type="hidden" name="customer_name[]" value="'+customer_name+'"/>'+customer_name+'</td>'
+	     + '<td class="col-md-1"><input type="hidden" name="contact_name[]" value="'+contact_name+'"/>'+contact_name+'</td>'
+	     + '<td class="col-md-1"><input type="hidden" name="purpose_id[]" value="'+purpose_id+'"/>'+purpose_text+'</td>'
+	     + '<td class="col-md-1"><input type="hidden" name="purpose_desc[]" value="'+purpose_desc+'"/>'+purpose_desc+'</td>'
+	     + '<td class="col-md-1"><input type="hidden" name="travel_cost[]" value="'+travel_cost+'"/>'+travel_cost+'</td>'
+	     + '<td class="col-md-1"><input type="hidden" name="entertain_cost[]" value="'+entertain_cost+'"/>'+entertain_cost+'</td>'
+	     + '<td class="col-md-1"><input type="hidden" name="entertain_detail[]" value="'+entertain_detail+'"/>'+entertain_detail+'</td>';
+		 
+		 	$tr = $('#tr_'+editId).html(rowTem);
+		 	
+	 }else{
+		 $("#ltineraryTable tbody:last").append(rowTem);
+	 }
 	 $('#addNewLineModal').modal("hide");
 }
+
+$('#addNewLineModal').on('hide.bs.modal', function () {
+	$('.modal input').val('');
+	$('.modal #purpose_desc').val('');
+});
 function editNewLine()
 {
 	var id=$('.prepareDelTr').data('id');
@@ -83,14 +105,13 @@ function editNewLine()
 	$('.modal input[name="travel_cost[]"]').val(travel_cost);
 	$('.modal input[name="entertain_cost[]"]').val(entertain_cost);
 	$('.modal input[name="entertain_detail[]"]').val(entertain_detail);
+	$('.modal input[name="tr_id"]').val(id);
+	//
 	$('#addNewLineModal').modal('show');
 }
 function showItemOperate(obj){
 	thisObj=$(obj);
-	thisObj.addClass('prepareDelTr');
-	thisObj.css({
-		"background-color":"rgba(249,202,206,1)"
-	});
+	thisObj.toggleClass('prepareDelTr').toggleClass('warning');
 	$('#itemDelBut').attr('disabled',false);
 	$('#itemEditBut').attr('disabled',false);
 }
@@ -99,6 +120,7 @@ function delLineItem(){
 	var remainTrNum = $('#ltineraryTable tbody tr').length;
 	if(remainTrNum==0){
 		$('#itemDelBut').attr('disabled',true);
+		$('#itemEditBut').attr('disabled',true);
 	}
 	
 

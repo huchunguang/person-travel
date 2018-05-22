@@ -68,8 +68,8 @@ use App\User;
                                                 </tr>
                                                 	<tr>
 												<th style="width: 30px;text-align: center">＃</th>
-												<th>Date</th>
-												<th>Time</th>
+												<th>Date From</th>
+												<th>Date To</th>
 												<th>Cost Center</th>
 												<th>Trip Type</th>
 												<th>Department Approver</th>
