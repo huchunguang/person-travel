@@ -417,7 +417,7 @@ class TripController extends Controller
 				}
 				
 			}
-			Event::fire(new TripNotify($trip, $request, 'Domestic Trip Cancelled'));
+			Event::fire(new TripNotify($trip, $request, 'Domestic Trip Updated'));
 			
 		});
 		$user_id=Auth::user()->UserID;

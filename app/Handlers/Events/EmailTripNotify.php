@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldBeQueued;
 use Illuminate\Support\Facades\Mail;
 use App\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class EmailTripNotify {
 
@@ -34,11 +35,11 @@ class EmailTripNotify {
 		$request=$event->request;
 		if ($trip->trip_type==1){
 			$travelType='INTERNATIONAL';
-			$viewDetailUrl=url("/etravel/tripnationallist/{$trip->trip_id}");
+			$viewDetailUrl=url("etravel/tripnationallist/{$trip->trip_id}");
 		}else{
 			
 			$travelType='DOMESTIC';
-			$viewDetailUrl=url("/etravel/tripdemosticlist/{$trip->trip_id}");
+			$viewDetailUrl=url("etravel/tripdemosticlist/{$trip->trip_id}");
 		}
 		
 		if ($trip->overseas_approver && $trip->is_depart_approved)
@@ -58,15 +59,20 @@ class EmailTripNotify {
 			'actionType' => $actionType,
 			'viewDetailUrl'=>$viewDetailUrl,
 		];
-		// 		dd($tripCreater);
-		// 		echo view('emails.workflowNotify',$variables);die
+			// dd($viewDetailUrl);
+			// echo view('emails.workflowNotify',$variables);die
 		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject,$manager,$trip,$tripCreater) {
-			$to = '383702275@qq.com';
-// 			$cc = $trip->cc;
-// 			$to = $manager->Email;
-			$message->to([$to,$tripCreater->Email])
-				->cc([ 
-				'huchunguang123@gmail.com','15152364392@163.com'])->subject($subject);
+			$cc = $trip->cc;
+			if (Auth::user()->UserID == $trip->user_id) {
+				$to = $manager->Email;
+				array_push($cc,$tripCreater->Email);
+			}else{
+				$to = $tripCreater->Email;
+				array_push($cc,$manager->Email);
+			}
+// 			dd($to);
+			$message->to($to)->cc($cc)->subject($subject);
+			
 		});
 		if($flag){
 			Log::info('send notify email successfully', ['id' => $trip->trip_id,'variables'=>$variables]);

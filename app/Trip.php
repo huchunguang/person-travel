@@ -83,6 +83,6 @@ class Trip extends Model {
 	}
 	public function getCcAttribute($value)
 	{
-		return json_decode($value,true);
+		return $value?json_decode($value,true):[];
 	}
 }
