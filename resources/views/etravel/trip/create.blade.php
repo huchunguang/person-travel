@@ -90,13 +90,13 @@
 												<input type="text" name="daterange_from" value="{{old('daterange_from')}}"
 													class="form-control singleDatePicker" > <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
-													style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+													style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 											</div>
-											<div class="col-md-6">
+											<div class="col-md-6" style="padding-right: 0px;">
 												<input type="text" name="daterange_to" value="{{old('daterange_to')}}"
 													class="form-control singleDatePicker"> <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
-													style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+													style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 											</div>
 
 
@@ -130,7 +130,7 @@
 												@else
 												<option value="{{ $item['UserID'] }}">
 												@endif
-												{{$item['FirstName']}}
+												{{$item['LastName']}} {{$item['FirstName']}}
 												</option> 
 												@endforeach
 											</select>

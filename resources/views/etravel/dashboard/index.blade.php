@@ -93,9 +93,9 @@
                                                     <td class="highlight">
                                                         <div class="success"></div>
                                                        	@if($item['trip_type']=='1')
-														<a href="/etravel/tripnationallist/{{ $item['trip_id'] }}">{{isset($item->destination_name['Country'])?$item->destination_name['Country']:'Destination'}}  </a>
+														<a href="/etravel/tripnationallist/{{ $item['trip_id'] }}">{{isset($item->destination_name)?$item->destination_name:'Destination'}}  </a>
 														@elseif($item['trip_type']=='2')
-														<a href="/etravel/tripdemosticlist/{{ $item['trip_id'] }}">{{isset($item->destination_name['Country'])?$item->destination_name['Country']:'Destination'}}  </a>
+														<a href="/etravel/tripdemosticlist/{{ $item['trip_id'] }}">{{isset($item->destination_name)?$item->destination_name:'Destination'}}  </a>
 														@endif
                                                         
                                                     </td>

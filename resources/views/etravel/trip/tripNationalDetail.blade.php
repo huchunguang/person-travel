@@ -6,7 +6,7 @@
 		<div class="row">
 		<!-- BEGIN FORM-->
 		<form action="/etravel/tripapproval/{{$trip->trip_id}}" method="post" class="horizontal-form" id="national_approval">
-			@if($trip->status == 'pending' && ($trip->department_approver == Auth::user()->UserID || $trip->overseas_approver == Auth::user()->UserID) && $trip->is_depart_approved!='1')
+			@if($trip->status == 'pending' && ($trip->department_approver == Auth::user()->UserID || $trip->overseas_approver == Auth::user()->UserID) )
 				@include('etravel.layout.approverAction')
 			@endif
 			@include('etravel.layout.error')
@@ -26,7 +26,7 @@
 					<div class="portlet-title">
 						<div class="caption">
 							<i class="icon-bubble"></i> <span
-								class="caption-subject bold uppercase">{{ $trip->status }} @if($trip->is_depart_approved) TO {{$trip->overseasApprover()->first()['FirstName']}} @endif</span>
+								class="caption-subject bold uppercase">{{ $trip->status }} @if($trip->is_depart_approved && $trip->department_approver == Auth::user()->UserID) TO {{$trip->overseasApprover()->first()['FirstName']}} @endif</span>
 						</div>
 					</div>
 
@@ -97,13 +97,13 @@
 												<input type="text" name="daterange_from" value="{{$trip->daterange_from}}"
 													class="form-control singleDatePicker" disabled> <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
-													style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+													style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 											</div>
-											<div class="col-md-6" style="margin-left: 0px;padding:0px;">
+											<div class="col-md-6" style="padding-right: 0px;">
 												<input type="text" name="daterange_to" value="{{$trip->daterange_to}}"
 													class="form-control singleDatePicker" disabled> <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
-													style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+													style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 											</div>
 
 
@@ -213,17 +213,17 @@
 													 </label>
 													
 												</li>
-												
+												@if($ccUser)
 												<li class="list-group-item">
 													<div class="row">
 														<div class="col-md-6">
 															<div class="form-group">
 																<label class="control-label">CC</label> 
-																<select name="CC" class="form-control select2" disabled>
-																	<option value="1">&lt;&nbsp;1&nbsp;&gt;</option>
-																	<option value="2">&lt;&nbsp;2&nbsp;&gt;</option>
-																	<option value="3">&lt;&nbsp;3&nbsp;&gt;</option>
-
+																
+																<select name="CC" class="form-control select2" disabled multiple>
+																@foreach($ccUser as $item)
+																	<option value="{{$item['Email']}}" selected>{{$item['LastName']}} {{$item['FirstName']}}</option>
+																@endforeach
 																</select>
 															</div>
 														</div>
@@ -232,6 +232,7 @@
 													</div>
 
 												</li>
+												@endif
 											</ul>
 
 											<table id="flightLtinerary" class="table table-bordered table-striped table-condensed flip-content">

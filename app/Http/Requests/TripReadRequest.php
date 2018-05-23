@@ -15,7 +15,7 @@ class TripReadRequest extends Request {
 	{
 		$trip = $this->route('trip');
 		$user_id=Auth::user()->UserID;
-		return Trip::where('trip_id',$trip->trip_id)->where('user_id',$user_id)->orWhere('department_approver',$user_id)->exists();
+		return Trip::where('trip_id',$trip->trip_id)->where('user_id',$user_id)->orWhere('department_approver',$user_id)->orWhere(['is_depart_approved'=>'1','overseas_approver'=>$user_id])->exists();
 	}
 
 	/**

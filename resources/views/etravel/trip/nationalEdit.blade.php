@@ -108,11 +108,11 @@
 													<i class="glyphicon glyphicon-calendar fa fa-calendar"
 													style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 												</div>
-												<div class="col-md-6">
+												<div class="col-md-6" style="padding-right: 0px;">
 													<input type="text" name="daterange_to" value="{{$trip->daterange_to}}"
 													class="form-control singleDatePicker"> <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
-													style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+													style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 													
 												</div>
 												
@@ -267,18 +267,17 @@
 													
 												</li>
 												
+												@if($ccUser)
 												<li class="list-group-item">
 													<div class="row">
 														<div class="col-md-6">
 															<div class="form-group">
-																<label class="control-label">CC</label> <select
-																	id="CostCenter" name="CC"
-																	class="cboSelect2 leave-control form-control"
-																	tabindex="-1">
-																	<option value="1">&lt;&nbsp;1&nbsp;&gt;</option>
-																	<option value="2">&lt;&nbsp;2&nbsp;&gt;</option>
-																	<option value="3">&lt;&nbsp;3&nbsp;&gt;</option>
-
+																<label class="control-label">CC</label> 
+																
+																<select name="CC" class="form-control select2" multiple>
+																@foreach($ccUser as $item)
+																	<option value="{{$item['Email']}}" selected>{{$item['LastName']}} {{$item['FirstName']}}</option>
+																@endforeach
 																</select>
 															</div>
 														</div>
@@ -287,6 +286,7 @@
 													</div>
 
 												</li>
+												@endif
 											</ul>
 
 											<table id="flightLtinerary" class="table table-bordered table-striped table-condensed flip-content">

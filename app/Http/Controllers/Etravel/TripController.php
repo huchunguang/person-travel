@@ -33,12 +33,14 @@ use App\Airline;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Mail\Message;
 use App\Events\TripNotify;
+use App\Repositories\TripRepository;
 
 class TripController extends Controller
 {
-	public function __construct(SystemVariable $system) 
+	public function __construct(SystemVariable $system,TripRepository $trip) 
 	{
 		$this->system=$system;
+		$this->trip=$trip;
 	}
     /**
      * @brief create trip 
@@ -288,6 +290,7 @@ class TripController extends Controller
 // 		dd($trip->overseasApprover()->first()['FirstName']);
 // 		dd($trip->destination_id);
 		$destination=Country::whereIn('CountryID',$trip->destination_id)->get();
+		
 // 		dd($destination->toArray());
 // 		dd($trip->purpose_file);
 // 		dd($destination);
@@ -301,7 +304,8 @@ class TripController extends Controller
 			'flightData'=>$flightData,
 			'insuranceData'=>$insuranceData,
 			'destination'=>$destination,
-			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode
+			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
+			'ccUser'=>$this->trip->getCcUser($trip),
 		]);
 	}
 	/**
@@ -369,7 +373,8 @@ class TripController extends Controller
 			'insuranceData'=>$insuranceData,
 			'destination'=>$destination,
 			'trip'=>$trip,
-			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode
+			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
+			'ccUser'=>$this->trip->getCcUser($trip),
 		]);
 	}
 	/**

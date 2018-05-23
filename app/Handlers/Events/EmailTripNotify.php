@@ -70,7 +70,7 @@ class EmailTripNotify {
 				$to = $tripCreater->Email;
 				array_push($cc,$manager->Email);
 			}
-// 			dd($to);
+// 			dd($cc);
 			$message->to($to)->cc($cc)->subject($subject);
 			
 		});

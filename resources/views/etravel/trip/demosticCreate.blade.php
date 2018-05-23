@@ -97,13 +97,11 @@
 												<input type="text" name="daterange_from"
 													class="form-control singleDatePicker"> <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
-													style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+													style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 											</div>
-											<div class="col-md-6">
-												<input type="text" name="daterange_to"
-													class="form-control singleDatePicker"> <i
-													class="glyphicon glyphicon-calendar fa fa-calendar"
-													style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+											<div class="col-md-6" style="padding-right: 0px;">
+												<input type="text" name="daterange_to" class="form-control singleDatePicker"> 
+												<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 											</div>
 
 
@@ -198,11 +196,10 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Department Approver</label> 
-											<select name="department_approver" class="form-control">
-												<option value="">Select...</option>
+											<select name="department_approver" class="form-control input-sm select2">
 												@foreach ($approvers as $item)
-												<option value="{{ $item['UserID'] }}">&lt;&nbsp;{{
-													$item['FirstName'] }}&nbsp;&gt;</option> @endforeach
+												<option value="{{ $item['UserID'] }}">{{$item['LastName']}} {{$item['FirstName']}}</option> 
+												@endforeach
 											</select>
 										</div>
 									</div>
