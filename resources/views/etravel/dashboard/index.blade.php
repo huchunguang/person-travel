@@ -214,7 +214,7 @@
                                                 		@if($i<5)
                                                 			<tr>
                                                 				<td>
-															<a href="">{{$staffTripList['approved'][$i]->user()->first()['FirstName']}}</a>
+																	<a href="">{{$staffTripList['approved'][$i]->user()->first()['FirstName']}}</a>
                                                 				</td>
                                                 				<td>{{$staffTripList['approved'][$i]['daterange_from']}}</td>
                                                 				<td>{{$staffTripList['approved'][$i]['daterange_to']}}</td>

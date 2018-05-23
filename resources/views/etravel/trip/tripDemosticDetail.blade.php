@@ -304,7 +304,7 @@
 @include('etravel.modal.forApproval')
 @include('etravel.modal.forPartlyApproval')
 <script>
-var total_approved_num = {{ count($demosticInfo) }};
+var total_approved_num = {{ count($approvedCnt) }};
 $('#approveBtn').on('click',function(){
 	$('#domestic_approval').submit();
 });

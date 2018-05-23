@@ -96,7 +96,7 @@
 									<div class="col-md-6">
 
 										<div class="form-group" style="margin-bottom: 0px;">
-											<p>
+											<p style="margin-bottom: 0px;">
 												<label class="control-label">Period of Travel From</label>
 											</p>
 
@@ -120,7 +120,15 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Project Code</label>
-											<input type="text" name="project_code" class="form-control" value="{{ $trip->project_code }}"/>
+											<select id="project_code" name="project_code" class="form-control input-sm select2">
+												@foreach ($wbscodeList as $item)
+													@if($item['wbs_id']==old('project_code') || $item['wbs_id']==$trip->project_code)
+													<option value="{{$item['wbs_id']}}" selected="selected">{{$item['wbs_code']}}</option>
+													@else
+													<option value="{{$item['wbs_id']}}">{{$item['wbs_code']}}</option>
+													@endif
+												@endforeach
+											</select>
 										</div>
 									</div>
 								</div>
@@ -181,7 +189,7 @@
 																	class="form-control singleDatePicker"> <i
 																	class="glyphicon glyphicon-calendar fa fa-calendar"
 																	style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
-															</div>
+												</div>
 												@else
 												{{ $item['datetime_date'] }}
 												@endif
@@ -224,7 +232,15 @@
 											@endif
 											</td>
 											<td>
+											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+												<select class="form-control" name="purpose_id[]" id="purpose_id">
+												@foreach ($purposeCats as $purpose)
+													<option value="{{ $purpose['purpose_id'] }}">{{$purpose['purpose_catgory'] }}</option>
+												@endforeach
+												</select>
+											@else
 												{{ $item->visitPurpose()->first()['purpose_catgory'] }}
+											@endif
 											</td>
 											<td>
 											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))

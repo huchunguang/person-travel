@@ -6,7 +6,9 @@
 		<div class="row">
 		<!-- BEGIN FORM-->
 		<form action="/etravel/tripapproval/{{$trip->trip_id}}" method="post" class="horizontal-form" id="national_approval">
-			@if($trip->status == 'pending' && ($trip->department_approver == Auth::user()->UserID || $trip->overseas_approver == Auth::user()->UserID) )
+			@if($trip->status == 'pending' && ($trip->department_approver == Auth::user()->UserID || $trip->overseas_approver == Auth::user()->UserID) && $trip->is_depart_approved != 1)
+				@include('etravel.layout.approverAction')
+			@elseif($trip->status == 'pending' && $trip->overseas_approver == Auth::user()->UserID && $trip->is_depart_approved ==1 )
 				@include('etravel.layout.approverAction')
 			@endif
 			@include('etravel.layout.error')

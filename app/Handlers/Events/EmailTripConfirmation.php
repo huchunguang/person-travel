@@ -41,6 +41,7 @@ class EmailTripConfirmation {
 			}
 			
 			if ($trip->trip_type=='2'){
+				$trip->update(['status'=>'approved']);
 				$trip->demostic()->update(['is_approved'=>'1']);
 			}
 			

@@ -261,11 +261,14 @@ class TripController extends Controller
     {
 		$userObjMdl = User::where('UserID',$trip->user_id)->firstOrFail();
 		$approver = User::find($trip->department_approver);
+		$approvedCnt = $trip->demostic()->where(['is_approved'=>1])->count();
+// 		dd($approvedCnt);
 		$demosticInfo = $trip->demostic()->get();
 		return view('/etravel/trip/tripDemosticDetail', [
 			'userObjMdl'=>$userObjMdl,
 			'trip' => $trip,
 			'approver'=>$approver,
+			'approvedCnt'=>$approvedCnt,
 			'demosticInfo' => $demosticInfo,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode
 		]);
@@ -394,6 +397,7 @@ class TripController extends Controller
 			'purpose_desc',
 			'travel_cost',
 			'entertain_cost',
+			'purpose_id',
 			'entertain_detail',
 			
 		]));
@@ -410,6 +414,7 @@ class TripController extends Controller
 					$demostic_trip->datetime_date=$item['datetime_date'];
 					$demostic_trip->datetime_time=$item['datetime_time'];
 					$demostic_trip->location=$item['location'];
+					$demostic_trip->purpose_id=$item['purpose_id'];
 					$demostic_trip->customer_name=$item['customer_name'];
 					$demostic_trip->contact_name=$item['contact_name'];
 					$demostic_trip->purpose_desc=$item['purpose_desc'];
