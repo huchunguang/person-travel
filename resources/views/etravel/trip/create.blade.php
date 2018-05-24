@@ -428,7 +428,7 @@
 															<div class="form-group">
 																<label class="control-label col-md-7">Select address from the list to inform Rep. Office</label>
 																<div class="col-md-5">
-																	<select class="js-data-example-ajax" name="rep_office[]" multiple></select>
+																	<select class="form-control js-data-example-ajax" name="rep_office[]" style="width: 230px;" multiple></select>
 																</div>
 															</div>
 														</div>
