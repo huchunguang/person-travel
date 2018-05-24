@@ -73,6 +73,7 @@ use App\User;
 												<th>Cost Center</th>
 												<th>Trip Type</th>
 												<th>Department Approver</th>
+												<th>Overseas Approver</th>
 												<th>Status</th>
 												<th>View</th>
 											</tr>
@@ -94,6 +95,7 @@ use App\User;
 															@endif
 														</td>
 														<td><?php echo User::find($item['department_approver'])['FirstName'];?></td>
+														<td>{{$item->overseasApprover()->first()['FirstName']}}</td>
 														<td>{{ $item['status'] }}</td>
 														<td>
 															@if($item['trip_type']=='1')
@@ -126,7 +128,7 @@ use App\User;
                                                 <tr class="btn-primary roundborder">
                                                     <th style="text-align:right">Total Transactions Applied:</th>
                                                     <th style="text-align:center" id="tblCounter">{{ $tripList->total() }}</th>
-                                                    <th colspan="5"></th>
+                                                    <th colspan="6"></th>
                                                     <th style="text-align:center"></th>
                                                 </tr>
                                                

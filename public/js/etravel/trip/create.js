@@ -132,7 +132,60 @@ var FormValidation = function () {
 }();
 
 jQuery(document).ready(function() {
-    FormValidation.init();
+	FormValidation.init();
+	
+	function formatUserList(userList){
+		var markup = "<div class='select2-result-repository clearfix'>" +
+	      "<div class='select2-result-repository__title'>"+userList.LastName +userList.FirstName+"</div>";
+
+	  if (userList.Email) {
+	    markup += "<div class='select2-result-repository__description'>"+userList.Email+"</div>";
+	  }
+
+	  markup += "</div>";
+
+	  return markup;
+} 
+	function formatUserSelection (user) {
+		  return user.text;
+	}
+	// Select2 Search
+	$('.js-data-example-ajax').select2({
+		ajax : {
+			url : '/user/search',
+			dataType : 'json',
+			delay : 250,
+			data: function (params) {
+				
+			      return {
+			        q: params.term, // search term
+			      };
+			    },
+		    processResults: function (data, params) {
+			      // parse the results into the format expected by Select2
+			      // since we are using custom formatting functions we do not
+					// need to
+			      // alter the remote JSON data, except to indicate that
+					// infinite
+			      // scrolling can be used
+		    	  params.page = params.page || 1;
+			      return {
+			        results: data.data,
+			        pagination: {
+			            more: (params.page * 30) < data.total
+			          }
+			      };
+			    },
+			    cache: false
+			 },
+		cache : false,
+		placeholder: 'Search user...',
+		escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+		minimumInputLength : 1,
+		templateResult: formatUserList,
+		templateSelection: formatUserSelection,
+
+		});
 });
 $('.airlineSel').on('change',function(){
 	var selVal=$(this).val();
@@ -149,6 +202,9 @@ $('.airlineSel').on('change',function(){
 	}
 	
 });
+
+
+
 
 
 

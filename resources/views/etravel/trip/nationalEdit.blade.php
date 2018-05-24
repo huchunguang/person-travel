@@ -421,25 +421,24 @@
 										</div>
 										<div class="tab-pane fade" id="teana">
 											<ul class="list-group">
+													@if(count($rep_office))
 													<li class="list-group-item">
-														<div class="row">
-														<div class="col-md-7">
-                                                                                    <div class="form-group">
-                                                                                        <label class="control-label col-md-7">Select address from the list to inform Rep. Office</label>
-                                                                                        <div class="col-md-5">
-                                                                                            <select class="form-control select2" name="rep_office">
-                                                                                                <option value="12">Male</option>
-                                                                                                <option value="13">Female</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-														
-														
-														</div>
-
-
+																	<div class="row">
+																		<div class="col-md-7">
+																			<div class="form-group">
+																				<label class="control-label col-md-7">Select address from the list to inform Rep. Office</label>
+																				<div class="col-md-5">
+																					<select class="js-data-example-ajax" name="rep_office[]" multiple> 
+																						@foreach($rep_office as $officeUser)
+																						<option value="{{$officeUser['FirstName']}}" selected>{{$officeUser['FirstName']}}</option>
+																						@endforeach
+																					</select>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
 													</li>
+													@endif
 													<li class="list-group-item">
 														<div class="form-group">
 															<strong>User Preference:</strong>

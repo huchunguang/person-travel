@@ -82,8 +82,15 @@ class UserController extends Controller {
 		//
 	}
 	
-	public function search()
+	public function search(Request $request)
 	{
-		return response()->json(['items'=>User::all()]);	
+		$query=$request->input('q');
+		$res = User::where('FirstName','like','%'.$query.'%')->paginate(PAGE_SIZE);
+		foreach ($res as $item){
+			$item->id=$item->UserID;
+			$item->text=$item->FirstName;
+		}
+// 		dd($res->toArray());
+		return response()->json($res->toArray());	
 	}
 }

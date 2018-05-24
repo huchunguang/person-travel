@@ -293,7 +293,7 @@ class TripController extends Controller
 // 		dd($trip->overseasApprover()->first()['FirstName']);
 // 		dd($trip->destination_id);
 		$destination=Country::whereIn('CountryID',$trip->destination_id)->get();
-		
+		$rep_office = User::find($trip->hotel_prefer['rep_office']);
 // 		dd($destination->toArray());
 // 		dd($trip->purpose_file);
 // 		dd($destination);
@@ -307,6 +307,7 @@ class TripController extends Controller
 			'flightData'=>$flightData,
 			'insuranceData'=>$insuranceData,
 			'destination'=>$destination,
+			'rep_office'=>$rep_office,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
 			'ccUser'=>$this->trip->getCcUser($trip),
 		]);
@@ -359,6 +360,7 @@ class TripController extends Controller
 		$insuranceData=$trip->insurance()->first();
 // 		dd($trip->destination_id);
 		$destination=Country::find($trip->destination_id)->keyBy('CountryID')->keys()->toArray();
+		$rep_office = User::find($trip->hotel_prefer['rep_office']);
 // 		dd($destination);
 // 		dd($estimateExpenses->toArray());
 		return view('/etravel/trip/nationalEdit',[
@@ -376,6 +378,7 @@ class TripController extends Controller
 			'insuranceData'=>$insuranceData,
 			'destination'=>$destination,
 			'trip'=>$trip,
+			'rep_office'=>$rep_office,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
 			'ccUser'=>$this->trip->getCcUser($trip),
 		]);
@@ -540,7 +543,8 @@ class TripController extends Controller
 		$trip->status='cancelled';
 		$trip->save();
 		Event::fire(new TripNotify($trip, $request, 'National Trip Cancelled'));
-		return redirect('/etravel/'.$user_id.'/triplist?status=cancelled');
+		return redirect('/etravel/tripnationallist/'.$trip->trip_id);
+// 		return redirect('/etravel/'.$user_id.'/triplist?status=cancelled');
 	}
 	public function test(Request $request)
 	{
