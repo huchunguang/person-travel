@@ -168,8 +168,8 @@
 											<td>
 												{{ $item->visitPurpose()->first()['purpose_catgory'] }}
 											</td>
-											<td>
-												{{ $item['purpose_desc'] }}
+											<td data-toggle="tooltip" title="{{$item['purpose_desc']}}">
+												{{ str_limit($item['purpose_desc'],10) }}
 											</td>
 											<td>
 												{{ $item['travel_cost'] }}
