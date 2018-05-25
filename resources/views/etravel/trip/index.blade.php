@@ -120,7 +120,7 @@ use App\User;
 												@endforeach
 											@else
 											<tr >
-												<td align="center" colspan="8" style="color:red" data-value=" No records found."> No records found.</td>
+												<td align="center" colspan="8" style="color:red"> No records found.</td>
 											</tr>
 											@endif
                                             </tbody>

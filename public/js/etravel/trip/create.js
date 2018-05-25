@@ -145,7 +145,7 @@ jQuery(document).ready(function() {
 	  markup += "</div>";
 
 	  return markup;
-} 
+	} 
 	function formatUserSelection (user) {
 		  return user.text;
 	}

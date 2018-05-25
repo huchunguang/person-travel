@@ -112,8 +112,8 @@ function editNewLine()
 function showItemOperate(obj){
 	thisObj=$(obj);
 	thisObj.toggleClass('prepareDelTr').toggleClass('warning');
-	$('#itemDelBut').attr('disabled',false);
-	$('#itemEditBut').attr('disabled',false);
+	$('#itemDelBut').prop('disabled',!$('.prepareDelTr').length);
+	$('#itemEditBut').prop('disabled',!$('.prepareDelTr').length);
 }
 function delLineItem(){
 	$('.prepareDelTr').remove();

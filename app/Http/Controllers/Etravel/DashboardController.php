@@ -29,7 +29,11 @@ class DashboardController extends Controller
     		{
     			$item->destination_name=$this->trip->getTripDst($item);
     		}
-//     		dd($pendingRequests->toArray());
+    		foreach ($approved_request as $item)
+    		{
+    			$item->destination_name=$this->trip->getTripDst($item);
+    		}
+//     		    		dd($approved_request->toArray());
 		return view('/etravel/dashboard/index', [ 
 			'staffTripList'=>$staffTripList,
 			'approved_request' => $approved_request,

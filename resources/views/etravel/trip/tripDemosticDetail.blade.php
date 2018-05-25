@@ -254,7 +254,7 @@
 											
 											<strong> {{ ucfirst($trip->status)}} by: 
 											@if($trip->status != 'cancelled')
-											{{ $approver->FirstName }} {{ ucfirst($approver->LastName) }} 
+											{{ ucfirst($approver->LastName) }} {{ $approver->FirstName }}  
 											@else {{ ucfirst($userObjMdl->FirstName) }} {{ ucfirst($userObjMdl->LastName) }}
 											@endif 
 											 on {{$trip->updated_at}}</strong> 
@@ -304,7 +304,7 @@
 @include('etravel.modal.forApproval')
 @include('etravel.modal.forPartlyApproval')
 <script>
-var total_approved_num = {{ count($approvedCnt) }};
+var total_approved_num = {{$approvedCnt}};
 $('#approveBtn').on('click',function(){
 	$('#domestic_approval').submit();
 });
@@ -312,6 +312,7 @@ $('#partlyApproveBtn').on('click',function(){
 	$('#domestic_approval').submit();
 });
 $('#btnRejectTravel').on('click',function(){
+	$('input[name="status"]').val('rejected');
 	$('#domestic_approval').submit();
 });
 

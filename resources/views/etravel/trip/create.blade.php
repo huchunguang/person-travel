@@ -28,9 +28,8 @@
 
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">Name Of Traveller</label> <input
-												disabled type="text" class="form-control"
-												placeholder="{{ $userProfile['FirstName'] }}">
+											<label class="control-label">Name Of Traveller</label> 
+											<input type="text" class="form-control" placeholder="{{ $userProfile['FirstName'] }}" disabled>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -56,7 +55,7 @@
                                                     		<option data-region="{{$countryItem['RegionID']}}" value="{{$countryItem['CountryID']}}" <?php if(in_array($countryItem['CountryID'], old('destination',[]))){echo "selected";}?>>
                                                     		{{$countryItem['Country']}}
                                                     		</option>
-                                                    	@endforeach
+                                                    @endforeach
                                             </select>
 										</div>
 									</div>
@@ -65,6 +64,7 @@
 										<div class="form-group">
 											<label class="control-label">Cost Center</label> 
 											<select name="cost_center_id" class="form-control input-sm select2" required>
+												@if($costCenters)
 												@foreach($costCenters as $costItem)
 												@if(old('cost_center_id') == $costItem['CostCenterID'] || $costItem['CostCenterID']==$defaultCostCenterID)
 												<option value="{{ $costItem['CostCenterID'] }}" selected="selected">
@@ -74,6 +74,7 @@
 												{{$costItem['CostCenterCode'] }}
 												</option>
 												@endforeach
+												@endif
 											</select>
 										</div>
 									</div>
@@ -108,6 +109,7 @@
 											<label class="control-label">Project Code</label>
 											<select id="project_code" name="project_code" class="form-control">
 												<option value="">Select...</option>
+												@if($wbscodeList)
 												@foreach ($wbscodeList as $item)
 													@if($item['wbs_id']==old('project_code'))
 													<option value="{{$item['wbs_id']}}" selected="selected">{{$item['wbs_code']}}</option>
@@ -115,6 +117,7 @@
 													<option value="{{$item['wbs_id']}}">{{$item['wbs_code']}}</option>
 													@endif
 												@endforeach
+												@endif
 											</select>
 										</div>
 									</div>

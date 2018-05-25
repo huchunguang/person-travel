@@ -262,8 +262,11 @@ class TripController extends Controller
 		$userObjMdl = User::where('UserID',$trip->user_id)->firstOrFail();
 		$approver = User::find($trip->department_approver);
 		$approvedCnt = $trip->demostic()->where(['is_approved'=>1])->count();
-// 		dd($approvedCnt);
+		if (empty($approvedCnt)){
+			$approvedCnt=$trip->demostic()->count();
+		}
 		$demosticInfo = $trip->demostic()->get();
+// 		dd($approvedCnt);
 		return view('/etravel/trip/tripDemosticDetail', [
 			'userObjMdl'=>$userObjMdl,
 			'trip' => $trip,

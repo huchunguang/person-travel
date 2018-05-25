@@ -136,7 +136,7 @@
                                                 <tr>
                                                     <td class="highlight">
                                                         <div class="success"></div>
-                                                        <a href="">  {{$item->destination_name['Country']?$item->destination_name['Country']:'Destination'}}  </a>
+                                                        <a href="">  {{isset($item->destination_name)?$item->destination_name:'Destination'}}  </a>
                                                     </td>
                                                     <td class="hidden-xs">{{$item->daterange_from}}</td>
                                                     <td> {{$item->daterange_to}}</td>
