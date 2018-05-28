@@ -32,7 +32,11 @@ class TripRepository extends Repository
 	public function getListByStatus($status='approved') 
 	{
 		if (in_array($status, $this->validateStatus)){
-			return Trip::where(['user_id'=>Auth::user()->UserID,'status'=>$status])->orderBy('updated_at','DESC')->limit(5)->get();
+			$res=Trip::where(['user_id'=>Auth::user()->UserID,'status'=>$status])->orderBy('daterange_from','ASC')->limit(5)->get();
+			foreach ($res as $item) {
+				$item->destination_name = $this->getTripDst($item);
+			}
+			return $res;
 		}
 		return [];
 	}

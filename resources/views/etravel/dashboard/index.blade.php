@@ -159,7 +159,7 @@
 		<div class="portlet light sameheight-box">
 			<div class="portlet-title tabbable-line">
 				<button type="button" class="btn btn-primary"
-					style="margin-bottom: 10px; font-size: 28px;">22</button>
+					style="margin-bottom: 10px; font-size: 28px;">{{ sprintf('%02d',count($staffTripList)) }}</button>
 				<div class="caption" style="float: right; margin-right: 10px;">
 					<i class="icon-globe font-dark hide"></i> <span
 						class="caption-subject policies-text bold uppercase">Manager Section</span> 
@@ -318,14 +318,36 @@
 		<div class="portlet box default">
 			<div class="portlet-title">
 				<div class="caption">
-					MY INCOMING TRIPS(2) <i class="glyphicon glyphicon-arrow-right"></i>
+					MY INCOMING TRIPS({{ sprintf('%2d',count($incomingTrips)) }}) <i class="glyphicon glyphicon-arrow-right"></i>
 				</div>
 				<div class="tools">
 					<a title="" class="fullscreen" href="" data-original-title=""> </a>
 				</div>
 			</div>
-			<div class="portlet-body policy-content portlet-collapsed"
-				style="display: block;">to do list</div>
+			<div class="portlet-body policy-content portlet-collapsed" style="display: block;padding:0px;">
+				<div class="table-scrollable" style="overflow-y:auto;  padding:0px;margin:0;">
+                                        <table class="table table-light">
+                                            <tbody>
+                                        		@if(count($incomingTrips))
+                                            		@foreach($incomingTrips as $item)
+                                                <tr>
+                                                    <td class="highlight">
+                                                        <div class="success"></div>
+                                                        <a href="">  {{isset($item->destination_name)?$item->destination_name:'Destination'}}  </a>
+                                                    </td>
+                                                    <td class="hidden-xs">{{$item->daterange_from}}</td>
+                                                    <td> {{$item->daterange_to}}</td>
+                                                </tr>
+                                             	@endforeach
+                                          	@else
+                                          		<tr>
+                                          			<td style="text-align: center;color:rgb(87,142,190);"colspan="3">No records found.</td>
+                                           	@endif
+                                          		</tr>	
+                                            </tbody>
+                                        </table>
+                  </div>
+			</div>
 		</div>
 
 	</div>

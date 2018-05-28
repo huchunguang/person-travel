@@ -7,38 +7,34 @@ use App\Trip;
 use Illuminate\Support\Facades\Auth;
 use App\Contacts\SystemVariable;
 use App\Repositories\TripRepository;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-	public function __construct(SystemVariable $system,TripRepository $trip)
+	public function __construct(SystemVariable $system, TripRepository $trip)
 	{
-		$this->system = $system;	
-		$this->trip=$trip;
+		$this->system = $system;
+		$this->trip = $trip;
 	}
-	
-    public function index(Request $request) 
-    {
-    		$generalAnnouncement = $this->system->getAnnouncement();
-    		$approved_request=[];
-    		$approved_request = $this->trip->getListByStatus('approved');
-    		$pendingRequests=$this->trip->getListByStatus('pending');
-    		$staffTripList=$this->trip->staffTripByStatus()->groupBy('status');
-//     		dd($staffTripList);
-//     		dd($staffTripList['pending'][0]->user()->first()['FirstName']);
-    		foreach ($pendingRequests as $item)
-    		{
-    			$item->destination_name=$this->trip->getTripDst($item);
-    		}
-    		foreach ($approved_request as $item)
-    		{
-    			$item->destination_name=$this->trip->getTripDst($item);
-    		}
-//     		    		dd($approved_request->toArray());
+
+	public function index(Request $request)
+	{
+		$approvedRequests = [ ];
+		$generalAnnouncement = $this->system->getAnnouncement();
+		$approvedRequests = $this->trip->getListByStatus('approved');
+		$pendingRequests = $this->trip->getListByStatus('pending');
+		$staffTripList = $this->trip->staffTripByStatus()->groupBy('status');
+		
+		$incomingTrips = $approvedRequests->filter(function ($item) {
+			$daterange_from = Carbon::createFromFormat('m/d/Y', $item->daterange_from)->getTimestamp();
+			return $daterange_from >= time();
+		});
 		return view('/etravel/dashboard/index', [ 
 			'staffTripList'=>$staffTripList,
-			'approved_request' => $approved_request,
+			'approved_request' => $approvedRequests,
 			'pendingRequests'=>$pendingRequests,
-			'generalAnnouncement' => $generalAnnouncement
+			'generalAnnouncement' => $generalAnnouncement,
+			'incomingTrips'=>$incomingTrips
 		]);
     }
     public function unknownUser(Request $request) 
