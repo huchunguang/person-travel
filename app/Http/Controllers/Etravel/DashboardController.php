@@ -17,6 +17,11 @@ class DashboardController extends Controller
 		$this->trip = $trip;
 	}
 
+	/**
+	 * @desc show the etravel dashboard related with all trip info
+	 * @param Request $request
+	 * @return \Illuminate\View\View
+	 */
 	public function index(Request $request)
 	{
 		$approvedRequests = [ ];
@@ -29,12 +34,14 @@ class DashboardController extends Controller
 			$daterange_from = Carbon::createFromFormat('m/d/Y', $item->daterange_from)->getTimestamp();
 			return $daterange_from >= time();
 		});
+// 		dd($staffTripList->toArray());
 		return view('/etravel/dashboard/index', [ 
 			'staffTripList'=>$staffTripList,
 			'approved_request' => $approvedRequests,
 			'pendingRequests'=>$pendingRequests,
 			'generalAnnouncement' => $generalAnnouncement,
-			'incomingTrips'=>$incomingTrips
+			'incomingTrips'=>$incomingTrips,
+			'staffTripCnt'=>count($this->trip->staffTripByStatus()),
 		]);
     }
     public function unknownUser(Request $request) 

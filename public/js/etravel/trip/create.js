@@ -191,22 +191,181 @@ $('.airlineSel').on('change',function(){
 	var selVal=$(this).val();
 	if(selVal == '1'){
 		var trInd=$(this).closest("tr").index();
+		$('#addNewFlight').modal('hide');
 		$('#airlineList').modal('show');
 		$('#checkAirlineBtn').on('click',function(){
 			var airlineCode = $("#aircodeSel").find('option:selected').data('code');
 //			alert(airlineCode);
 			$('#flightLtinerary tbody>tr').eq(trInd).find('td').eq(3).html(airlineCode);
 			$('#airlineList').modal('hide');
+			$('#addNewFlight').modal('show');
 		});
 		
 	}
 	
 });
 
+//New Accommodation
+var addnewLineNum = 0;
+function addNewAccommodation(){
+	var hotel_name=$('.modal input[name="hotel_name[]"]').val();
+	var rate=$('.modal input[name="rate[]"]').val();
+	var checkin_date=$('.modal input[name="checkin_date[]"]').val();
+	var checkout_date=$('.modal input[name="checkout_date[]"]').val();
+	addnewLineNum++;
+
+	 var rowTem = '<tr id="tr_' + addnewLineNum + '" onclick="showHotelItemOperate(this)" data-id="'+ addnewLineNum +'">'
+     + '<td><input type="hidden" name="hotel_name[]" value="'+hotel_name+'"/>'+hotel_name+'</td>'
+     + '<td><input type="hidden" name="checkin_date[]" value="'+checkin_date+'"/>'+checkin_date+'</td>'
+     + '<td><input type="hidden" name="checkout_date[]" value="'+checkout_date+'"/>'+checkout_date+'</td>'
+     + '<td><input type="hidden" name="rate[]" value="'+rate+'"/>'+rate+'</td>'
+     + '</tr>';
+	 var editId=$('.modal input[name="tr_id"]').val();
+	 if(editId){
+		 rowTem = '<td><input type="hidden" name="hotel_name[]" value="'+hotel_name+'"/>'+hotel_name+'</td>'
+	     + '<td><input type="hidden" name="checkin_date[]" value="'+checkin_date+'"/>'+checkin_date+'</td>'
+	     + '<td><input type="hidden" name="checkout_date[]" value="'+checkout_date+'"/>'+checkout_date+'</td>'
+	     + '<td><input type="hidden" name="rate[]" value="'+rate+'"/>'+rate+'</td>';
+		 
+		 	$tr = $('#tr_'+editId).html(rowTem);
+		 	
+	 }else{
+		 $("#hotelItinerary tbody:last").append(rowTem);
+	 }
+	 $('#addNewAccommodation').modal("hide");
+}
+
+$('#addNewAccommodation').on('hide.bs.modal', function () {
+	$('.modal input').val('');
+});
+function editHotel()
+{
+	var id=$('.prepareDelTr').data('id');
+	var hotel_name=$('#tr_'+id+' input[name="hotel_name[]"]').val();
+	var checkin_date=$('#tr_'+id+' input[name="checkin_date[]"]').val();
+	var checkout_date=$('#tr_'+id+' input[name="checkout_date[]"]').val();
+	var rate=$('#tr_'+id+' input[name="rate[]"]').val();
+	
+	$('.modal input[name="hotel_name[]"]').val(hotel_name);
+	$('.modal input[name="checkin_date[]"]').val(checkin_date);
+	$('.modal input[name="checkout_date[]"]').val(checkout_date);
+	$('.modal input[name="rate[]"]').val(rate);
+	
+	$('.modal input[name="tr_id"]').val(id);
+	//
+	$('#addNewAccommodation').modal('show');
+}
+function showHotelItemOperate(obj){
+	thisObj=$(obj);
+	thisObj.toggleClass('prepareDelTr').toggleClass('warning');
+	$('#itemDelBut').prop('disabled',!$('.prepareDelTr').length);
+	$('#itemEditBut').prop('disabled',!$('.prepareDelTr').length);
+}
+function delHotelItem(){
+	$('.prepareDelTr').remove();
+	var remainTrNum = $('#hotelItinerary tbody tr').length;
+	if(remainTrNum==0){
+		$('#itemDelBut').attr('disabled',true);
+		$('#itemEditBut').attr('disabled',true);
+	}
+	
+
+	
+}
 
 
 
+//New Flight
 
+var addFlightNum = 0;
+function addNewFlight(){
+	var flight_date=$('.modal input[name="flight_date[]"]').val();
+	var flight_from=$('.modal input[name="flight_from[]"]').val();
+	var flight_to=$('.modal input[name="flight_to[]"]').val();
+	var etd_time=$('.modal input[name="etd_time[]"]').val();
+	var eta_time=$('.modal input[name="eta_time[]"]').val();
+	var airline_or_train=$('.modal #airline_or_train').val();
+	var airline_or_train_text=$('.modal #airline_or_train').find('option:selected').text();
+	var class_flight=$('.modal input[name="class_flight[]"]').val();
+	var is_visa=$('.modal #is_visa').val();
+	var is_visa_text=$('.modal #is_visa').find('option:selected').text();
+	addFlightNum++;
+
+	 var rowTem = '<tr id="tr_' + addFlightNum + '" onclick="showFlightItemOperate(this)" data-id="'+ addFlightNum +'">'
+     + '<td><input type="hidden" name="flight_date[]" value="'+flight_date+'"/>'+flight_date+'</td>'
+     + '<td><input type="hidden" name="flight_from[]" value="'+flight_from+'"/>'+flight_from+'</td>'
+     + '<td><input type="hidden" name="flight_to[]" value="'+flight_to+'"/>'+flight_to+'</td>'
+     + '<td><input type="hidden" name="airline_or_train[]" value="'+airline_or_train+'"/>'+airline_or_train_text+'</td>'
+     + '<td><input type="hidden" name="etd_time[]" value="'+etd_time+'"/>'+etd_time+'</td>'
+     + '<td><input type="hidden" name="eta_time[]" value="'+eta_time+'"/>'+eta_time+'</td>'
+     + '<td><input type="hidden" name="class_flight[]" value="'+class_flight+'"/>'+class_flight+'</td>'
+     + '<td><input type="hidden" name="is_visa[]" value="'+is_visa+'"/>'+is_visa_text+'</td>'
+     + '</tr>';
+	 var editId=$('.modal input[name="tr_id"]').val();
+	 if(editId){
+		 rowTem = '<td><input type="hidden" name="flight_date[]" value="'+flight_date+'"/>'+flight_date+'</td>'
+	     + '<td><input type="hidden" name="flight_from[]" value="'+flight_from+'"/>'+flight_from+'</td>'
+	     + '<td><input type="hidden" name="flight_to[]" value="'+flight_to+'"/>'+flight_to+'</td>'
+	     + '<td><input type="hidden" name="airline_or_train[]" value="'+airline_or_train+'"/>'+airline_or_train_text+'</td>'
+	     + '<td><input type="hidden" name="etd_time[]" value="'+etd_time+'"/>'+etd_time+'</td>'
+	     + '<td><input type="hidden" name="eta_time[]" value="'+eta_time+'"/>'+eta_time+'</td>'
+	     + '<td><input type="hidden" name="class_flight[]" value="'+class_flight+'"/>'+class_flight+'</td>'
+	     + '<td><input type="hidden" name="is_visa[]" value="'+is_visa+'"/>'+is_visa_text+'</td>';
+		 
+		 	$tr = $('#tr_'+editId).html(rowTem);
+		 	
+	 }else{
+		 $("#flightLtinerary tbody:last").append(rowTem);
+	 }
+	 $('#addNewFlight').modal("hide");
+}
+
+$('#addNewFlight').on('hide.bs.modal', function () {
+	$('.modal input').val('');
+});
+function editFlight()
+{
+	var id=$('.prepareDelTr').data('id');
+	var flight_date=$('#tr_'+id+' input[name="flight_date[]"]').val();
+	var flight_from=$('#tr_'+id+' input[name="flight_from[]"]').val();
+	var flight_to=$('#tr_'+id+' input[name="flight_to[]"]').val();
+	var etd_time=$('#tr_'+id+' input[name="etd_time[]"]').val();
+	var eta_time=$('#tr_'+id+' input[name="eta_time[]"]').val();
+	var class_flight=$('#tr_'+id+' input[name="class_flight[]"]').val();
+	var airline_or_train=$('#tr_'+id+' input[name="airline_or_train[]"]').val();
+	var is_visa=$('#tr_'+id+' input[name="is_visa[]"]').val();
+	
+	$('.modal input[name="flight_date[]"]').val(flight_date);
+	$('.modal input[name="flight_from[]"]').val(flight_from);
+	$('.modal input[name="flight_to[]"]').val(flight_to);
+	$('.modal input[name="etd_time[]"]').val(etd_time);
+	$('.modal input[name="eta_time[]"]').val(eta_time);
+	$('.modal input[name="class_flight[]"]').val(class_flight);
+	$('.modal input[name="class_flight[]"]').val(class_flight);
+	$('.modal #airline_or_train option[value="'+airline_or_train+'"]').attr("select","selected");
+	$('.modal #is_visa option[value="'+is_visa+'"]').attr("select","selected");
+	
+	$('.modal input[name="tr_id"]').val(id);
+	//
+	$('#addNewFlight').modal('show');
+}
+function showFlightItemOperate(obj){
+	thisObj=$(obj);
+	thisObj.toggleClass('prepareDelTr').toggleClass('warning');
+	$('#flightDelBut').prop('disabled',!$('.prepareDelTr').length);
+	$('#flightEditBut').prop('disabled',!$('.prepareDelTr').length);
+}
+function delFlightItem(){
+	$('.prepareDelTr').remove();
+	var remainTrNum = $('#flightLtinerary tbody tr').length;
+	if(remainTrNum==0){
+		$('#flightDelBut').attr('disabled',true);
+		$('#flightEditBut').attr('disabled',true);
+	}
+	
+
+	
+}
 
 
 

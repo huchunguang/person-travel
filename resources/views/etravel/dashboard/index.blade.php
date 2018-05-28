@@ -159,7 +159,7 @@
 		<div class="portlet light sameheight-box">
 			<div class="portlet-title tabbable-line">
 				<button type="button" class="btn btn-primary"
-					style="margin-bottom: 10px; font-size: 28px;">{{ sprintf('%02d',count($staffTripList)) }}</button>
+					style="margin-bottom: 10px; font-size: 28px;">{{ sprintf('%02d',$staffTripCnt) }}</button>
 				<div class="caption" style="float: right; margin-right: 10px;">
 					<i class="icon-globe font-dark hide"></i> <span
 						class="caption-subject policies-text bold uppercase">Manager Section</span> 

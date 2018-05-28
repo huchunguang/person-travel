@@ -182,7 +182,7 @@
 									<ul id="myTab" class="nav nav-tabs">
 										<li class="active"><a href="#home" data-toggle="tab">FLIGHT ITINERARY</a></li>
 										<li><a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a></li>
-										<li><a href="#teana" data-toggle="tab">HOTEL ACCOMODATION</a></li>
+										<li><a href="#teana" data-toggle="tab">HOTEL ACCOMMODATION</a></li>
 										<li><a href="#camry" data-toggle="tab">TRAVEL INSURANCE</a></li>
 									</ul>
 									<div id="myTabContent" class="tab-content" style="border: 2px #dddddd solid;">

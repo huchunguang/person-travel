@@ -191,7 +191,7 @@
 									<ul id="myTab" class="nav nav-tabs">
 										<li class="active"><a href="#home" data-toggle="tab">FLIGHT ITINERARY</a></li>
 										<li><a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a></li>
-										<li><a href="#teana" data-toggle="tab">HOTEL ACCOMODATION</a></li>
+										<li><a href="#teana" data-toggle="tab">HOTEL ACCOMMODATION</a></li>
 										<li><a href="#camry" data-toggle="tab">TRAVEL INSURANCE</a></li>
 									</ul>
 									<div id="myTabContent" class="tab-content" style="border: 2px #dddddd solid;">
@@ -236,7 +236,29 @@
 
 												</li>
 											</ul>
-
+											<div class="row">
+												
+													
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label">
+												<button data-target="#addNewFlight" data-toggle="modal" type="button" class="btn btn-primary">
+													<i class="glyphicon glyphicon-plus-sign"></i> 
+													Add Line Item
+												</button>
+												<button id="flightEditBut" type="button" accesskey="I" onclick="editFlight()" disabled class="btn yellow-gold leave-type-button">
+									 				<i class="fa fa-pencil"></i> Ed<u>i</u>t
+												</button>
+												<button id="flightDelBut" type="button" class="btn red-mint" disabled onclick="delFlightItem()">
+													<i class="glyphicon glyphicon-remove-sign"></i> 
+													Delete
+												</button>
+											</label>
+										</div>
+									</div>
+								
+												
+											</div>
 											<table id="flightLtinerary" class="table table-bordered table-striped table-condensed flip-content">
 												<thead>
 													<tr>
@@ -251,55 +273,7 @@
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
-														<td>
-															<div class="col-md-8">
-																<input type="text" name="flight_date[]"
-																	class="form-control singleDatePicker"> <i
-																	class="glyphicon glyphicon-calendar fa fa-calendar"
-																	style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
-															</div>
-
-														</td>
-														<td>
-															<input type="text" name="flight_from[]" id=""/>
-														</td>
-														<td>
-															<input type="text" name="flight_to[]" id="" />
-														</td>
-														<td>
-															<select class="form-control airlineSel" name="airline_or_train[]">
-																<option value="">Select...</option>																
-																<option value="1" data-id="">airline</option>
-																<option value="0">train</option>
-															</select>
-														</td>
-														<td>
-															
-																<input type="text" name="etd_time[]"class="form-control timepicker timepicker-default time-input" placeholder=""> 
-																<span class="input-group-btn">
-<!-- 																	<button class="btn default" type="button"> -->
-<!-- 																		<i class="fa fa-clock-o"></i> -->
-<!-- 																	</button> -->
-																</span>
-															
-														</td>
-														<td>
-																<input type="text" name="eta_time[]"class="form-control timepicker timepicker-default time-input" placeholder=""> 
-																<span class="input-group-btn">
-<!-- 																	<button class="btn default" type="button"> -->
-<!-- 																		<i class="fa fa-clock-o"></i> -->
-<!-- 																	</button> -->
-																</span>
-														</td>
-														<td><input type="text" name="class_flight[]" id="" /></td>
-														<td>
-															<select class="form-control" name="is_visa[]">
-																<option value="1">YES</option>
-																<option value="0">NO</option>
-															</select>
-														</td>
-													</tr>
+													
 												</tbody>
 											</table>
 										
@@ -492,8 +466,28 @@
 														</div>
 													</li>
 												</ul>
-
-												<table class="table table-bordered">
+												<div class="row">
+													
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label">
+												<button data-target="#addNewAccommodation" data-toggle="modal" type="button" class="btn btn-primary">
+													<i class="glyphicon glyphicon-plus-sign"></i> 
+													Add Line Item
+												</button>
+												<button id="itemEditBut" type="button" accesskey="I" onclick="editHotel()" disabled class="btn yellow-gold leave-type-button">
+									 				<i class="fa fa-pencil"></i> Ed<u>i</u>t
+												</button>
+												<button id="itemDelBut" type="button" class="btn red-mint" disabled onclick="delHotelItem()">
+													<i class="glyphicon glyphicon-remove-sign"></i> 
+													Delete
+												</button>
+											</label>
+										</div>
+									</div>
+								
+												</div>
+												<table class="table table-bordered" id="hotelItinerary">
 													<thead>
 														<tr class="info">
 															<td class="text-center">Hotel Name</td>
@@ -503,29 +497,7 @@
 														</tr>
 													</thead>
 													<tbody>
-														<tr>
-															<td><input type="text" name="hotel_name[]" id="" /></td>
-															<td>
-																<div class="col-md-8">
-																	<input type="text" id="" name="checkin_date[]"
-																		class="form-control singleDatePicker"> <i
-																		class="glyphicon glyphicon-calendar fa fa-calendar"
-																		style="position: absolute; bottom: 10px; right: 24px; top: auto; cursor: pointer;"></i>
-																</div>
-	
-															</td>
-															<td>
-																<div class="col-md-8"
-																	style="position: relative;">
-																	<input type="text" id="" name="checkout_date[]"
-																		class="form-control singleDatePicker"> <i
-																		class="glyphicon glyphicon-calendar fa fa-calendar"
-																		style="position: absolute; bottom: 10px; right: 24px; top: auto; cursor: pointer;"></i>
-
-																</div>
-															</td>
-															<td><input type="text" name="rate[]" id="" /></td>
-														</tr>
+														
 													</tbody>
 												</table>
 										
@@ -591,6 +563,8 @@
 </div>
 
 @include('etravel.modal.airlineList')
+@include('etravel.modal.newAccommodation')
+@include('etravel.modal.newFlight')
 <script src="{{asset('/js/etravel/trip/create.js')}}"></script>
 
 @endsection
