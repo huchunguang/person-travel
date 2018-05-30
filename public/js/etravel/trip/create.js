@@ -204,10 +204,13 @@ $('.airlineSel').on('change',function(){
 	}
 	
 });
-
+$('.modal input[name="hotel_name[]"]').on('click',function(){
+	$('#hotelList').modal('show');
+});
 //New Accommodation
 var addnewLineNum = 0;
 function addNewAccommodation(){
+	var hotel_id=$('.modal input[name="hotel_id[]"]').val();
 	var hotel_name=$('.modal input[name="hotel_name[]"]').val();
 	var rate=$('.modal input[name="rate[]"]').val();
 	var checkin_date=$('.modal input[name="checkin_date[]"]').val();
@@ -215,14 +218,15 @@ function addNewAccommodation(){
 	addnewLineNum++;
 
 	 var rowTem = '<tr id="tr_' + addnewLineNum + '" onclick="showHotelItemOperate(this)" data-id="'+ addnewLineNum +'">'
-     + '<td><input type="hidden" name="hotel_name[]" value="'+hotel_name+'"/>'+hotel_name+'</td>'
+     + '<td><input type="hidden" name="hotel_id[]" value="'+hotel_id+'"/><input type="hidden" name="hotel_name[]" value="'+hotel_name+'"/>'+hotel_name+'</td>'
      + '<td><input type="hidden" name="checkin_date[]" value="'+checkin_date+'"/>'+checkin_date+'</td>'
      + '<td><input type="hidden" name="checkout_date[]" value="'+checkout_date+'"/>'+checkout_date+'</td>'
      + '<td><input type="hidden" name="rate[]" value="'+rate+'"/>'+rate+'</td>'
      + '</tr>';
 	 var editId=$('.modal input[name="tr_id"]').val();
 	 if(editId){
-		 rowTem = '<td><input type="hidden" name="hotel_name[]" value="'+hotel_name+'"/>'+hotel_name+'</td>'
+		 var accomodate_id=$('#tr_'+editId+' input[name="accomodate_id[]"]').val();
+		 rowTem = '<td><input type="hidden" name="hotel_id[]" value="'+hotel_id+'"/><input type="hidden" name="accomodate_id[]"value="'+accomodate_id+'" /><input type="hidden" name="hotel_name[]" value="'+hotel_name+'"/>'+hotel_name+'</td>'
 	     + '<td><input type="hidden" name="checkin_date[]" value="'+checkin_date+'"/>'+checkin_date+'</td>'
 	     + '<td><input type="hidden" name="checkout_date[]" value="'+checkout_date+'"/>'+checkout_date+'</td>'
 	     + '<td><input type="hidden" name="rate[]" value="'+rate+'"/>'+rate+'</td>';
@@ -240,12 +244,15 @@ $('#addNewAccommodation').on('hide.bs.modal', function () {
 });
 function editHotel()
 {
+	
 	var id=$('.prepareDelTr').data('id');
+	var hotel_id=$('#tr_'+id+' input[name="hotel_id[]"]').val();
 	var hotel_name=$('#tr_'+id+' input[name="hotel_name[]"]').val();
 	var checkin_date=$('#tr_'+id+' input[name="checkin_date[]"]').val();
 	var checkout_date=$('#tr_'+id+' input[name="checkout_date[]"]').val();
 	var rate=$('#tr_'+id+' input[name="rate[]"]').val();
 	
+	$('.modal input[name="hotel_id[]"]').val(hotel_id);
 	$('.modal input[name="hotel_name[]"]').val(hotel_name);
 	$('.modal input[name="checkin_date[]"]').val(checkin_date);
 	$('.modal input[name="checkout_date[]"]').val(checkout_date);
@@ -257,6 +264,8 @@ function editHotel()
 }
 function showHotelItemOperate(obj){
 	thisObj=$(obj);
+//	$('#hotelItinerary tbody tr').;
+	thisObj.siblings().removeClass('prepareDelTr').removeClass('warning');
 	thisObj.toggleClass('prepareDelTr').toggleClass('warning');
 	$('#itemDelBut').prop('disabled',!$('.prepareDelTr').length);
 	$('#itemEditBut').prop('disabled',!$('.prepareDelTr').length);
@@ -303,7 +312,8 @@ function addNewFlight(){
      + '</tr>';
 	 var editId=$('.modal input[name="tr_id"]').val();
 	 if(editId){
-		 rowTem = '<td><input type="hidden" name="flight_date[]" value="'+flight_date+'"/>'+flight_date+'</td>'
+		 var flight_id=$('#tr_'+editId+' input[name="flight_id[]"]').val();
+		 rowTem = '<td><input type="hidden" name="flight_id[]" value="'+flight_id+'"/><input type="hidden" name="flight_date[]" value="'+flight_date+'"/>'+flight_date+'</td>'
 	     + '<td><input type="hidden" name="flight_from[]" value="'+flight_from+'"/>'+flight_from+'</td>'
 	     + '<td><input type="hidden" name="flight_to[]" value="'+flight_to+'"/>'+flight_to+'</td>'
 	     + '<td><input type="hidden" name="airline_or_train[]" value="'+airline_or_train+'"/>'+airline_or_train_text+'</td>'
@@ -326,6 +336,7 @@ $('#addNewFlight').on('hide.bs.modal', function () {
 function editFlight()
 {
 	var id=$('.prepareDelTr').data('id');
+	var flight_id=$('#tr_'+id+' input[name="flight_id[]"]').val();
 	var flight_date=$('#tr_'+id+' input[name="flight_date[]"]').val();
 	var flight_from=$('#tr_'+id+' input[name="flight_from[]"]').val();
 	var flight_to=$('#tr_'+id+' input[name="flight_to[]"]').val();
@@ -335,6 +346,7 @@ function editFlight()
 	var airline_or_train=$('#tr_'+id+' input[name="airline_or_train[]"]').val();
 	var is_visa=$('#tr_'+id+' input[name="is_visa[]"]').val();
 	
+	$('.modal input[name="flight_id[]"]').val(flight_id);
 	$('.modal input[name="flight_date[]"]').val(flight_date);
 	$('.modal input[name="flight_from[]"]').val(flight_from);
 	$('.modal input[name="flight_to[]"]').val(flight_to);
@@ -351,6 +363,7 @@ function editFlight()
 }
 function showFlightItemOperate(obj){
 	thisObj=$(obj);
+	thisObj.siblings().removeClass('prepareDelTr').removeClass('warning');
 	thisObj.toggleClass('prepareDelTr').toggleClass('warning');
 	$('#flightDelBut').prop('disabled',!$('.prepareDelTr').length);
 	$('#flightEditBut').prop('disabled',!$('.prepareDelTr').length);

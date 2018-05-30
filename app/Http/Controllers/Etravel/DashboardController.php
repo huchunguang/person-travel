@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Contacts\SystemVariable;
 use App\Repositories\TripRepository;
 use Carbon\Carbon;
+use App\Http\Apis\Classes\EhotelApi;
 
 class DashboardController extends Controller
 {
@@ -24,6 +25,7 @@ class DashboardController extends Controller
 	 */
 	public function index(Request $request)
 	{
+		
 		$approvedRequests = [ ];
 		$generalAnnouncement = $this->system->getAnnouncement();
 		$approvedRequests = $this->trip->getListByStatus('approved');

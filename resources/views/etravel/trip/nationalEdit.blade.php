@@ -288,7 +288,29 @@
 												</li>
 												@endif
 											</ul>
-
+											<div class="row" style="margin-left: 0px;">
+												
+													
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label">
+												<button data-target="#addNewFlight" data-toggle="modal" type="button" class="btn btn-primary">
+													<i class="glyphicon glyphicon-plus-sign"></i> 
+													Add Line Item
+												</button>
+												<button id="flightEditBut" type="button" accesskey="I" onclick="editFlight()" disabled class="btn yellow-gold leave-type-button">
+									 				<i class="fa fa-pencil"></i> Ed<u>i</u>t
+												</button>
+												<button id="flightDelBut" type="button" class="btn red-mint" disabled onclick="delFlightItem()">
+													<i class="glyphicon glyphicon-remove-sign"></i> 
+													Delete
+												</button>
+											</label>
+										</div>
+									</div>
+								
+												
+											</div>
 											<table id="flightLtinerary" class="table table-bordered table-striped table-condensed flip-content">
 												<thead>
 													<tr>
@@ -305,73 +327,30 @@
 												<tbody>
 												@if(count($flightData)>0)
 													@foreach($flightData as $flightItem)
-													<tr>
-														<input type="hidden" name="flight_id[]" value="{{$flightItem['id']}}"/>
-														<td>
-															<div class="col-md-8">
-																<input type="text" name="flight_date[]" value="{{$flightItem['flight_date']}}"
-																	class="form-control singleDatePicker"> <i
-																	class="glyphicon glyphicon-calendar fa fa-calendar"
-																	style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
-															</div>
-
-														</td>
-														<td>
-															<input type="text" name="flight_from[]" id="" value="{{$flightItem['flight_from']}}"/>
-														</td>
-														<td>
-															<input type="text" name="flight_to[]" id="" value="{{$flightItem['flight_to']}}"/>
-														</td>
-														<td>
-															<select class="form-control" name="airline_or_train[]">
-																@if($flightItem['airline_or_train']=='1')
-																<option value="1" selected="selected">airline</option>
-																@else
-																<option value="1">airline</option>
-																@endif
-																@if($flightItem['airline_or_train']=='0')
-																<option value="0" selected="selected">train</option>
-																@else
-																<option value="0">train</option>
-																@endif
-															</select>
-														</td>
-														<td>
-															
-																<input type="text" name="etd_time[]"class="form-control timepicker timepicker-default time-input" placeholder="" value="{{$flightItem['etd_time']}}"> 
-																<span class="input-group-btn">
-<!-- 																	<button class="btn default" type="button"> -->
-<!-- 																		<i class="fa fa-clock-o"></i> -->
-<!-- 																	</button> -->
-																</span>
-															
-														</td>
-														<td>
-																<input type="text" name="eta_time[]"class="form-control timepicker timepicker-default time-input" placeholder="" value="{{$flightItem['eta_time']}}"> 
-																<span class="input-group-btn">
-<!-- 																	<button class="btn default" type="button"> -->
-<!-- 																		<i class="fa fa-clock-o"></i> -->
-<!-- 																	</button> -->
-																</span>
-														</td>
-														<td><input type="text" name="class_flight[]" id="" value="{{$flightItem['class_flight']}}"/></td>
-														<td>
-															<select class="form-control" name="is_visa[]">
-															@if($flightItem['is_visa']=='1')
-																<option value="1" selected="selected">YES</option>
-															@else
-																<option value="1">YES</option>
-															@endif
-															
-															@if($flightItem['is_visa']=='0')
-															<option value="0" selected="selected">NO</option>
-															@else
-															<option value="0">NO</option>
-															@endif
-															</select>
-														</td>
+													<tr></tr>
 													
-													</tr>
+													
+													
+													
+													
+													
+													<tr id="tr_{{$flightItem['id']}}" onclick="showFlightItemOperate(this)" data-id="{{$flightItem['id']}}">
+														<input type="hidden" name="flight_id[]" value="{{$flightItem['id']}}"/>
+     													<td><input type="hidden" name="flight_date[]" value="{{$flightItem['flight_date']}}"/>{{$flightItem['flight_date']}}</td>
+     													<td><input type="hidden" name="flight_from[]" value="{{$flightItem['flight_from']}}"/>{{$flightItem['flight_from']}}</td>
+     													<td><input type="hidden" name="flight_to[]" value="{{$flightItem['flight_to']}}"/>{{$flightItem['flight_to']}}</td>
+     													<td>
+     															@if($flightItem['airline_or_train']=='1')
+																 	airline
+																@else
+																	train
+																@endif
+														</td>
+     													<td><input type="hidden" name="etd_time[]" value="{{$flightItem['etd_time']}}"/>{{$flightItem['etd_time']}}</td>
+     													<td><input type="hidden" name="eta_time[]" value="{{$flightItem['eta_time']}}"/>{{$flightItem['eta_time']}}</td>
+    													<td><input type="hidden" name="class_flight[]" value="{{$flightItem['class_flight']}}"/>{{$flightItem['class_flight']}}</td>
+    													<td><input type="hidden" name="is_visa[]" value="{{$flightItem['is_visa']}}"/>{{ $flightItem['is_visa']==1 ? 'YES' : 'NO' }}</td>
+    												</tr>
 													@endforeach
 												@endif
 												</tbody>
@@ -490,8 +469,28 @@
 														</div>
 													</li>
 												</ul>
-
-												<table class="table table-bordered">
+									<div class="row" style="margin-left: 0px;">
+													
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label">
+												<button data-target="#addNewAccommodation" data-toggle="modal" type="button" class="btn btn-primary">
+													<i class="glyphicon glyphicon-plus-sign"></i> 
+													Add Line Item
+												</button>
+												<button id="itemEditBut" type="button" accesskey="I" onclick="editHotel()" disabled class="btn yellow-gold leave-type-button">
+									 				<i class="fa fa-pencil"></i> Ed<u>i</u>t
+												</button>
+												<button id="itemDelBut" type="button" class="btn red-mint" disabled onclick="delHotelItem()">
+													<i class="glyphicon glyphicon-remove-sign"></i> 
+													Delete
+												</button>
+											</label>
+										</div>
+									</div>
+								
+									</div>
+												<table class="table table-bordered" id="hotelItinerary">
 													<thead>
 														<tr class="info">
 															<td class="text-center">Hotel Name</td>
@@ -502,30 +501,18 @@
 													</thead>
 													<tbody>
 													@foreach($hotelData as $hotelItem)
-														<tr>
-															<input type="hidden" name="hotel_id[]" value="{{$hotelItem['accomodate_id']}}"/>
-															<td><input type="text" name="hotel_name[]" id="" value="{{$hotelItem['hotel_name']}}"/></td>
+														<tr id="tr_{{$hotelItem['accomodate_id']}}" onclick="showHotelItemOperate(this)" data-id="{{$hotelItem['accomodate_id']}}">
 															<td>
-																<div class="col-md-8">
-																	<input type="text" id="" name="checkin_date[]" value="{{$hotelItem['checkin_date']}}"
-																		class="form-control singleDatePicker"> <i
-																		class="glyphicon glyphicon-calendar fa fa-calendar"
-																		style="position: absolute; bottom: 10px; right: 24px; top: auto; cursor: pointer;"></i>
-																</div>
-	
-															</td>
+																<input type="hidden" name="accomodate_id[]"value="{{$hotelItem['accomodate_id']}}" />
+																<input type="hidden" name="hotel_id[]"value="{{$hotelItem['hotel_id']}}" />
+																<input type="hidden" name="hotel_name[]" value="{{$hotelItem['hotel_name']}}" />{{$hotelItem['hotel_name']}}</td>
 															<td>
-																<div class="col-md-8"
-																	style="position: relative;">
-																	<input type="text" id="" name="checkout_date[]" value="{{$hotelItem['checkout_date']}}"
-																		class="form-control singleDatePicker"> <i
-																		class="glyphicon glyphicon-calendar fa fa-calendar"
-																		style="position: absolute; bottom: 10px; right: 24px; top: auto; cursor: pointer;"></i>
-
-																</div>
+																<input type="hidden" name="checkin_date[]" value="{{$hotelItem['checkin_date']}}" />{{$hotelItem['checkin_date']}}</td>
+															<td>
+																<input type="hidden" name="checkout_date[]" value="{{$hotelItem['checkout_date']}}" />{{$hotelItem['checkout_date']}}</td>
+															<td>
+																<input type="hidden" name="rate[]" value="{{$hotelItem['rate']}}" />{{$hotelItem['rate']}}
 															</td>
-															<td><input type="text" name="rate[]" id="" value="{{$hotelItem['rate']}}"/></td>
-														
 														</tr>
 													@endforeach
 													</tbody>
@@ -650,6 +637,10 @@
 </div>
 </div>
 </div>
+@include('etravel.modal.airlineList')
+@include('etravel.modal.newAccommodation')
+@include('etravel.modal.newFlight')
+@include('etravel.modal.hotel')
 <script src="{{asset('js/etravel/trip/tripNationalDetail.js')}}"></script>
 <script src="{{asset('/js/etravel/trip/create.js')}}"></script>
 

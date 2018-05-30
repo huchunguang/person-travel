@@ -22,6 +22,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">Hotel Name</label>
+								<input type="hidden" name="hotel_id[]" id="" class="form-control"/>
 								<input type="text" name="hotel_name[]" id="" class="form-control"/>
 							</div>
 						</div>

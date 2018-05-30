@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Mail\Message;
 use App\Events\TripNotify;
 use App\Repositories\TripRepository;
+use App\Http\Apis\Classes\EhotelApi;
 
 class TripController extends Controller
 {
@@ -52,6 +53,8 @@ class TripController extends Controller
     		$countryList = Country::orderBy('Country')->select(['CountryID','Country','RegionID'])->get();
     		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
     		$airlineList = Airline::all();
+    		$hotelList = new EhotelApi();
+    		$hotelList=$hotelList->getHotelList();
     		return view('/etravel/trip/create')->with('userProfile', $userProfile['userProfile'])
 			->with('approvers', $userProfile['approvers'])
 			->with('purposeCats', $purposeCategory)
@@ -59,7 +62,7 @@ class TripController extends Controller
 			->with('countryList',$countryList)
 			->with('approvers', $userProfile['approvers'])
     		->with('airlineList',$airlineList)
-    		->with('userList',$userList);
+    		->with('userList',$userList)->with('hotelList',$hotelList);
 	}
     /**
      * @brief create demostic trip
@@ -203,7 +206,7 @@ class TripController extends Controller
     			$trip->save();
     			$flightData=$request->only(['flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
     			$flightData=array_bound_key($flightData);
-    			$hotelData=$request->only(['hotel_name','checkin_date','checkout_date','rate']);
+    			$hotelData=$request->only(['hotel_id','hotel_name','checkin_date','checkout_date','rate']);
     			$hotelData=array_bound_key($hotelData);
     			$estimateExpenses=$request->only(['estimate_type','employee_annual_budget','employee_ytd_expenses','available_amount','required_amount']);
     			$estimateExpenses=array_bound_key($estimateExpenses);
@@ -307,46 +310,37 @@ class TripController extends Controller
 			'overseas_approver'=>$overseas_approver,
 			'hotelData' => $hotelData,
 			'estimateExpenses'=>$estimateExpenses,
-			'flightData'=>$flightData,
-			'insuranceData'=>$insuranceData,
-			'destination'=>$destination,
-			'rep_office'=>$rep_office,
+			'flightData' => $flightData,
+			'insuranceData' => $insuranceData,
+			'destination' => $destination,
+			'rep_office' => $rep_office,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
-			'ccUser'=>$this->trip->getCcUser($trip),
+			'ccUser' => $this->trip->getCcUser($trip)
 		]);
 	}
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy(Trip $trip)
+
+	public function demosticEdit(EditDomesticRequest $request, Trip $trip)
 	{
-		
-	}
-	
-	public function demosticEdit(EditDomesticRequest $request,Trip $trip)
-	{
-		$userObjMdl = User::where('UserID',$trip->user_id)->firstOrFail();
+		$userObjMdl = User::where('UserID', $trip->user_id)->firstOrFail();
 		$approver = User::find($trip->department_approver);
 		$demosticInfo = $trip->demostic()->get();
-		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
-// 		dd($demosticInfo->toArray());
-// 		foreach ($demosticInfo as $item){
-// 			echo $item->visitPurpose()->first()['purpose_catgory'];
-// 		}
-// 		die;
-		return view('/etravel/trip/demosticEdit', [
-			'userObjMdl'=>$userObjMdl,
+		$purposeCategory = Trip_purpose::all([ 
+			
+			'purpose_id',
+			'purpose_catgory'
+		]);
+		return view('/etravel/trip/demosticEdit', [ 
+			
+			'userObjMdl' => $userObjMdl,
 			'trip' => $trip,
-			'purposeCats'=>$purposeCategory,
+			'purposeCats' => $purposeCategory,
 			'approver'=>$approver,
 			'demosticInfo' => $demosticInfo,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
 			'costCenters'=>Costcenter::getAvailableCenters(),
 		]);
 	}
+	
 	public function nationalEdit(EditNationalRequest $request,Trip $trip)
 	{
 		$overseas_approver=[];
@@ -357,15 +351,18 @@ class TripController extends Controller
 			$overseas_approver=User::find($trip->overseas_approver);
 		}
 		$approver = User::find($trip->department_approver);
-		$hotelData=$trip->accomodation()->get();
-		$estimateExpenses=$trip->estimateExpense()->get();
-		$flightData=$trip->flight()->get();
-		$insuranceData=$trip->insurance()->first();
-// 		dd($trip->destination_id);
-		$destination=Country::find($trip->destination_id)->keyBy('CountryID')->keys()->toArray();
+		$hotelData = $trip->accomodation()->get();
+		$estimateExpenses = $trip->estimateExpense()->get();
+		$flightData = $trip->flight()->get();
+		$insuranceData = $trip->insurance()->first();
+		$destination = Country::find($trip->destination_id)->keyBy('CountryID')
+			->keys()
+			->toArray();
 		$rep_office = User::find($trip->hotel_prefer['rep_office']);
-// 		dd($destination);
-// 		dd($estimateExpenses->toArray());
+
+		$hotelList = new EhotelApi();
+		$hotelList=$hotelList->getHotelList();
+		
 		return view('/etravel/trip/nationalEdit',[
 			'userObjMdl'=>$userProfile['userProfile'],
 			'overseas_approver'=>$overseas_approver,
@@ -384,6 +381,8 @@ class TripController extends Controller
 			'rep_office'=>$rep_office,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
 			'ccUser'=>$this->trip->getCcUser($trip),
+			'hotelList'=>$hotelList,
+			'airlineList' => Airline::all(),
 		]);
 	}
 	/**
@@ -483,7 +482,7 @@ class TripController extends Controller
 			$flightData=$request->only(['flight_id','flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
 			$flightData=array_bound_key($flightData);
 // 			dd($flightData);
-			$hotelData=$request->only(['hotel_id','hotel_name','checkin_date','checkout_date','rate']);
+			$hotelData=$request->only(['hotel_id','accomodate_id','hotel_name','checkin_date','checkout_date','rate']);
 // 			dd($hotelData);
 			$hotelData=array_bound_key($hotelData);
 // 			dd($hotelData);
@@ -503,8 +502,8 @@ class TripController extends Controller
 			}
 			foreach ($hotelData as $hotelItem)
 			{
-				if (!empty($hotelItem['hotel_id'])) {
-					Trip_accomodation::find($hotelItem['hotel_id'])->update(array_except($hotelItem, ['hotel_id']));
+				if (!empty($hotelItem['accomodate_id'])) {
+					Trip_accomodation::find($hotelItem['accomodate_id'])->update(array_except($hotelItem, ['accomodate_id']));
 				}else{
 					$trip->accomodation()->create($hotelItem);
 				}

@@ -25,6 +25,7 @@
         <link href="{{ asset('assets/layouts/layout2/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
 <!--         <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css" /> -->
 <!--         <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css" /> -->
+		<link href="{{ asset('assets/global/plugins/jstree/dist/themes/default/style.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/icheck/skins/all.css') }}" rel="stylesheet" type="text/css" />
     
     
@@ -148,7 +149,7 @@
 	<div class="page-wrapper-row full-height">
 			<div class="page-wrapper-middle">
 					<div class="page-content">
-						@yield("content")
+						@yield('content')
 					</div>
 			</div>
 	</div>
@@ -168,6 +169,7 @@ $.ajaxSetup({
 });
 </script>
 </body>
+<script src="{{asset('assets/global/plugins/jstree/dist/jstree.min.js')}}" type="text/javascript"></script>
 </html>
 
 

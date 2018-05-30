@@ -236,7 +236,7 @@
 
 												</li>
 											</ul>
-											<div class="row">
+											<div class="row" style="margin-left: 0px;">
 												
 													
 									<div class="col-md-6">
@@ -466,7 +466,7 @@
 														</div>
 													</li>
 												</ul>
-												<div class="row">
+												<div class="row" style="margin-left: 0px;">
 													
 									<div class="col-md-6">
 										<div class="form-group">
@@ -565,6 +565,7 @@
 @include('etravel.modal.airlineList')
 @include('etravel.modal.newAccommodation')
 @include('etravel.modal.newFlight')
+@include('etravel.modal.hotel')
 <script src="{{asset('/js/etravel/trip/create.js')}}"></script>
 
 @endsection
