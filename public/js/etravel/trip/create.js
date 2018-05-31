@@ -196,11 +196,14 @@ $('.airlineSel').on('change',function(){
 		$('#checkAirlineBtn').on('click',function(){
 			var airlineCode = $("#aircodeSel").find('option:selected').data('code');
 //			alert(airlineCode);
-			$('#flightLtinerary tbody>tr').eq(trInd).find('td').eq(3).html(airlineCode);
+			$('.modal input[name="air_code[]"]').val(airlineCode);
+//			$('#flightLtinerary tbody>tr').eq(trInd).find('td').eq(3).html(airlineCode);
 			$('#airlineList').modal('hide');
 			$('#addNewFlight').modal('show');
 		});
 		
+	}else{
+		$('.modal input[name="air_code[]"]').val('');
 	}
 	
 });

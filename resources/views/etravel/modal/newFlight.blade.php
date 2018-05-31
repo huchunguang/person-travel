@@ -45,12 +45,21 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">Airline/Train</label>
-									<input type="hidden" name="air_code[]" class="form-control"/>
-									<select class="form-control airlineSel" name="airline_or_train" id="airline_or_train" required>
+									<div class="row">
+											
+									<div class="col-md-4" style="padding-right:0;">
+											<input type="text" name="air_code[]" class="form-control" readonly/>
+										</div>
+										<div class="col-md-8" style="padding-left:0;">
+										<select class="form-control select2 airlineSel" name="airline_or_train" id="airline_or_train" required style="display:inline">
 																<option value="">Select...</option>																
 																<option value="1" data-id="">airline</option>
 																<option value="0">train</option>
-									</select>								 
+											</select>
+										</div>
+									</div>
+									
+																	 
 							</div>
 						</div>
 					</div>
@@ -84,7 +93,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">VISA</label>
-								<select class="form-control" name="is_visa" id="is_visa">
+								<select class="form-control select2" name="is_visa" id="is_visa">
 									<option value="1">YES</option>
 									<option value="0">NO</option>
 								</select>

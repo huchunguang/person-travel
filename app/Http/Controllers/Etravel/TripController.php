@@ -165,7 +165,7 @@ class TripController extends Controller
     {
 //     		header("Content-Type: ".Storage::mimeType($savePath));
 //     		echo Storage::get($savePath);
-// 			dd($request->all());
+			dd($request->all());
     		DB::beginTransaction();
     		try {
     			$trip=new Trip;
@@ -204,7 +204,7 @@ class TripController extends Controller
     			$trip->flight_itinerary_prefer=$request->only(['is_sent_affairs','CC']);
     			$trip->hotel_prefer=$request->only(['rep_office','room_type','smoking','foods']);
     			$trip->save();
-    			$flightData=$request->only(['flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
+    			$flightData=$request->only(['air_code','flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
     			$flightData=array_bound_key($flightData);
     			$hotelData=$request->only(['hotel_id','hotel_name','checkin_date','checkout_date','rate']);
     			$hotelData=array_bound_key($hotelData);
@@ -447,6 +447,11 @@ class TripController extends Controller
 	 */
 	public function nationalUpdate(UpdateNationalTripRequest $request,Trip $trip)
 	{
+// 		$test1=$request->input('flight_id');
+// 		$res=$trip->flight()->get(['id'])->toArray();
+// 		$res=array_pluck($res, 'id');
+// 		$res=[6,7];
+// 		dd(array_diff($res, $test1));
 // 		dd($request->all());
 		DB::beginTransaction();
 		try {
@@ -479,7 +484,7 @@ class TripController extends Controller
 				$trip->is_depart_approved='0';
 			}
 			$trip->save();
-			$flightData=$request->only(['flight_id','flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
+			$flightData=$request->only(['air_code','flight_id','flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
 			$flightData=array_bound_key($flightData);
 // 			dd($flightData);
 			$hotelData=$request->only(['hotel_id','accomodate_id','hotel_name','checkin_date','checkout_date','rate']);
@@ -490,24 +495,47 @@ class TripController extends Controller
 			$estimateExpenses=array_bound_key($estimateExpenses);
 			$insuranceData=$request->only(['insurance_id','insurance_type','nominee_name','passport_fullname','nric_no','nric_num','elationship']);
 // 			dd($estimateExpenses);
-			foreach ($flightData as $flightItem)
-			{
-				if (!empty($flightItem['flight_id'])){
-					Trip_flight::find($flightItem['flight_id'])->update(array_except($flightItem, ['flight_id']));
-
-				}else{
-					$trip->flight()->create($flightItem);
+			if ($flightData) {
+				$flightIds=$trip->flight()->get(['id'])->toArray();
+				$flightIds=array_pluck($flightIds, 'id');
+				$reqFlightIds=$request->input('flight_id');
+				if ($reqFlightIds){
+					$diffFlightIds=array_diff($flightIds, $reqFlightIds);
+					if ($diffFlightIds)Trip_flight::whereIn('id',$diffFlightIds)->delete();
 				}
-				
-			}
-			foreach ($hotelData as $hotelItem)
-			{
-				if (!empty($hotelItem['accomodate_id'])) {
-					Trip_accomodation::find($hotelItem['accomodate_id'])->update(array_except($hotelItem, ['accomodate_id']));
-				}else{
-					$trip->accomodation()->create($hotelItem);
+				foreach ($flightData as $flightItem)
+				{
+					if (!empty($flightItem['flight_id'])){
+						Trip_flight::find($flightItem['flight_id'])->update(array_except($flightItem, ['flight_id']));
+					}else{
+						$trip->flight()->create($flightItem);
+					}
+					
 				}
+			}else{
+				Trip_flight::where('trip_id',$trip->trip_id)->delete();
 			}
+			
+			if ($hotelData) {
+				$accomIds=$trip->accomodation()->get(['accomodate_id'])->toArray();
+				$accomIds=array_pluck($accomIds, 'accomodate_id');
+				$reqAccomIds=$request->input('accomodate_id');
+				if ($reqAccomIds){
+					$diffAccomIds=array_diff($accomIds, $reqAccomIds);
+					if ($diffAccomIds)Trip_accomodation::where('accomodate_id',$diffAccomIds)->delete();
+				}
+				foreach ($hotelData as $hotelItem)
+				{
+					if (!empty($hotelItem['accomodate_id'])) {
+						Trip_accomodation::find($hotelItem['accomodate_id'])->update(array_except($hotelItem, ['accomodate_id']));
+					}else{
+						$trip->accomodation()->create($hotelItem);
+					}
+				}
+			}else{
+				Trip_accomodation::where('trip_id',$trip->trip_id)->delete();
+			}
+			
 			foreach ($estimateExpenses as $estimateItem)
 			{
 				if (!empty($estimateItem['estimate_id'])){
