@@ -335,13 +335,14 @@
 													
 													
 													<tr id="tr_{{$flightItem['id']}}" onclick="showFlightItemOperate(this)" data-id="{{$flightItem['id']}}">
+														<input type="hidden" name="air_code[]" value="{{$flightItem['air_code']}}"/>
 														<input type="hidden" name="flight_id[]" value="{{$flightItem['id']}}"/>
      													<td><input type="hidden" name="flight_date[]" value="{{$flightItem['flight_date']}}"/>{{$flightItem['flight_date']}}</td>
      													<td><input type="hidden" name="flight_from[]" value="{{$flightItem['flight_from']}}"/>{{$flightItem['flight_from']}}</td>
      													<td><input type="hidden" name="flight_to[]" value="{{$flightItem['flight_to']}}"/>{{$flightItem['flight_to']}}</td>
      													<td>
      															@if($flightItem['airline_or_train']=='1')
-																 	airline
+																 	airline  {{$flightItem['air_code']}}
 																@else
 																	train
 																@endif

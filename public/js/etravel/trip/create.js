@@ -120,11 +120,95 @@ var FormValidation = function () {
 
     }
 
+    
+    var flightValidate=function(){
+
+        // for more info visit the official plugin documentation: 
+            // http://docs.jquery.com/Plugins/Validation
+
+            var form1 = $('#flightCreate');
+            var error1 = $('#flightCreate .alert-danger', form1);
+            var success1 = $('#flightCreate .alert-success', form1);
+
+            form1.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+//                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",  // validate all fields including form hidden input
+                messages: {
+                    select_multi: {
+                        maxlength: jQuery.validator.format("Max {0} items allowed for selection"),
+                        minlength: jQuery.validator.format("At least {0} items must be selected")
+                    }
+                },
+                rules: {
+                	"flight_date[]":{
+                		required:true,
+                		
+                	},
+                	"flight_from[]": {
+                        required: true
+                    },
+                    "flight_to[]": {
+                        required: true
+                    },
+                    "etd_time[]": {
+                    	required: true
+                    },
+                    "eta_time[][]": {
+                    	required:true
+                    },
+                    "employee_ytd_expenses[]": {
+                    	required:true
+                    },
+                    "available_amount[]": {
+                    	required:true
+                    },
+                    
+                },
+
+                invalidHandler: function (event, validator) { //display error alert on form submit              
+                    success1.hide();
+                    error1.show();
+                    App.scrollTo(error1, -200);
+                },
+
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    var cont = $(element).parent('.input-group');
+                    if (cont.size() > 0) {
+                        cont.after(error);
+                    } else {
+                        element.after(error);
+                    }
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+                    $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
+                },
+
+                success: function (label) {
+                    label.closest('.form-group').removeClass('has-error'); // set success class to the control group
+                },
+                submitHandler: function (form) {
+                    success1.show();
+                    error1.hide();
+                    form.submit();
+                }
+
+            });
+
+
+    
+    }
     return {
         //main function to initiate the module
         init: function () {
             handleValidation1();
-
+            flightValidate();
         }
 
     };
@@ -218,6 +302,9 @@ function addNewAccommodation(){
 	var rate=$('.modal input[name="rate[]"]').val();
 	var checkin_date=$('.modal input[name="checkin_date[]"]').val();
 	var checkout_date=$('.modal input[name="checkout_date[]"]').val();
+	if(hotel_name=='' || checkin_date=='' || checkout_date==''){
+		return false;
+	}	
 	addnewLineNum++;
 
 	 var rowTem = '<tr id="tr_' + addnewLineNum + '" onclick="showHotelItemOperate(this)" data-id="'+ addnewLineNum +'">'
@@ -293,6 +380,7 @@ var addFlightNum = 0;
 function addNewFlight(){
 	var flight_date=$('.modal input[name="flight_date[]"]').val();
 	var flight_from=$('.modal input[name="flight_from[]"]').val();
+	var air_code=$('.modal input[name="air_code[]"]').val();
 	var flight_to=$('.modal input[name="flight_to[]"]').val();
 	var etd_time=$('.modal input[name="etd_time[]"]').val();
 	var eta_time=$('.modal input[name="eta_time[]"]').val();
@@ -301,13 +389,16 @@ function addNewFlight(){
 	var class_flight=$('.modal input[name="class_flight[]"]').val();
 	var is_visa=$('.modal #is_visa').val();
 	var is_visa_text=$('.modal #is_visa').find('option:selected').text();
+	if(flight_date=='' || flight_from=='' || flight_to==''){
+		return false;
+	}
 	addFlightNum++;
 
 	 var rowTem = '<tr id="tr_' + addFlightNum + '" onclick="showFlightItemOperate(this)" data-id="'+ addFlightNum +'">'
-     + '<td><input type="hidden" name="flight_date[]" value="'+flight_date+'"/>'+flight_date+'</td>'
+     + '<td><input type="hidden" name="air_code[]" value="'+air_code+'"/><input type="hidden" name="flight_date[]" value="'+flight_date+'"/>'+flight_date+'</td>'
      + '<td><input type="hidden" name="flight_from[]" value="'+flight_from+'"/>'+flight_from+'</td>'
      + '<td><input type="hidden" name="flight_to[]" value="'+flight_to+'"/>'+flight_to+'</td>'
-     + '<td><input type="hidden" name="airline_or_train[]" value="'+airline_or_train+'"/>'+airline_or_train_text+'</td>'
+     + '<td><input type="hidden" name="airline_or_train[]" value="'+airline_or_train+'"/>'+airline_or_train_text+'  '+air_code+'</td>'
      + '<td><input type="hidden" name="etd_time[]" value="'+etd_time+'"/>'+etd_time+'</td>'
      + '<td><input type="hidden" name="eta_time[]" value="'+eta_time+'"/>'+eta_time+'</td>'
      + '<td><input type="hidden" name="class_flight[]" value="'+class_flight+'"/>'+class_flight+'</td>'
@@ -316,10 +407,10 @@ function addNewFlight(){
 	 var editId=$('.modal input[name="tr_id"]').val();
 	 if(editId){
 		 var flight_id=$('#tr_'+editId+' input[name="flight_id[]"]').val();
-		 rowTem = '<td><input type="hidden" name="flight_id[]" value="'+flight_id+'"/><input type="hidden" name="flight_date[]" value="'+flight_date+'"/>'+flight_date+'</td>'
+		 rowTem = '<td><input type="hidden" name="flight_id[]" value="'+flight_id+'"/><input type="hidden" name="air_code[]" value="'+air_code+'"/><input type="hidden" name="flight_date[]" value="'+flight_date+'"/>'+flight_date+'</td>'
 	     + '<td><input type="hidden" name="flight_from[]" value="'+flight_from+'"/>'+flight_from+'</td>'
 	     + '<td><input type="hidden" name="flight_to[]" value="'+flight_to+'"/>'+flight_to+'</td>'
-	     + '<td><input type="hidden" name="airline_or_train[]" value="'+airline_or_train+'"/>'+airline_or_train_text+'</td>'
+	     + '<td><input type="hidden" name="airline_or_train[]" value="'+airline_or_train+'"/>'+airline_or_train_text+'  '+air_code+'</td>'
 	     + '<td><input type="hidden" name="etd_time[]" value="'+etd_time+'"/>'+etd_time+'</td>'
 	     + '<td><input type="hidden" name="eta_time[]" value="'+eta_time+'"/>'+eta_time+'</td>'
 	     + '<td><input type="hidden" name="class_flight[]" value="'+class_flight+'"/>'+class_flight+'</td>'
@@ -330,15 +421,20 @@ function addNewFlight(){
 	 }else{
 		 $("#flightLtinerary tbody:last").append(rowTem);
 	 }
+	 $('#airline_or_train option:selected').val('')
 	 $('#addNewFlight').modal("hide");
 }
 
 $('#addNewFlight').on('hide.bs.modal', function () {
-	$('.modal input').val('');
+	var isAirline = $('#airline_or_train option:selected').val();
+	if(!isAirline){
+		$('.modal input').val('');
+	}
 });
 function editFlight()
 {
 	var id=$('.prepareDelTr').data('id');
+	var air_code=$('#tr_'+id+' input[name="air_code[]"]').val();
 	var flight_id=$('#tr_'+id+' input[name="flight_id[]"]').val();
 	var flight_date=$('#tr_'+id+' input[name="flight_date[]"]').val();
 	var flight_from=$('#tr_'+id+' input[name="flight_from[]"]').val();
@@ -349,6 +445,7 @@ function editFlight()
 	var airline_or_train=$('#tr_'+id+' input[name="airline_or_train[]"]').val();
 	var is_visa=$('#tr_'+id+' input[name="is_visa[]"]').val();
 	
+	$('.modal input[name="air_code[]"]').val(air_code);
 	$('.modal input[name="flight_id[]"]').val(flight_id);
 	$('.modal input[name="flight_date[]"]').val(flight_date);
 	$('.modal input[name="flight_from[]"]').val(flight_from);

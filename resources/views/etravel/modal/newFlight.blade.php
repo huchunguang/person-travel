@@ -49,6 +49,7 @@
 											
 									<div class="col-md-4" style="padding-right:0;">
 											<input type="text" name="air_code[]" class="form-control" readonly/>
+											
 										</div>
 										<div class="col-md-8" style="padding-left:0;">
 										<select class="form-control select2 airlineSel" name="airline_or_train" id="airline_or_train" required style="display:inline">
@@ -107,7 +108,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" onclick="addNewFlight()">Save</button>
+				<button type="submit" class="btn btn-primary" onclick="addNewFlight()">Save</button>
 			</div>
 		</div>
 	</div>

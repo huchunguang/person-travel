@@ -165,7 +165,7 @@ class TripController extends Controller
     {
 //     		header("Content-Type: ".Storage::mimeType($savePath));
 //     		echo Storage::get($savePath);
-			dd($request->all());
+// 			dd($request->all());
     		DB::beginTransaction();
     		try {
     			$trip=new Trip;
@@ -224,7 +224,7 @@ class TripController extends Controller
     			{
     				$trip->estimateExpense()->create($estimateItem);
     			}
-    			if($insuranceData){
+    			if($insuranceData['insurance_type']){
     				$trip->insurance()->create($insuranceData);
     			}
     			DB::commit();
