@@ -267,7 +267,7 @@
 													
 												</li>
 												
-												@if($ccUser)
+												@if($trip->cc)
 												<li class="list-group-item">
 													<div class="row">
 														<div class="col-md-6">
@@ -275,8 +275,13 @@
 																<label class="control-label">CC</label> 
 																
 																<select name="CC" class="form-control select2" multiple>
-																@foreach($ccUser as $item)
-																	<option value="{{$item['Email']}}" selected>{{$item['LastName']}} {{$item['FirstName']}}</option>
+																@foreach($userList as $user)
+																	@if(in_array($user['Email'],$trip->cc))
+																	<option value="{{$user['Email']}}" selected>
+																	@else
+																	<option value="{{$user['Email']}}">
+																	@endif
+																	{{$user['LastName']}} {{$user['FirstName']}}</option>
 																@endforeach
 																</select>
 															</div>

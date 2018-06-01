@@ -286,6 +286,7 @@ class TripController extends Controller
 	 */
 	public function tripNationalDetails(TripReadRequest $request,Trip $trip) 
 	{
+// 		dd($trip->cc);
 		$overseas_approver=[];
 		$userObjMdl = User::where('UserID',$trip->user_id)->firstOrFail();
 		if ($trip->overseas_approver){
@@ -297,12 +298,10 @@ class TripController extends Controller
 		$flightData=$trip->flight()->get();
 		$insuranceData=$trip->insurance()->first();
 // 		dd($trip->overseasApprover()->first()['FirstName']);
-// 		dd($trip->destination_id);
 		$destination=Country::whereIn('CountryID',$trip->destination_id)->get();
 		$rep_office = User::find($trip->hotel_prefer['rep_office']);
 // 		dd($destination->toArray());
 // 		dd($trip->purpose_file);
-// 		dd($destination);
 		return view('/etravel/trip/tripNationalDetail', [
 			'userObjMdl'=>$userObjMdl,
 			'trip' => $trip,
@@ -315,7 +314,8 @@ class TripController extends Controller
 			'destination' => $destination,
 			'rep_office' => $rep_office,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
-			'ccUser' => $this->trip->getCcUser($trip)
+			'cc' => $trip->cc,
+			
 		]);
 	}
 
@@ -344,6 +344,7 @@ class TripController extends Controller
 	public function nationalEdit(EditNationalRequest $request,Trip $trip)
 	{
 		$overseas_approver=[];
+		$userList = User::all(['Email','FirstName','LastName']);
 		$userProfile=User::getUserProfile();
 		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
 		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
@@ -362,7 +363,6 @@ class TripController extends Controller
 
 		$hotelList = new EhotelApi();
 		$hotelList=$hotelList->getHotelList();
-		
 		return view('/etravel/trip/nationalEdit',[
 			'userObjMdl'=>$userProfile['userProfile'],
 			'overseas_approver'=>$overseas_approver,
@@ -380,9 +380,10 @@ class TripController extends Controller
 			'trip'=>$trip,
 			'rep_office'=>$rep_office,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
-			'ccUser'=>$this->trip->getCcUser($trip),
+// 			'ccUser'=>$this->trip->getCcUser($trip)->toArray(),
 			'hotelList'=>$hotelList,
 			'airlineList' => Airline::all(),
+			'userList'=>$userList,
 		]);
 	}
 	/**

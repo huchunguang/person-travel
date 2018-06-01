@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => '', 'name' => 'Arkema-ETravel'],
+	'from' => ['address' => 'arkema-etravel@arkema.com', 'name' => 'Arkema-ETravel'],
 
 	/*
 	|--------------------------------------------------------------------------

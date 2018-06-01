@@ -215,7 +215,7 @@
 													 </label>
 													
 												</li>
-												@if($ccUser)
+												@if($cc)
 												<li class="list-group-item">
 													<div class="row">
 														<div class="col-md-6">
@@ -223,8 +223,8 @@
 																<label class="control-label">CC</label> 
 																
 																<select name="CC" class="form-control select2" disabled multiple>
-																@foreach($ccUser as $item)
-																	<option value="{{$item['Email']}}" selected>{{$item['LastName']}} {{$item['FirstName']}}</option>
+																@foreach($cc as $item)
+																	<option value="{{$item}}" selected>{{$item}}</option>
 																@endforeach
 																</select>
 															</div>

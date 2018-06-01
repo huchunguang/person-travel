@@ -109,6 +109,7 @@ class ApproverController extends Controller {
 	public function approval(Request $request,Trip $trip) 
 	{
 		$status= $request->input('status');
+		$trip->update(['approver_comment'=>$request->input('approver_comment')]);
 // 		dd($request->all());
 		switch ($status){
 			case 'approved':
