@@ -46,7 +46,7 @@
 										<div class="form-group">
 											<label class="control-label">Name Of Traveller</label> <input
 												disabled type="text" class="form-control"
-												placeholder="{{ $userObjMdl->FirstName }}">
+												placeholder="{{ $userProfile['FirstName'] }} {{ $userProfile['LastName'] }}-{{ $userProfile['UserName'] }}">
 										</div>
 									</div>
 									<!--/span-->
@@ -268,9 +268,7 @@
 									<div class="col-md-12 ">
 										<div class="form-group">
 											<label>Approver Comments</label>
-											<textarea name="approver_comment"
-									class="form-control leave-control" style="overflow-y: scroll;" disabled
-									rows="2">{{ $trip->approver_comment }}</textarea>
+											<textarea name="approver_comment" class="form-control" style="overflow-y: scroll;" disabled rows="2">{{$trip->approver_comment}}</textarea>
 										</div>
 									</div>
 

@@ -18,7 +18,7 @@
 										class="control-label col-md-4 text-right">NAME OF TRAVELLER:</label>
 									<div class="col-md-7">
 										<div id="TravellerName">
-											<span class="label label-default label-lg">{{ $userProfile['FirstName'] }}</span>
+											<span class="label label-default label-lg">{{ $userProfile['FirstName'] }} {{ $userProfile['LastName'] }}-{{ $userProfile['UserName'] }}</span>
 										</div>
 									</div>
 								</div>

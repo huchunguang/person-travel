@@ -358,7 +358,11 @@ function showHotelItemOperate(obj){
 	thisObj.siblings().removeClass('prepareDelTr').removeClass('warning');
 	thisObj.toggleClass('prepareDelTr').toggleClass('warning');
 	$('#itemDelBut').prop('disabled',!$('.prepareDelTr').length);
-	$('#itemEditBut').prop('disabled',!$('.prepareDelTr').length);
+	if($('.prepareDelTr').length===1){
+		$('#itemEditBut').prop('disabled',false);
+	}else{
+		$('#itemEditBut').prop('disabled',true);
+	}
 }
 function delHotelItem(){
 	$('.prepareDelTr').remove();
@@ -386,7 +390,8 @@ function addNewFlight(){
 	var eta_time=$('.modal input[name="eta_time[]"]').val();
 	var airline_or_train=$('.modal #airline_or_train').val();
 	var airline_or_train_text=$('.modal #airline_or_train').find('option:selected').text();
-	var class_flight=$('.modal input[name="class_flight[]"]').val();
+	var class_flight=$('.modal #classFlightSel option:selected').val();
+	alert(class_flight)
 	var is_visa=$('.modal #is_visa').val();
 	var is_visa_text=$('.modal #is_visa').find('option:selected').text();
 	if(flight_date=='' || flight_from=='' || flight_to==''){
@@ -452,8 +457,8 @@ function editFlight()
 	$('.modal input[name="flight_to[]"]').val(flight_to);
 	$('.modal input[name="etd_time[]"]').val(etd_time);
 	$('.modal input[name="eta_time[]"]').val(eta_time);
-	$('.modal input[name="class_flight[]"]').val(class_flight);
-	$('.modal input[name="class_flight[]"]').val(class_flight);
+//	$('.modal input[name="class_flight[]"]').val(class_flight);
+	$('.modal #classFlightSel option[value="'+class_flight+'"]').attr("select","selected");
 	$('.modal #airline_or_train option[value="'+airline_or_train+'"]').attr("select","selected");
 	$('.modal #is_visa option[value="'+is_visa+'"]').attr("select","selected");
 	
@@ -466,7 +471,11 @@ function showFlightItemOperate(obj){
 	thisObj.siblings().removeClass('prepareDelTr').removeClass('warning');
 	thisObj.toggleClass('prepareDelTr').toggleClass('warning');
 	$('#flightDelBut').prop('disabled',!$('.prepareDelTr').length);
-	$('#flightEditBut').prop('disabled',!$('.prepareDelTr').length);
+	if($('.prepareDelTr').length===1){
+		$('#flightEditBut').prop('disabled',false);
+	}else{
+		$('#flightEditBut').prop('disabled',true);
+	}
 }
 function delFlightItem(){
 	$('.prepareDelTr').remove();

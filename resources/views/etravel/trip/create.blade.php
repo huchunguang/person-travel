@@ -29,7 +29,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Name Of Traveller</label> 
-											<input type="text" class="form-control" placeholder="{{ $userProfile['FirstName'] }}" disabled>
+											<input type="text" class="form-control" placeholder="{{ $userProfile['FirstName'] }} {{ $userProfile['LastName'] }}-{{ $userProfile['UserName'] }}" disabled>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -107,6 +107,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Project Code</label>
+											
 											<select id="project_code" name="project_code" class="form-control">
 												<option value="">Select...</option>
 												@if($wbscodeList)
@@ -123,9 +124,11 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-3" style="padding-right:0;">
 										<div class="form-group">
-											<label class="control-label">Department Approver</label> 
+											<p style="margin-bottom: 0px;">
+												<label class="control-label">Department Approver</label>
+											</p> 
 											<select id="department_approver" name="department_approver" class="form-control input-sm select2">
 												@foreach ($approvers as $item)
 												@if($item['UserID'] == old('department_approver'))
@@ -137,6 +140,21 @@
 												</option> 
 												@endforeach
 											</select>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label class="control-label">Add'l Notification</label>
+											<div class="row" style="background-color:#eef1f5;margin-left:1px;height: 34px;margin-right:1px;">
+												<div class="col-md-8" style="margin-top: 10px;">											
+													<span class="icon icon-user-tie"></span> 
+													{{ isset($currentUser->manager()->first()->LastName)? $currentUser->manager()->first()->LastName :'' }}
+													{{ isset($currentUser->manager()->first()->FirstName)? $currentUser->manager()->first()->FirstName :'' }}
+												</div>
+												<div class="col-md-4">
+													<input type="text" class="form-control" disabled style="border: none;"/>
+												</div>
+											</div>
 										</div>
 									</div>
 									<div class="col-md-6">

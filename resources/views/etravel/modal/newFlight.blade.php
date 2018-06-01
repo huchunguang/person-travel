@@ -70,13 +70,13 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">ETD</label>
-								<input type="text" name="etd_time[]"class="form-control timepicker timepicker-default time-input" placeholder="">
+								<input type="text" name="etd_time[]"class="form-control" placeholder="">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">ETA</label>
-								<input type="text" name="eta_time[]"class="form-control timepicker timepicker-default time-input" placeholder="">
+								<input type="text" name="eta_time[]"class="form-control" placeholder="">
 							</div>
 						</div>
 					
@@ -88,7 +88,14 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">Class Fight</label>
-								<input type="text" name="class_flight[]" id="" class="form-control"/>
+								<select class="form-control select2" name="class_flight[]" id="classFlightSel" required style="display:inline">
+									<option value="">Select...</option>																
+									<option value="Economy">Economy</option>
+									<option value="Economy Plus">Economy Plus</option>
+									<option value="Business Class">Business Class</option>
+									<option value="First Class">First Class</option>
+								</select>
+<!-- 								<input type="text" name="class_flight[]" id="" class="form-control"/> -->
 							</div>
 						</div>
 						<div class="col-md-6">

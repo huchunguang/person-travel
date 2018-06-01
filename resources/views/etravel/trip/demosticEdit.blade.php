@@ -44,7 +44,7 @@
 										<div class="form-group">
 											<label class="control-label">Name Of Traveller</label> <input
 												disabled type="text" class="form-control"
-												placeholder="{{ $userObjMdl->FirstName }}">
+												placeholder="{{ $userProfile['FirstName'] }} {{ $userProfile['LastName'] }}-{{ $userProfile['UserName'] }}">
 										</div>
 									</div>
 									<!--/span-->
