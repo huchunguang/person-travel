@@ -265,7 +265,7 @@
 														</td>
 														<td>
 															@if($flightItem['airline_or_train']=='1')
-															Airline
+															Airline  {{$flightItem['air_code']}}
 															@elseif($flightItem['airline_or_train']=='0')
 															Train
 															@endif
