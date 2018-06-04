@@ -202,6 +202,23 @@
 											</select>
 										</div>
 									</div>
+									<div class="col-md-6">
+										
+										<div class="form-group">
+											<label class="control-label">Add'l Notification</label>
+											<div class="row" style="background-color:#eef1f5;margin-left:1px;height: 34px;margin-right:1px;">
+												<div class="col-md-8" style="margin-top: 10px;">											
+													<span class="icon icon-user-tie"></span> 
+													{{ isset($currentUser->manager()->first()->LastName)? $currentUser->manager()->first()->LastName :'' }}
+													{{ isset($currentUser->manager()->first()->FirstName)? $currentUser->manager()->first()->FirstName :'' }}
+												</div>
+												<div class="col-md-4">
+													<input type="text" class="form-control" disabled style="border: none;"/>
+												</div>
+											</div>
+										</div>
+									
+									</div>
 								</div>
 
 								<div class="row">

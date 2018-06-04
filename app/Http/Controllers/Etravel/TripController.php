@@ -8,7 +8,6 @@ use App\Department_approver;
 use App\Trip;
 use App\Trip_purpose;
 use Illuminate\Support\Facades\Event;
-
 use Illuminate\Support\Facades\Auth;
 use App\Costcenter;
 use Illuminate\Support\Facades\DB;
@@ -48,21 +47,36 @@ class TripController extends Controller
      */
     public function create(Request $requset) 
     {
-    		$userList = User::all(['Email','FirstName','LastName']);
-    		$userProfile=User::getUserProfile();
-    		$countryList = Country::orderBy('Country')->select(['CountryID','Country','RegionID'])->get();
-    		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
-    		$airlineList = Airline::all();
-    		$hotelList = new EhotelApi();
-    		$hotelList=$hotelList->getHotelList();
-    		return view('/etravel/trip/create')->with('userProfile', $userProfile['userProfile'])
+		$userList = User::all([ 
+			
+			'Email',
+			'FirstName',
+			'LastName'
+		]);
+		$userProfile = User::getUserProfile();
+		$countryList = Country::orderBy('Country')->select([ 
+			
+			'CountryID',
+			'Country',
+			'RegionID'
+		])->get();
+		$purposeCategory = Trip_purpose::all([ 
+			
+			'purpose_id',
+			'purpose_catgory'
+		]);
+		$airlineList = Airline::all();
+		$hotelList = new EhotelApi();
+		$hotelList = $hotelList->getHotelList();
+		return view('/etravel/trip/create')->with('userProfile', $userProfile['userProfile'])
 			->with('approvers', $userProfile['approvers'])
 			->with('purposeCats', $purposeCategory)
 			->with('costCenters', Costcenter::getAvailableCenters())
-			->with('countryList',$countryList)
+			->with('countryList', $countryList)
 			->with('approvers', $userProfile['approvers'])
-    		->with('airlineList',$airlineList)
-    		->with('userList',$userList)->with('hotelList',$hotelList);
+			->with('airlineList', $airlineList)
+			->with('userList', $userList)
+			->with('hotelList', $hotelList);
 	}
     /**
      * @brief create demostic trip
@@ -99,22 +113,21 @@ class TripController extends Controller
      */
     public function store(Request $request) 
     {
-    		$rules=[
-    				'cost_center_id'=>'required',
-    				'daterange_from'=>'required',
-    				'daterange_to'=>'required',
-    				'datetime_date'=>'required',
-    				'datetime_time'=>'required',
-    				'location'=>'required',
-    				'customer_name'=>'required',
-    				'contact_name'=>'required',
-    				'purpose_desc'=>'required',
-    				'department_approver'=>'required|integer',
-    				'project_code'=>'required',
-    		];
-    		$this->validate($request, $rules);
+    	$rules = [ 
+			'cost_center_id' => 'required',
+			'daterange_from' => 'required',
+			'daterange_to' => 'required',
+			'datetime_date' => 'required',
+			'datetime_time' => 'required',
+			'location' => 'required',
+			'customer_name' => 'required',
+			'contact_name' => 'required',
+			'purpose_desc' => 'required',
+			'department_approver' => 'required|integer',
+			'project_code' => 'required'
+		];
+    	$this->validate($request, $rules);
 		$tripData = $request->only([ 
-			
 			'cost_center_id',
 			'daterange_from',
 			'daterange_to',
@@ -123,11 +136,7 @@ class TripController extends Controller
 			'approver_comment',
 			'project_code'
 		]);
-		$tripData = array_merge($tripData, [ 
-			
-			'user_id' => Auth::user()->UserID,
-			'trip_type' => 2
-		]);
+		$tripData = array_merge($tripData, ['user_id' => Auth::user()->UserID,'trip_type' => 2]);
 		$demosticData = array_bound_key($request->only([ 
 			
 			'datetime_date',
