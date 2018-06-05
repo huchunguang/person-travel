@@ -304,7 +304,7 @@
                             <tr>
                               <td class="mini-block" style="text-align: center;">
                                 <span class="header-sm">Reference #:</span><br />
-                                {{$trip->trip_id}} <br />
+                                {{$trip->reference_id}} <br />
 
                                 <span class="header-sm">Date From:</span><br />
                                 {{$trip->daterange_from}} to {{$trip->daterange_to}}  <br />

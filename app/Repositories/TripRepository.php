@@ -26,7 +26,8 @@ class TripRepository extends Repository
 	}	
 	public function generateRef()
 	{
-		$counterNum = Trip_counter::where('year',Carbon::now()->year)->where('company_id',Auth::user()->CompanyID)->first()->total_number?:0;
+		$tripCounter=Trip_counter::where('year',Carbon::now()->year)->where('company_id',Auth::user()->CompanyID)->first();
+		$counterNum = $tripCounter?$tripCounter->total_number:0;
 		return auto_generate_ref($counterNum);
 	}
 	public function getCcUser(Trip $trip){
