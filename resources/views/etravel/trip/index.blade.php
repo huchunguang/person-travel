@@ -83,7 +83,7 @@ use App\User;
                                             
 												@foreach($tripList as $item)
 													<tr class='rowhover'>
-														<td>{{ $item['trip_id'] }}</td>
+														<td>{{ $item['reference_id'] }}</td>
 														<td>{{ $item['daterange_from'] }}</td>
 														<td>{{ $item['daterange_to'] }}</td>
 														<td><?php echo Costcenter::find($item['cost_center_id'])['CostCenterCode'];?></td>

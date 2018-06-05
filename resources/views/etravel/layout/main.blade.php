@@ -144,7 +144,9 @@
 
 <body class="page-container-bg-solid page-header-menu-fixed">
 <div class="page-wrapper">
+@if(Auth::check())
 	@include('etravel.layout.header')
+@endif
 <div style="background-color: rgba(165,163,163,0.07);" class="page-wrapper">
 	<div class="page-wrapper-row full-height">
 			<div class="page-wrapper-middle">

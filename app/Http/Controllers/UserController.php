@@ -88,7 +88,7 @@ class UserController extends Controller {
 		$res = User::where('FirstName','like','%'.$query.'%')->paginate(PAGE_SIZE);
 		foreach ($res as $item){
 			$item->id=$item->UserID;
-			$item->text=$item->FirstName;
+			$item->text=$item->LastName.' '.$item->FirstName;
 		}
 // 		dd($res->toArray());
 		return response()->json($res->toArray());	

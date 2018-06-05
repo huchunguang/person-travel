@@ -62,9 +62,9 @@ var FormValidation = function () {
                 	daterange_from: {
                         required: true
                     },
-                    extra_comment: {
-                        required: true
-                    },
+//                    extra_comment: {
+//                        required: true
+//                    },
                     project_code: {
                     	required: true
                     },
@@ -272,16 +272,16 @@ jQuery(document).ready(function() {
 		});
 });
 $('.airlineSel').on('change',function(){
+	
 	var selVal=$(this).val();
+//	alert(selVal);
 	if(selVal == '1'){
-		var trInd=$(this).closest("tr").index();
 		$('#addNewFlight').modal('hide');
 		$('#airlineList').modal('show');
 		$('#checkAirlineBtn').on('click',function(){
 			var airlineCode = $("#aircodeSel").find('option:selected').data('code');
 //			alert(airlineCode);
 			$('.modal input[name="air_code[]"]').val(airlineCode);
-//			$('#flightLtinerary tbody>tr').eq(trInd).find('td').eq(3).html(airlineCode);
 			$('#airlineList').modal('hide');
 			$('#addNewFlight').modal('show');
 		});
@@ -391,7 +391,7 @@ function addNewFlight(){
 	var airline_or_train=$('.modal #airline_or_train').val();
 	var airline_or_train_text=$('.modal #airline_or_train').find('option:selected').text();
 	var class_flight=$('.modal #classFlightSel option:selected').val();
-	alert(class_flight)
+//	alert(class_flight)
 	var is_visa=$('.modal #is_visa').val();
 	var is_visa_text=$('.modal #is_visa').find('option:selected').text();
 	if(flight_date=='' || flight_from=='' || flight_to==''){
@@ -426,13 +426,18 @@ function addNewFlight(){
 	 }else{
 		 $("#flightLtinerary tbody:last").append(rowTem);
 	 }
-	 $('#airline_or_train option:selected').val('')
+	 $('.modal #modalFlag').val('1');
+//	 $('#airline_or_train option:selected').val('')
 	 $('#addNewFlight').modal("hide");
 }
 
 $('#addNewFlight').on('hide.bs.modal', function () {
-	var isAirline = $('#airline_or_train option:selected').val();
-	if(!isAirline){
+//	var isAirline = $('#airline_or_train option:selected').val();
+//	if(isAirline!='1' && isAirline!='0'){
+//		$('.modal input').val('');
+//	}
+	var flag = $('.modal #modalFlag').val();
+	if(flag){
 		$('.modal input').val('');
 	}
 });

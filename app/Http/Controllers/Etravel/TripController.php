@@ -34,6 +34,7 @@ use Illuminate\Mail\Message;
 use App\Events\TripNotify;
 use App\Repositories\TripRepository;
 use App\Http\Apis\Classes\EhotelApi;
+use App\Trip_counter;
 
 class TripController extends Controller
 {
@@ -68,6 +69,7 @@ class TripController extends Controller
 		$airlineList = Airline::all();
 		$hotelList = new EhotelApi();
 		$hotelList = $hotelList->getHotelList();
+		dd($hotelList);
 		return view('/etravel/trip/create')->with('userProfile', $userProfile['userProfile'])
 			->with('approvers', $userProfile['approvers'])
 			->with('purposeCats', $purposeCategory)
@@ -155,10 +157,12 @@ class TripController extends Controller
 			$tripData['country_id']=$this->system->CountryAssignedID;
 			$tripData['site_id']=$this->system->SiteID;
 			$tripData['company_id']=$this->system->CompanyID;
+			$tripData['reference_id']=$this->trip->generateRef();
 			$tripObjMdl = Trip::create($tripData);
 			foreach ($demosticData as $item){
 				$tripObjMdl->demostic()->create($item);
 			}
+			Trip_counter::updateSeries();
 			Event::fire(new TripNotify($tripObjMdl, $request, 'Domestic Trip Created'));
 		});
 		
@@ -179,6 +183,7 @@ class TripController extends Controller
     		try {
     			$trip=new Trip;
     			$trip->trip_type=1;
+    			$trip->reference_id=$this->trip->generateRef();
     			$trip->cc=$request->input('cc');
     			$trip->user_id=Auth::user()->UserID;
     			$trip->department_id=$this->system->DepartmentID;
@@ -236,6 +241,7 @@ class TripController extends Controller
     			if($insuranceData['insurance_type']){
     				$trip->insurance()->create($insuranceData);
     			}
+    			Trip_counter::updateSeries();
     			DB::commit();
     			Event::fire(new TripNotify($trip, $request, 'National Trip Created'));
     			return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
@@ -457,11 +463,6 @@ class TripController extends Controller
 	 */
 	public function nationalUpdate(UpdateNationalTripRequest $request,Trip $trip)
 	{
-// 		$test1=$request->input('flight_id');
-// 		$res=$trip->flight()->get(['id'])->toArray();
-// 		$res=array_pluck($res, 'id');
-// 		$res=[6,7];
-// 		dd(array_diff($res, $test1));
 // 		dd($request->all());
 		DB::beginTransaction();
 		try {

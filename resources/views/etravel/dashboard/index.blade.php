@@ -301,11 +301,21 @@
 				
 			</div>
 			<div class="portlet-body">
-				<div class="panel-default">
-					<div class="panel-heading">
-                                        <h4 class="panel-title">
-                                                <a class="accordion-toggle" href="staff/travellist?status=pending"> Pending for my Approval</a>
-                                        </h4>
+				<div class="portlet box blue-soft">
+					<div class="portlet-title">
+						<div class="caption">
+                           	<i class="fa fa-database"></i>
+                           	<div style="display: inline-block;">
+                           	<lable style="width:20px;background-color:grey;border-radius:50%;border:2px solid grey;background-clip:content-box;padding:1px;">
+                           	{{ isset($staffTripList['pending'])?sprintf('%02d',count($staffTripList['pending'])):'00' }}
+                           	</label>
+                           	</div>
+                           	<div style="display: inline-block;">
+                           		<a class="accordion-toggle" href="staff/travellist?status=pending" style="color: white;"> Pending for my Approval</a>
+                           	</div>
+                           	
+                       </div>
+                    	
                     </div>
 				</div>
 			</div>

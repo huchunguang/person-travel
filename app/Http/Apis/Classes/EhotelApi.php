@@ -4,7 +4,6 @@ use GuzzleHttp\Client;
 use phpDocumentor\Reflection\Types\Array_;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Log;
-
 //author: vicS
 //API token generator and validator
 
@@ -104,7 +103,7 @@ class EhotelApi
 						if (isset($v['city'])) {
 							$value[$v['city']][]=$v;
 							$arr[$key][$v['city']][]=$v;
-							unset($arr[$key][$k]);
+							unset($arr[x][$k]);
 						}
 						
 						unset($value[$k]);

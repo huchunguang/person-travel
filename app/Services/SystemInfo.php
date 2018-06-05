@@ -11,8 +11,9 @@ class SystemInfo implements SystemVariable{
 	public $user_id='';
 	public function __construct() 
 	{
-		$this->user_id=Auth::user()->UserID;
-		
+		if (Auth::check()){
+			$this->user_id=Auth::user()->UserID;
+		}
 	}
 	/**
 	 * {@inheritDoc}

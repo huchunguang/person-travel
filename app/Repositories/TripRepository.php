@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Country;
 use PhpParser\Builder\FunctionTest;
 use App\User;
+use App\Trip_counter;
+use Carbon\Carbon;
 
 class TripRepository extends Repository
 {
@@ -22,6 +24,11 @@ class TripRepository extends Repository
 	{
 		return 'App\Trip';
 	}	
+	public function generateRef()
+	{
+		$counterNum = Trip_counter::where('year',Carbon::now()->year)->where('company_id',Auth::user()->CompanyID)->first()->total_number?:0;
+		return auto_generate_ref($counterNum);
+	}
 	public function getCcUser(Trip $trip){
 		if ($trip->cc){
 			$cc = User::whereIn('Email',$trip->cc)->get();

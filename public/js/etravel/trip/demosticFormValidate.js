@@ -28,9 +28,9 @@
 	                    daterange_to: {
 	                        required: true
 	                    },
-	                    extra_comment: {
-	                        required: true
-	                    },
+//	                    extra_comment: {
+//	                        required: true
+//	                    },
 	                    project_code: {
 	                    	required: true
 	                    },

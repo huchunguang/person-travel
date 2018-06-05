@@ -10,6 +10,7 @@
 			<div class="modal-body">
 				<form action="#" method="post" class="horizontal-form" id="flightCreate">
 					<input type="hidden" name="tr_id" value=""/>
+					<input type="hidden" name="modalFlag" id="modalFlag"/>
 					<div class="alert alert-danger display-hide">
 						<button class="close" data-close="alert"></button>
 						You have some form errors. Please check below.

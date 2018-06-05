@@ -28,7 +28,7 @@ class TriplistController extends AdminController
 // 			dd($tripList->toArray());
 		}
 		if ($request->isMethod('get')){
-			$tripList=Trip::paginate(PAGE_SIZE);
+			$tripList=Trip::whereBetween('daterange_from',[Carbon::now()->subDays(30)->format('m/d/Y'),Carbon::today()->format('m/d/Y')])->paginate(PAGE_SIZE);
 		}
 		return view('/etravel/admin/triplist/index', compact('countryList', 'siteList', 'companyList','departmentList','breadcrumb','tripList','status'));
 	}
