@@ -1,25 +1,26 @@
 $('#destinationSel').on('change',function(){
-	var countryId=$('#destinationSel option:selected').map(function(){
+	var countryIds=[];
+	$('#destinationSel option:selected').map(function(){
 		var regionId=$(this).data('region');
-			if(regionId!='6'){
-				//此处配置亚太地区ID
-				return $(this).val();
-			}
-		}).get();
-	if(countryId){
-		$.get('/etravel/approver?countryId='+countryId,function(data){
-			var overseasOptions='';
-			$.each(data,function(ind,val){
-				overseasOptions+='<option value="'+val.UserID+'">'+val.FirstName+'</option>';
+		countryIds.push(regionId);
+	});
+	if(countryIds.length!=0){
+		if($.inArray('',countryIds)>=0||$.inArray(1,countryIds)>=0||$.inArray(2,countryIds)>=0||$.inArray(3,countryIds)>=0||$.inArray(4,countryIds)>=0||$.inArray(5,countryIds)>=0){
+			$.get('/etravel/approver',function(data){
+				var overseasOptions='';
+				$.each(data,function(ind,val){
+					overseasOptions+='<option value="'+val.UserID+'">'+val.FirstName+'</option>';
+				});
+				if(overseasOptions!=''){
+					$('#overseas_approver').attr('disabled',false).empty().append(overseasOptions);
+				}
+				
 			});
-			if(overseasOptions!=''){
-				$('#overseas_approver').attr('disabled',false).empty().append(overseasOptions);
-			}
-			
-		});
-//		alert(countryId);
+		}else{
+			$('#overseas_approver').attr('disabled',true);
+		}
 	}else{
-		$overseas_approver.attr('disabled',true);
+		$('#overseas_approver').attr('disabled',true);
 	}
 	
 });
