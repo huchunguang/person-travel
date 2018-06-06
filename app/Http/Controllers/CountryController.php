@@ -5,8 +5,9 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Country;
+use App\Http\Controllers\Etravel\Admin\AdminController;
 
-class CountryController extends Controller {
+class CountryController extends AdminController {
 
 	/**
 	 * Display a listing of the resource.
@@ -83,6 +84,6 @@ class CountryController extends Controller {
 	}
 	public function sites(Country $country) 
 	{
-		return response()->json($country->sites()->get());
+		return response()->json($this->siteListHRSecurity($country->CountryID));
 	}
 }

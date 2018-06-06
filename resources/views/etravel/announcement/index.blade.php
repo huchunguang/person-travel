@@ -72,9 +72,9 @@
 									@if(count($announcementList)>0) @foreach($announcementList as
 									$announceItem)
 									<tr>
-										<td>1</td>
+										<td>{{$announceItem['id']}}</td>
 										<td>{{$announceItem->announceType()->first()['type']}}</td>
-										<td>{{$announceItem['description']}}</td>
+										<td>{!! str_limit($announceItem['announcement'],10) !!}</td>
 										<td>{{$announceItem['date_effectivity']}}</td>
 										<td>{{$announceItem['date_expired']}}</td>
 										<td>

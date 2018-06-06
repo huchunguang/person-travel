@@ -181,7 +181,7 @@
 											@foreach($demosticInfo as $item)
 										<tr id="trOne" >
 											<td>
-												@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+												@if(($trip->status == 'pending') || ($trip->status == 'rejected') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
 												<input type="hidden" name="demostic_id[]" value="{{$item['id']}}"/>
 												
 												<div style="position: relative;">
@@ -195,7 +195,7 @@
 												@endif
 											</td>
 											<td>
-											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+											@if(($trip->status == 'pending') || ($trip->status == 'rejected') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
 												<div class="input-group">
 																<input type="text" 
 																	name="datetime_time[]"
@@ -211,28 +211,28 @@
 											@endif
 											</td>
 											<td>
-											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+											@if(($trip->status == 'pending') || ($trip->status == 'rejected') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
 												<input type="text" name="location[]" class="form-control" value="{{ $item['location'] }}"/>
 											@else
 												{{ $item['location'] }}
 											@endif
 											</td>
 											<td>
-											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+											@if(($trip->status == 'pending') || ($trip->status == 'rejected') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
 												<input type="text" name="customer_name[]" class="form-control" value="{{ $item['customer_name'] }}"/>
 											@else
 												{{ $item['customer_name'] }}
 											@endif
 											</td>
 											<td>
-											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+											@if(($trip->status == 'pending') || ($trip->status == 'rejected') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
 												<input type="text" name="contact_name[]" class="form-control" value="{{ $item['contact_name'] }}"/>
 											@else
 												{{ $item['contact_name'] }}
 											@endif
 											</td>
 											<td>
-											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+											@if(($trip->status == 'pending') || ($trip->status == 'rejected') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
 												<select class="form-control" name="purpose_id[]" id="purpose_id">
 												@foreach ($purposeCats as $purpose)
 													<option value="{{ $purpose['purpose_id'] }}">{{$purpose['purpose_catgory'] }}</option>
@@ -243,28 +243,28 @@
 											@endif
 											</td>
 											<td>
-											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+											@if(($trip->status == 'pending') || ($trip->status == 'rejected') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
 												<textarea id="purpose_desc" name="purpose_desc[]" class="form-control leave-control" style="overflow-y: scroll;" rows="1">{{ $item['purpose_desc'] }}</textarea>
 											@else
 												{{ $item['purpose_desc'] }}
 											@endif
 											</td>
 											<td>
-											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+											@if(($trip->status == 'pending') || ($trip->status == 'rejected') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
 												<input type="text" name="travel_cost[]" value="{{ $item['travel_cost'] }}" class="form-control input-number admin-non-edit"/>
 											@else
 												{{ $item['travel_cost'] }}
 											@endif
 											</td>
 											<td>
-											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+											@if(($trip->status == 'pending') || ($trip->status == 'rejected') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
 												<input type="text" name="entertain_cost[]"  value="{{ $item['entertain_cost'] }}" class="form-control input-number"/>
 											@else
 												{{ $item['entertain_cost'] }}
 											@endif
 											</td>
 											<td>
-											@if(($trip->status == 'pending') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
+											@if(($trip->status == 'pending') || ($trip->status == 'rejected') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
 												<input type="text" name="entertain_detail[]" class="form-control" value="{{ $item['entertain_detail'] }}"/>
 											@else
 												{{ $item['entertain_detail'] }}
@@ -293,7 +293,7 @@
 									<div class="col-md-12 ">
 										<div class="form-group">
 											<label>Extra Comments</label>
-											@if($trip->status == 'pending')
+											@if($trip->status == 'pending' || $trip->status == 'rejected')
 												<textarea name="extra_comment" class="form-control" style="overflow-y: scroll;" rows="2">{{ $trip->extra_comment }}</textarea>
 											@else
 												<textarea name="extra_comment" class="form-control" disabled style="overflow-y: scroll;" rows="2">{{ $trip->extra_comment }}</textarea>
@@ -334,7 +334,7 @@
 
 							</div>
 						
-							@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved'))
+							@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
 								<div class="row form-actions text-right">
                                  	<button type="submit" accesskey="D" class="btn red-mint"><i class="glyphicon glyphicon-new-window"></i> Resubmit</button>
                                  	

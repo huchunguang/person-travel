@@ -8,6 +8,7 @@ use App\Trip_announcetype;
 use App\Trip_announcement;
 use App\Site;
 use App\Contacts\SystemVariable;
+use Illuminate\Support\Facades\Auth;
 
 class AnnouncementController extends Controller
 {
@@ -26,6 +27,7 @@ class AnnouncementController extends Controller
 		$announcementList = $countryList = $siteList = array();
 		$country=$request->input('country');
 		if ($site_id=$request->input('site_id')){
+// 			dd(123);
 			$announcementList = Trip_announcement::where('disabled','0')->where('site_id',$site_id)->orderBy('created_at','DESC')->paginate(PAGE_SIZE);
 		}else{
 			$announcementList = Trip_announcement::where('disabled','0')->orderBy('created_at','DESC')->paginate(PAGE_SIZE);
@@ -55,7 +57,7 @@ class AnnouncementController extends Controller
 	{
 		
 		$countryList = array();
-		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
+		$countryList = Country::whereIn('CountryID',$this->system->accessCountryIds)->orderBy('Country')->select(['CountryID','Country'])->get();
 		$typeList = Trip_announcetype::all();
 		return view('/etravel/announcement/create',['countryList'=>$countryList,'typeList'=>$typeList]);
 	}
@@ -70,7 +72,8 @@ class AnnouncementController extends Controller
 		$rules=array(
 			'site_id'=>'required|integer',
 			'type_id'=>'required|integer',
-			'description'=>'required|max:255',
+			'company_id'=>'required|integer',
+// 			'description'=>'required|max:255',
 			'date_effectivity'=>'required',
 			'date_expired'=>'required',
 			'announcement'=>'required'
@@ -130,7 +133,7 @@ class AnnouncementController extends Controller
 		$rules=array(
 			'site_id'=>'required|integer',
 			'type_id'=>'required|integer',
-			'description'=>'required|max:255',
+// 			'description'=>'required|max:255',
 			'date_effectivity'=>'required',
 			'date_expired'=>'required',
 			'announcement'=>'required'
@@ -139,7 +142,7 @@ class AnnouncementController extends Controller
 		try {
 			$announcement->site_id=$request->input('site_id');
 			$announcement->type_id=$request->input('type_id');
-			$announcement->description=$request->input('description');
+// 			$announcement->description=$request->input('description');
 			$announcement->date_effectivity=$request->input('date_effectivity');
 			$announcement->date_expired=$request->input('date_expired');
 			$announcement->announcement=$request->input('announcement');

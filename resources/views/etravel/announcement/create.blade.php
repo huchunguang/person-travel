@@ -46,6 +46,7 @@
 															<div class="input-group">
 																<select id="siteSel" name="site_id" class="form-control input-sm select2">
 																	<span class="select2-chosen" id="select2-chosen-2">&lt;&nbsp;Select Site&nbsp;&gt;</span>
+																		<option disabled selected value></option>
                                             						 </select>
 															</div>
 
@@ -55,18 +56,24 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
+															<label class="control-label">Company</label>
+															<div class="input-group">
+																<select id="companySel" name="company_id" class="form-control input-sm select2">
+																	<span class="select2-chosen" id="select2-chosen-2">&lt;&nbsp;Select Company&nbsp;&gt;</span>
+																	<option disabled selected value></option>
+                                            						 </select>
+															</div>
+
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
 															<label class="control-label">Type</label>
 															<select id="type_id" name="type_id" class="form-control input-sm select2">
 																	@foreach($typeList as $typeItem)
 																	<option value="{{$typeItem['id']}}">{{$typeItem['type']}}</option>
 																	@endforeach
                                             					</select>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Description</label>
-															<textarea id="description" name="description" class="form-control leave-control" style="overflow-y: scroll;" rows="1"></textarea>
 														</div>
 													</div>
 												</div>

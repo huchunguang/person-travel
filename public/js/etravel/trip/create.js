@@ -204,6 +204,9 @@ var FormValidation = function () {
 
     
     }
+    
+    
+    
     return {
         //main function to initiate the module
         init: function () {
@@ -299,7 +302,7 @@ var addnewLineNum = 0;
 function addNewAccommodation(){
 	var hotel_id=$('.modal input[name="hotel_id[]"]').val();
 	var hotel_name=$('.modal input[name="hotel_name[]"]').val();
-	var rate=$('.modal input[name="rate[]"]').val();
+	var rate=$('.modal #rate').val();
 	var checkin_date=$('.modal input[name="checkin_date[]"]').val();
 	var checkout_date=$('.modal input[name="checkout_date[]"]').val();
 	if(hotel_name=='' || checkin_date=='' || checkout_date==''){
@@ -346,7 +349,7 @@ function editHotel()
 	$('.modal input[name="hotel_name[]"]').val(hotel_name);
 	$('.modal input[name="checkin_date[]"]').val(checkin_date);
 	$('.modal input[name="checkout_date[]"]').val(checkout_date);
-	$('.modal input[name="rate[]"]').val(rate);
+//	$('.modal input[name="rate[]"]').val(rate);
 	
 	$('.modal input[name="tr_id"]').val(id);
 	//

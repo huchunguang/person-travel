@@ -69,7 +69,7 @@ class TripController extends Controller
 		$airlineList = Airline::all();
 		$hotelList = new EhotelApi();
 		$hotelList = $hotelList->getHotelList();
-		dd($hotelList);
+// 		dd($hotelList);
 		return view('/etravel/trip/create')->with('userProfile', $userProfile['userProfile'])
 			->with('approvers', $userProfile['approvers'])
 			->with('purposeCats', $purposeCategory)
@@ -424,7 +424,7 @@ class TripController extends Controller
 		]));
 // 		dd($demostic_data);
 		DB::transaction(function()use($trip,$request,$demostic_data){
-			$trip->status=($request->input('status')=='partly-approved')?'pending':$request->input('status');
+			$trip->status=($request->input('status')=='partly-approved' || $request->input('status')=='rejected')?'pending':$request->input('status');
 			$trip->cost_center_id=$request->input('cost_center_id');
 			$trip->daterange_from=$request->input('daterange_from');
 			$trip->daterange_to=$request->input('daterange_to');

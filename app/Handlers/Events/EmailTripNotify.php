@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Mail;
 use App\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Contacts\SystemVariable;
+use App\Trip;
 
 class EmailTripNotify {
 
@@ -16,9 +18,9 @@ class EmailTripNotify {
 	 *
 	 * @return void
 	 */
-	public function __construct()
+	public function __construct(SystemVariable $system)
 	{
-		//
+		$this->system=$system;
 	}
 
 	/**
@@ -29,6 +31,7 @@ class EmailTripNotify {
 	 */
 	public function handle(TripNotify $event)
 	{
+		
 		$actionType=$event->actionType;
 		$trip=$event->trip;
 		$tripCreater = User::find($trip->user_id);
@@ -61,7 +64,8 @@ class EmailTripNotify {
 		];
 			// dd($viewDetailUrl);
 			// echo view('emails.workflowNotify',$variables);die
-		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject,$manager,$trip,$tripCreater) {
+		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject,$manager,$trip,$tripCreater,$request) {
+			
 			$cc = $trip->cc;
 			if (Auth::user()->UserID == $trip->user_id) {
 				$to = $manager->Email;
@@ -69,6 +73,10 @@ class EmailTripNotify {
 			}else{
 				$to = $tripCreater->Email;
 				array_push($cc,$manager->Email);
+			}
+			if ($request->input('status')=='approved'){
+				
+				array_push($cc, $this->system->adminEmail);
 			}
 // 			dd($cc);
 			$message->to($to)->cc($cc)->subject($subject);

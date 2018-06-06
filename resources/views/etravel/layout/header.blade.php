@@ -6,26 +6,26 @@
 			<i class="fa fa-home"></i>Dashboard</a></li>
 		<li><a href="##" style="color: white;"><i class="fa fa-exchange"></i>Delegation</a></li>
 		<li><a href="##" style="color: white;"><i class="fa fa-bar-chart"></i>Reports</a></li>
-		@if(Auth::user()->UserTypeID=='1' || Auth::user()->UserTypeID=='5')
+		@if(Auth::user()->UserTypeID=='1')
 		<li class="dropdown">
 			<a href="##" class="dropdown-toggle" data-toggle="dropdown" style="color: white;">
 				<i class="fa fa-gears"></i>Configuration<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu">
 				<li><a href="/etravel/airline">AirLine</a></li>
-				<li><a href="/etravel/announcement">Announcement</a></li>
-				<li><a href="/etravel/purpose">Purpose List Category</a></li>
 			</ul>
 		</li>
 		@endif
 		
-		@if(Auth::user()->UserTypeID=='1' || Auth::user()->UserTypeID=='5')
+		@if($isEtravelAdmin)
 		<li class="dropdown">
 			<a href="##" class="dropdown-toggle" data-toggle="dropdown" style="color: white;">
-				<i class="fa fa-book"></i>Admin<span class="caret"></span>
+				<i class="fa fa-book"></i>Etravel Admin<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu">
 				<li><a href="/etravel/admin/hr-listing">Travel Listing</a></li>
+				<li><a href="/etravel/announcement">Announcement</a></li>
+				<li><a href="/etravel/purpose">Purpose List Category</a></li>
 			</ul>
 		</li>
 		@endif

@@ -276,18 +276,25 @@
 								
 
 							</div>
-						
-							@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved'))
-								<div class="row form-actions text-right">
+							<div class="row form-actions text-right">	
+							@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
+								
 									<button id="TravelTypeEdit" type="button" accesskey="I" onclick="window.location.href='/etravel/trip/edit/{{$trip->trip_id}}'" class="btn yellow-gold leave-type-button">
 									 	<i class="fa fa-pencil"></i> Ed<u>i</u>t
 									</button>
 								
+                                
+							@endif
+							
+							@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved'))
+								
+								
                                  	<button id=TravelTypeCancel type="button" accesskey="D"  onclick="window.location.href='/etravel/trip/cancel/{{$trip->trip_id}}'" class="btn default">
 										<i class="fa fa-share"></i> <u>C</u>ancel
 									</button>
-                                </div>
+                                
 							@endif
+							</div>
 					</div>
 				</div>
 				<!-- END VALIDATION STATES-->

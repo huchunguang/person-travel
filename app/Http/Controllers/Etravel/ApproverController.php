@@ -14,11 +14,13 @@ use App\Events\TripWasRejected;
 use App\Events\TripWasPartlyApproved;
 use App\Repositories\ApproverRepository;
 use App\Events\TripNotify;
+use App\Contacts\SystemVariable;
 
 class ApproverController extends Controller {
 	
-	public function __construct() 
+	public function __construct(SystemVariable $system) 
 	{
+		$this->system=$system;
 		$this->user_id=Auth::user()->UserID;
 	}
 
@@ -122,9 +124,9 @@ class ApproverController extends Controller {
 		}
 		
 		if ($trip->trip_type=='2'){
-			Event::fire(new TripNotify($trip, $request, 'Domestic Trip '.$status));
-			return redirect('/etravel/tripdemosticlist/'.$trip->trip_id);
-		}elseif ($trip->trip_type=='1'){
+			Event::fire(new TripNotify($trip, $request, 'Domestic Trip ' . $status));
+			return redirect('/etravel/tripdemosticlist/' . $trip->trip_id);
+		} elseif ($trip->trip_type == '1') {
 			Event::fire(new TripNotify($trip, $request, 'National Trip '.$status));
 			return redirect('/etravel/tripnationallist/'.$trip->trip_id);
 		}
@@ -132,12 +134,9 @@ class ApproverController extends Controller {
 	}
 	public function getOverseasApprover(Request $request,ApproverRepository $approver)
 	{
-		$countryId=$request->input('countryId');
-		if ($countryId){
-			$countryId=explode(',', $countryId);
-			$generalManager=$approver->getGeneralManagerByCountryId($countryId);
-			return response()->json($generalManager);
-		}
+		$countryId = Auth::user()->CountryAssignedID;
+		$generalManager = $approver->getGeneralManagerByCountryId((array) $countryId);
+		return response()->json($generalManager);
 	}
 
 }

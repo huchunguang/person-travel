@@ -29,7 +29,9 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">Rate</label>
-								<input type="text" name="rate[]" id="" class="form-control"/>
+<!-- 								<input type="text" name="rate[]" id="" class="form-control"/> -->
+								<select class="form-control" name="rate[]" id="rate" disabled>
+								</select>
 							</div>
 						</div>
 					</div>

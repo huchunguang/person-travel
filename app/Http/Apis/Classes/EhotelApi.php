@@ -63,6 +63,10 @@ class EhotelApi
 				'country_id'=>23,
 				'country'=>'Singapore',
 				'city'=>'Singapore',
+				'standard'=>'100',
+				'deluxe'=>'120',
+				'superior'=>'230',
+				'executive'=>'330',
 			],
 			[
 				'id'=>16,
@@ -70,6 +74,10 @@ class EhotelApi
 				'country_id'=>23,
 				'country'=>'Singapore',
 				'city'=>'Singapore',
+				'standard'=>'200',
+				'deluxe'=>'280',
+				'superior'=>'380',
+				'executive'=>'500',
 			],
 		];
 		$res=collect($res)->groupBy('country')->toArray();

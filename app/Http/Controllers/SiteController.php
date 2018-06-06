@@ -5,8 +5,9 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Site;
+use App\Http\Controllers\Etravel\Admin\AdminController;
 
-class SiteController extends Controller {
+class SiteController extends AdminController {
 
 	/**
 	 * Display a listing of the resource.
@@ -81,5 +82,11 @@ class SiteController extends Controller {
 	{
 		//
 	}
-
+	public function getAccessDeps(Site $site)
+	{
+		$companyList = $this->getCompanyListHRSecurity($site->SiteID)->toArray();
+		$companyList=array_pluck($companyList, 'company');
+// 		dd($companyList);		
+		return response()->json($companyList);
+	}
 }

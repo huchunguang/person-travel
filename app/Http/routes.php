@@ -75,6 +75,8 @@ Route::group([],function(){
 	Route::get('user/search','UserController@search');
 	
 	Route::get('country-sites/{country}','CountryController@sites');
+	Route::get('site-companies/{site_id}','SiteController@getAccessDeps');
+	//
 	#Company
 	Route::get('site-companys/{site_id}','CompanyController@getSiteCompanys');
 	Route::get('site-company-departments/{site_id}/{company_id}','DepartmentController@getDepListBySiteIdCpId');

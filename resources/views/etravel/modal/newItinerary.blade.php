@@ -73,8 +73,8 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label for="">Purpose of Visit Category</label> <select
-									class="form-control" name="purpose_id[]" id="purpose_id">
+								<label for="">Purpose of Visit Category</label> 
+								<select class="form-control" name="purpose_id[]" id="purpose_id">
 									@foreach ($purposeCats as $item)
 									<option value="{{ $item['purpose_id'] }}">{{$item['purpose_catgory'] }}</option>
 									@endforeach

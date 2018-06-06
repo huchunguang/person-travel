@@ -18,7 +18,7 @@ class ApproverRepository extends Repository
 		{
 			$generalManager[]=$item->generalManager()->first();
 		}
-		$generalManager=array_filter($generalManager);
+		$generalManager=array_unique(array_filter($generalManager));
 		return $generalManager;
 	}
 }

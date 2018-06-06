@@ -14,15 +14,16 @@ function announcementDel(id){
 }
 
 
+
 $('#countrySel').change(function(){
-	var siteStr="";
+	var siteStr="<option disabled selected value></option>";
 	var countryId = $(this).val();
 	$.get('/country-sites/'+countryId,function(siteList){
 		for(var i=0;i<siteList.length;i++){
 			siteStr+="<option value="+siteList[i].SiteID+">"+siteList[i].Site+"</option>";
 		}
 		if(siteStr!=""){
-			$('#siteSel').append(siteStr);
+			$('#siteSel').empty().append(siteStr);
 		}
 		
 	});
