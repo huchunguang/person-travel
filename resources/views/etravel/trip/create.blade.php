@@ -548,7 +548,7 @@
 									<div class="portlet box default">
 										<div class="portlet-title">
 											<div class="caption">
-												Extras Comments
+												Extra Comments
 											</div>
 											<div class="tools">
 												<a href="" class="collapse" data-original-title="" title="">

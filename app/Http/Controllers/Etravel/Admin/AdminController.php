@@ -62,7 +62,7 @@ class AdminController extends Controller
 	public function getCompanyListHRSecurity($site_id=null,$columns=array('*')) 
 	{
 		$return = [];
-		$site_id=$site_id?:$this->system->getSiteId();
+		$site_id=$site_id?$site_id:$this->system->getSiteId();
 		$accessCompanyIds=$this->system->accessCompanyIds;
 // 		$user_id=$this->system->UserID;
 // 		$user_type=$this->system->UserTypeID;

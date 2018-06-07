@@ -174,7 +174,9 @@
 
 								</div>
 
-								<div class="row form-group col-sm-12">
+								<div class="row">
+									<div class="col-md-12">
+										
 									<div class="portlet box default">
 										<div class="portlet-title">
 											<div class="caption">PURPOSE OF TRAVEL</div>
@@ -202,6 +204,8 @@
 											</div>
 										</div>
 									</div>
+								
+									</div>
 								</div>
 <!-- 								<div class="row form-group col-sm-12"> -->
 
@@ -225,11 +229,9 @@
 
 <!-- 								</div> -->
 
-
-
-								<div class="row form-group col-sm-12">
+								<div class="row">
 									
-									
+									<div class="col-sm-12">
 									<ul id="myTab" class="nav nav-tabs">
 										<li class="active"><a href="#home" data-toggle="tab">FLIGHT ITINERARY</a></li>
 										<li><a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a></li>
@@ -415,7 +417,7 @@
 																				<div class="col-md-5">
 																					<select class="form-control js-data-example-ajax" name="rep_office[]" style="width: 230px;" multiple> 
 																						@foreach($rep_office as $officeUser)
-																						<option value="{{$officeUser['FirstName']}}" selected>{{$officeUser['FirstName']}}</option>
+																						<option value="{{$officeUser['UserID']}}" selected>{{$officeUser['LastName']}} {{$officeUser['FirstName']}}</option>
 																						@endforeach
 																					</select>
 																				</div>
@@ -601,14 +603,17 @@
 										</div>
 									</div>
 								
-								
 								</div>
-								
-								<div class="row form-group col-sm-12">
+								</div>
+								<p></p>
+								<div class="row">
+									<div class="col-sm-12">
+										
+										
 									<div class="portlet box default">
 										<div class="portlet-title">
 											<div class="caption">
-												Extras Comments
+												Extra Comments
 											</div>
 											<div class="tools">
 												<a href="" class="collapse" data-original-title="" title="">
@@ -621,12 +626,18 @@
 												style="overflow-y: scroll;" rows="2">{{$trip['extra_comment']}}</textarea>
 										</div>
 									</div>
-								</div>							</div>
+								
+									
+									</div>
+								</div>							
+							</div>
 
-							@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved'))
+							@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
 								<div class="row form-actions text-right">
-                                 	<button type="submit" accesskey="D" class="btn red-mint"><i class="glyphicon glyphicon-new-window"></i> Resubmit</button>
-                                 	
+                                 	<button type="submit" accesskey="D" class="btn red-mint">
+                                 		<i class="glyphicon glyphicon-new-window"></i>
+                                 			Resubmit
+                                 	</button>
                                 </div>
 							@endif					
 						<!-- END FORM-->

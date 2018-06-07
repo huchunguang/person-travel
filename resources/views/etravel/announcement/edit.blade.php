@@ -14,7 +14,7 @@
 						</div>
 					</div>
 					<div class="portlet-body form">
-						<form action="/etravel/announcement/{{$announce['id']}}" method="post" class="horizontal-form">
+						<form action="/etravel/announcement/{{$announce['id']}}" method="post" class="horizontal-form" id="adminAnnounceform">
 							<div class="form-body">
 								<input type="hidden" name="_token" value="{{ csrf_token() }}">
 								<input type="hidden" name="_method" value="PUT"/>
@@ -59,13 +59,34 @@
 																	@endif
 																	@endforeach
 																	</span>
-                                            						 </select>
+                                            					</select>
 															</div>
 
 														</div>
 													</div>
 												</div>
 												<div class="row">
+													<div class="col-md-6">
+														
+														<div class="form-group">
+															<label class="control-label">Company</label>
+															<div class="input-group">
+																<select id="siteSel" name="site_id" class="form-control input-sm select2">
+																	<span class="select2-chosen" id="select2-chosen-2">
+																	@foreach($companyList as $companyItem)
+																	@if($announce['company_id'] == $companyItem['CompanyID'])
+																	<option value="{{$companyItem['CompanyID']}}" selected="selected">{{$companyItem['CompanyCode']}}-{{$companyItem['CompanyName']}}</option>
+																	@else
+																	<option value="{{$companyItem['CompanyID']}}">{{$companyItem['CompanyCode']}}-{{$companyItem['CompanyName']}}</option>
+																	@endif
+																	@endforeach
+																	</span>
+                                            					</select>
+															</div>
+
+														</div>
+													
+													</div>
 													<div class="col-md-6">
 														<div class="form-group">
 															<label class="control-label">Type</label>
@@ -78,12 +99,6 @@
 																	@endif
 																	@endforeach
                                             					</select>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Description</label>
-															<textarea id="description" name="description" class="form-control leave-control" style="overflow-y: scroll;" rows="1">{{$announce['description']}}</textarea>
 														</div>
 													</div>
 												</div>
@@ -144,7 +159,7 @@
 	</div>
 </div>
 
-<script src="{{asset('/js/etravel/announcement/edit.js')}}"></script>
+<script src="{{asset('/js/etravel/announcement/announcement.js')}}"></script>
 @endsection
 
 

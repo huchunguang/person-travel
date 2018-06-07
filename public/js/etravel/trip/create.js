@@ -350,8 +350,7 @@ function editHotel()
 	$('.modal input[name="hotel_name[]"]').val(hotel_name);
 	$('.modal input[name="checkin_date[]"]').val(checkin_date);
 	$('.modal input[name="checkout_date[]"]').val(checkout_date);
-//	$('.modal input[name="rate[]"]').val(rate);
-	
+	$('.modal #rate').empty().append("<option value='"+rate+"'>"+rate+"</option>");
 	$('.modal input[name="tr_id"]').val(id);
 	//
 	$('#addNewAccommodation').modal('show');

@@ -48,21 +48,19 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         Route::get('trip/nationalCancel/{trip}','TripController@nationalCancel');
         Route::put('trip/nationalUpdate/{trip}','TripController@nationalUpdate');
         
-        #TripPurpose
-        Route::get('purpose',['as'=>'tripPurpose','uses'=>'PurposeController@index']);
-        Route::post('purpose','PurposeController@store');
-        Route::get('purpose/edit/{purpose}','PurposeController@edit');
-        Route::get('purpose/{purpose}','PurposeController@show');
-        Route::post('purpose/{purpose}','PurposeController@update');
-        Route::post('purpose/destroy/{purpose}','PurposeController@destroy');
         #Manager Section
         Route::get('staff/travellist','ApproverController@index');
         Route::put('tripapproval/{trip}','ApproverController@approval');
-        #Announcement Resource
-        Route::resource('announcement', 'AnnouncementController');
-        Route::resource('airline', 'AirlineController');
+        
+        
        	Route::get('approver',['uses'=>'ApproverController@getOverseasApprover','as'=>'overseasApprover']);
        	
+       	#Configuration
+       	Route::resource('airline', 'AirlineController');
+       	
+       	#Etravel Admin
+       	Route::resource('announcement', 'AnnouncementController');
+       	Route::resource('purpose', 'PurposeController');
        	Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
        		Route::match(['get','post'],'hr-listing','TriplistController@index');
         	
@@ -75,7 +73,7 @@ Route::group([],function(){
 	Route::get('user/search','UserController@search');
 	
 	Route::get('country-sites/{country}','CountryController@sites');
-	Route::get('site-companies/{site_id}','SiteController@getAccessDeps');
+	Route::get('site-companies/{site}','SiteController@getAccessDeps');
 	//
 	#Company
 	Route::get('site-companys/{site_id}','CompanyController@getSiteCompanys');

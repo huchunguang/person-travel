@@ -163,7 +163,7 @@ class TripController extends Controller
 				$tripObjMdl->demostic()->create($item);
 			}
 			Trip_counter::updateSeries();
-			Event::fire(new TripNotify($tripObjMdl, $request, 'Domestic Trip Created'));
+			Event::fire(new TripNotify($tripObjMdl, $request, 'submitted'));
 		});
 		
     	return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
@@ -243,7 +243,7 @@ class TripController extends Controller
     			}
     			Trip_counter::updateSeries();
     			DB::commit();
-    			Event::fire(new TripNotify($trip, $request, 'National Trip Created'));
+    			Event::fire(new TripNotify($trip, $request, 'submitted'));
     			return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
     		} catch (Exception $e) {
     			DB::rollBack();
@@ -301,7 +301,6 @@ class TripController extends Controller
 	 */
 	public function tripNationalDetails(TripReadRequest $request,Trip $trip) 
 	{
-// 		dd($trip->cc);
 		$overseas_approver=[];
 		$userObjMdl = User::where('UserID',$trip->user_id)->firstOrFail();
 		if ($trip->overseas_approver){
@@ -448,7 +447,7 @@ class TripController extends Controller
 				}
 				
 			}
-			Event::fire(new TripNotify($trip, $request, 'Domestic Trip Updated'));
+			Event::fire(new TripNotify($trip, $request, $trip->status));
 			
 		});
 		$user_id=Auth::user()->UserID;
@@ -467,6 +466,8 @@ class TripController extends Controller
 		DB::beginTransaction();
 		try {
 			$trip->user_id=Auth::user()->UserID;
+			$trip->status=$request->input('status')=='rejected'?'pending':$request->input('status');
+			
 			$trip->destination_id=$request->input('destination');
 			$trip->cost_center_id=$request->input('cost_center_id');
 			$trip->daterange_from=$request->input('daterange_from');
@@ -563,7 +564,7 @@ class TripController extends Controller
 				]));
 			}
 			DB::commit();
-			Event::fire(new TripNotify($trip, $request, 'National Trip Updated'));
+			Event::fire(new TripNotify($trip, $request, $trip->status));
 			
 			return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
 		} catch (Exception $e) {
@@ -575,21 +576,15 @@ class TripController extends Controller
 		$user_id=Auth::user()->UserID;
 		$trip->status='cancelled';
 		$trip->save();
-		Event::fire(new TripNotify($trip, $request, 'Domestic Trip Cancelled'));
+		Event::fire(new TripNotify($trip, $request, $trip->status));
 		return redirect('/etravel/'.$user_id.'/triplist?status=cancelled');
 	}
 	public function nationalCancel(TripCancelRequest $request,Trip $trip)
 	{
-		$user_id=Auth::user()->UserID;
-		$trip->status='cancelled';
+		$trip->status = 'cancelled';
 		$trip->save();
-		Event::fire(new TripNotify($trip, $request, 'National Trip Cancelled'));
-		return redirect('/etravel/tripnationallist/'.$trip->trip_id);
-// 		return redirect('/etravel/'.$user_id.'/triplist?status=cancelled');
+		Event::fire(new TripNotify($trip, $request, $trip->status));
+		return redirect('/etravel/tripnationallist/' . $trip->trip_id);
 	}
-	public function test(Request $request)
-	{
-		$trip=Trip::find('1231');
-		Event::fire(new TripNotify($trip, $request, 'actionTypeVar'));
-	}
+	
 }

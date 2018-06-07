@@ -15,12 +15,12 @@ class EmailTripNotify {
 
 	/**
 	 * Create the event handler.
-	 *
+	 * 
 	 * @return void
 	 */
 	public function __construct(SystemVariable $system)
 	{
-		$this->system=$system;
+		$this->system = $system;
 	}
 
 	/**
@@ -31,42 +31,37 @@ class EmailTripNotify {
 	 */
 	public function handle(TripNotify $event)
 	{
-		
-		$actionType=$event->actionType;
-		$trip=$event->trip;
+		$actionType = $event->actionType;
+		$trip = $event->trip;
 		$tripCreater = User::find($trip->user_id);
-		$request=$event->request;
+		$request = $event->request;
 		if ($trip->trip_type==1){
-			$travelType='INTERNATIONAL';
-			$viewDetailUrl=url("etravel/tripnationallist/{$trip->trip_id}");
+			$travelType = 'International';
+			$viewDetailUrl = url("etravel/tripnationallist/{$trip->trip_id}");
 		}else{
-			
-			$travelType='DOMESTIC';
-			$viewDetailUrl=url("etravel/tripdemosticlist/{$trip->trip_id}");
+			$travelType = 'Domestic';
+			$viewDetailUrl = url("etravel/tripdemosticlist/{$trip->trip_id}");
 		}
 		
 		if ($trip->overseas_approver && $trip->is_depart_approved)
 		{
-			$manager= User::find($trip->overseas_approver);
+			$manager = User::find($trip->overseas_approver);
 		}else{
-			$manager=User::find($trip->department_approver);
+			$manager = User::find($trip->department_approver);
 		}
 		$recipient=$trip->user()->first();
-		$subject = "Etravel: {$travelType} request has been {$actionType} by applicant.";
+		$subject = $this->getSubject($travelType, $actionType, $tripCreater);
 		$variables=[
 			
-			'recipient' => $recipient,
-			'manager' => $manager,
 			'trip' => $trip,
-			'travelType' => $travelType,
-			'actionType' => $actionType,
+			'subject'=>$subject,
+			'recipient' => Auth::user()->UserID == $trip->user_id?$manager:$recipient,
 			'viewDetailUrl'=>$viewDetailUrl,
 		];
-			// dd($viewDetailUrl);
-			// echo view('emails.workflowNotify',$variables);die
+// 		dd($variables);
 		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject,$manager,$trip,$tripCreater,$request) {
 			
-			$cc = $trip->cc;
+			$cc = $trip->cc ?: [ ];
 			if (Auth::user()->UserID == $trip->user_id) {
 				$to = $manager->Email;
 				array_push($cc,$tripCreater->Email);
@@ -74,12 +69,12 @@ class EmailTripNotify {
 				$to = $tripCreater->Email;
 				array_push($cc,$manager->Email);
 			}
-			if ($request->input('status')=='approved'){
+			if ($request->input('status') == 'approved'){
 				
 				array_push($cc, $this->system->adminEmail);
 			}
 // 			dd($cc);
-			$message->to($to)->cc($cc)->subject($subject);
+			$message->to($to)->cc($cc)->subject("Etravel:".$subject);
 			
 		});
 		if($flag){
@@ -88,5 +83,20 @@ class EmailTripNotify {
 			Log::info('failed to send notify email', ['id' => $trip->trip_id,'variables'=>$variables]);
 		}
 	}
-
+	public function getSubject($travelType,$actionType,$tripCreater)
+	{
+		$subject='';
+		$userLastName=Auth::user()->LastName;
+		$userFirstName=Auth::user()->FirstName;
+		if ($actionType=='submitted'){
+			$subject = "{$userLastName} {$userFirstName} {$actionType} {$travelType} travel request for your approval";
+		}elseif ($actionType=='pending'){
+			$subject = "{$userLastName} {$userFirstName} updated {$travelType} travel request for your approval";
+		}elseif ($actionType=='approved' || $actionType=='partly-approved' || $actionType=='rejected'){
+			$subject = "{$travelType} travel request has been {$actionType}";
+		}elseif ($actionType=='cancelled'){
+			$subject = "{$userLastName} {$userFirstName} {$actionType} his {$travelType} travel request";
+		}
+		return $subject;
+	}
 }

@@ -20,42 +20,69 @@
 						</div>
 					</div>
 					<div class="portlet-body" style="display: block;">
+					<form action="{{url('etravel/announcement')}}" method="get" name="adminAnnounceform" role="form">
+							<input type="hidden" name="_token" value="{{csrf_token()}}"/>
 						<div class="row">
+						
 
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<div class="form-group">
-									<lavel class="control-label">Country</lavel>
+									<label class="control-label">Country</label>
 									<div class="input-group">
-										<select id="countrySel" name="country"
-											class="form-control input-sm select2"> @foreach($countryList
-											as $countryItem) @if($country &&
-											$country==$countryItem['CountryID'])
-											<option value="{{$countryItem['CountryID']}}"
-												selected="selected">{{$countryItem['Country']}}</option>
+										<select id="countrySel" name="country" class="form-control input-sm select2"> 
+										@foreach($countryList as $countryItem) 
+											@if($country && $country==$countryItem['CountryID'])
+											<option value="{{$countryItem['CountryID']}}" selected="selected">{{$countryItem['Country']}}</option>
 											@else
 											<option value="{{$countryItem['CountryID']}}">{{$countryItem['Country']}}</option>
-											@endif @endforeach
+											@endif
+										@endforeach
 										</select>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<div class="form-group">
-									<lavel class="control-label">Site</lavel>
+									<label class="control-label">Site</label>
 									<div class="input-group">
-										<select id="siteSel" name="site_id"
-											class="form-control input-sm select2"> @foreach($siteList as
-											$siteItem) @if($site_id==$siteItem['SiteID'])
+										<select id="siteSel" name="site_id" class="form-control input-sm select2"> 
+										@foreach($siteList as $siteItem) 
+											@if($site_id==$siteItem['SiteID'])
 											<option value="{{$siteItem['SiteID']}}" selected="selected">{{$siteItem['Site']}}</option>
 											@else
 											<option value="{{$siteItem['SiteID']}}">{{$siteItem['Site']}}</option>
-											@endif @endforeach
+											@endif 
+										@endforeach
 										</select>
 									</div>
 								</div>
 							</div>
-
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="control-label">CompanyID</label>
+									<div class="input-group">
+										<select id="companySel" name="company_id" class="form-control input-sm select2"> 
+										@foreach($companyList as $companyItem) 
+											@if($company_id==$companyItem['CompanyID'])
+												<option value="{{$companyItem['CompanyID']}}" selected="selected">{{$companyItem['CompanyCode']}}-{{$companyItem['CompanyName']}}</option>
+											@else
+												<option value="{{$companyItem['CompanyID']}}">{{$companyItem['CompanyCode']}}-{{$companyItem['CompanyName']}}</option>
+											@endif 
+										@endforeach
+										</select>
+									</div>
+								</div>
+							</div>
+	
 						</div>
+						<div class="row">
+								<div class="col-md-6 text-right">
+									<button id="btnExecute" type="submit" class="btn green" data-toggle="tooltip" data-placement="bottom" title="Click to execute.">
+										<i class="fa fa-filter"></i> Filter
+									</button>
+								</div>
+						</div>
+						</form>
 						<div class="table-scrollable">
 							<table class="table table-striped table-hover">
 								<thead>
@@ -71,7 +98,7 @@
 								<tbody>
 									@if(count($announcementList)>0) @foreach($announcementList as
 									$announceItem)
-									<tr>
+									<tr id="announce_{{$announceItem['id']}}">
 										<td>{{$announceItem['id']}}</td>
 										<td>{{$announceItem->announceType()->first()['type']}}</td>
 										<td>{!! str_limit($announceItem['announcement'],10) !!}</td>
@@ -109,5 +136,5 @@
 	</div>
 	
 </div>
-<script src="{{asset('/js/etravel/announcement/index.js')}}"></script>
+<script src="{{asset('/js/etravel/announcement/announcement.js')}}"></script>
 @endsection

@@ -9,13 +9,10 @@ use App\Trip_announcement;
 use App\Site;
 use App\Contacts\SystemVariable;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Etravel\Admin\AdminController;
 
-class AnnouncementController extends Controller
+class AnnouncementController extends AdminController
 {
-	public function __construct(SystemVariable $system) 
-	{
-		$this->system=$system;
-	}
 
 	/**
 	 * Display a listing of the resource.
@@ -24,18 +21,28 @@ class AnnouncementController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		$announcementList = $countryList = $siteList = array();
-		$country=$request->input('country');
-		if ($site_id=$request->input('site_id')){
-// 			dd(123);
-			$announcementList = Trip_announcement::where('disabled','0')->where('site_id',$site_id)->orderBy('created_at','DESC')->paginate(PAGE_SIZE);
+		$announcementList = $countryList = $siteList = $companyList = array();
+		$country = $request->input('country');
+		if ($country && !in_array($country, $this->system->accessCountryIds)) return back();
+		$siteId = $request->input('site_id');
+		$companyId = $request->input('company_id');
+		if ($siteId || $country || $companyId){
+			$tripAnnouncement=Trip_announcement::where('disabled','0');
+			$country?$tripAnnouncement->where('country',$country):'';
+			$siteId?$tripAnnouncement->where('site_id',$siteId):'';
+			$companyId?$tripAnnouncement->where('company_id',$companyId):'';
+			$announcementList =$tripAnnouncement->orderBy('created_at','DESC')->paginate(PAGE_SIZE);
 		}else{
-			$announcementList = Trip_announcement::where('disabled','0')->orderBy('created_at','DESC')->paginate(PAGE_SIZE);
+			$announcementList = Trip_announcement::where('disabled','0')->whereIn('company_id',$this->system->accessCompanyIds)->whereIn('site_id',$this->system->accessSiteIds)->orderBy('created_at','DESC')->paginate(PAGE_SIZE);
 		}
 		if ($country){
-			$countryMdl = Country::find($country);
-			$siteList = $countryMdl->sites()->get();
+			$siteList = $this->siteListHRSecurity($country);
 		}
+		
+		if ($siteId){
+			$companyList = array_pluck($this->getCompanyListHRSecurity($siteId)->toArray(),'company');
+		}
+// 		dd($announcementList->toArray());
 		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
 		return view('/etravel/announcement/index', [ 
 			
@@ -43,7 +50,9 @@ class AnnouncementController extends Controller
 			'announcementList' => $announcementList,
 			'countryList'=>$countryList,
 			'siteList'=>$siteList,
-			'site_id'=>$site_id,
+			'companyList'=>$companyList,
+			'company_id'=>$companyId,
+			'site_id'=>$siteId,
 			'country'=>$country,
 		]);
 	}
@@ -57,7 +66,7 @@ class AnnouncementController extends Controller
 	{
 		
 		$countryList = array();
-		$countryList = Country::whereIn('CountryID',$this->system->accessCountryIds)->orderBy('Country')->select(['CountryID','Country'])->get();
+		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
 		$typeList = Trip_announcetype::all();
 		return view('/etravel/announcement/create',['countryList'=>$countryList,'typeList'=>$typeList]);
 	}
@@ -110,15 +119,17 @@ class AnnouncementController extends Controller
 	{
 		$countryList = array();
 		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
-		$country=Country::find($announce['country']);
-		$siteList=$country->sites()->get();
+		$siteList=$this->siteListHRSecurity($announce['country']);
+// 		dd($announce['company_id']);
+		$companyList=array_pluck($this->getCompanyListHRSecurity($announce['site_id'])->toArray(), 'company');
 		$typeList = Trip_announcetype::all();
 		return view('etravel/announcement/edit', [ 
 			
 			'announce' => $announce,
 			'countryList' => $countryList,
 			'typeList' => $typeList,
-			'siteList' => $siteList
+			'siteList' => $siteList,
+			'companyList'=>$companyList,
 		]);
 	}
 

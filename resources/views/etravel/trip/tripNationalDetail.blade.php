@@ -346,22 +346,26 @@
 													@if(count($rep_office))
 													<li class="list-group-item">
 														<div class="row">
-														<div class="col-md-7">
-                                                                                    <div class="form-group">
-                                                                                        <label class="control-label col-md-7">Select address from the list to inform Rep. Office</label>
-                                                                                        <div class="col-md-5">
-                                                                                        
-                                                                                            <select class="form-control js-data-example-ajax" name="rep_office[]" style="width: 230px;" disabled multiple>
-                                                                                             
-                                                                                            	@foreach($rep_office as $officeUser)
-                                                                                            		<option value="{{$officeUser['FirstName']}}" selected>{{$officeUser['FirstName']}}</option>
-                                                                                            	@endforeach
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-														
-														
+															<div class="col-md-7">
+
+																				<div class="form-group">
+																					<label class="control-label col-md-7">Select
+																						address from the list to inform Rep. Office</label>
+																					<div class="col-md-5">
+
+																						<select class="form-control js-data-example-ajax"
+																							name="rep_office[]" style="width: 230px;"
+																							disabled multiple> @foreach($rep_office as
+																							$officeUser)
+																							<option value="{{$officeUser['UserID']}}"
+																								selected>{{$officeUser['LastName']}}
+																								{{$officeUser['FirstName']}}</option>
+																							@endforeach
+																						</select>
+																					</div>
+																				</div>
+
+																			</div>
 														</div>
 
 
@@ -528,12 +532,13 @@
 								</div>
 								
 								</div>
+								<p></p>
 								<div class="row">
 									<div class="col-sm-12">
 									<div class="portlet box default">
 										<div class="portlet-title">
 											<div class="caption">
-												Extras Comments
+												Extra Comments
 											</div>
 											<div class="tools">
 												<a href="" class="collapse" data-original-title="" title="">
@@ -549,17 +554,19 @@
 									</div>
 								</div>
 							</div>
-							@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved'))
-								<div class="row form-actions text-right">
+							<div class="row form-actions text-right">
+							@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
 									<button type="button" accesskey="I" onclick="window.location.href='/etravel/trip/nationalEdit/{{$trip->trip_id}}'" class="btn yellow-gold leave-type-button">
 									 	<i class="fa fa-pencil"></i> Ed<u>i</u>t
 									</button>
-								
+							@endif	
+							
+							@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved'))
                                  	<button type="button" accesskey="C"  onclick="window.location.href='/etravel/trip/nationalCancel/{{$trip->trip_id}}'" class="btn default">
 										<i class="fa fa-share"></i> <u>C</u>ancel
 									</button>
-                                </div>
-							@endif						
+							@endif
+							</div>						
 						<!-- END FORM-->
 					</div>
 				</div>

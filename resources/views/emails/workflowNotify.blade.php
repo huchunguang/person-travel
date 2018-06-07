@@ -278,7 +278,7 @@
           </tr>
           <tr>
             <td class="free-text">
-              Dear {{$manager->LastName}} {{$manager->FirstName}}, {{$recipient->LastName}} {{$recipient->FirstName}} {{$actionType}} request: 
+              Dear {{$recipient->LastName}} {{$recipient->FirstName}}, {{$subject}}: 
             </td>
           </tr>
           <tr>

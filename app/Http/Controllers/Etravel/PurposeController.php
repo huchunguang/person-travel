@@ -5,17 +5,54 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Trip_purpose;
 use Illuminate\Support\Facades\View;
+use App\Http\Controllers\Etravel\Admin\AdminController;
+use App\Country;
 
-class PurposeController extends Controller {
+class PurposeController extends AdminController {
 
 	/**
 	 * Display a listing of the demostic visit purpose.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		return view('/etravel/purpose/index',['purposeList'=>Trip_purpose::orderBy('created_at','DESC')->paginate(PAGE_SIZE)]);
+		
+		$purposeList = $countryList = $siteList = $companyList = array();
+		$country = $request->input('country');
+		if ($country && !in_array($country, $this->system->accessCountryIds)) return back();
+		$siteId = $request->input('site_id');
+		$companyId = $request->input('company_id');
+		if ($siteId || $country || $companyId){
+			$tripAnnouncement=Trip_purpose::where('disabled','0');
+			$country?$tripAnnouncement->where('country',$country):'';
+			$siteId?$tripAnnouncement->where('site_id',$siteId):'';
+			$companyId?$tripAnnouncement->where('company_id',$companyId):'';
+			$purposeList =$tripAnnouncement->orderBy('created_at','DESC')->paginate(PAGE_SIZE);
+		}else{
+			$purposeList = Trip_purpose::where('disabled','0')->whereIn('company_id',$this->system->accessCompanyIds)->whereIn('site_id',$this->system->accessSiteIds)->orderBy('created_at','DESC')->paginate(PAGE_SIZE);
+		}
+		if ($country){
+			$siteList = $this->siteListHRSecurity($country);
+		}
+		
+		if ($siteId){
+			$companyList = array_pluck($this->getCompanyListHRSecurity($siteId)->toArray(),'company');
+		}
+		// 		dd($announcementList->toArray());
+		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
+		return view('/etravel/purpose/index', [
+			
+			'breadcrumb' => 'Announcements',
+			'purposeList' => $purposeList,
+			'countryList'=>$countryList,
+			'siteList'=>$siteList,
+			'companyList'=>$companyList,
+			'company_id'=>$companyId,
+			'site_id'=>$siteId,
+			'country'=>$country,
+		]);
+		
 	}
 
 	/**
@@ -25,7 +62,10 @@ class PurposeController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		$countryList = array();
+		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
+		return view('/etravel/purpose/create',['countryList'=>$countryList]);
+		
 	}
 
 	/**
@@ -37,14 +77,21 @@ class PurposeController extends Controller {
 	{
 		$rules=[
 			'purpose_catgory'=>'required|unique:trip_purposes|max:255',
-			'purpose_desc'=>'required',
+			'purpose_desc'=>'required|max:255',
+			'country'=>'required|integer',
+			'site_id'=>'required|integer',
+			'company_id'=>'required|integer',
 		];
 		$this->validate($request, $rules);
+// 		dd($request->all());
 		$purpose = new Trip_purpose();
+		$purpose->country = $request->input('country');
+		$purpose->site_id= $request->input('site_id');
+		$purpose->company_id= $request->input('company_id');
 		$purpose->purpose_catgory=$request->input('purpose_catgory');
 		$purpose->purpose_desc=$request->input('purpose_desc');
 		if ($purpose->save()) {
-			return redirect()->route('tripPurpose');
+			return redirect('etravel/purpose');
 		}
 		return response()->json(['res_info'=>['code'=>'100001','msg'=>'']]);
 	}
@@ -68,7 +115,17 @@ class PurposeController extends Controller {
 	 */
 	public function edit(Trip_purpose $purpose)
 	{
-		echo view('/etravel/purpose/edit',['purpose'=>$purpose]);
+		$countryList = array();
+		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
+		$siteList=$this->siteListHRSecurity($purpose['country']);
+		$companyList=array_pluck($this->getCompanyListHRSecurity($purpose['site_id'])->toArray(), 'company');
+		return view('etravel/purpose/edit', [
+			
+			'purpose' => $purpose,
+			'countryList' => $countryList,
+			'siteList' => $siteList,
+			'companyList'=>$companyList,
+		]);
 	}
 
 	/**
