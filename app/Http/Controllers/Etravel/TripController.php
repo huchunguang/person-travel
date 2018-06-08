@@ -35,16 +35,20 @@ use App\Events\TripNotify;
 use App\Repositories\TripRepository;
 use App\Http\Apis\Classes\EhotelApi;
 use App\Trip_counter;
+use App\Repositories\UserRepository;
 
 class TripController extends Controller
 {
-	public function __construct(SystemVariable $system,TripRepository $trip) 
+	public function __construct(SystemVariable $system,TripRepository $trip,UserRepository $user) 
 	{
 		$this->system=$system;
 		$this->trip=$trip;
+		$this->user=$user;
 	}
     /**
-     * @brief create trip 
+     * @desc create a international trip 
+     * @param Request $requset
+     * @return \Illuminate\View\View
      */
     public function create(Request $requset) 
     {
@@ -61,18 +65,13 @@ class TripController extends Controller
 			'Country',
 			'RegionID'
 		])->get();
-		$purposeCategory = Trip_purpose::all([ 
-			
-			'purpose_id',
-			'purpose_catgory'
-		]);
 		$airlineList = Airline::all();
 		$hotelList = new EhotelApi();
 		$hotelList = $hotelList->getHotelList();
 // 		dd($hotelList);
 		return view('/etravel/trip/create')->with('userProfile', $userProfile['userProfile'])
 			->with('approvers', $userProfile['approvers'])
-			->with('purposeCats', $purposeCategory)
+			->with('purposeCats', $this->user->purposeCatWithCompany())
 			->with('costCenters', Costcenter::getAvailableCenters())
 			->with('countryList', $countryList)
 			->with('approvers', $userProfile['approvers'])
@@ -88,12 +87,16 @@ class TripController extends Controller
     public function demosticCreate() 
     {
     	$userProfile=User::getUserProfile();
-		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
+    	$purposeCategory = $this->user->purposeCatWithCompany();
 		return view('/etravel/trip/demosticCreate')->with('userProfile', $userProfile['userProfile'])->with('approvers', $userProfile['approvers'])->with('purposeCats',$purposeCategory)->with('costCenters',Costcenter::getAvailableCenters());
 	}
-    /**
-     *@brief currently user demostic trip list
-     */
+    
+	/**
+	 * @desc show list of trips with has been logined account 
+	 * @param User $user
+	 * @param Request $request
+	 * @return \Illuminate\View\View
+	 */
 	public function index(User $user,Request $request)
     {
 		$filter = [ ];
@@ -109,12 +112,13 @@ class TripController extends Controller
 		]);
 	}
     /**
-     * @desc trip_type 1:international 2:demostic
+     * @desc store trip of domestic info into database
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request) 
     {
+//     	dd($request->all());
     	$rules = [ 
 			'cost_center_id' => 'required',
 			'daterange_from' => 'required',
@@ -333,21 +337,22 @@ class TripController extends Controller
 		]);
 	}
 
+	/**
+	 * @param EditDomesticRequest $request
+	 * @param Trip $trip
+	 * @return \Illuminate\View\View
+	 */
 	public function demosticEdit(EditDomesticRequest $request, Trip $trip)
 	{
 		$userObjMdl = User::where('UserID', $trip->user_id)->firstOrFail();
 		$approver = User::find($trip->department_approver);
 		$demosticInfo = $trip->demostic()->get();
-		$purposeCategory = Trip_purpose::all([ 
-			
-			'purpose_id',
-			'purpose_catgory'
-		]);
+		
 		return view('/etravel/trip/demosticEdit', [ 
 			
 			'userObjMdl' => $userObjMdl,
 			'trip' => $trip,
-			'purposeCats' => $purposeCategory,
+			'purposeCats' => $this->user->purposeCatWithCompany(),
 			'approver'=>$approver,
 			'demosticInfo' => $demosticInfo,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
@@ -355,13 +360,18 @@ class TripController extends Controller
 		]);
 	}
 	
+	/**
+	 * @param EditNationalRequest $request
+	 * @param Trip $trip
+	 * @return \Illuminate\View\View
+	 */
 	public function nationalEdit(EditNationalRequest $request,Trip $trip)
 	{
 		$overseas_approver=[];
 		$userList = User::all(['Email','FirstName','LastName']);
 		$userProfile=User::getUserProfile();
 		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
-		$purposeCategory = Trip_purpose::all(['purpose_id','purpose_catgory']);
+		$purposeCategory = $this->user->purposeCatWithCompany();
 		if ($trip->overseas_approver){
 			$overseas_approver=User::find($trip->overseas_approver);
 		}
@@ -421,7 +431,6 @@ class TripController extends Controller
 			'entertain_detail',
 			
 		]));
-// 		dd($demostic_data);
 		DB::transaction(function()use($trip,$request,$demostic_data){
 			$trip->status=($request->input('status')=='partly-approved' || $request->input('status')=='rejected')?'pending':$request->input('status');
 			$trip->cost_center_id=$request->input('cost_center_id');
@@ -452,7 +461,6 @@ class TripController extends Controller
 		});
 		$user_id=Auth::user()->UserID;
 		return redirect('/etravel/'.$user_id.'/triplist?status=pending');
-// 		dd($request->all());
 	}
 	/**
 	 * @desc store demostic update data by it owner creater(Resubmit)
@@ -571,6 +579,11 @@ class TripController extends Controller
 			DB::rollBack();
 		}
 	}
+	/**
+	 * @param TripCancelRequest $request
+	 * @param Trip $trip
+	 * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+	 */
 	public function demosticCancel(TripCancelRequest $request,Trip $trip) 
 	{
 		$user_id=Auth::user()->UserID;
@@ -579,6 +592,11 @@ class TripController extends Controller
 		Event::fire(new TripNotify($trip, $request, $trip->status));
 		return redirect('/etravel/'.$user_id.'/triplist?status=cancelled');
 	}
+	/**
+	 * @param TripCancelRequest $request
+	 * @param Trip $trip
+	 * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+	 */
 	public function nationalCancel(TripCancelRequest $request,Trip $trip)
 	{
 		$trip->status = 'cancelled';

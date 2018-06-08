@@ -108,8 +108,8 @@
 										<div class="form-group">
 											<label class="control-label">Project Code</label>
 											
-											<select id="project_code" name="project_code" class="form-control">
-												<option value="">Select...</option>
+											<select id="project_code" name="project_code" class="form-control select2">
+												<option disabled selected value></option>
 												@if($wbscodeList)
 												@foreach ($wbscodeList as $item)
 													@if($item['wbs_id']==old('project_code'))

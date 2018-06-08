@@ -51,10 +51,9 @@
 									<!--/span-->
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">SITE</label> <select id="Site"
-												name="Site" disabled=""
-												class="cboSelect2 leave-control form-control" tabindex="-1">
-												<option value="0">&lt;&nbsp; {{ $userObjMdl->site()->first()['Site'] }}&nbsp;&gt;</option>
+											<label class="control-label">SITE</label> 
+											<select id="Site" name="Site" disabled class="select2 form-control">
+												<option value="0">{{ $userObjMdl->site()->first()['Site'] }}</option>
 											</select>
 
 
@@ -64,28 +63,24 @@
 								</div>
 
 								<div class="row">
-
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Cost Center</label> 
-											<select name="cost_center_id" class="cboSelect2 leave-control form-control" tabindex="-1" disabled>
-												<option >&lt;&nbsp;{{ $costCenterCode }}&nbsp;&gt;</option>
+											<select name="cost_center_id" class="select2 form-control" disabled>
+												<option >{{ $costCenterCode }}</option>
 											</select>
 										</div>
 									</div>
-									<!--/span-->
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Department</label> 
-											<select id="Department" name="Department" disabled="" class="cboSelect2 leave-control form-control" tabindex="-1">
-												<option value="0">&lt;&nbsp;{{ $userObjMdl->department()->first()['Department']}}&nbsp;&gt;</option>
+											<select id="Department" name="Department" disabled class="select2 form-control">
+												<option value="0">{{ $userObjMdl->department()->first()['Department']}}</option>
 											</select>
 
 
 										</div>
 									</div>
-									<!--/span-->
-
 								</div>
 
 								<div class="row">
@@ -234,10 +229,9 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">Department Approver
-											</label> 
-											<select name="department_approver" class="cboSelect2 leave-control form-control" tabindex="-1" disabled>
-												<option value="">&lt;&nbsp;{{ $approver->FirstName }}&nbsp;&gt;</option> 
+											<label class="control-label">Department Approver</label> 
+											<select name="department_approver" class="select2 form-control" disabled>
+												<option value="{{ $approver->FirstName }}">{{ $approver->LastName }} {{ $approver->FirstName }}</option> 
 											</select>
 																@if($trip->status=='pending')
 																<span class="glyphicon glyphicon-hand-right" style="color: green"></span>

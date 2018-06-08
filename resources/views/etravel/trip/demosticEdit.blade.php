@@ -50,13 +50,12 @@
 									<!--/span-->
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">SITE</label> <select id="Site"
-												name="Site" disabled=""
-												class="cboSelect2 leave-control form-control" tabindex="-1">
-												<option value="0">&lt;&nbsp; {{ $userObjMdl->site()->first()['Site'] }}&nbsp;&gt;</option>
+											<label class="control-label">SITE</label> 
+											<select id="Site" name="Site" class="select2 form-control" disabled>
+												<option value="0">
+												{{ $userObjMdl->site()->first()['Site'] }}
+												</option>
 											</select>
-
-
 										</div>
 									</div>
 									<!--/span-->
@@ -67,13 +66,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Cost Center</label> 
-											<select name="cost_center_id" class="cboSelect2 leave-control form-control" tabindex="-1">
+											<select name="cost_center_id" class="select2 form-control">
 												@foreach($costCenters as $costItem)
 												<option value="{{ $costItem['CostCenterID'] }}">
-													&lt;&nbsp;{{ $costItem['CostCenterCode'] }}&nbsp;&gt;
+													{{ $costItem['CostCenterCode'] }}
 												</option>
 												@endforeach
-												<option value="{{$costCenterCode}}">&lt;&nbsp;{{ $costCenterCode }}&nbsp;&gt;</option>
+												<option value="{{$costCenterCode}}">{{ $costCenterCode }}</option>
 											</select>
 										</div>
 									</div>
@@ -81,8 +80,8 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Department</label> 
-											<select id="Department" name="Department" disabled="" class="cboSelect2 leave-control form-control" tabindex="-1">
-												<option value="0">&lt;&nbsp;{{ $userObjMdl->department()->first()['Department']}}&nbsp;&gt;</option>
+											<select id="Department" name="Department" disabled class="select2 form-control">
+												<option value="0">{{ $userObjMdl->department()->first()['Department']}}</option>
 											</select>
 
 
@@ -121,6 +120,7 @@
 										<div class="form-group">
 											<label class="control-label">Project Code</label>
 											<select id="project_code" name="project_code" class="form-control input-sm select2">
+												<option disabled selected value></option>
 												@foreach ($wbscodeList as $item)
 													@if($item['wbs_id']==old('project_code') || $item['wbs_id']==$trip->project_code)
 													<option value="{{$item['wbs_id']}}" selected="selected">{{$item['wbs_code']}}</option>
@@ -307,8 +307,8 @@
 										<div class="form-group">
 											<label class="control-label">Department Approver
 											</label> 
-											<select name="department_approver" class="cboSelect2 leave-control form-control" tabindex="-1" disabled>
-												<option value="">&lt;&nbsp;{{ $approver->FirstName }}&nbsp;&gt;</option> 
+											<select name="department_approver" class="select2 form-control" disabled>
+												<option value="{{ $approver->FirstName }}">{{ $approver->LastName }} {{ $approver->FirstName }}</option> 
 											</select>
 											@if($trip->status == 'partly-approved')
 											<span class="fa fa-thumbs-o-down"></span> <strong> {{ ucfirst($trip->status)}} by: {{ ucfirst($approver->LastName) }} {{ $approver->FirstName }} on {{$trip->updated_at}}</strong> 
@@ -323,7 +323,7 @@
 										<div class="form-group">
 											<label>Approver Comments</label>
 											<textarea name="approver_comment"
-									class="form-control leave-control" style="overflow-y: scroll;" disabled
+									class="form-control" style="overflow-y: scroll;" disabled
 									rows="2">{{ $trip->approver_comment }}</textarea>
 										</div>
 									</div>

@@ -36,14 +36,12 @@
 									<!--/span-->
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">SITE</label> <select id="Site"
-												name="Site" disabled=""
-												class="cboSelect2 leave-control form-control" tabindex="-1">
-												<option value="0">&lt;&nbsp;{{ $userProfile['site']['Site']
-													}}&nbsp;&gt;</option>
+											<label class="control-label">SITE</label> 
+											<select id="Site" name="Site" class="select2 form-control" disabled>
+												<option value="0">
+													{{$userProfile['site']['Site']}}
+												</option>
 											</select>
-
-
 										</div>
 									</div>
 									<!--/span-->
@@ -70,11 +68,11 @@
 									<!--/span-->
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">Department</label> <select
-												id="Department" name="Department" disabled=""
-												class="cboSelect2 leave-control form-control" tabindex="-1">
-												<option value="0">&lt;&nbsp;{{
-													$userProfile['department']['Department'] }}&nbsp;&gt;</option>
+											<label class="control-label">Department</label> 
+											<select id="Department" name="Department" class="select2 form-control" disabled>
+												<option value="0">
+												{{$userProfile['department']['Department'] }}
+												</option>
 											</select>
 
 
@@ -110,8 +108,8 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Project Code</label>
-											<select id="project_code" name="project_code" class="form-control input-sm">
-													<option value="">Select...</option>
+											<select id="project_code" name="project_code" class="form-control input-sm select2">
+												<option disabled selected value></option>
 												@foreach ($wbscodeList as $item)
 													@if($item['wbs_id']==old('project_code'))
 													<option value="{{$item['wbs_id']}}" selected="selected">{{$item['wbs_code']}}</option>

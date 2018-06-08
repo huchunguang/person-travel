@@ -18,8 +18,8 @@ class checkUserMiddleware {
 		if (!Auth::check()) {
 			$user = false;
 			$userName = GetWindowsUsername();
-			//$userName = 'A6053995';//Nancy
-			//$userName = 'A0009298';//Victor
+			//$userName = 'A6053995';//Available Window Account Of Nancy for testing
+			//$userName = 'A0009298';//Available Window Account Of Victor for testing
 			if ($userName){
 				$user = User::where('UserName', $userName)->first();
 				if (empty($user)) {
@@ -27,6 +27,8 @@ class checkUserMiddleware {
 						'userName' => $userName
 					]);
 				}
+			}else{
+				return redirect('auth/login');
 			}
 			Auth::login($user);
 			$addParams = ['userName'=>$userName,'user_id'=>$user['UserID']];

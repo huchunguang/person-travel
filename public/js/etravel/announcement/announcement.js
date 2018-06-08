@@ -17,7 +17,7 @@
 		var siteId = $(this).val();
 		$.get('/site-companies/'+siteId,function(companyList){
 			for(var i=0;i<companyList.length;i++){
-				companyStr+="<option value="+companyList[i].CompanyID+">"+companyList[i].CompanyName+"</option>";
+				companyStr+="<option value="+companyList[i].CompanyID+">"+companyList[i].CompanyCode+"-"+companyList[i].CompanyName+"</option>";
 			}
 			if(companyStr!=""){
 				$('#companySel').empty().append(companyStr);
@@ -44,6 +44,8 @@
 	var textarea = document.getElementById('announcement');
     // editor generator 
     var editor = new wangEditor(textarea);
+    // configure with English
+    editor.config.lang = wangEditor.langs['en'];
     editor.create();
     $('#adminAnnounceform').submit(function(e){
     		e.preventDefault();

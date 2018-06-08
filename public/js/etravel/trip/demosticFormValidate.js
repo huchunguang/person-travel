@@ -31,9 +31,9 @@
 //	                    extra_comment: {
 //	                        required: true
 //	                    },
-	                    project_code: {
-	                    	required: true
-	                    },
+//	                    project_code: {
+//	                    	required: true
+//	                    },
 	                    department_approver: {
 	                    	required: true
 	                    },

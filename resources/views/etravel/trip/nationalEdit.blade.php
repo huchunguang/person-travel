@@ -124,6 +124,7 @@
 										<div class="form-group">
 											<label class="control-label">Project Code</label>
 											<select id="project_code" name="project_code" class="form-control input-sm select2">
+												<option disabled selected value></option>
 												@foreach ($wbscodeList as $item)
 													@if($item['wbs_id']==old('project_code') || $item['wbs_id']==$trip->project_code)
 													<option value="{{$item['wbs_id']}}" selected="selected">{{$item['wbs_code']}}</option>
