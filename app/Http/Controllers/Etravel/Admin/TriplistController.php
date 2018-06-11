@@ -19,17 +19,18 @@ class TriplistController extends AdminController
 		$siteList = $this->siteListHRSecurity($country_id);
 		$companyList = $this->getCompanyListHRSecurity($site_id);
 		$departmentList = $this->getDepByCompanySite($site_id, $company_id);
-		if ($request->isMethod('post')){
+		if ($country_id){
 			$searchFilter = $this->prepareSearchFilter($request);
+// 			dd($searchFilter);
 			$baseFilter=array_except($searchFilter, ['daterange_from','daterange_to']);
-			$betweenFilter=array_only($searchFilter, ['daterange_from','daterange_to']);
-			unset($searchFilter);
+			$betweenFilter=[$searchFilter['daterange_from'],$searchFilter['daterange_to']];
 			$tripList = Trip::where($baseFilter)->whereBetween('daterange_from',$betweenFilter)->whereBetween('daterange_to',$betweenFilter)->paginate(PAGE_SIZE);
-// 			dd($tripList->toArray());
-		}
-		if ($request->isMethod('get')){
+			$tripList->appends($request->all());
+			unset($searchFilter);
+		}else{
 			$tripList=Trip::whereBetween('daterange_from',[Carbon::now()->subDays(30)->format('m/d/Y'),Carbon::today()->format('m/d/Y')])->paginate(PAGE_SIZE);
 		}
+// 		dd($tripList->toArray());
 		return view('/etravel/admin/triplist/index', compact('countryList', 'siteList', 'companyList','departmentList','breadcrumb','tripList','status'));
 	}
 	protected function prepareSearchFilter(Request $request)
