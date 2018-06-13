@@ -1,26 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-
-</head>
+<meta charset="utf-8">
+<title>无固定width/height容器内的绝对定位元素拉伸</title>
 <style>
-div.test
-{
-white-space:nowrap; 
-width:120px; 
-overflow:hidden; 
-	text-overflow:ellipsis;
+body {
+    background-color: #ddd;
+}
+img {
+	vertical-align: bottom;
+}
+.container { 
+	display:inline-block;
+	position: relative;
+}
+.cover { 
+	position: absolute; 
+	left: 0; top: 0; right: 0; bottom: 0;
+	opacity: .5; filter: alpha(opacity=50);
 }
 </style>
-<body>
-<div class="box" style="border:1px solid blue;overflow:scroll;">
+</head>
 
-	<div class="test" style="border:1px solid red;height:100px;width:100px;float:left;">
-		fasfasf
-	</div>
+<body>
+<div class="container">
+	<i class="cover"></i>
+	<img src="http://img.mukewang.com/547c34cf000171a002560191.jpg" width="512" height="381">
 </div>
-<div class="test" style="">This is some long text that will not fit in the box</div>
+<span class="container">
+	<i class="cover"></i>
+	<img src="http://img.mukewang.com/547c34c9000171a002560191.jpg" width="256" height="191">
+</span>
 </body>
 </html>
