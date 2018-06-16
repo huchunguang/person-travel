@@ -74,6 +74,7 @@ class EmailTripNotify {
 				array_push($cc, $this->system->adminEmail);
 			}
 // 			dd($cc);
+
 			$message->to($to)->cc($cc)->subject("Etravel:".$subject);
 			
 		});
@@ -100,3 +101,6 @@ class EmailTripNotify {
 		return $subject;
 	}
 }
+
+
+

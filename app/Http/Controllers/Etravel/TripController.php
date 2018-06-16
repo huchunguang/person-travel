@@ -130,7 +130,7 @@ class TripController extends Controller
 			'contact_name' => 'required',
 			'purpose_desc' => 'required',
 			'department_approver' => 'required|integer',
-			'project_code' => 'required'
+// 			'project_code' => 'required'
 		];
     	$this->validate($request, $rules);
 		$tripData = $request->only([ 
