@@ -47,7 +47,7 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">SITE</label> 
+											<label class="control-label">Site</label> 
 											<select id="Site" class="form-control input-sm select2" disabled>
 												<option>
 												{{ $userObjMdl->site()->first()['Site'] }}
@@ -180,7 +180,7 @@
 										
 									<div class="portlet box default">
 										<div class="portlet-title">
-											<div class="caption">PURPOSE OF TRAVEL</div>
+											<div class="caption" style="font-size:14px;">PURPOSE OF TRAVEL</div>
 											<div class="tools">
 												<a href="" class="collapse" data-original-title="" title="">
 												</a>
@@ -613,7 +613,7 @@
 										
 									<div class="portlet box default">
 										<div class="portlet-title">
-											<div class="caption">
+											<div class="caption uppercase">
 												Extra Comments
 											</div>
 											<div class="tools">

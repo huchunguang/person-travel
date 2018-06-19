@@ -51,7 +51,7 @@
 									<!--/span-->
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">SITE</label> 
+											<label class="control-label">Site</label> 
 											<select id="Site" name="Site" disabled class="select2 form-control">
 												<option value="0">{{ $userObjMdl->site()->first()['Site'] }}</option>
 											</select>
@@ -219,7 +219,7 @@
 								<div class="row">
 									<div class="col-md-12 ">
 										<div class="form-group">
-											<label>Extra Comments</label>
+											<label class="uppercase">Extra Comments</label>
 											<textarea name="extra_comment" class="form-control" disabled
 										style="overflow-y: scroll;" rows="2">{{ $trip->extra_comment }}</textarea>
 										</div>

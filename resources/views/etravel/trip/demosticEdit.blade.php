@@ -50,7 +50,7 @@
 									<!--/span-->
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">SITE</label> 
+											<label class="control-label">Site</label> 
 											<select id="Site" name="Site" class="select2 form-control" disabled>
 												<option value="0">
 												{{ $userObjMdl->site()->first()['Site'] }}
@@ -292,7 +292,7 @@
 								<div class="row">
 									<div class="col-md-12 ">
 										<div class="form-group">
-											<label>Extra Comments</label>
+											<label class="uppercase">Extra Comments</label>
 											@if($trip->status == 'pending' || $trip->status == 'rejected')
 												<textarea name="extra_comment" class="form-control" style="overflow-y: scroll;" rows="2">{{ $trip->extra_comment }}</textarea>
 											@else
