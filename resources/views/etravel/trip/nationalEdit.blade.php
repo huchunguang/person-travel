@@ -66,9 +66,9 @@
 											<select id="destinationSel" name="destination[]" class="form-control input-sm select2" multiple>
 												@foreach($countryList as $countryItem)
 													@if(old('destination') == $countryItem['CountryID'] || in_array($countryItem['CountryID'],$destination))
-                                                    		<option value="{{$countryItem['CountryID']}}" selected="selected">
+                                                    		<option data-region="{{$countryItem['IsAsia']}}" value="{{$countryItem['CountryID']}}" selected="selected">
                                                     	@else
-                                                    		<option value="{{$countryItem['CountryID']}}">
+                                                    		<option data-region="{{$countryItem['IsAsia']}}" value="{{$countryItem['CountryID']}}">
                                                     	@endif
                                                     		{{$countryItem['Country']}}
                                                     		</option>
@@ -232,7 +232,7 @@
 
 								<div class="row">
 									
-									<div class="col-sm-12">
+									<div class="col-md-12">
 									<ul id="myTab" class="nav nav-tabs">
 										<li class="active"><a href="#home" data-toggle="tab">FLIGHT ITINERARY</a></li>
 										<li><a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a></li>
@@ -608,12 +608,12 @@
 								</div>
 								<p></p>
 								<div class="row">
-									<div class="col-sm-12">
+									<div class="col-md-12">
 										
 										
 									<div class="portlet box default">
 										<div class="portlet-title">
-											<div class="caption uppercase">
+											<div class="caption uppercase" style="font-size:14px;">
 												Extra Comments
 											</div>
 											<div class="tools">

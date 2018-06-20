@@ -178,7 +178,7 @@
 								</div>
 								
 								<div class="row">
-									<div class="col-sm-12">
+									<div class="col-md-12">
 									<ul id="myTab" class="nav nav-tabs">
 										<li class="active"><a href="#home" data-toggle="tab">FLIGHT ITINERARY</a></li>
 										<li><a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a></li>
@@ -534,10 +534,10 @@
 								</div>
 								<p></p>
 								<div class="row">
-									<div class="col-sm-12">
+									<div class="col-md-12">
 									<div class="portlet box default">
 										<div class="portlet-title">
-											<div class="caption uppercase">
+											<div class="caption uppercase" style="font-size:14px;">
 												Extra Comments
 											</div>
 											<div class="tools">

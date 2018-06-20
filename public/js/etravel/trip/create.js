@@ -5,7 +5,8 @@ $('#destinationSel').on('change',function(){
 		countryIds.push(regionId);
 	});
 	if(countryIds.length!=0){
-		if($.inArray('',countryIds)>=0||$.inArray(1,countryIds)>=0||$.inArray(2,countryIds)>=0||$.inArray(3,countryIds)>=0||$.inArray(4,countryIds)>=0||$.inArray(5,countryIds)>=0){
+		
+		if($.inArray('',countryIds)>=0||$.inArray(0,countryIds)>=0){
 			$.get('/etravel/approver',function(data){
 				var overseasOptions='';
 				$.each(data,function(ind,val){

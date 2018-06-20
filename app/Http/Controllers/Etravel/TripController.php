@@ -60,7 +60,7 @@ class TripController extends Controller
 		]);
 		$userProfile = User::getUserProfile();
 		$countryList = Country::orderBy('Country')->select([ 
-			
+			'IsAsia',
 			'CountryID',
 			'Country',
 			'RegionID'
@@ -370,7 +370,7 @@ class TripController extends Controller
 		$overseas_approver=[];
 		$userList = User::all(['Email','FirstName','LastName']);
 		$userProfile=User::getUserProfile();
-		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
+		$countryList = Country::orderBy('Country')->select(['CountryID','Country','IsAsia'])->get();
 		$purposeCategory = $this->user->purposeCatWithCompany();
 		if ($trip->overseas_approver){
 			$overseas_approver=User::find($trip->overseas_approver);

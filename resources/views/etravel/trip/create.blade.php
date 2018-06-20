@@ -52,7 +52,7 @@
 											<label class="control-label">Destination</label>
 											<select id="destinationSel" name="destination[]" class="form-control input-sm select2" multiple>
 													@foreach($countryList as $countryItem)
-                                                    		<option data-region="{{$countryItem['RegionID']}}" value="{{$countryItem['CountryID']}}" <?php if(in_array($countryItem['CountryID'], old('destination',[]))){echo "selected";}?>>
+                                                    		<option data-region="{{$countryItem['IsAsia']}}" value="{{$countryItem['CountryID']}}" <?php if(in_array($countryItem['CountryID'], old('destination',[]))){echo "selected";}?>>
                                                     		{{$countryItem['Country']}}
                                                     		</option>
                                                     @endforeach
@@ -175,7 +175,9 @@
 									</div>
 								</div>
 
-								<div class="row form-group col-sm-12">
+								<div class="row">
+									<div class="col-md-12">
+										
 									<div class="portlet box default">
 										<div class="portlet-title">
 											<div class="caption" style="font-size:14px;">PURPOSE OF TRAVEL</div>
@@ -202,10 +204,13 @@
 											</div>
 										</div>
 									</div>
+								
+									</div>
 								</div>
 								
 								
-								<div class="row form-group col-sm-12">
+								<div class="row">
+									<div class="col-md-12">
 									<ul id="myTab" class="nav nav-tabs">
 										<li class="active"><a href="#home" data-toggle="tab">FLIGHT ITINERARY</a></li>
 										<li><a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a></li>
@@ -521,6 +526,7 @@
 										
 										</div>
 									</div>
+									</div>
 								</div>
 								
 <!-- 								<div class="row form-group col-sm-12" > -->
@@ -544,10 +550,12 @@
 <!-- 									</div> -->
 
 <!-- 								</div> -->
-								<div class="row form-group col-sm-12">
+								<div class="row">
+									<div class="col-md-12">
+										
 									<div class="portlet box default">
 										<div class="portlet-title">
-											<div class="caption uppercase">
+											<div class="caption uppercase" style="font-size:14px;">
 												Extra Comments
 											</div>
 											<div class="tools">
@@ -559,6 +567,8 @@
 											<textarea id="extra_comment" name="extra_comment" class="form-control"
 												style="overflow-y: scroll;" rows="2">{{old('extra_comment')}}</textarea>
 										</div>
+									</div>
+								
 									</div>
 								</div>
 							</div>

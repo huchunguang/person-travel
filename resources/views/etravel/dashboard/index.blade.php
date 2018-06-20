@@ -67,7 +67,13 @@
 				</form>
 			
 			</div>
-			<div class="tab-pane fade" id="camry"></div>
+			<div class="tab-pane fade" id="camry">
+				<section class="text-center text-success bold">
+					Pls. Click this link > <a href="http://www.arkema-etravel.com/">www.arkema-ehotel.com</a>
+					You can view here all the approved Arkema Corporate Hotel 
+					in Asia Pacific
+				</section>
+			</div>
 		</div>
 	</div>
 	<div class="col-md-3">
