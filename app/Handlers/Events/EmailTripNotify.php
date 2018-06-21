@@ -71,7 +71,10 @@ class EmailTripNotify {
 			}
 			if ($request->input('status') == 'approved'){
 				
-				array_push($cc, $this->system->adminEmail);
+				if ($this->system->adminEmail) {
+					array_push($cc, $this->system->adminEmail);
+				}
+				
 			}
 // 			dd($cc);
 

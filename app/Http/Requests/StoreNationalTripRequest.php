@@ -40,8 +40,8 @@ class StoreNationalTripRequest extends Request {
 			'class_flight'=>'array',
 			'room_type'=>'string',
 			'smoking'=>'integer',
-			'purpose_file' => 'required|mimes:txt,doc,xlsx,pdf,docx,xls,jpg,png,gif,bmp,ppt,pptx',
-			'project_code'=>'required',
+// 			'purpose_file' => 'required|mimes:txt,doc,xlsx,pdf,docx,xls,jpg,png,gif,bmp,ppt,pptx',
+// 			'project_code'=>'required',
 			
 			
 		];

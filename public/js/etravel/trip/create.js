@@ -67,9 +67,9 @@ var FormValidation = function () {
 //                    extra_comment: {
 //                        required: true
 //                    },
-                    project_code: {
-                    	required: true
-                    },
+//                    project_code: {
+//                    	required: true
+//                    },
                     "employee_annual_budget[]": {
                     	number:true
                     },
