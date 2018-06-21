@@ -27,12 +27,12 @@
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<div class="form-group">
 						<input type="radio" name="trip" value="international" id="tabInternationalTrip"/> 
-						<a href="javascript:;" class="btn info "><label for="tabInternationalTrip"><strong>International Trip</strong></label></a>
+						<a href="javascript:;" class="btn info "><label for="tabInternationalTrip" style="font-size:15px;"><strong>International Trip</strong></label></a>
 
 					</div>
 					<div class="form-group">
 						<input type="radio" name="trip" value="demostic" id="domesticTrip"/> 
-						<a href="javascript:;"class="btn info "><label for="domesticTrip"><strong>Domestic Trip</strong></label></a>
+						<a href="javascript:;"class="btn info "><label for="domesticTrip" style="font-size:15px;"><strong>Domestic Trip</strong></label></a>
 					</div>
 
 					<center>
@@ -142,10 +142,15 @@
                                                 <tr>
                                                     <td class="highlight">
                                                         <div class="success"></div>
-                                                        <a href="">  {{isset($item->destination_name)?$item->destination_name:'Destination'}}  </a>
+                                                        @if($item['trip_type']=='1')
+														<a href="/etravel/tripnationallist/{{ $item['trip_id'] }}">{{isset($item->destination_name)?$item->destination_name:'Destination'}}  </a>
+														@elseif($item['trip_type']=='2')
+														<a href="/etravel/tripdemosticlist/{{ $item['trip_id'] }}">{{isset($item->destination_name)?$item->destination_name:'Destination'}}  </a>
+														@endif
                                                     </td>
                                                     <td class="hidden-xs">{{$item->daterange_from}}</td>
                                                     <td> {{$item->daterange_to}}</td>
+                                                    <td><i class="fa fa-check" style="color: green;"></i></td>
                                                 </tr>
                                              	@endforeach
                                           	@else
@@ -179,7 +184,7 @@
 			<div class="portlet box blue-soft">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-database"></i>Staff Trips</div>
+                                        <i class="fa fa-male"></i>Staff Trips</div>
                                     <div class="tools">
                                         <a href="javascript:;" class="expand" data-original-title="" title=""> </a>
                                     </div>
@@ -198,7 +203,7 @@
                                                 		@if($i<5)
                                                 			<tr>
                                                 				<td>
-															<a href="">{{$staffTripList['pending'][$i]->user()->first()['FirstName']}}</a>
+																{{$staffTripList['pending'][$i]->user()->first()['FirstName']}}
                                                 				</td>
                                                 				<td>{{$staffTripList['pending'][$i]['daterange_from']}}</td>
                                                 				<td>{{$staffTripList['pending'][$i]['daterange_to']}}</td>
@@ -220,7 +225,7 @@
                                                 		@if($i<5)
                                                 			<tr>
                                                 				<td>
-																	<a href="">{{$staffTripList['approved'][$i]->user()->first()['FirstName']}}</a>
+																	{{$staffTripList['approved'][$i]->user()->first()['FirstName']}}
                                                 				</td>
                                                 				<td>{{$staffTripList['approved'][$i]['daterange_from']}}</td>
                                                 				<td>{{$staffTripList['approved'][$i]['daterange_to']}}</td>
@@ -242,7 +247,7 @@
                                                 		@if($i<5)
                                                 			<tr>
                                                 				<td>
-															<a href="">{{$staffTripList['partly-approved'][$i]->user()->first()['FirstName']}}</a>
+																	{{$staffTripList['partly-approved'][$i]->user()->first()['FirstName']}}
                                                 				</td>
                                                 				<td>{{$staffTripList['partly-approved'][$i]['daterange_from']}}</td>
                                                 				<td>{{$staffTripList['partly-approved'][$i]['daterange_to']}}</td>
@@ -264,7 +269,7 @@
                                                 		@if($i<5)
                                                 			<tr>
                                                 				<td>
-															<a href="">{{$staffTripList['rejected'][$i]->user()->first()['FirstName']}}</a>
+																	{{$staffTripList['rejected'][$i]->user()->first()['FirstName']}}
                                                 				</td>
                                                 				<td>{{$staffTripList['rejected'][$i]['daterange_from']}}</td>
                                                 				<td>{{$staffTripList['rejected'][$i]['daterange_to']}}</td>
@@ -286,7 +291,7 @@
                                                 		@if($i<5)
                                                 			<tr>
                                                 				<td>
-															<a href="">{{$staffTripList['cancelled'][$i]->user()->first()['FirstName']}}</a>
+																	{{$staffTripList['cancelled'][$i]->user()->first()['FirstName']}}
                                                 				</td>
                                                 				<td>{{$staffTripList['cancelled'][$i]['daterange_from']}}</td>
                                                 				<td>{{$staffTripList['cancelled'][$i]['daterange_to']}}</td>
@@ -310,7 +315,7 @@
 				<div class="portlet box blue-soft">
 					<div class="portlet-title">
 						<div class="caption">
-                           	<i class="fa fa-database"></i>
+                           	<i class="glyphicon glyphicon-arrow-right"></i>
                            	<div style="display: inline-block;">
                            	<lable style="width:20px;background-color:grey;border-radius:50%;border:2px solid grey;background-clip:content-box;padding:1px;">
                            	{{ isset($staffTripList['pending'])?sprintf('%02d',count($staffTripList['pending'])):'00' }}
@@ -349,7 +354,11 @@
                                                 <tr>
                                                     <td class="highlight">
                                                         <div class="success"></div>
-                                                        <a href="">  {{isset($item->destination_name)?$item->destination_name:'Destination'}}  </a>
+                                                        @if($item['trip_type']=='1')
+														<a href="/etravel/tripnationallist/{{ $item['trip_id'] }}">{{isset($item->destination_name)?$item->destination_name:'Destination'}}  </a>
+														@elseif($item['trip_type']=='2')
+														<a href="/etravel/tripdemosticlist/{{ $item['trip_id'] }}">{{isset($item->destination_name)?$item->destination_name:'Destination'}}  </a>
+														@endif
                                                     </td>
                                                     <td class="hidden-xs">{{$item->daterange_from}}</td>
                                                     <td> {{$item->daterange_to}}</td>

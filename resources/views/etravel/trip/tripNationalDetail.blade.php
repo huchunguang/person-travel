@@ -170,6 +170,7 @@
 											
 											<div class="form-group">
 												<button type="button" class="btn purple" id="downloadFile" data-filename="{{$trip->purpose_file}}">Download File</button>
+												<textarea class="form-control" rows="1" placeholder="Process something" name="purpose_desc" style="padding-top: 0;overflow-y: scroll;" disabled>{{$trip->purpose_desc}}</textarea>
 											</div>
 										
 										</div>

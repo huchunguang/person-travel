@@ -50,7 +50,7 @@ class EmailTripNotify {
 			$manager = User::find($trip->department_approver);
 		}
 		$recipient=$trip->user()->first();
-		$subject = $this->getSubject($travelType, $actionType, $tripCreater);
+		$subject = $this->getSubject($travelType, $actionType, $tripCreater,$trip);
 		$variables=[
 			
 			'trip' => $trip,
@@ -87,7 +87,7 @@ class EmailTripNotify {
 			Log::info('failed to send notify email', ['id' => $trip->trip_id,'variables'=>$variables]);
 		}
 	}
-	public function getSubject($travelType,$actionType,$tripCreater)
+	public function getSubject($travelType,$actionType,$tripCreater,$trip)
 	{
 		$subject='';
 		$userLastName=Auth::user()->LastName;
@@ -97,7 +97,7 @@ class EmailTripNotify {
 		}elseif ($actionType=='pending'){
 			$subject = "{$userLastName} {$userFirstName} updated {$travelType} travel request for your approval";
 		}elseif ($actionType=='approved' || $actionType=='partly-approved' || $actionType=='rejected'){
-			$subject = "{$travelType} travel request has been {$actionType}";
+			$subject = "{$travelType} Travel Request# {$trip->reference_id} has been {$actionType}";
 		}elseif ($actionType=='cancelled'){
 			$subject = "{$userLastName} {$userFirstName} {$actionType} his {$travelType} travel request";
 		}

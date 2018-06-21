@@ -64,6 +64,9 @@ var FormValidation = function () {
                 	daterange_from: {
                         required: true
                     },
+                    purpose_desc: {
+                    	maxlength:255
+                    },
 //                    extra_comment: {
 //                        required: true
 //                    },

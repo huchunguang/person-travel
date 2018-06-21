@@ -199,6 +199,7 @@ class TripController extends Controller
     			$trip->cost_center_id=$request->input('cost_center_id');
     			$trip->daterange_from=$request->input('daterange_from');
     			$trip->daterange_to=$request->input('daterange_to');
+    			$trip->purpose_desc=$request->input('purpose_desc');
     			$trip->overseas_approver=$request->input('overseas_approver');
     			$trip->department_approver=$request->input('department_approver');
     			$trip->approver_comment=$request->input('approver_comment');
@@ -443,21 +444,19 @@ class TripController extends Controller
 					$demostic_trip->datetime_date=$item['datetime_date'];
 					$demostic_trip->datetime_time=$item['datetime_time'];
 					$demostic_trip->location=$item['location'];
-					$demostic_trip->purpose_id=$item['purpose_id'];
-					$demostic_trip->customer_name=$item['customer_name'];
-					$demostic_trip->contact_name=$item['contact_name'];
-					$demostic_trip->purpose_desc=$item['purpose_desc'];
-					$demostic_trip->travel_cost=number_format($item['travel_cost'],2);
-					$demostic_trip->entertain_cost=number_format($item['entertain_cost'],2);
-					$demostic_trip->entertain_detail=$item['entertain_detail'];
+					$demostic_trip->purpose_id = $item['purpose_id'];
+					$demostic_trip->customer_name = $item['customer_name'];
+					$demostic_trip->contact_name = $item['contact_name'];
+					$demostic_trip->purpose_desc = $item['purpose_desc'];
+					$demostic_trip->travel_cost = number_format($item['travel_cost'], 2);
+					$demostic_trip->entertain_cost = number_format($item['entertain_cost'], 2);
+					$demostic_trip->entertain_detail = $item['entertain_detail'];
 					$demostic_trip->save();
-				}else{
+				} else {
 					$trip->demostic()->create($item);
 				}
-				
 			}
 			Event::fire(new TripNotify($trip, $request, $trip->status));
-			
 		});
 		$user_id=Auth::user()->UserID;
 		return redirect('/etravel/'.$user_id.'/triplist?status=pending');
@@ -473,16 +472,16 @@ class TripController extends Controller
 // 		dd($request->all());
 		DB::beginTransaction();
 		try {
-			$trip->user_id=Auth::user()->UserID;
-			$trip->status=$request->input('status')=='rejected'?'pending':$request->input('status');
-			
-			$trip->destination_id=$request->input('destination');
-			$trip->cost_center_id=$request->input('cost_center_id');
-			$trip->daterange_from=$request->input('daterange_from');
-			$trip->daterange_to=$request->input('daterange_to');
-			$trip->department_approver=$request->input('department_approver');
-			$trip->approver_comment=$request->input('approver_comment');
-			$trip->extra_comment=$request->input('extra_comment');
+			$trip->user_id = Auth::user()->UserID;
+			$trip->status = $request->input('status') == 'rejected' ? 'pending' : $request->input('status');
+			$trip->destination_id = $request->input('destination');
+			$trip->cost_center_id = $request->input('cost_center_id');
+			$trip->daterange_from = $request->input('daterange_from');
+			$trip->daterange_to = $request->input('daterange_to');
+			$trip->purpose_desc = $request->input('purpose_desc');
+			$trip->department_approver = $request->input('department_approver');
+			$trip->approver_comment = $request->input('approver_comment');
+			$trip->extra_comment = $request->input('extra_comment');
 			if($request->hasFile('purpose_file')){
 				$file=$request->file('purpose_file');
 				if(!$file->isValid()){

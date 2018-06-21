@@ -202,6 +202,8 @@
 <!--                                                             <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a> -->
                                                         </div>
                                               		</div>
+                                              		<textarea class="form-control" rows="1" placeholder="Process something" name="purpose_desc" style="padding-top: 0;overflow-y: scroll;">{{$trip->purpose_desc}}</textarea>
+                                              		
 											</div>
 										</div>
 									</div>

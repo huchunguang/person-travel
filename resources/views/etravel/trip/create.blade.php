@@ -170,7 +170,7 @@
 									<div class="col-md-12 ">
 										<div class="form-group">
 											<label>Approver Comments</label>
-											<textarea name="approver_comment" class="form-control leave-control" style="overflow-y: scroll;" rows="2" disabled>{{old('approver_comment')}}</textarea>
+											<textarea name="approver_comment" class="form-control" style="overflow-y: scroll;" rows="2" disabled>{{old('approver_comment')}}</textarea>
 										</div>
 									</div>
 								</div>
@@ -187,8 +187,8 @@
 											</div>
 										</div>
 										<div class="portlet-body form">
-											<div class="form-group">
-                                                    <div class="fileinput fileinput-new" data-provides="fileinput" style="margin-top: 5px;">
+											<div class="form-group" style="border: 2px #dddddd solid;">
+                                                    <div class="fileinput fileinput-new" data-provides="fileinput" style="margin-top: 5px;margin-bottom:0;">
                                                         <div class="input-group input-large">
                                                             <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
                                                                 <i class="fa fa-file fileinput-exists"></i>&nbsp;
@@ -201,6 +201,8 @@
                                                             <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                                         </div>
                                               		</div>
+                                              <textarea class="form-control" rows="1" placeholder="Process something" name="purpose_desc" style="padding-top: 0;overflow-y: scroll;"></textarea>
+                                              		
 											</div>
 										</div>
 									</div>
