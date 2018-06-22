@@ -17,8 +17,7 @@ use Carbon\Carbon;
 									<div class="form-group">
 										<lavel class="control-label">Country</lavel>
 										<div class="input-group">
-											<select id="country_id" name="country_id"
-												class="form-control input-sm select2">
+											<select id="country_id" name="country_id" class="form-control input-sm select2">
 												<option value="">Select...</option> 
 												@foreach($countryList as $countryItem) 
 													@if($CountryAssignedID && $CountryAssignedID==$countryItem['CountryID'])

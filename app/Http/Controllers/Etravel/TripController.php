@@ -205,6 +205,7 @@ class TripController extends Controller
     			$trip->approver_comment=$request->input('approver_comment');
     			$trip->extra_comment=$request->input('extra_comment');
     			$trip->entertainment_details=$request->input('entertainment_details');
+    			
     			if ($request->hasFile('purpose_file')){
     				$file=$request->file('purpose_file');
     				if(!$file->isValid()){
@@ -522,6 +523,7 @@ class TripController extends Controller
 					$diffFlightIds=array_diff($flightIds, $reqFlightIds);
 					if ($diffFlightIds)Trip_flight::whereIn('id',$diffFlightIds)->delete();
 				}
+// 				dd($flightData);
 				foreach ($flightData as $flightItem)
 				{
 					if (!empty($flightItem['flight_id'])){

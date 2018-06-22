@@ -2023,47 +2023,7 @@ function ExecuteCancelLeaveRequest() {
     });
 }
 
-function CancelLeaveApprove(comment) {
-    var LeaveID = $("#_LeaveID").val();
-    var ApplicantID = $("#_LeaveApplicant").val();
-    
-    ViewProgressBar();
-    $.ajax({
-        type: "POST",
-        url: "../class/ajax.php",
-        data: {
-            nIndex: 20, //Cancel Leave request
-            Param: LeaveID + "|" + ApplicantID + "|" + comment
-        },
-        success: function (data, response) {//it's always good to check server output when developing...
-            var action = response;
-            if (action) {
-                location.reload();
-            }
-        }
-    });
-}
 
-function CancelLeaveSubmission(comment){
-    var LeaveID = $("#_LeaveID").val();
-    var ApplicantID = $("#_LeaveApplicant").val();
-    
-    ViewProgressBar();
-    $.ajax({
-        type: "POST",
-        url: "../class/ajax.php",
-        data: {
-            nIndex: 4, //Cancel Leave request
-            Param: LeaveID + "|" + ApplicantID + "|" + comment
-        },
-        success: function (data, response) {//it's always good to check server output when developing...
-            var action = response;
-            if (action) {
-                location.reload();
-            }
-        }
-    });
-}
 
 function RejectCancelValidation() {
     MessageBoxEx("Are you sure you want to reject this cancellation?",BootstrapDialog.TYPE_DANGER,"RejectCancelLeaveRequest","HideProgressBar");
@@ -2122,4 +2082,27 @@ function getDepBySiteCompany(siteId,companyId){
 		$('#department_id').append(departmentStr);
 	});
 	
+}
+
+
+function siteListWithCountry(countryId){
+	var siteStr='<option value="">Select...</option>';
+	$.get('/sites/'+countryId,function(siteList){
+		for(var i=0;i<siteList.length;i++){
+			siteStr+="<option value="+siteList[i].SiteID+">"+siteList[i].Site+"</option>";
+		}
+		$('#site_id').append(siteStr);
+		
+	});
+}
+function getUserBySiteId(siteId){
+	var userStr='<option value="">Select...</option>';
+	$.get('/site-users/'+siteId,function(userList){
+		$.each(userList,function(index,user){
+			userStr+="<option value="+user.UserID+">"+user.LastName+"-"+user.FirstName+"</option>";
+		});
+		$('#manager_id').append(userStr);
+		
+		
+	});
 }

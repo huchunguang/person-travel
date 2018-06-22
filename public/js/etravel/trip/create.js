@@ -386,9 +386,14 @@ function delHotelItem(){
 
 
 //New Flight
-
+function showFlight(){
+	$('.modal input').val('');
+	$(".modal #airline_or_train").val("0").select2()
+	$('#addNewFlight').modal("show");
+}
 var addFlightNum = 0;
 function addNewFlight(){
+	
 	var flight_date=$('.modal input[name="flight_date[]"]').val();
 	var flight_from=$('.modal input[name="flight_from[]"]').val();
 	var air_code=$('.modal input[name="air_code[]"]').val();
@@ -470,12 +475,11 @@ function editFlight()
 	$('.modal input[name="etd_time[]"]').val(etd_time);
 	$('.modal input[name="eta_time[]"]').val(eta_time);
 //	$('.modal input[name="class_flight[]"]').val(class_flight);
-	$('.modal #classFlightSel option[value="'+class_flight+'"]').attr("select","selected");
-	$('.modal #airline_or_train option[value="'+airline_or_train+'"]').attr("select","selected");
-	$('.modal #is_visa option[value="'+is_visa+'"]').attr("select","selected");
-	
+	$('.modal #classFlightSel option[value="'+class_flight+'"]').attr("selected","selected");
+//	$('.modal #airline_or_train option[value="'+airline_or_train+'"]').attr("selected","selected");
+	$(".modal #airline_or_train").val(airline_or_train).select2();
+	$('.modal #is_visa option[value="'+is_visa+'"]').attr("selected","selected");
 	$('.modal input[name="tr_id"]').val(id);
-	//
 	$('#addNewFlight').modal('show');
 }
 function showFlightItemOperate(obj){

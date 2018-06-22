@@ -86,4 +86,8 @@ class CountryController extends AdminController {
 	{
 		return response()->json($this->siteListHRSecurity($country->CountryID));
 	}
+	public function sitesByAll(Country $country) 
+	{
+		return response()->json($country->sites()->get());
+	}
 }

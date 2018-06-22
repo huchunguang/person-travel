@@ -38,8 +38,8 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         #List
         Route::get('{user}/triplist',['as'=>'triplist','uses'=>'TripController@index']);
         Route::get('triplist/{trip}','TripController@tripDetails');
-        Route::get('tripdemosticlist/{trip}','TripController@tripDemosticDetails');
-        Route::get('tripnationallist/{trip}','TripController@tripNationalDetails');
+        Route::get('tripdemosticlist/{trip}',['as'=>'domesticDetail','uses'=>'TripController@tripDemosticDetails']);
+        Route::get('tripnationallist/{trip}',['as'=>'internationalDetail','uses'=>'TripController@tripNationalDetails']);
         Route::get('trip/edit/{trip}','TripController@demosticEdit');
         Route::get('trip/cancel/{trip}','TripController@demosticCancel');
         Route::put('trip/update/{trip}','TripController@demosticUpdate');
@@ -58,6 +58,7 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
        	#Configuration
        	Route::resource('airline', 'AirlineController');
        	
+       	
        	#Etravel Admin
        	Route::resource('announcement', 'AnnouncementController');
        	Route::resource('purpose', 'PurposeController');
@@ -67,16 +68,22 @@ Route::group(['prefix'=>'etravel','namespace'=>'Etravel'],function(){
         });
     });
 });
-
-
+	//
+Route::group(['middleware'=>'checkUser'],function(){
+	Route::get('delegate/index','DelegateController@index');
+	Route::post('delegate/store','DelegateController@store');
+});
 Route::group([],function(){
 	Route::get('user/search','UserController@search');
 	
 	Route::get('country-sites/{country}','CountryController@sites');
+	Route::get('sites/{country}','CountryController@sitesByAll');
 	Route::get('site-companies/{site}','SiteController@getAccessDeps');
-	//
+	#Site
+	Route::get('site-users/{site}','SiteController@users');
 	#Company
 	Route::get('site-companys/{site_id}','CompanyController@getSiteCompanys');
+	
 	Route::get('site-company-departments/{site_id}/{company_id}','DepartmentController@getDepListBySiteIdCpId');
 });
 

@@ -36,6 +36,10 @@ class SystemInfo implements SystemVariable{
 		return Auth::user()->SiteID;
 		
 	}
+	public function getCountryId()
+	{
+		return Auth::user()->CountryAssignedID;
+	}
 	public function getAdminEmail()
 	{
 		$etravelAdmin = Company_site::where('CompanyID',Auth::user()->CompanyID)->where('SiteID',Auth::user()->SiteID)->first();

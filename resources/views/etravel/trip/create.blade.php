@@ -188,6 +188,7 @@
 										</div>
 										<div class="portlet-body form">
 											<div class="form-group" style="border: 2px #dddddd solid;">
+											       <textarea class="form-control" rows="2" placeholder="purpose description" name="purpose_desc" style="padding-top: 0;overflow-y: scroll;"></textarea>
                                                     <div class="fileinput fileinput-new" data-provides="fileinput" style="margin-top: 5px;margin-bottom:0;">
                                                         <div class="input-group input-large">
                                                             <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
@@ -201,7 +202,6 @@
                                                             <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                                         </div>
                                               		</div>
-                                              <textarea class="form-control" rows="1" placeholder="Process something" name="purpose_desc" style="padding-top: 0;overflow-y: scroll;"></textarea>
                                               		
 											</div>
 										</div>
@@ -267,7 +267,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">
-												<button data-target="#addNewFlight" data-toggle="modal" type="button" class="btn btn-primary">
+												<button onclick="showFlight()" type="button" class="btn btn-primary">
 													<i class="glyphicon glyphicon-plus-sign"></i> 
 													Add Line Item
 												</button>

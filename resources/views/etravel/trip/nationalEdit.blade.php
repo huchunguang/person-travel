@@ -187,7 +187,8 @@
 											</div>
 										</div>
 										<div class="portlet-body form">
-											<div class="form-group">
+											<div class="form-group" style="border: 2px #dddddd solid;">
+											       <textarea class="form-control" rows="2" placeholder="purpose description" name="purpose_desc" style="padding-top: 0;overflow-y: scroll;">{{$trip->purpose_desc}}</textarea>
                                                     <div class="fileinput fileinput-exists" data-provides="fileinput" style="margin-top: 5px;">
                                                         <div class="input-group input-large">
                                                             <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
@@ -198,11 +199,14 @@
                                                                 <span class="fileinput-new"> Select file </span>
                                                                 <span class="fileinput-exists"> Change </span>
                                                                 <input type="hidden" value="" name="">
+                                                                @if($trip->purpose_file)
                                                                 <input type="file" name="purpose_file" value="{{Storage::get($trip->purpose_file)}}"> </span>
-<!--                                                             <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a> -->
+                                                                @else
+                                                                <input type="file" name="purpose_file" value=""> </span>
+                                                                @endif
+                                                            <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                                         </div>
                                               		</div>
-                                              		<textarea class="form-control" rows="1" placeholder="Process something" name="purpose_desc" style="padding-top: 0;overflow-y: scroll;">{{$trip->purpose_desc}}</textarea>
                                               		
 											</div>
 										</div>
@@ -304,7 +308,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">
-												<button data-target="#addNewFlight" data-toggle="modal" type="button" class="btn btn-primary">
+												<button onclick="showFlight()" type="button" class="btn btn-primary">
 													<i class="glyphicon glyphicon-plus-sign"></i> 
 													Add Line Item
 												</button>
@@ -351,6 +355,9 @@
      													<td><input type="hidden" name="flight_from[]" value="{{$flightItem['flight_from']}}"/>{{$flightItem['flight_from']}}</td>
      													<td><input type="hidden" name="flight_to[]" value="{{$flightItem['flight_to']}}"/>{{$flightItem['flight_to']}}</td>
      													<td>
+     													
+     															
+     															<input type="hidden" name="airline_or_train[]" value="{{$flightItem['airline_or_train']}}"/>
      															@if($flightItem['airline_or_train']=='1')
 																 	airline  {{$flightItem['air_code']}}
 																@else

@@ -53,8 +53,8 @@
 											
 										</div>
 										<div class="col-md-8" style="padding-left:0;">
-										<select class="form-control select2 airlineSel" name="airline_or_train" id="airline_or_train" required style="display:inline">
-																<option value="">Select...</option>																
+										<select class="form-control select2 airlineSel" style="width: 100%" name="airline_or_train" id="airline_or_train" required style="display:inline">
+																<option value=""></option>																
 																<option value="1" data-id="">airline</option>
 																<option value="0">train</option>
 											</select>
@@ -89,7 +89,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">Class Fight</label>
-								<select class="form-control select2" name="class_flight[]" id="classFlightSel" required style="display:inline">
+								<select class="form-control" name="class_flight[]" id="classFlightSel" required style="display:inline">
 									<option value="">Select...</option>																
 									<option value="Economy">Economy</option>
 									<option value="Economy Plus">Economy Plus</option>
@@ -102,7 +102,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">VISA</label>
-								<select class="form-control select2" name="is_visa" id="is_visa">
+								<select class="form-control" name="is_visa" id="is_visa">
 									<option value="1">YES</option>
 									<option value="0">NO</option>
 								</select>

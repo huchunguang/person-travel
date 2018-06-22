@@ -37,12 +37,12 @@ class EmailTripNotify {
 		$request = $event->request;
 		if ($trip->trip_type==1){
 			$travelType = 'International';
-			$viewDetailUrl = url("etravel/tripnationallist/{$trip->trip_id}");
+			$viewDetailUrl = route('internationalDetail',['trip'=>$trip->trip_id]);
 		}else{
 			$travelType = 'Domestic';
-			$viewDetailUrl = url("etravel/tripdemosticlist/{$trip->trip_id}");
+			
+			$viewDetailUrl = route('domesticDetail',['trip'=>$trip->trip_id]);
 		}
-		
 		if ($trip->overseas_approver && $trip->is_depart_approved)
 		{
 			$manager = User::find($trip->overseas_approver);
@@ -93,7 +93,7 @@ class EmailTripNotify {
 		$userLastName=Auth::user()->LastName;
 		$userFirstName=Auth::user()->FirstName;
 		if ($actionType=='submitted'){
-			$subject = "{$userLastName} {$userFirstName} {$actionType} {$travelType} travel request for your approval";
+			$subject = "{$userLastName} {$userFirstName} ".ucfirst($actionType)." {$travelType} Travel Request# {$trip->reference_id} for your approval";
 		}elseif ($actionType=='pending'){
 			$subject = "{$userLastName} {$userFirstName} updated {$travelType} travel request for your approval";
 		}elseif ($actionType=='approved' || $actionType=='partly-approved' || $actionType=='rejected'){

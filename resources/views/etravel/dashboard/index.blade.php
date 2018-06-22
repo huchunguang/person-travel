@@ -107,6 +107,7 @@
                                                     </td>
                                                     <td class="hidden-xs">{{$item->daterange_from}}</td>
                                                     <td> {{$item->daterange_to}}</td>
+                                                    <td><i class="fa fa-arrow-right" style="color:orange;"></i></td>
                                                 </tr>
                                              	@endforeach
                                           	@else
@@ -195,7 +196,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td colspan="3" class="font-dark list-title">
-                                                    	<i class="fa fa-upload">PENGING</i>
+                                                    	<i class="fa fa-upload">Pending</i>
                                                    	</td>
                                                 </tr>
                                                 @if(isset($staffTripList['pending']) && count($staffTripList['pending']))
@@ -217,7 +218,7 @@
                                                 @endif
                                                 <tr>
                                                     <td colspan="3" class="font-dark list-title">
-                                                    	<i class="fa fa-check-square-o">APPROVED</i>
+                                                    	<i class="fa fa-check-square-o">Approved</i>
                                                     	</td>
                                                 </tr>
                                                 @if(isset($staffTripList['approved']) && count($staffTripList['approved']))
@@ -239,7 +240,7 @@
                                                 @endif
                                                  <tr>
                                                     <td colspan="3" class="font-dark list-title">
-                                                    	<i class="fa fa-check-square-o">PARTLY APPROVED</i>
+                                                    	<i class="fa fa-check-square-o">Partly Approved</i>
                                                     	</td>
                                                 </tr>
                                                 @if(isset($staffTripList['partly-approved']) && count($staffTripList['partly-approved']))
@@ -261,7 +262,7 @@
                                                 @endif
                                                 <tr>
                                                     <td colspan="3" class="font-dark list-title">
-                                                    	<i class="fa fa-thumbs-down">REJECTED</i>
+                                                    	<i class="fa fa-thumbs-down">Rejected</i>
                                                     	</td>
                                                 </tr>
                                                 @if(isset($staffTripList['rejected']) && count($staffTripList['rejected']))
@@ -283,7 +284,7 @@
                                                 @endif
                                                 <tr>
                                                     <td colspan="3" class="font-dark list-title">
-                                                    	<i class="fa fa-times">CANCELLED</i>
+                                                    	<i class="fa fa-times">Cancelled</i>
                                                     	</td>
                                                 </tr>
                                                 @if(isset($staffTripList['cancelled']) &&  count($staffTripList['cancelled']))

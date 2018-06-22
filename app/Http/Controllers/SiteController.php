@@ -89,4 +89,8 @@ class SiteController extends AdminController {
 // 		dd($companyList);		
 		return response()->json($companyList);
 	}
+	public function users(Site $site)
+	{
+		return response()->json($site->users()->get(['UserID','FirstName','LastName']));
+	}
 }
