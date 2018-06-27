@@ -6,7 +6,9 @@ use App\Airline;
 use App\Contacts\SystemVariable;
 use Illuminate\Http\Request;
 
-class AirlineController extends Controller {
+class AirlineController extends Controller 
+{
+	
 	public function __construct(SystemVariable $system) 
 	{
 		$this->system=$system;
@@ -19,12 +21,10 @@ class AirlineController extends Controller {
 	 */
 	public function index()
 	{
-		//
 		$airlineList=array();
 		$airlineList=Airline::orderBy('created_at','DESC')->paginate(PAGE_SIZE);
 // 		dd($airlineList->toArray());
 		return view('etravel/airline/index',['airlineList'=>$airlineList,'breadcrumb' => 'List Of Airline']);
-		
 	}
 
 	/**

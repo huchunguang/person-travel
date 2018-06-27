@@ -44,7 +44,7 @@
 								<tbody>
 									@if(count($purposeList)>0) 
 									@foreach($purposeList as $purposeItem)
-									<tr id="announce_{{$purposeItem['purpose_id']}}">
+									<tr id="TableClassRowID-{{$purposeItem['purpose_id']}}">
 										<td>{{$purposeItem['purpose_id']}}</td>
 										<td>{{$purposeItem['purpose_catgory']}}</td>
 										<td>{!! str_limit($purposeItem['purpose_desc'],10) !!}</td>
@@ -55,7 +55,7 @@
 												<i class="fa fa-pencil"></i> Ed<u>i</u>t
 											</button>
 											<button type="button" accesskey="D"
-												onclick="announcementDel({{$purposeItem['purpose_id']}})"
+												onclick="DeletePurposeType({{$purposeItem['purpose_id']}})"
 												class="btn red-mint leave-type-button">
 												<i class="fa fa-times"></i> <u>D</u>elete
 											</button>
@@ -81,5 +81,5 @@
 	</div>
 	
 </div>
-<script src="{{asset('/js/etravel/announcement/announcement.js')}}"></script>
+<script src="{{asset('/js/etravel/purpose/index.js')}}"></script>
 @endsection

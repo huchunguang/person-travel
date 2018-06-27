@@ -313,8 +313,8 @@ $('#btnRejectTravel').on('click',function(){
 	$('input[name="status"]').val('rejected');
 	$('#domestic_approval').submit();
 });
-$('input').iCheck({checkboxClass: 'icheckbox_minimal-green'});
-$('input').on('ifChanged', function(event){
+
+$('input[name^="is_approve"]').on('ifChanged', function(event){
 	  var approved_num=$(":checkbox:checked").length;
 // 	 	alert(approved_num)
 		if(approved_num == total_approved_num){

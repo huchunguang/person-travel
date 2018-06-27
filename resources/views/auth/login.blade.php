@@ -34,7 +34,12 @@
 							</div>
 						</div>
 
-
+						<div class="form-group">
+							<label class="col-md-4 control-label"></label>
+							<div class="col-md-6">
+								<label> <input type="checkbox" class="icheck" name="remember" value="1">  Remember Me</label>
+							</div>
+						</div>
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<button type="submit" class="btn btn-primary">
@@ -49,4 +54,7 @@
 		</div>
 	</div>
 </div>
+<script>
+$('input').iCheck({checkboxClass: 'icheckbox_minimal-green'});
+</script>
 @endsection

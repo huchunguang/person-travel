@@ -16,9 +16,19 @@ function SavePurposeType(purpose_id){
 	});
 }
 function DeletePurposeType(purpose_id){
-	$.post('/etravel/purpose/destroy/'+purpose_id,{},function(data){
-		if(data.res_info.code == '100000'){
-			$('#TableClassRowID-'+purpose_id).remove();
+	$.ajax({
+		'type':'DELETE',
+		'url':'/etravel/purpose/'+purpose_id,
+		'data':'',
+		'dataType':'json',
+		'success':function(data){
+			if(data.res_info.code == '100000'){
+				$('#TableClassRowID-'+purpose_id).remove();
+			}
+		},
+		'error':function(data){
+			
 		}
 	});
+
 }

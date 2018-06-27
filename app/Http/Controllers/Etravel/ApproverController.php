@@ -20,8 +20,8 @@ class ApproverController extends Controller {
 	
 	public function __construct(SystemVariable $system) 
 	{
-		$this->system=$system;
-		$this->user_id=Auth::user()->UserID;
+		$this->system = $system;
+		$this->user_id = Auth::user()->UserID;
 	}
 
 	/**
@@ -108,6 +108,7 @@ class ApproverController extends Controller {
 	{
 		//
 	}
+	
 	public function approval(Request $request,Trip $trip) 
 	{
 		$status= $request->input('status');
@@ -132,6 +133,13 @@ class ApproverController extends Controller {
 		}
 		
 	}
+	
+	/**
+	 * @brief retrieve overseas approver list when this travel out of Asia 
+	 * @param Request $request
+	 * @param ApproverRepository $approver
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
 	public function getOverseasApprover(Request $request,ApproverRepository $approver)
 	{
 		$countryId = Auth::user()->CountryAssignedID;

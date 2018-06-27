@@ -20,10 +20,20 @@ function CancelAirline(airline_id)
 	});
 }
 
-function DeletePurposeType(airline_id){
-	$.post('/etravel/airline/'+airline_id,{},function(data){
-		if(data.res_info.code == '100000'){
-			$('#TableClassRowID-'+airline_id).remove();
+function DeleteAirline(airline_id){
+	$.ajax({
+		'type':'DELETE',
+		'url':'/etravel/airline/'+airline_id,
+		'data':'',
+		'dataType':'json',
+		'success':function(data){
+			if(data.res_info.code == '100000'){
+				$('#TableClassRowID-'+airline_id).remove();
+			}
+		},
+		'error':function(data){
+			
 		}
 	});
+
 }

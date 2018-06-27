@@ -76,7 +76,8 @@ class PurposeController extends AdminController {
 	public function store(Request $request)
 	{
 		$rules=[
-			'purpose_catgory'=>'required|unique:trip_purposes|max:255',
+// 			'purpose_catgory'=>'required|unique:trip_purposes|max:255',
+			'purpose_catgory'=>'required|max:255',
 			'purpose_desc'=>'required|max:255',
 			'country'=>'required|integer',
 			'site_id'=>'required|integer',

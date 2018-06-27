@@ -312,7 +312,7 @@
 															<td class="text-center">Employee Annual Budget</td>
 															<td class="text-center">Employee YTD Expenses</td>
 															<td class="text-center">Available Amount</td>
-															<td class="text-center">Required Amount</td>
+															<td class="text-center">Required Budget for this Trip</td>
 														</tr>
 													</thead>
 													<tbody>
@@ -428,7 +428,7 @@
 														<div class="row">
 														<div class="col-md-7">
 															<div class="form-group">
-																<label class="control-label col-md-7">Select address from the list to inform Rep. Office</label>
+																<label class="control-label col-md-6" style="padding-left: 0;">Select address from the list to inform Rep. Office</label>
 																<div class="col-md-5">
 																	<select class="form-control js-data-example-ajax" name="rep_office[]" style="width: 230px;" multiple></select>
 																</div>
@@ -444,7 +444,9 @@
 														<div class="form-group">
 															<strong>User Preference:</strong>
 														</div>
-														<div class="col-md-10">
+														<div class="row">
+															<div class="col-md-6">
+																
 														<div class="form-group">
 															<label>Room Type:</label>
 															<div class="input-group">
@@ -460,8 +462,27 @@
 																	</label>
 																</div>
 															</div>
+															
 														</div>
-														<div class="form-group">
+														
+															</div>
+															
+															<div class="col-md-6">
+																
+                                                         	<div class="form-group">
+                                                         		
+																<label class="control-label col-md-3">Hotel Name</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="per_hotel_name" value="{{old('per_hotel_name')}}"> </div>
+															
+                                                         	</div>
+                                                         
+															</div>
+														</div>
+														
+														<div class="row">
+															<div class="col-md-6">
+																<div class="form-group">
+																	
 															<label>Smoking?:</label>
 															<div class="input-group">
 																<div class="icheck-inline">
@@ -473,12 +494,26 @@
 															</div>
 
 
-														</div>
+														
+																</div>
+															</div>
+															
+															<div class="col-md-6">
+																
+                                                         	<div class="form-group">
+                                                         		
+																<label class="control-label col-md-3">Rate per Night</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="rate_per_night" value="{{old('rate_per_night')}}"> </div>
+															
+                                                         	</div>
+                                                         
+															</div>
 														</div>
 														<div class="row">
 														<div class="col-md-6">
                                                                                     <div class="form-group">
-                                                                                        <label class="control-label col-md-3">Food Restrictions</label>
+                                                                                        <label class="control-label col-md-2" style="padding-left: 0;">Food <br />
+                                                                                        Restrictions</label>
                                                                                         <div class="col-md-9">
                                                                                             <select name="foods[]" class="form-control select2-multiple" multiple>
                                                                                                 <option value="Vegetarian" <?php if(in_array('Vegetarian', old('foods',[]))){echo "selected";}?>>Vegetarian</option>
@@ -486,8 +521,32 @@
                                                                                                 <option value="Muslim Food" <?php if(in_array('Muslim Food', old('foods',[]))){echo "selected";}?>>Muslim Food</option>
                                                                                             </select>
                                                                                         </div>
+                                                                                        
                                                                                     </div>
                                                                                 </div>
+                                                         <div class="col-md-6">
+                                                         	<div class="form-group">
+                                                         		
+																<label class="control-label col-md-3">No. of Nights</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="no_of_nights" value="{{old('no_of_nights')}}"> </div>
+															
+                                                         	</div>
+                                                         </div>
+														</div>
+														<div class="row">
+															<div class="col-md-6">
+															
+															</div>
+															<div class="col-md-6">
+																
+                                                         	<div class="form-group" style="margin-top:8px;">
+                                                         		
+																<label class="control-label col-md-3">Total Amount</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="total_amount" value="{{old('total_amount')}}"> </div>
+															
+                                                         	</div>
+                                                         
+															</div>
 														</div>
 													</li>
 												</ul>

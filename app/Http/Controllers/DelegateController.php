@@ -9,6 +9,8 @@ use App\Site;
 use App\Services\SystemInfo;
 use App\User;
 use App\Delegation;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class DelegateController extends Controller {
 
@@ -44,8 +46,8 @@ class DelegateController extends Controller {
 	}
 
 	/**
-	 * Store a newly created resource in storage.
-	 *
+	 * Store and Update a delegation entity
+	 * @param $request Request
 	 * @return Response
 	 */
 	public function store(Request $request)
@@ -53,10 +55,15 @@ class DelegateController extends Controller {
 		
 		$delegationId=$request->input('delegationId');
 		if (!$delegationId){
+			if (Delegation::where(['ManagerID'=>Auth::user()->UserID])->exists()){
+				$delegationId = Delegation::where(['ManagerID'=>Auth::user()->UserID])->first()->DelegationID;
+				goto update;
+			}
 			$res = Delegation::create($request->all());
 			return redirect('delegate/index')->withInput()->with('delegationId',$res->DelegationID);
 		}else{
 // 			dd($request->all());
+			update:
 			$updata = $request->only(['ManagerID','ManagerDelegationID','DelegationStartDate','DelegationEndDate','EnableDelegation']);
 			Delegation::find($delegationId)->update($updata);
 			return redirect('delegate/index')->withInput()->with('delegationId',$delegationId);

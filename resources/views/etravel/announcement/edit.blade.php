@@ -71,7 +71,7 @@
 														<div class="form-group">
 															<label class="control-label">Company</label>
 															<div class="input-group">
-																<select id="siteSel" name="site_id" class="form-control input-sm select2">
+																<select id="siteSel" name="company_id" class="form-control input-sm select2">
 																	<span class="select2-chosen" id="select2-chosen-2">
 																	@foreach($companyList as $companyItem)
 																	@if($announce['company_id'] == $companyItem['CompanyID'])

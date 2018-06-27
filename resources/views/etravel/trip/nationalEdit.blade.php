@@ -384,7 +384,7 @@
 															<td class="text-center">Employee Annual Budget</td>
 															<td class="text-center">Employee YTD Expenses</td>
 															<td class="text-center">Available Amount</td>
-															<td class="text-center">Required Amount</td>
+															<td class="text-center">Required Budget for this Trip</td>
 														</tr>
 													</thead>
 													<tbody>
