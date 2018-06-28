@@ -37,7 +37,7 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label"></label>
 							<div class="col-md-6">
-								<label> <input type="checkbox" class="icheck" name="remember" value="1">  Remember Me</label>
+								<label> <input type="checkbox" class="icheck" name="remember" value="1" {{old('remember')?'checked':''}}>  Remember Me</label>
 							</div>
 						</div>
 						<div class="form-group">

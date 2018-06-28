@@ -50,7 +50,7 @@ class EmailTripNotify {
 			$manager = User::find($trip->department_approver);
 		}
 		$recipient=$trip->user()->first();
-		$subject = $this->getSubject($travelType, $actionType, $tripCreater,$trip);
+		$subject = $this->getEmailSubject($travelType, $actionType, $tripCreater,$trip);
 		$variables=[
 			
 			'trip' => $trip,
@@ -87,7 +87,7 @@ class EmailTripNotify {
 			Log::info('failed to send notify email', ['id' => $trip->trip_id,'variables'=>$variables]);
 		}
 	}
-	public function getSubject($travelType,$actionType,$tripCreater,$trip)
+	public function getEmailSubject($travelType,$actionType,$tripCreater,$trip)
 	{
 		$subject='';
 		$userLastName=Auth::user()->LastName;

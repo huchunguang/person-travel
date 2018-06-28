@@ -56,7 +56,9 @@
                         <li><a href="/etravel/staff/travellist"><i class="fa fa-flag-o"></i> My Staff Travel Requests</a></li>
                         <li><a href="/etravel/staff/travellist?status=pending"><i class="fa fa-check"></i>  For My Approval</a></li>
                         <li class="divider"></li>
-						<li><a href="/auth/logout"> <i class="icon-key"></i> Log Out </a></li>
+                        <li><a href="/password/email"> <i class="icon-key"></i> Reset Password</a></li>
+                        <li class="divider"></li>
+						<li><a href="/auth/logout"> <i class="fa fa-sign-out"></i> Log Out </a></li>
 					</ul>
 				</li>
 			</ul>
