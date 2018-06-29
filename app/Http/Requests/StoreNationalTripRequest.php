@@ -25,7 +25,7 @@ class StoreNationalTripRequest extends Request {
 			'destination'=>'required|array',
 			'cost_center_id'=>'required|integer',
 			'daterange_from'=>'required|date',
-			'daterange_to'=>'required|date',
+			'daterange_to'=>'required|date|after:daterange_from',
 			'department_approver'=>'required|integer',
 			'approver_comment'=>'string',
 			'extra_comment'=>'string',
@@ -40,7 +40,7 @@ class StoreNationalTripRequest extends Request {
 			'class_flight'=>'array',
 			'room_type'=>'string',
 			'smoking'=>'integer',
-// 			'purpose_file' => 'required|mimes:txt,doc,xlsx,pdf,docx,xls,jpg,png,gif,bmp,ppt,pptx',
+			'purpose_file' => 'mimes:txt,doc,xlsx,pdf,docx,xls,jpg,png,gif,bmp,ppt,pptx',
 // 			'project_code'=>'required',
 			
 			

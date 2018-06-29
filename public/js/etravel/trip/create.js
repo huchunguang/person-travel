@@ -73,18 +73,18 @@ var FormValidation = function () {
 //                    project_code: {
 //                    	required: true
 //                    },
-                    "employee_annual_budget[]": {
-                    	number:true
-                    },
-                    "employee_ytd_expenses[]": {
-                    	number:true
-                    },
-                    "available_amount[]": {
-                    	number:true
-                    },
-                    "required_amount[]": {
-                    	number:true
-                    },
+//                    "employee_annual_budget[]": {
+//                    	number:true
+//                    },
+//                    "employee_ytd_expenses[]": {
+//                    	number:true
+//                    },
+//                    "available_amount[]": {
+//                    	number:true
+//                    },
+//                    "required_amount[]": {
+//                    	number:true
+//                    },
                     
                 },
 
@@ -228,7 +228,7 @@ jQuery(document).ready(function() {
 	
 	function formatUserList(userList){
 		var markup = "<div class='select2-result-repository clearfix'>" +
-	      "<div class='select2-result-repository__title'>"+userList.LastName +userList.FirstName+"</div>";
+	      "<div class='select2-result-repository__title'>"+userList.LastName+" "+userList.FirstName+"</div>";
 
 	  if (userList.Email) {
 	    markup += "<div class='select2-result-repository__description'>"+userList.Email+"</div>";

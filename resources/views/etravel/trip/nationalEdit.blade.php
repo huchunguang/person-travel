@@ -440,8 +440,12 @@
 														<div class="form-group">
 															<strong>User Preference:</strong>
 														</div>
-														<div class="col-md-10">
+														<div class="row">
+															
+															<div class="col-md-6">
+																
 														<div class="form-group">
+															
 															<label>Room Type:</label>
 															<div class="input-group">
 																<div class="icheck-inline">
@@ -456,8 +460,29 @@
 																	</label>
 																</div>
 															</div>
+														
 														</div>
-														<div class="form-group">
+														
+															</div>
+															
+															<div class="col-md-6">
+																
+                                                         	<div class="form-group">
+                                                         		
+																<label class="control-label col-md-3">Hotel Name</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="per_hotel_name" value="{{old('per_hotel_name')}}" placeholder="{{ $trip->hotel_prefer['per_hotel_name'] or '' }}"> </div>
+															
+                                                         	</div>
+                                                         
+															</div>
+														
+														</div>
+														
+														<div class="row">
+															
+															<div class="col-md-6">
+																<div class="form-group">
+																	
 															<label>Smoking?:</label>
 															<div class="input-group">
 																<div class="icheck-inline">
@@ -469,12 +494,28 @@
 															</div>
 
 
+														
+																</div>
+															</div>
+															
+															<div class="col-md-6">
+																
+                                                         	<div class="form-group">
+                                                         		
+																<label class="control-label col-md-3">Rate per Night</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="rate_per_night" value="{{old('rate_per_night')}}" placeholder="{{ $trip->hotel_prefer['rate_per_night'] or '' }}"> </div>
+															
+                                                         	</div>
+                                                         
+															</div>
+														
 														</div>
-														</div>
+														
 														<div class="row">
 														<div class="col-md-6">
                                                                                     <div class="form-group">
-                                                                                        <label class="control-label col-md-3">Food:</label>
+                                                                                        <label class="control-label col-md-2" style="padding-left: 0;">Food <br />
+                                                                                        Restrictions</label>
                                                                                         <div class="col-md-9">
                                                                                         		<select name="foods[]" class="form-control select2-multiple" multiple>
                                                                                             		<option value="Vegetarian" <?php if(in_array('Vegetarian', $trip->hotel_prefer['foods']?:[])){echo 'selected';}?>>Vegetarian</option>
@@ -484,6 +525,33 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                           <div class="col-md-6">
+                                                           	
+                                                         	<div class="form-group">
+                                                         		
+																<label class="control-label col-md-3">No. of Nights</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="no_of_nights" value="{{old('no_of_nights')}}" placeholder="{{ $trip->hotel_prefer['no_of_nights'] or ''}}"> </div>
+															
+                                                         	</div>
+                                                         
+                                                           </div>
+														</div>
+														<div class="row">
+															
+															<div class="col-md-6">
+															
+															</div>
+															<div class="col-md-6">
+																
+                                                         	<div class="form-group" style="margin-top:8px;">
+                                                         		
+																<label class="control-label col-md-3">Total Amount</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="total_amount" value="{{old('total_amount')}}" placeholder="{{ $trip->hotel_prefer['no_of_nights'] or '' }}"> </div>
+															
+                                                         	</div>
+                                                         
+															</div>
+														
 														</div>
 													</li>
 												</ul>

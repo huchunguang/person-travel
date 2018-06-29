@@ -7,7 +7,7 @@ jQuery(document).ready(function() {
 	$(".leave-date").prop('disabled',true);
 	function formatUserList(userList){
 		var markup = "<div class='select2-result-repository clearfix'>" +
-	      "<div class='select2-result-repository__title'>"+userList.LastName +userList.FirstName+"</div>";
+	      "<div class='select2-result-repository__title'>"+userList.LastName+" "+userList.FirstName+"</div>";
 
 	  if (userList.Email) {
 	    markup += "<div class='select2-result-repository__description'>"+userList.Email+"</div>";

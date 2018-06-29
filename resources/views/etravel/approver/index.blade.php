@@ -63,7 +63,8 @@ use App\User;
                                             <thead class="btn-primary roundborder" >
                                                 <tr>
                                                     <th colspan="1" style="text-align: left" class="nosort" data-sortcolumn="0" data-sortkey="0-0">Search:</th>
-                                                    <th colspan="2"><input id="txtDateSearch" type="text" placeholder="Search by Date #" style="color: #666; width: 100%;"></th>		
+                                                   	<th colspan="2"><input id="txtReferenceNumSearch" type="text" placeholder="Search by Reference" style="color: #666; width: 100%;"></th>
+                                                    <th colspan="2"><input id="txtDateSearch" type="text" placeholder="Search by Date" style="color: #666; width: 100%;"></th>		
                                                     <th colspan="2"><input id="txtCostCenterSearch" type="text" placeholder="Search by Cost Center" style="color: #666; width: 100%;"></th>
                                                     <th colspan="5"></th>
                                                 </tr>

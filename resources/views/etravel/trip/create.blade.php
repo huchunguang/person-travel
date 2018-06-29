@@ -247,6 +247,7 @@
 														<div class="col-md-6">
 															<div class="form-group">
 																<label class="control-label" for="cc">CC</label>
+																
 																<select id="cc" name="cc[]" class="form-control select2" multiple disabled>
 																<option value="">Select an option</option>
 																@foreach($userList as $user)

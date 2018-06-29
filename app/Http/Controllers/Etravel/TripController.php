@@ -6,12 +6,10 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Department_approver;
 use App\Trip;
-use App\Trip_purpose;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Auth;
 use App\Costcenter;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use App\Trip_demostic;
 use App\Country;
 use App\Http\Requests\StoreNationalTripRequest;
@@ -26,11 +24,8 @@ use App\Http\Requests\EditNationalRequest;
 use App\Http\Requests\TripCancelRequest;
 use App\Http\Requests\TripReadRequest;
 use App\Trip_insurance;
-use App\Company;
 use App\Contacts\SystemVariable;
 use App\Airline;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Mail\Message;
 use App\Events\TripNotify;
 use App\Repositories\TripRepository;
 use App\Http\Apis\Classes\EhotelApi;
@@ -46,18 +41,13 @@ class TripController extends Controller
 		$this->user=$user;
 	}
     /**
-     * @desc create a international trip 
+     * @desc create a international travel request 
      * @param Request $requset
      * @return \Illuminate\View\View
      */
     public function create(Request $requset) 
     {
-		$userList = User::all([ 
-			
-			'Email',
-			'FirstName',
-			'LastName'
-		]);
+		$userList = User::all(['Email','FirstName','LastName']);
 		$userProfile = User::getUserProfile();
 		$countryList = Country::orderBy('Country')->select([ 
 			'IsAsia',
@@ -118,21 +108,6 @@ class TripController extends Controller
      */
     public function store(Request $request) 
     {
-//     	dd($request->all());
-    	$rules = [ 
-			'cost_center_id' => 'required',
-			'daterange_from' => 'required',
-			'daterange_to' => 'required',
-			'datetime_date' => 'required',
-			'datetime_time' => 'required',
-			'location' => 'required',
-			'customer_name' => 'required',
-			'contact_name' => 'required',
-			'purpose_desc' => 'required',
-			'department_approver' => 'required|integer',
-// 			'project_code' => 'required'
-		];
-    	$this->validate($request, $rules);
 		$tripData = $request->only([ 
 			'cost_center_id',
 			'daterange_from',
@@ -222,7 +197,7 @@ class TripController extends Controller
     				$trip->purpose_file=$savePath;
     			}
     			$trip->flight_itinerary_prefer=$request->only(['is_sent_affairs','CC']);
-    			$trip->hotel_prefer=$request->only(['rep_office','room_type','smoking','foods']);
+    			$trip->hotel_prefer=$request->only(['rep_office','room_type','smoking','foods','per_hotel_name','rate_per_night','no_of_nights','total_amount']);
     			$trip->save();
     			$flightData=$request->only(['air_code','flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
     			$flightData=array_bound_key($flightData);
@@ -283,7 +258,7 @@ class TripController extends Controller
 	 */
 	public function tripDemosticDetails(TripReadRequest $request, Trip $trip)
     {
-		$userObjMdl = User::where('UserID',$trip->user_id)->firstOrFail();
+		$userObjMdl = User::where('UserID', $trip->user_id)->firstOrFail();
 		$approver = User::find($trip->department_approver);
 		$approvedCnt = $trip->demostic()->where(['is_approved'=>1])->count();
 		if (empty($approvedCnt)){
@@ -313,10 +288,10 @@ class TripController extends Controller
 			$overseas_approver=User::find($trip->overseas_approver);
 		}
 		$approver = User::find($trip->department_approver);
-		$hotelData=$trip->accomodation()->get();
-		$estimateExpenses=$trip->estimateExpense()->get();
-		$flightData=$trip->flight()->get();
-		$insuranceData=$trip->insurance()->first();
+		$hotelData = $trip->accomodation()->get();
+		$estimateExpenses = $trip->estimateExpense()->get();
+		$flightData = $trip->flight()->get();
+		$insuranceData = $trip->insurance()->first();
 // 		dd($trip->overseasApprover()->first()['FirstName']);
 		$destination=Country::whereIn('CountryID',$trip->destination_id)->get();
 		$rep_office = User::find($trip->hotel_prefer['rep_office']);
@@ -499,7 +474,7 @@ class TripController extends Controller
 				$trip->purpose_file=$savePath;
 			} 
 			$trip->flight_itinerary_prefer=$request->only(['is_sent_affairs','CC']);
-			$trip->hotel_prefer=$request->only(['rep_office','room_type','smoking','foods']);
+			$trip->hotel_prefer=$request->only(['rep_office','room_type','smoking','foods','per_hotel_name','rate_per_night','no_of_nights','total_amount']);
 			if($trip->is_depart_approved=='1'){
 				$trip->is_depart_approved='0';
 			}

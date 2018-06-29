@@ -378,8 +378,12 @@
 														<div class="form-group">
 															<strong>User Preference:</strong>
 														</div>
-														<div class="col-md-10">
-														<div class="form-group">
+														
+														<div class="row">
+															<div class="col-md-6">
+																
+															<div class="form-group">
+															
 															<label>Room Type:</label>
 															<div class="input-group">
 																<div class="icheck-inline">
@@ -394,8 +398,29 @@
 																	</label>
 																</div>
 															</div>
+														
 														</div>
-														<div class="form-group">
+														
+															</div>
+															
+															<div class="col-md-6">
+																
+                                                         	<div class="form-group">
+                                                         		
+																<label class="control-label col-md-3">Hotel Name</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="per_hotel_name" disabled value="{{ $trip->hotel_prefer['per_hotel_name'] or '' }}"> </div>
+															
+                                                         	</div>
+                                                         
+															</div>
+														
+														
+														</div>
+														
+														<div class="row">
+															<div class="col-md-6">
+																<div class="form-group">
+																	
 															<label>Smoking?:</label>
 															<div class="input-group">
 																<div class="icheck-inline">
@@ -407,12 +432,31 @@
 															</div>
 
 
+														
+																</div>
+															</div>
+															
+															<div class="col-md-6">
+																
+                                                         	<div class="form-group">
+                                                         		
+																<label class="control-label col-md-3">Rate per Night</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="rate_per_night" disabled value="{{ $trip->hotel_prefer['rate_per_night'] or '' }}"> </div>
+															
+                                                         	</div>
+                                                         
+															</div>
 														</div>
-														</div>
+															
+														
+														
+														
+														
 														<div class="row">
 														<div class="col-md-6">
                                                                                     <div class="form-group">
-                                                                                        <label class="control-label col-md-3">Food Restrictions:</label>
+                                                                                        <label class="control-label col-md-2" style="padding-left: 0;">Food <br />
+                                                                                        Restrictions</label>
                                                                                         <div class="col-md-9">
                                                                                         @if(count($trip->hotel_prefer['foods']))
                                                                                             @foreach($trip->hotel_prefer['foods'] as $food)
@@ -422,6 +466,37 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                        <div class="col-md-6">
+                                                        	
+                                                           	
+                                                         	<div class="form-group">
+                                                         		
+																<label class="control-label col-md-3">No. of Nights</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="no_of_nights" disabled value="{{ $trip->hotel_prefer['no_of_nights'] or '' }}"> </div>
+															
+                                                         	</div>
+                                                         
+                                                           
+                                                        </div>
+														</div>
+														<div class="row">
+															
+															
+															<div class="col-md-6">
+															
+															</div>
+															<div class="col-md-6">
+																
+                                                         	<div class="form-group" style="margin-top:8px;">
+                                                         		
+																<label class="control-label col-md-3">Total Amount</label>
+																<div class="col-md-9"><input type="text" class="form-control" name="total_amount" disabled value="{{ $trip->hotel_prefer['no_of_nights'] or '' }}"> </div>
+															
+                                                         	</div>
+                                                         
+															</div>
+														
+														
 														</div>
 													</li>
 												</ul>

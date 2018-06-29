@@ -11,6 +11,6 @@ $("#txtDateSearch").on('input', function () {
 $("#txtCostCenterSearch").on('input', function () {
     SearchRecord('tblTravelList', 3, this.value, 0);
 });
-$("#txtApproverSearch").on('input', function () {
-    SearchRecord('tblTravelList', 5, this.value, 0);
+$("#txtReferenceNumSearch").on('input', function () {
+    SearchRecord('tblTravelList', 0, this.value, 0);
 });

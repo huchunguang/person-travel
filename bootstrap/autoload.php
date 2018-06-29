@@ -2,7 +2,7 @@
 
 define('LARAVEL_START', microtime(true));
 
-define('PAGE_SIZE', 15);
+define('PAGE_SIZE', 50);
 ini_set('sendmail_from', 'Arkema-ETravel');
 
 /*
