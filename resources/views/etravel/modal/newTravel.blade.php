@@ -10,21 +10,23 @@
 			<form action="/etravel/trip" role="form" method="post">
 			<div class="modal-body">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<div class="form-group">
-						<input type="radio" name="trip" value="international" id="internationalTrip"/>
-						<a href="javascript:;" class="btn info">
-							<label for="internationalTrip"><strong>International Trip</strong></label> 
-						</a>
+					<div class="input-group">
+						<div class="icheck-inline">
+							<label for="tabInternationalTrip"> 
+							<input type="radio" name="trip" class="icheck" value="1" id="tabInternationalTrip">
+							 <span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">International Trip</span>
+							</label>
+						</div>
 
 					</div>
-					<div class="form-group">
-						<input type="radio" name="trip" value="demostic" id="demosticTrip"/> 
-						<a href="javascript:;" class="btn info ">
-							<label for="demosticTrip">
-								<strong>Domestic Trip</strong>
+					<p></p>
+					<div class="input-group">
+						<div class="icheck-inline">
+							<label for="domesticTrip"> 
+							<input type="radio" name="trip" class="icheck" value="2" id="domesticTrip"> 
+							<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">Domestic</span>
 							</label>
-						</a>
-
+						</div>
 					</div>
 
 			</div>

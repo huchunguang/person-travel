@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>E-Travel Notification</title>
+  <title>E-Travel Email</title>
 
   <style type="text/css">
     /* Take care of image borders and formatting, client hacks */
@@ -273,25 +273,23 @@
         <table cellspacing="0" cellpadding="0" width="900" class="w320">
           <tr>
             <td class="header-lg">
-              E-Travel Notification
+              E-Travel Delegation Notification
             </td>
           </tr>
           <tr>
             <td class="free-text">
-              Dear {{$recipient->LastName}} {{$recipient->FirstName}}, {{$subject}}: 
+              Dear {{$recipient->LastName}} {{$recipient->FirstName}},
             </td>
           </tr>
           <tr>
             <td class="button">
-              <div>
-              
-              <!--[if mso]>
+              <div><!--[if mso]>
                 <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{$viewDetailUrl}}" style="height:45px;v-text-anchor:middle;width:155px;" arcsize="15%" strokecolor="#ffffff" fillcolor="#3598dc">
                   <w:anchorlock/>
-                  <center style="color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;">View Details</center>
+                  <center style="color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;">Click to open E-Travel Application</center>
                 </v:roundrect>
               <![endif]--><a href="{{$viewDetailUrl}}"
-              style="background-color:#3598dc;border-radius:5px;color:#ffffff;display:inline-block;font-family:'Cabin', Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;line-height:45px;text-align:center;text-decoration:none;width:155px;-webkit-text-size-adjust:none;mso-hide:all;">View Details</a></div>
+              style="background-color:#3598dc;border-radius:5px;color:#ffffff;display:inline-block;font-family:'Cabin', Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;line-height:45px;text-align:center;text-decoration:none;width:155px;-webkit-text-size-adjust:none;mso-hide:all;">Click to open E-Travel</a></div>
             </td>
           </tr>
           <tr>
@@ -305,11 +303,11 @@
                           <table cellspacing="0" cellpadding="0" width="100%" style="border-collapse:separate !important;">
                             <tr>
                               <td class="mini-block" style="text-align: center;">
-                                <span class="header-sm">Reference #:</span><br />
-                                {{$trip->reference_id}} <br />
+                                Please be Informed that you have been assigned as a delegated approver all Leave/Entitlement request 
+                                will automatically assigned to you as an approver on behalf of {approver} for the given period below. <br /><br />
 
-                                <span class="header-sm">Date From:</span><br />
-                                {{$trip->daterange_from}} to {{$trip->daterange_to}}  <br />
+                                <span class="header-sm">From: </span> <br />
+                                {start-date} to {end-date} <br />
                               </td>
                             </tr>
                           </table>

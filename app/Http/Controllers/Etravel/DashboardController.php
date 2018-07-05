@@ -25,7 +25,6 @@ class DashboardController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		
 		$approvedRequests = [ ];
 		$generalAnnouncement = $this->system->getAnnouncement();
 		$approvedRequests = $this->trip->getListByStatus('approved');
@@ -58,9 +57,9 @@ class DashboardController extends Controller
      */
     public function trip(Request $request) 
     {
-		if ($request->input('trip') == 'demostic') {
+		if ($request->input('trip') == '2') {
 			return redirect()->route('demosticCreate');
-		} elseif ($request->input('trip') == 'international') {
+		} elseif ($request->input('trip') == '1') {
 			return redirect()->route('internationalCreate');
 		}
 	}

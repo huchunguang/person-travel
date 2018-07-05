@@ -40,7 +40,7 @@ class TripRepository extends Repository
 	public function getListByStatus($status='approved') 
 	{
 		if (in_array($status, $this->validateStatus)){
-			$res=Trip::where(['user_id'=>Auth::user()->UserID,'status'=>$status])->orderBy('daterange_from','ASC')->limit(5)->get();
+			$res=Trip::where(['user_id'=>Auth::user()->UserID,'status'=>$status])->orderBy('daterange_from','ASC')->limit(10)->get();
 			foreach ($res as $item) {
 				$item->destination_name = $this->getTripDst($item);
 			}
@@ -50,7 +50,7 @@ class TripRepository extends Repository
 	}
 	public function staffTripByStatus()
 	{
-		return Trip::where(['department_approver'=>Auth::user()->UserID])->orderBy('created_at','DESC')->get();
+		return Trip::where(['department_approver'=>Auth::user()->UserID])->orWhere(['overseas_approver'=>Auth::user()->UserID])->orderBy('created_at','DESC')->get();
 	}
 	public function getTripDst(Trip $trip)
 	{

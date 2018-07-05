@@ -25,15 +25,26 @@
 			<div class="tab-pane fade in active" id="home">
 				<form action="/etravel/trip" role="form" method="post">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<div class="form-group">
-						<input type="radio" name="trip" value="international" id="tabInternationalTrip"/> 
-						<a href="javascript:;" class="btn info "><label for="tabInternationalTrip" style="font-size:15px;"><strong>International Trip</strong></label></a>
+					
+					<div class="input-group">
+						<div class="icheck-inline">
+							<label for="tabInternationalTrip"> 
+							<input type="radio" name="trip" class="icheck" value="1" id="tabInternationalTrip">
+							 <span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">International Trip</span>
+							</label>
+						</div>
 
 					</div>
-					<div class="form-group">
-						<input type="radio" name="trip" value="demostic" id="domesticTrip"/> 
-						<a href="javascript:;"class="btn info "><label for="domesticTrip" style="font-size:15px;"><strong>Domestic Trip</strong></label></a>
+					<p></p>
+					<div class="input-group">
+						<div class="icheck-inline">
+							<label for="domesticTrip"> 
+							<input type="radio" name="trip" class="icheck" value="2" id="domesticTrip"> 
+							<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">Domestic</span>
+							</label>
+						</div>
 					</div>
+					
 
 					<center>
 						<button id="btnLeaveControl-Delete" type="submit" accesskey="N"
@@ -47,15 +58,23 @@
 				
 				<form action="/etravel/trip" role="form" method="post">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<div class="form-group">
-						<input type="radio" name="trip" value="international"/> <a href="javascript:;"
-							class="btn info "> <strong>International Trip</strong>  </a>
+					<div class="input-group">
+						<div class="icheck-inline">
+							<label for="tabInternationalTrip"> 
+							<input type="radio" name="trip" class="icheck" value="1" id="tabInternationalTrip">
+							 <span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">International Trip</span>
+							</label>
+						</div>
 
 					</div>
-					<div class="form-group">
-						<input type="radio" name="trip" value="demostic"/> <a href="javascript:;"
-							class="btn info "><strong>Domestic Trip</strong></a>
-
+					<p></p>
+					<div class="input-group">
+						<div class="icheck-inline">
+							<label for="domesticTrip"> 
+							<input type="radio" name="trip" class="icheck" value="2" id="domesticTrip"> 
+							<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">Domestic</span>
+							</label>
+						</div>
 					</div>
 
 					<center>

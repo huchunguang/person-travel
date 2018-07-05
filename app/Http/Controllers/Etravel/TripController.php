@@ -50,6 +50,7 @@ class TripController extends Controller
 		$userList = User::all(['Email','FirstName','LastName']);
 		$userProfile = User::getUserProfile();
 		$countryList = Country::orderBy('Country')->select([ 
+			
 			'IsAsia',
 			'CountryID',
 			'Country',
@@ -76,9 +77,12 @@ class TripController extends Controller
      */
     public function demosticCreate() 
     {
-    	$userProfile=User::getUserProfile();
-    	$purposeCategory = $this->user->purposeCatWithCompany();
-		return view('/etravel/trip/demosticCreate')->with('userProfile', $userProfile['userProfile'])->with('approvers', $userProfile['approvers'])->with('purposeCats',$purposeCategory)->with('costCenters',Costcenter::getAvailableCenters());
+		$userProfile = User::getUserProfile();
+		$purposeCategory = $this->user->purposeCatWithCompany();
+		return view('/etravel/trip/demosticCreate')->with('userProfile', $userProfile['userProfile'])
+			->with('approvers', $userProfile['approvers'])
+			->with('purposeCats', $purposeCategory)
+			->with('costCenters', Costcenter::getAvailableCenters());
 	}
     
 	/**

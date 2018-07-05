@@ -13,6 +13,10 @@
 		    }
 		);
 	}
+	
+	
+	
+	
 	initializeDateSettings();
 	$('#addLineItem').on('click',function(){
 		var obj=document.all.requestTable;
@@ -25,7 +29,7 @@
 		    cel=newRow.insertCell();
 		    cel.innerHTML=rw.cells[i].innerHTML;
 		  }
-//		 $.getScript("{{asset('storage/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}");
+		 
 		 initializeDateSettings();
 		 return true;
 	});
