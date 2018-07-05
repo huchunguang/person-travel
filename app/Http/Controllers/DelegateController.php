@@ -11,6 +11,8 @@ use App\User;
 use App\Delegation;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Events\DelegationNotify;
+use Illuminate\Support\Facades\Event;
 
 class DelegateController extends Controller {
 
@@ -59,15 +61,17 @@ class DelegateController extends Controller {
 				$delegationId = Delegation::where(['ManagerID'=>Auth::user()->UserID])->first()->DelegationID;
 				goto update;
 			}
-			$res = Delegation::create($request->all());
-			return redirect('delegate/index')->withInput()->with('delegationId',$res->DelegationID);
+			$delegation = Delegation::create($request->all());
 		}else{
 // 			dd($request->all());
 			update:
 			$updata = $request->only(['ManagerID','ManagerDelegationID','DelegationStartDate','DelegationEndDate','EnableDelegation']);
-			Delegation::find($delegationId)->update($updata);
-			return redirect('delegate/index')->withInput()->with('delegationId',$delegationId);
+			$delegation = Delegation::find($delegationId);
+			$delegation->update($updata);
 		}
+// 		dd($delegation->DelegationEndDate);
+		Event::fire(new DelegationNotify($delegation, $request));
+		return redirect('delegate/index')->withInput()->with('delegationId',$delegationId?$delegationId:$delegation->DelegationID);
 	}
 
 	/**

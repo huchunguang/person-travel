@@ -92,7 +92,7 @@ use Carbon\Carbon;
                                             <div class="col-md-8">
                                             	
 												<input type="text" name="DelegationStartDate" value="{{old('DelegationStartDate')}}"
-													class="form-control singleDatePicker leave-date" > <i
+													class="form-control singleDatePicker delegate-date"> <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
 													style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 											
@@ -104,7 +104,7 @@ use Carbon\Carbon;
                                             <div class="col-md-8">
                                             	
 												<input type="text" name="DelegationEndDate" value="{{old('DelegationEndDate')}}"
-													class="form-control singleDatePicker leave-date" > <i
+													class="form-control singleDatePicker delegate-date" > <i
 													class="glyphicon glyphicon-calendar fa fa-calendar"
 													style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 											
@@ -119,9 +119,9 @@ use Carbon\Carbon;
 																		<div class="icheckbox_minimal-grey"
 																			style="position: relative;">
 																			@if(old('EnableDelegation'))
-																			<input type="checkbox" class="icheck" name="EnableDelegation" style="position: absolute; opacity: 0;" value="1" checked>
+																			<input type="checkbox"  name="EnableDelegation" style="position: absolute; opacity: 0;" value="1" checked>
 																			@else
-																			<input type="checkbox" class="icheck" name="EnableDelegation" style="position: absolute; opacity: 0;" value="1">
+																			<input type="checkbox"  name="EnableDelegation" style="position: absolute; opacity: 0;" value="1">
 																			@endif
 																			<ins class="iCheck-helper"
 																				style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>

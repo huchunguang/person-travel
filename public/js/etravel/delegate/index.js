@@ -83,9 +83,12 @@ function enableDelegationControl(df){
     $("#delegate_id").prop('disabled', !df);
     $('input[name="EnableDelegation"]').iCheck('enable');
 }
-$(".leave-date").change(function () {
-    enableDelegationSave();
+
+
+$('.delegate-date').on('apply.daterangepicker', function(ev, picker) {
+	enableDelegationSave();
 });
+
 $("#delegate_id").change(function () {
     enableDelegationSave();
 });

@@ -26,6 +26,9 @@ class EventServiceProvider extends ServiceProvider {
 		'App\Events\TripNotify'=>[
 			'App\Handlers\Events\EmailTripNotify'
 		],
+		'App\Events\DelegationNotify'=>[
+			'App\Handlers\Events\EmailDelegationNotify'
+		],
 	];
 
 	/**

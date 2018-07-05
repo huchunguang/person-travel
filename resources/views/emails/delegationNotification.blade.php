@@ -4,7 +4,6 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>E-Travel Email</title>
-
   <style type="text/css">
     /* Take care of image borders and formatting, client hacks */
     img { max-width: 600px; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;}
@@ -283,7 +282,9 @@
           </tr>
           <tr>
             <td class="button">
-              <div><!--[if mso]>
+              <div>
+              
+              <!--[if mso]>
                 <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{$viewDetailUrl}}" style="height:45px;v-text-anchor:middle;width:155px;" arcsize="15%" strokecolor="#ffffff" fillcolor="#3598dc">
                   <w:anchorlock/>
                   <center style="color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;">Click to open E-Travel Application</center>
@@ -303,11 +304,11 @@
                           <table cellspacing="0" cellpadding="0" width="100%" style="border-collapse:separate !important;">
                             <tr>
                               <td class="mini-block" style="text-align: center;">
-                                Please be Informed that you have been assigned as a delegated approver all Leave/Entitlement request 
-                                will automatically assigned to you as an approver on behalf of {approver} for the given period below. <br /><br />
+                                Please be Informed that you have been assigned as a delegated approver all domestic/International request 
+                                will automatically assigned to you as an approver on behalf of {{$delegation->manager()->first()->LastName}} {{$delegation->manager()->first()->FirstName}} for the given period below. <br /><br />
 
                                 <span class="header-sm">From: </span> <br />
-                                {start-date} to {end-date} <br />
+                                {{$delegation->DelegationStartDate}} to {{$delegation->DelegationEndDate}} <br />
                               </td>
                             </tr>
                           </table>
