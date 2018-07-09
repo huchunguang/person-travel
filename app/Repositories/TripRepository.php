@@ -42,7 +42,7 @@ class TripRepository extends Repository
 	
 	public function getTravelType(Trip $trip)
 	{
-		return Trip::TRAVELTYPE[$trip->trip_type];
+		return Trip::$traveltype[$trip->trip_type];
 	}
 	
 	public function getDaysToApply(Trip $trip)
@@ -80,7 +80,7 @@ class TripRepository extends Repository
 // 			dd(Country::find($trip->destination_id,['Country'])->implode('Country',','));
 			return Country::find($trip->destination_id,['Country'])->implode('Country',',');
 		}elseif ($trip->trip_type == '2'){
-			return Trip::TRAVELTYPE[$trip->trip_type];
+			return Trip::$traveltype[$trip->trip_type];
 		}
 	}
 }

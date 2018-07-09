@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Trip extends Model 
 {
-	const TRAVELTYPE=array(
+	static $traveltype=array(
 		'1'=>'International',
 		'2'=>'Domestic',
 	);
