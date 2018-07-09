@@ -2,10 +2,15 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Trip extends Model {
-
+class Trip extends Model 
+{
+	const TRAVELTYPE=array(
+		'1'=>'International',
+		'2'=>'Domestic',
+	);
 	protected $primaryKey = 'trip_id';
 	protected $guarded= [''];
+	
 	public function accomodation() 
 	{
 		return $this->hasMany('App\Trip_accomodation','trip_id','trip_id');
@@ -85,4 +90,5 @@ class Trip extends Model {
 	{
 		return $value?json_decode($value,true):[];
 	}
+	
 }

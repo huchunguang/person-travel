@@ -54,3 +54,20 @@ $("#txtStartDateSearch").on('input', function () {
 $("#txtEndDateSearch").on('input', function () {
     SearchRecord('adminTripListTbl', 5, this.value, 0);
 });
+//Export 
+$('#btnExport').on('click',function(){
+//	var formData=new FormData(document.getElementById("tripListFrom"));
+//	var startDate=$('#txtStartDateSearch').val();
+//	var endDate=$('#txtEndDateSearch').val();
+//	if(startDate){
+//		formData.append('daterange_from', startDate);
+//	}
+//	if(endDate){
+//		formData.append('daterange_to', endDate);
+//	}
+	var formData=$('#tripListFrom').serialize();
+//	$.get("/excel/export", formData );
+	var url = "/excel/export?"+formData;
+	document.getElementById('DownloadExcelFile').src = url;
+
+});

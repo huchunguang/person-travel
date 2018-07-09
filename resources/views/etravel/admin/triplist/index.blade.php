@@ -10,7 +10,7 @@ use Carbon\Carbon;
 				<!-- BEGIN SAMPLE TABLE PORTLET-->
 				<div class="portlet box default">
 					<div class="portlet-body" style="display: block;">
-						<form action="{{url('/etravel/admin/hr-listing')}}" method="post" name="adminTravelform" role="form">
+						<form id="tripListFrom" action="{{url('/etravel/admin/hr-listing')}}" method="post" name="adminTravelform" role="form">
 							<input type="hidden" name="_token" value="{{csrf_token()}}"/>
 							<div class="row">
 								<div class="col-md-6">
@@ -116,24 +116,35 @@ use Carbon\Carbon;
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<lavel class="control-label">From</lavel>
+										<label class="control-label">From</label>
+										@if(old('daterange_from'))
+										<input id="hr_daterange_from" type="text" name="daterange_from"
+											value="{{old('daterange_from')}}"
+											class="form-control singleDatePicker">
+										@else
 										<input id="hr_daterange_from" type="text" name="daterange_from"
 											value="{{Carbon::now()->firstOfMonth()->format('m/d/Y')}}"
-											class="form-control singleDatePicker"> <i
-											class="glyphicon glyphicon-calendar fa fa-calendar"
+											class="form-control singleDatePicker">
+										@endif
+										 <i class="glyphicon glyphicon-calendar fa fa-calendar"
 											style="position: absolute; bottom: 20px; right: 20px; top: auto; cursor: pointer;"></i>
+											
 									</div>
 								</div>
 								<div class="col-md-6">
 
 									<div class="form-group">
-										<lavel class="control-label">To</lavel>
-
+										<label class="control-label">To</label>
+										@if(old('daterange_to'))
+										<input id="hr_daterange_from" type="text" name="daterange_to"
+											value="{{old('daterange_to')}}"
+											class="form-control singleDatePicker"> 
+										@else
 										<input id="hr_daterange_from" type="text" name="daterange_to"
 											value="{{Carbon::now()->format('m/d/Y')}}"
-											class="form-control singleDatePicker"> <i
-											class="glyphicon glyphicon-calendar fa fa-calendar"
-											style="position: absolute; bottom: 20px; right: 20px; top: auto; cursor: pointer;"></i>
+											class="form-control singleDatePicker"> 
+										@endif
+										<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 20px; right: 20px; top: auto; cursor: pointer;"></i>
 
 									</div>
 
@@ -147,6 +158,12 @@ use Carbon\Carbon;
 										title="Click to execute.">
 										<i class="fa fa-filter"></i> Filter
 									</button>
+									<button id="btnExport" type="button" class="btn yellow-gold"
+										data-toggle="tooltip" data-placement="bottom"
+										title="Click to Print.">
+										<i class="glyphicon glyphicon-list-alt"></i> Export to Excel
+									</button>
+
 								</div>
 							</div>
 						</form>
@@ -261,5 +278,6 @@ use Carbon\Carbon;
 		</div>
 	</div>
 </div>
+<iframe id="DownloadExcelFile" style="display:none;"></iframe>
 <script src="{{asset('js/etravel/admin/triplist/index.js')}}"></script>
 @endsection

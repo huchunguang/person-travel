@@ -89,4 +89,6 @@ Route::group([],function(){
 
 #Download
 Route::get('download','FileController@download');
+#Excel
+Route::get('excel/export','ExcelController@exportTripList');
 

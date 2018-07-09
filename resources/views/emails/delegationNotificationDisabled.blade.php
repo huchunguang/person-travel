@@ -273,7 +273,7 @@
         <table cellspacing="0" cellpadding="0" width="900" class="w320">
           <tr>
             <td class="header-lg">
-              E-Leave Delegation Notification
+              E-Travel Delegation Notification
             </td>
           </tr>
           <tr>
