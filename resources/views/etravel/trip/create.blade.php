@@ -188,7 +188,7 @@
 										</div>
 										<div class="portlet-body form">
 											<div class="form-group" style="border: 2px #dddddd solid;">
-											       <textarea class="form-control" rows="2" placeholder="purpose description" name="purpose_desc" style="padding-top: 0;overflow-y: scroll;"></textarea>
+											       <textarea class="form-control" rows="4" placeholder="purpose" name="purpose_desc" style="padding-top: 0;overflow-y: scroll;"></textarea>
                                                     <div class="fileinput fileinput-new" data-provides="fileinput" style="margin-top: 5px;margin-bottom:0;">
                                                         <div class="input-group input-large">
                                                             <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
@@ -412,7 +412,7 @@
 														</div>
 														<div class="col-md-6">
 															<div class="form-group">
-																<label class="control-label col-md-3">elationship</label>
+																<label class="control-label col-md-3">Relationship</label>
 																<div class="col-md-9"><input type="text" class="form-control" name="elationship" value="{{old('elationship')}}"> </div>
 															</div>
 														</div>

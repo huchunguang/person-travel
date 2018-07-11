@@ -10,7 +10,7 @@ $('#destinationSel').on('change',function(){
 			$.get('/etravel/approver',function(data){
 				var overseasOptions='';
 				$.each(data,function(ind,val){
-					overseasOptions+='<option value="'+val.UserID+'">'+val.FirstName+' '+val.FirstName+'</option>';
+					overseasOptions+='<option value="'+val.UserID+'">'+val.LastName+' '+val.FirstName+'</option>';
 				});
 				if(overseasOptions!=''){
 					$('#overseas_approver').attr('disabled',false).empty().append(overseasOptions);

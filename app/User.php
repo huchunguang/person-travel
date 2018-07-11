@@ -43,7 +43,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	public function site() 
 	{
-	    return $this->belongsTo('App\Site','SiteID','SiteID');
+	    return $this->hasOne('App\Site','SiteID','SiteID');
 	}
 	public function manager(){
 		return $this->hasOne('App\User','UserID','ManagerID');

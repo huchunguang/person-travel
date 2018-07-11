@@ -427,7 +427,7 @@ class TripController extends Controller
 					$demostic_trip->purpose_id = $item['purpose_id'];
 					$demostic_trip->customer_name = $item['customer_name'];
 					$demostic_trip->contact_name = $item['contact_name'];
-					$demostic_trip->purpose_desc = $item['purpose_desc'];
+					$demostic_trip->purpose_desc = $item['purpose_desc']?:'';
 					$demostic_trip->travel_cost = number_format($item['travel_cost'], 2);
 					$demostic_trip->entertain_cost = number_format($item['entertain_cost'], 2);
 					$demostic_trip->entertain_detail = $item['entertain_detail'];

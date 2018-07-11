@@ -12,13 +12,13 @@ class TripWasPartlyApproved extends Event {
 
 	/**
 	 * Create a new event instance.
-	 *
+	 * 
 	 * @return void
 	 */
 	public function __construct(Trip $trip,Request $request)
 	{
-		$this->trip=$trip;
-		$this->request=$request;
+		$this->trip = $trip;
+		$this->request = $request;
 	}
 
 }

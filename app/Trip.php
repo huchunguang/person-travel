@@ -8,6 +8,9 @@ class Trip extends Model
 		'1'=>'International',
 		'2'=>'Domestic',
 	);
+	const APPROVED='approved';
+	const PARTLY_APPROVED='partly-approved';
+	const REJECTED='rejected';
 	protected $primaryKey = 'trip_id';
 	protected $guarded= [''];
 	

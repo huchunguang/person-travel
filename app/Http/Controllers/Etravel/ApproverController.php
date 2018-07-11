@@ -113,6 +113,7 @@ class ApproverController extends Controller {
 	{
 		$status= $request->input('status');
 		$trip->update(['approver_comment'=>$request->input('approver_comment')]);
+		
 // 		dd($request->all());
 		switch ($status){
 			case 'approved':
@@ -123,7 +124,9 @@ class ApproverController extends Controller {
 				Event::fire(new TripWasRejected($trip,$request));break;
 				
 		}
-		
+		if ($trip->trip_type=='1' && $status==Trip::APPROVED && $this->user_id == $trip->department_approver){
+			$status='partly-approved';
+		}
 		if ($trip->trip_type=='2'){
 			Event::fire(new TripNotify($trip, $request, $status));
 			return redirect('/etravel/tripdemosticlist/' . $trip->trip_id);

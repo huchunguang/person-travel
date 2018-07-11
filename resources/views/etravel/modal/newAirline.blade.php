@@ -2,17 +2,14 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form action="/etravel/airline" id="" class="form-horizontal" method="post">
-
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">×</button>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					<h4 class="modal-title" id="myModalLabel">
 						<span class="caption-subject bold uppercase"> New Airline Item</span>
 					</h4>
 				</div>
 				<div class="modal-body">
-
 					<div class="form-body">
 						<div class="alert alert-danger display-hide">
 							<button class="close" data-close="alert"></button>
@@ -23,26 +20,27 @@
 							Your form validation is successful!
 						</div>
 						<div class="form-group">
-						<div class="col-md-4">
-							<label class="control-label ">Airline Name <span class="required"
-								aria-required="true"> * </span>
-							</label>
-						</div>
+							<div class="col-md-4">
+								<label class="control-label ">
+									Airline Name <span class="required" aria-required="true"> * </span>
+								</label>
+							</div>
 							<div class="col-md-10">
 								<div class="input-icon right">
-									<i class="fa"></i> <input type="text" class="form-control"
-										name="airline_name" required>
+									<i class="fa"></i>
+									<input type="text" class="form-control" name="airline_name" required>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
-						<div class="col-md-4">
-							<label>Airline Code  <span class="required" aria-required="true"> * </span>
-							</label>
+							<div class="col-md-4">
+								<label>
+									Airline Code <span class="required" aria-required="true"> * </span>
+								</label>
 							</div>
 							<div class="col-md-10">
 								<div class="input-icon right">
-									<i class="fa"></i> 
+									<i class="fa"></i>
 									<input type="text" class="form-control" name="airline_code" required>
 								</div>
 							</div>
@@ -62,4 +60,4 @@
 			</form>
 		</div>
 	</div>
-</div>	
+</div>

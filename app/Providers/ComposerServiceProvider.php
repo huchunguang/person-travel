@@ -12,16 +12,26 @@ class ComposerServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-			view()->composer(
-				['/etravel/delegate/index','/etravel/trip/demosticCreate','/etravel/trip/create','/etravel/trip/nationalEdit','/etravel/admin/triplist/index','/etravel/trip/demosticEdit'], 'App\Http\ViewComposers\CommonComposer'
-				);
-			view()->composer(
-				['/etravel/dashboard/index','/etravel/purpose/index','/etravel/admin/triplist/index'], 'App\Http\ViewComposers\AdminComposer'
-				);
-			view()->composer(
-				['*'], 'App\Http\ViewComposers\CheckAdminComposer'
-				);
+		view()->composer([ 
 			
+			'/etravel/delegate/index',
+			'/etravel/trip/demosticCreate',
+			'/etravel/trip/create',
+			'/etravel/trip/nationalEdit',
+			'/etravel/admin/triplist/index',
+			'/etravel/trip/demosticEdit',
+			'/overtime/index/create',
+		], 'App\Http\ViewComposers\CommonComposer');
+		view()->composer([ 
+			
+			'/etravel/dashboard/index',
+			'/etravel/purpose/index',
+			'/etravel/admin/triplist/index'
+		], 'App\Http\ViewComposers\AdminComposer');
+		view()->composer([ 
+			
+			'*'
+		], 'App\Http\ViewComposers\CheckAdminComposer');
 	}
 
 	/**

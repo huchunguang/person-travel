@@ -11,7 +11,7 @@
     [Dropdown Menu v2]
 ----------------------------------------------------*/
 .dropdown-menu-v2 {
-  margin-right: 10px !important; }
+  margin-right: 0px !important; }
 
 /*--------------------------------------------------
 	[Header]
@@ -19,8 +19,9 @@
 .page-header {
   margin: 0;
   padding: 0;
-  background: #2f373e;
-  border-bottom-color: #384047;
+  background: #4a867b;
+  border-bottom-color: #4a867b;
+	color:#ffffff;
   /* Navbar */
   /* Navbar Brand */
   /* Topbar Actions */ }
@@ -292,10 +293,8 @@
 ----------------------------------------------------*/
 /* Body */
 body {
-  background: #2f373e url(../img/bg_01.jpg) no-repeat;
-  background-position: center center;
-  background-size: cover;
-  background-attachment: fixed; }
+	
+}
 
 html {
   height: 100%; }
@@ -414,7 +413,7 @@ html {
 ----------------------------------------------------*/
 /* Page Content */
 .page-content {
-  margin: 20px 0;
+  margin:0;
   overflow: hidden; }
   .page-content .page-content-fixed-header {
     width: 100%;
@@ -773,10 +772,10 @@ Page sidebar
 @media (min-width: 992px) {
   /* 992px */
   .page-sidebar {
-    width: 235px;
+    width: 280px;
     float: left;
     position: relative;
-    margin: 20px -100% 20px 20px; }
+    margin: 20px -100% 20px 0px; }
     .page-full-width .page-sidebar {
       display: none !important; }
     .page-sidebar.navbar-collapse {
@@ -1041,7 +1040,7 @@ Page sidebar
   text-align: center;
   padding: 20px 0;
   margin-bottom: 0;
-  background: #fff; }
+  background: #4a857a; }
   .copyright-v2 a {
     z-index: 1; }
 

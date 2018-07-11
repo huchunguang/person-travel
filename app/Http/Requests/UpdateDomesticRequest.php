@@ -26,9 +26,9 @@ class UpdateDomesticRequest extends Request {
 	{
 		return [
 			'cost_center_id'=>'required',
-			'daterange_from'=>'required',
-			'daterange_to'=>'required|date',
-			'datetime_date'=>'required|date|after:daterange_from',
+			'daterange_from'=>'required|date',
+			'daterange_to'=>'required|date|after:daterange_from',
+			'datetime_date'=>'required',
 			'datetime_time' => 'required',
 			'location' => 'required',
 			'customer_name'=>'required',

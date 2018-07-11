@@ -51,6 +51,7 @@ class EmailTripNotify {
 		}
 		$recipient=$trip->user()->first();
 		$subject = $this->getEmailSubject($travelType, $actionType, $tripCreater,$trip);
+// 		dd($subject);
 		$variables=[
 			
 			'trip' => $trip,
@@ -59,17 +60,25 @@ class EmailTripNotify {
 			'viewDetailUrl'=>$viewDetailUrl,
 		];
 // 		dd($variables);
-		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject,$manager,$trip,$tripCreater,$request) {
+		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject,$manager,$trip,$tripCreater,$actionType) {
 			
 			$cc = $trip->cc ?: [ ];
 			if (Auth::user()->UserID == $trip->user_id) {
 				$to = $manager->Email;
 				array_push($cc,$tripCreater->Email);
+			}elseif ($trip->trip_type=='1' && Auth::user()->UserID == $trip->department_approver && $actionType == 'partly-approved'){
+				$to = $manager->Email;
+				array_push($cc, User::find($trip->department_approver)->Email);
+				array_push($cc, $tripCreater->Email);
 			}else{
 				$to = $tripCreater->Email;
 				array_push($cc,$manager->Email);
+				if ($trip->trip_type=='1' && Auth::user()->UserID == $trip->overseas_approver && $actionType == 'approved'){
+					array_push($cc, User::find($trip->department_approver)->Email);
+				}
 			}
-			if ($request->input('status') == 'approved'){
+			
+			if ($actionType== 'approved'){
 				
 				if ($this->system->adminEmail) {
 					array_push($cc, $this->system->adminEmail);
@@ -96,8 +105,12 @@ class EmailTripNotify {
 			$subject = "{$userLastName} {$userFirstName} ".ucfirst($actionType)." {$travelType} Travel Request# {$trip->reference_id} for your approval";
 		}elseif ($actionType=='pending'){
 			$subject = "{$userLastName} {$userFirstName} updated {$travelType} travel request for your approval";
-		}elseif ($actionType=='approved' || $actionType=='partly-approved' || $actionType=='rejected'){
+		}elseif ($actionType=='rejected'){
 			$subject = "{$travelType} Travel Request# {$trip->reference_id} has been {$actionType}";
+		}elseif ($actionType=='partly-approved'){
+			$subject = "{$travelType} Travel Request# {$trip->reference_id} has been partially approved";
+		}elseif ($actionType=='approved'){
+			$subject = "{$travelType} Travel Request# {$trip->reference_id} has been fully approved";
 		}elseif ($actionType=='cancelled'){
 			$subject = "{$userLastName} {$userFirstName} {$actionType} his {$travelType} travel request";
 		}

@@ -44,11 +44,11 @@ class RouteServiceProvider extends ServiceProvider {
 	{
 		$router->group(['namespace' => $this->namespace], function($router)
 		{
-			require app_path('Http/routes.php');
-// 			foreach (glob(app_path('Http//Routes').'/*.php') as $file)
-// 			{
-// 				$this->app->make('App\\Http\\Routes\\'.basename($file,'.php'))->map($router);
-// 			}
+// 			require app_path('Http/routes.php');
+			foreach (glob(app_path('Http//Routes').'/*.php') as $file)
+			{
+				$this->app->make('App\\Http\\Routes\\'.basename($file,'.php'))->map($router);
+			}
 		});
 	}
 
