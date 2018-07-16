@@ -40,4 +40,10 @@ trait parseSearchFilter
 		return $searchFilter;
 		
 	}
+	
+	public function buildTableFilter(Request $request)
+	{
+		$return = array_filter(array_pluck($request->columns, 'search.value','data'));
+		return $return;
+	}
 }

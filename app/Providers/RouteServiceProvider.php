@@ -3,6 +3,7 @@
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use App\Airline;
+use App\User;
 
 class RouteServiceProvider extends ServiceProvider {
 
@@ -32,6 +33,9 @@ class RouteServiceProvider extends ServiceProvider {
 		$router->model('airline', 'App\Airline');
 		$router->model('site', 'App\Site');
 		
+// 		$router->bind('user', function($value) {
+// 			return User::where('name', $value)->first();
+// 		});
 	}
 
 	/**

@@ -31,9 +31,10 @@ class checkUserMiddleware {
 				return redirect('auth/login');
 			}
 			Auth::login($user);
-			$addParams = ['userName'=>$userName,'user_id'=>$user['UserID']];
-			$request->attributes->add($addParams);
+			
 		}
+		$addParams = ['userName'=>Auth::user()->UserName,'user_id'=>Auth::user()->UserID];
+		$request->attributes->add($addParams);
 		return $next($request);
 	}
 

@@ -14,7 +14,7 @@ class OvertimeRoutes
 				$router->get('dashboard',['uses'=>'DashboardController@index']);
 				#Create
 				$router->get('create',['as'=>'overtimeCreate','uses'=>'IndexController@create']);
-				
+				$router->get('index',['as'=>'overtimeIndex','uses'=>'IndexController@index']);
 			});
 		});
 	}

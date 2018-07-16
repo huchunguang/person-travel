@@ -146,6 +146,7 @@ return [
 		'App\Providers\RouteServiceProvider',
 		'App\Providers\SystemServiceProvider',
 		'App\Providers\ComposerServiceProvider',
+		'App\Providers\ResponseMacroServiceProvider',
 		'Maatwebsite\Excel\ExcelServiceProvider',
 
 	],

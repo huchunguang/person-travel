@@ -9,6 +9,7 @@ use App\Contacts\SystemVariable;
 use App\Repositories\TripRepository;
 use Carbon\Carbon;
 use App\Http\Apis\Classes\EhotelApi;
+use App\Overtime;
 
 class DashboardController extends Controller
 {

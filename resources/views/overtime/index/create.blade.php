@@ -1,4 +1,30 @@
-@extends("overtime.layout.main") @section("content")
+@extends("overtime.layout.main")
+
+@section('styles')
+	 <!-- BEGIN PAGE LEVEL PLUGINS(DATE TIME) -->
+        <link href="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+        <!-- END PAGE LEVEL PLUGINS(DATE TIME) -->
+@endsection
+
+@section('script.header')
+	<!-- BEGIN PAGE LEVEL PLUGINS(DATE TIME) -->
+        <script src="{{asset('assets/global/plugins/moment.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/global/plugins/clockface/js/clockface.js')}}" type="text/javascript"></script>
+        <!-- END PAGE LEVEL PLUGINS(DATE TIME) -->
+        <!-- BEGIN PAGE LEVEL SCRIPTS(DATE TIME) -->
+        <script src="{{asset('assets/pages/scripts/components-date-time-pickers.min.js')}}" type="text/javascript"></script>
+        <!-- END PAGE LEVEL SCRIPTS(DATE TIME) -->
+@endsection 
+
+@section("content")
 <div class="col-md-12">
 	<!-- BEGIN SAMPLE FORM PORTLET-->
 	<div class="portlet light bordered">

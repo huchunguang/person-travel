@@ -1,15 +1,19 @@
 <?php namespace App\Http\Controllers\Overtime;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use Illuminate\Http\Request;
 use App\Contacts\SystemVariable;
-use Illuminate\Support\Facades\Auth;
 use App\Repositories\UserRepository;
+use Cache;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use App\Overtime;
+use App\Http\Traits\parseSearchFilter;
+
 
 class IndexController extends Controller {
 
+	use parseSearchFilter;
 	public function __construct(SystemVariable $system,UserRepository $user) 
 	{
 		$this->system=$system;
@@ -20,18 +24,44 @@ class IndexController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		//
+		$filter = $this->buildTableFilter($request);
+		$columns= $request->input('columns','');
+		$order=$request->input('order','');
+		$result= Overtime::where('user_id', $request->get('user_id'));
+		if (isset($filter) && !empty($filter)){
+			foreach ($filter as $key=>$filterItem){
+				$result->where($key,'like',"%{$filterItem}%");
+			}
+		}
+		$recordsFiltered=$result->count();
+		foreach ($order as $orderItem){
+			$result->orderBy($columns[$orderItem['column']]['data'], $orderItem['dir']);
+		}
+		
+		$result = $result->skip($request->input('start',0))->take($request->length)->get();
+		return response()->json([ 
+			
+			'data' => $result,
+			'draw' => $request->draw,
+			'recordsTotal' => Overtime::count(),
+			'recordsFiltered' =>$recordsFiltered,
+		]);
 	}
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Show the form for creating a new overtime request.
 	 *
 	 * @return Response
 	 */
 	public function create(Request $request)
 	{
+// 		return response()->json(['name'=>'huchunguang']);
+// 		$post_id = Cache::get('post_id');
+// 		dd($post_id);
+// 		$env = app()->environment();
+// 		dd($env);
 		$hrUserList = $this->user->getHrList();
 // 		dd($hrUserList->toArray());
 		return view('/overtime/index/create',compact('hrUserList'));

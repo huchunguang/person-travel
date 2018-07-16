@@ -4,7 +4,7 @@
                 <div class="container-fluid">
                     <div class="havbar-header">
                         <!-- BEGIN LOGO -->
-                        <a id="index" class="navbar-brand" href="start.html">
+                        <a id="index" class="navbar-brand" href="{{url('overtime/dashboard')}}">
                             <img src="../assets/layouts/layout6/img/logo.png" style="width:248px;" alt="Logo"> </a>
                         <!-- END LOGO -->
                         <!-- BEGIN TOPBAR ACTIONS -->
