@@ -6,6 +6,7 @@ use App\Trip_purpose;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Company_site;
 
 class UserRepository extends Repository
 {
@@ -34,5 +35,11 @@ class UserRepository extends Repository
 		$hrUserList = User::whereIn('UserID',$hrIds)->get();
 // 		dd($hrUserList->toArray());
 		return $hrUserList;
+	}
+	public function getWorkflowCfg(User $user=null)
+	{
+		$user = $user?$user:Auth::user();
+		$res = Company_site::where('CompanyID',$user->CompanyID)->where('SiteID',$user->SiteID)->where('CountryID',$user->CountryAssignedID)->first();
+		return $res;
 	}
 }

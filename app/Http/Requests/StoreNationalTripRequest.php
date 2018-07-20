@@ -15,7 +15,7 @@ class StoreNationalTripRequest extends Request {
 	}
 
 	/**
-	 * Get the validation rules that apply to the request.
+	 * Get the validation rules that apply to the store international travel request.
 	 *
 	 * @return array
 	 */
@@ -27,6 +27,7 @@ class StoreNationalTripRequest extends Request {
 			'daterange_from'=>'required|date',
 			'daterange_to'=>'required|date|after:daterange_from',
 			'department_approver'=>'required|integer',
+			'overseas_approver'=>'required_if:workflow,2',
 			'approver_comment'=>'string',
 			'extra_comment'=>'string',
 			'is_sent_affairs'=>'boolean',
@@ -42,7 +43,6 @@ class StoreNationalTripRequest extends Request {
 			'smoking'=>'integer',
 			'purpose_file' => 'mimes:txt,doc,xlsx,pdf,docx,xls,jpg,jpeg,png,gif,bmp,ppt,pptx',
 // 			'project_code'=>'required',
-			
 			
 		];
 	}

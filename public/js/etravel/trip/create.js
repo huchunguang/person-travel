@@ -1,3 +1,4 @@
+var workflow=$('input[name="workflow"]').val();
 $('#destinationSel').on('change',function(){
 	var countryIds=[];
 	$('#destinationSel option:selected').map(function(){
@@ -6,7 +7,7 @@ $('#destinationSel').on('change',function(){
 	});
 	if(countryIds.length!=0){
 		
-		if($.inArray('',countryIds)>=0||$.inArray(0,countryIds)>=0){
+		if(workflow == 2||$.inArray('',countryIds)>=0||$.inArray(0,countryIds)>=0){
 			$.get('/etravel/approver',function(data){
 				var overseasOptions='';
 				$.each(data,function(ind,val){

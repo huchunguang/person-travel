@@ -59,7 +59,6 @@ class TripController extends Controller
 		$airlineList = Airline::all();
 		$hotelList = new EhotelApi();
 		$hotelList = $hotelList->getHotelList();
-// 		dd($hotelList);
 		return view('/etravel/trip/create')->with('userProfile', $userProfile['userProfile'])
 			->with('approvers', $userProfile['approvers'])
 			->with('purposeCats', $this->user->purposeCatWithCompany())
@@ -68,7 +67,7 @@ class TripController extends Controller
 			->with('approvers', $userProfile['approvers'])
 			->with('airlineList', $airlineList)
 			->with('userList', $userList)
-			->with('hotelList', $hotelList);
+			->with('hotelList', $hotelList)->with('workflow',$this->user->getWorkflowCfg()->workflow);
 	}
     /**
      * @brief create demostic trip
