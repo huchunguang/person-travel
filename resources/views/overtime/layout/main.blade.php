@@ -20,6 +20,10 @@
 <link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/jqvmap/jqvmap/jqvmap.css') }}" rel="stylesheet" type="text/css" />
 <!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS(SELECT2) -->
+<link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+<!-- END PAGE LEVEL PLUGINS(SELECT2) -->
 <!-- BEGIN THEME GLOBAL STYLES -->
 <link href="{{ asset('assets/global/css/components.css') }}" rel="stylesheet" id="style_components" type="text/css" />
 <link href="{{ asset('assets/global/css/plugins.css') }}" rel="stylesheet" type="text/css" />
@@ -90,6 +94,17 @@
 	<script src="{{asset('assets/layouts/layout6/scripts/layout.min.js')}}" type="text/javascript"></script>
 	<script src="{{asset('assets/layouts/global/scripts/quick-sidebar.min.js')}}" type="text/javascript"></script>
 	<script src="{{asset('assets/layouts/global/scripts/quick-nav.min.js')}}" type="text/javascript"></script>
+	<!-- BEGIN PAGE LEVEL PLUGINS(SELECT2) -->
+	<script src="{{asset('assets/global/plugins/select2/js/select2.full.min.js')}}" type="text/javascript"></script>
+	<script src="{{asset('assets/pages/scripts/components-select2.min.js')}}" type="text/javascript"></script>
+	<!-- BEGIN PAGE LEVEL PLUGINS(SELECT2) -->
+	<script>
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+</script>
 	<!-- END THEME LAYOUT SCRIPTS -->
 	@yield('script.header')
 </body>

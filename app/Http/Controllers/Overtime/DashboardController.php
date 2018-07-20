@@ -10,13 +10,14 @@ use App\Repositories\TripRepository;
 use Carbon\Carbon;
 use App\Http\Apis\Classes\EhotelApi;
 use App\Overtime;
+use App\Repositories\OvertimeRepository;
 
 class DashboardController extends Controller
 {
-	public function __construct(SystemVariable $system, TripRepository $trip)
+	public function __construct(SystemVariable $system, OvertimeRepository $trip)
 	{
 		$this->system = $system;
-		$this->trip = $trip;
+		$this->overtime = $trip;
 	}
 
 	/**
@@ -26,6 +27,10 @@ class DashboardController extends Controller
 	 */
 	public function index(Request $request)
 	{
+// 		[
+// 			'pendingCount'=>$this->overtime->countByStatus('pending'),
+// 			'approved'=>$this->overtime->countByStatus('approved'),
+// 		]
 		return view('/overtime/dashboard/index');
 		$approvedRequests = [ ];
 		$generalAnnouncement = $this->system->getAnnouncement();

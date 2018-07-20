@@ -140,7 +140,7 @@ class TripController extends Controller
 			$tripData['country_id']=$this->system->CountryAssignedID;
 			$tripData['site_id']=$this->system->SiteID;
 			$tripData['company_id']=$this->system->CompanyID;
-			$tripData['reference_id']=$this->trip->generateRef();
+			$tripData['reference_id']=Trip_counter::generateRefId();
 			$tripObjMdl = Trip::create($tripData);
 			foreach ($demosticData as $item){
 				$tripObjMdl->demostic()->create($item);
@@ -166,7 +166,7 @@ class TripController extends Controller
     		try {
     			$trip=new Trip;
     			$trip->trip_type=1;
-    			$trip->reference_id=$this->trip->generateRef();
+    			$trip->reference_id=Trip_counter::generateRefId();
     			$trip->cc=$request->input('cc');
     			$trip->user_id=Auth::user()->UserID;
     			$trip->department_id=$this->system->DepartmentID;

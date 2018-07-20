@@ -15,16 +15,17 @@
 @endsection @section("content")
 <div class="row" style="margin-left: 10px;">
 	<div class="col-md-12">
-		<div class="portlet box blue">
+		<div class="portlet box green">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-database"></i>OVERTIME REQUEST LIST
+					<i class="fa fa-database"></i><span class="uppercase">{{$status}}</span> OVERTIME REQUEST LIST
+					<input type="hidden" name="status" value="{{$status}}"/>
 				</div>
 				<div class="tools">
 				</div>
 			</div>
 			<div class="portlet-body">
-				@include('overtime.snippets.overtimeList')
+			@include('overtime.snippets.overtimeList')
 			</div>
 		</div>
 	</div>

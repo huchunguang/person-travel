@@ -1,8 +1,10 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\Overtime;
+use Illuminate\Support\Facades\Auth;
 
-class StoreOvertimeRequest extends Request {
+class ReadOvertimeRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -11,7 +13,11 @@ class StoreOvertimeRequest extends Request {
 	 */
 	public function authorize()
 	{
-		return true;
+		$overtime = $this->route('overtime');
+		$user_id = Auth::user()->UserID;
+		return Overtime::where('id', $overtime->id)->where('user_id', $user_id)
+			->orWhere('hr_approver', $user_id)
+			->exists();
 	}
 
 	/**
@@ -21,12 +27,8 @@ class StoreOvertimeRequest extends Request {
 	 */
 	public function rules()
 	{
-		return [ 
+		return [
 			
-			'reason' => 'required',
-			'hr_approver' => 'required|integer',
-			'start_date' => 'required|date',
-			'end_date' => 'required|date|after:start_date'
 		];
 	}
 

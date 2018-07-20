@@ -3,7 +3,7 @@
 	<div class="page-content-inner">
 		<div class="row">
 			<form action="/etravel/tripapproval/{{$trip->trip_id}}" method="post" class="horizontal-form" id="domestic_approval">
-				@if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID ) @include('etravel.layout.approverAction') @endif @include('etravel.layout.error')
+				@if($trip->status == 'pending' && $trip->hr_approver == Auth::user()->UserID ) @include('etravel.layout.approverAction') @endif @include('etravel.layout.error')
 				<div class="col-md-12">
 					<!-- BEGIN VALIDATION STATES-->
 					@if($trip->status=='approved')

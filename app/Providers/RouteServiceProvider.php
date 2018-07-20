@@ -32,7 +32,7 @@ class RouteServiceProvider extends ServiceProvider {
 		$router->model('announcement', 'App\Trip_announcement');
 		$router->model('airline', 'App\Airline');
 		$router->model('site', 'App\Site');
-		
+		$router->model('overtime', 'App\Overtime');
 // 		$router->bind('user', function($value) {
 // 			return User::where('name', $value)->first();
 // 		});

@@ -21,6 +21,7 @@ class ComposerServiceProvider extends ServiceProvider {
 			'/etravel/admin/triplist/index',
 			'/etravel/trip/demosticEdit',
 			'/overtime/index/create',
+			'/overtime/index/show'
 		], 'App\Http\ViewComposers\CommonComposer');
 		view()->composer([ 
 			
@@ -32,6 +33,7 @@ class ComposerServiceProvider extends ServiceProvider {
 			
 			'*'
 		], 'App\Http\ViewComposers\CheckAdminComposer');
+		view()->composer(['/overtime/*'],'App\Http\ViewComposers\OvertimeSiderBarComposer');
 	}
 
 	/**

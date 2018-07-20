@@ -4,19 +4,19 @@ var TableDatatablesRowreorder = function () {
 
     var overTimeRequestList = function () {
         var table = $('#TblOvertimeList');
-
+        var status = $('input[name="status"]').val();
         var oTable = table.dataTable({
         	"rowId":"id",
-        	"stateSave": true,
         	"serverSide": true,
         	"processing": true,
         	"ajax" : {
-    			"url" : "/overtime/index",
-    			"type" : "GET"
+    			"url" : "/overtime/index/"+status,
+    			"type" : "POST"
     		},
     		"columns": [
-                { "data": "reference_id" },
                 { "data": "id" },
+                { "data": "reference_id" },
+                { "data": "reference_id" },
                 { "data": "start_date" },
                 { "data": "end_date" },
                 { "data": "head_count" },
@@ -30,17 +30,21 @@ var TableDatatablesRowreorder = function () {
             "columnDefs": [
                 {
                     "targets": [ 1,8,10 ],
-//                    "visible": false,
+                    "visible": false,
                     "orderable": false
                 },
                 {
-                    "targets": [ 0 ],
-//                    "visible": true,
+                	"targets": [0],
+//                	"visible": false,
+                },
+                {
+                    "targets": [ 1 ,2],
+//                    "visible": false,
                     "render": function ( data, type, row ) {
-//                    	console.log(row)
-                        return  '<a href="/overtime/'+row.id+'">'+data+'</a>';
+                        return  '<a href="/overtime/'+row.id+'" class="overtimeDetail">'+data+'</a>';
                     },
                 },
+                
             ],
             // Internationalisation. For more info refer to http://datatables.net/manual/i18n
             "language": {
@@ -114,6 +118,7 @@ var TableDatatablesRowreorder = function () {
             }
 
             overTimeRequestList();
+
         }
 
     };
@@ -154,5 +159,8 @@ jQuery(document).ready(function() {
             }
         } );
     } );
-    
+    $('.overtimeDetail').on('click',function(){
+    	alert(123);
+    });
 });
+

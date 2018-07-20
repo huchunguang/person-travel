@@ -30,7 +30,7 @@
 	<div class="portlet light bordered">
 		<div class="portlet-title">
 			<div class="caption">
-				<i class="icon-settings font-dark"></i> <span class="caption-subject font-dark sbold uppercase">OverTime Request Form</span>
+				<i class="icon-settings font-green"></i> <span class="caption-subject font-green sbold uppercase">OverTime Request Form Detail</span>
 			</div>
 			<div class="actions">
 				<div class="btn-group btn-group-devided" data-toggle="buttons">
@@ -44,11 +44,9 @@
 			</div>
 		</div>
 		<div class="portlet-body form">
-			<form class="form-horizontal" role="form" action="{{url('/overtime/store')}}" method="post">
-				@include('layout.error')
+			<form class="form-horizontal" role="form" action="/overtime/edit/{{$overtime->id}}" method="get">
 				<div class="form-body">
 					<input type="hidden" name="_token" value="{{csrf_token()}}"/>
-					<input type="hidden" name="user_id" value="{{$currentUser->UserID}}"/>
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
@@ -62,7 +60,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">Site</label>
 								<div class="col-md-9">
-									<select class="form-control select2">
+									<select class="form-control select2" disabled>
 										<option>{{$currentUser->site()->first()->Site}}</option>
 									</select>
 								</div>
@@ -74,10 +72,14 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">IGG</label>
 								<div class="col-md-9">
-									<select class="form-control select2" name="igg">
+									<select class="form-control select2" name="igg" disabled>
 										@if(count($iggList))
 											@foreach($iggList as $iggItem)
+												@if($overtime['igg'] == $iggItem['id'])
+												<option value="{{$iggItem['id']}}" selected>{{$iggItem['igg']}}</option>
+												@else
 												<option value="{{$iggItem['id']}}">{{$iggItem['igg']}}</option>
+												@endif
 											@endforeach
 										@endif
 									</select>
@@ -88,7 +90,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">Department</label>
 								<div class="col-md-9">
-									<select class="form-control select2">
+									<select class="form-control select2" disabled>
 										<option>{{$currentUser->department()->first()->Department}}</option>
 									</select>
 								</div>
@@ -100,7 +102,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">Position</label>
 								<div class="col-md-9">
-									<select class="form-control select2">
+									<select class="form-control select2" disabled>
 										<option>{{$currentUser->WorkPosition}}</option>
 									</select>
 								</div>
@@ -110,7 +112,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">Head Count</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" placeholder="" name="head_count">
+									<input type="text" class="form-control" placeholder="" name="head_count" value="{{$overtime['head_count']}}" disabled>
 								</div>
 							</div>
 						</div>
@@ -120,12 +122,18 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">Shift</label>
 								<div class="col-md-9">
-									<select class="form-control select2" name="shift">
+									<select class="form-control select2" name="shift" disabled>
+										
 										@if(count($shiftList))
 											@foreach($shiftList as $shiftItem)
+												@if($overtime['shift'] == $shiftItem['id'])
+												<option value ="{{$shiftItem['id']}}" selected>{{$shiftItem['shift']}}</option>
+												@else
 												<option value ="{{$shiftItem['id']}}">{{$shiftItem['shift']}}</option>
+												@endif
 											@endforeach
 										@endif
+									
 									</select>
 								</div>
 							</div>
@@ -134,7 +142,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">No. of Hour</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" placeholder="0" name="hours">
+									<input type="text" class="form-control" placeholder="0" name="hours" value="{{$overtime['hours']}}" disabled>
 								</div>
 							</div>
 						</div>
@@ -144,10 +152,14 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">Rate</label>
 								<div class="col-md-9">
-									<select class="form-control select2" name="rate">
+									<select class="form-control select2" name="rate" disabled>
 										@if(count($rateList))
 											@foreach($rateList as $rateItem)
+												@if($overtime['rate'] == $rateItem['id'])
+												<option value ="{{$rateItem['id']}}" selected>{{$rateItem['rate']}}</option>
+												@else
 												<option value ="{{$rateItem['id']}}">{{$rateItem['rate']}}</option>
+												@endif
 											@endforeach
 										@endif
 									</select>
@@ -158,10 +170,14 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">Reason</label>
 								<div class="col-md-9">
-									<select class="form-control select2" name="reason">
+									<select class="form-control select2" name="reason" disabled>
 										@if(count($reasonList))
 											@foreach($reasonList as $reasonItem)
+												@if($overtime['reason'] == $reasonItem['id'])
+												<option value ="{{$reasonItem['id']}}" selected>{{$reasonItem['reason_subject']}}</option>
+												@else
 												<option value ="{{$reasonItem['id']}}">{{$reasonItem['reason_subject']}}</option>
+												@endif
 											@endforeach
 										@endif
 									</select>
@@ -175,7 +191,8 @@
 								<label class="col-md-3 control-label">Overtime Start Date</label>
 								<div class="col-md-9">
 									<div class="input-group date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+0d">
-										<input type="text" class="form-control" name="start_date"> <span class="input-group-btn">
+										<input type="text" class="form-control" name="start_date" value="{{$overtime['start_date']}}" disabled>
+										<span class="input-group-btn">
 											<button class="btn default" type="button">
 												<i class="fa fa-calendar"></i>
 											</button>
@@ -189,7 +206,8 @@
 								<label class="col-md-3 control-label">Overtime End Date</label>
 								<div class="col-md-9">
 									<div class="input-group date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+0d">
-										<input type="text" class="form-control" name="end_date"> <span class="input-group-btn">
+										<input type="text" class="form-control" name="end_date" value="{{$overtime['end_date']}}" disabled>
+										<span class="input-group-btn">
 											<button class="btn default" type="button">
 												<i class="fa fa-calendar"></i>
 											</button>
@@ -204,10 +222,14 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">HR Approver</label>
 								<div class="col-md-9">
-									<select class="form-control select2" name="hr_approver">
-									@if($hrUserList)
+									<select class="form-control select2" name="hr_approver" disabled>
+									@if(count($hrUserList))
 										@foreach($hrUserList as $hrUser)
-										<option value="{{$hrUser->UserID}}">{{$hrUser->LastName}} {{$hrUser->FirstName}}</option>
+											@if($overtime['hr_approver']==$hrUser['UserID'])
+												<option value="{{$hrUser->UserID}}" selected>{{$hrUser->LastName}} {{$hrUser->FirstName}}</option>
+											@else
+												<option value="{{$hrUser->UserID}}">{{$hrUser->LastName}} {{$hrUser->FirstName}}</option>
+											@endif
 										@endforeach
 									@endif
 									</select>
@@ -224,7 +246,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<textarea class="form-control" rows="4" name="remark"></textarea>
+							<textarea class="form-control" rows="4" name="remark" disabled>{{$overtime['remark']}}</textarea>
 						</div>
 					</div>
 					
@@ -232,8 +254,13 @@
 				<div class="form-actions">
 					<div class="row">
 						<div class="col-md-offset-3 col-md-9">
-							<button type="submit" class="btn green">Submit</button>
-							<button type="button" class="btn default">Cancel</button>
+						@if($overtime->user_id==$currentUser->UserID && ($overtime->status == 'pending' || $overtime->status == 'partly-approved' || $overtime->status == 'rejected'))
+							<button type="submit" class="btn green"><i class="fa fa-pencil"></i>Edit</button>
+						@endif
+						@if($overtime->user_id==$currentUser->UserID && ($overtime->status == 'pending'))
+							<button type="button" class="btn default"><i class="fa fa-share"></i>Cancel</button>
+						@endif
+							
 						</div>
 					</div>
 				</div>
