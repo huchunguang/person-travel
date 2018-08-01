@@ -105,6 +105,13 @@
 	type="text/css" />
 <link href="{{asset('storage/global/css/bootstrap-sortable.css')}}" rel="stylesheet"
 	type="text/css" />
+	 <!-- BEGIN PAGE LEVEL PLUGINS(DATE TIME) -->
+        <link href="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+        <!-- END PAGE LEVEL PLUGINS(DATE TIME) -->
 	
 <script src="{{asset('js/jquery-1.8.3.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
@@ -140,6 +147,17 @@
 <script src="{{asset('assets/layouts/layout2/scripts/demo.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/layouts/global/scripts/quick-sidebar.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/layouts/global/scripts/quick-nav.min.js') }}" type="text/javascript"></script>
+<!-- BEGIN PAGE LEVEL PLUGINS(DATE TIME) -->
+        <script src="{{asset('assets/global/plugins/moment.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/global/plugins/clockface/js/clockface.js')}}" type="text/javascript"></script>
+        <!-- END PAGE LEVEL PLUGINS(DATE TIME) -->
+        <!-- BEGIN PAGE LEVEL SCRIPTS(DATE TIME) -->
+        <script src="{{asset('assets/pages/scripts/components-date-time-pickers.min.js')}}" type="text/javascript"></script>
+        <!-- END PAGE LEVEL SCRIPTS(DATE TIME) -->
 </head>
 
 <body class="page-container-bg-solid page-header-menu-fixed">

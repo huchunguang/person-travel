@@ -389,8 +389,19 @@ function delHotelItem(){
 //New Flight
 function showFlight(){
 	$('.modal input').val('');
-	$(".modal #airline_or_train").val("0").select2()
-	$('#addNewFlight').modal("show");
+	$(".modal #airline_or_train").val("1").select2()
+//	$('#addNewFlight').modal("show");
+	$('#airlineList').modal('show');
+	$('#checkAirlineBtn').on('click',function(){
+		var airlineCode = $("#aircodeSel").find('option:selected').data('code');
+		$('.modal input[name="air_code[]"]').val(airlineCode);
+		$('#airlineList').modal('hide');
+		$('#addNewFlight').modal('show');
+	});
+	$('#cancelAirlineBtn').on('click',function(){
+		$(".modal #airline_or_train").val("0").select2()
+		$('#addNewFlight').modal('show');
+	});
 }
 var addFlightNum = 0;
 function addNewFlight(){

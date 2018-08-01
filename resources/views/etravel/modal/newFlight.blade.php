@@ -23,8 +23,18 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">Date</label>
-								<input type="text" name="flight_date[]" class="form-control singleDatePicker">
-								<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+								
+									<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
+										<input type="text" class="form-control" name="start_date"> <span class="input-group-btn">
+											<button class="btn default" type="button">
+												<i class="fa fa-calendar"></i>
+											</button>
+										</span>
+									</div>
+								
+<!-- 								<input type="text" name="flight_date[]" class="form-control singleDatePicker">			
+					<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
+ -->
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -51,8 +61,9 @@
 									<div class="col-md-8" style="padding-left: 0;">
 										<select class="form-control select2 airlineSel" style="width: 100%" name="airline_or_train" id="airline_or_train" required style="display:inline">
 											<option value=""></option>
-											<option value="1" data-id="">Airline</option>
 											<option value="0">Train</option>
+											<option value="1" data-id="">Airline</option>
+											
 										</select>
 									</div>
 								</div>
