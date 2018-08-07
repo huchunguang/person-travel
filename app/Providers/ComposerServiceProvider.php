@@ -21,7 +21,8 @@ class ComposerServiceProvider extends ServiceProvider {
 			'/etravel/admin/triplist/index',
 			'/etravel/trip/demosticEdit',
 			'/overtime/index/create',
-			'/overtime/index/show'
+			'/overtime/index/show',
+			'/overtime/hr/report/index',
 		], 'App\Http\ViewComposers\CommonComposer');
 		view()->composer([ 
 			

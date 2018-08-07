@@ -31,6 +31,7 @@
 <!-- BEGIN THEME LAYOUT STYLES -->
 <link href="{{ asset('assets/layouts/layout6/css/layout.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/layouts/layout6/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
+<script src="{{asset('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
 @yield('styles')
 </head>
 <body class="">
@@ -43,7 +44,6 @@
 	</div>
 	<!-- SCRIPTS -->
 	<script></script>
-	<script src="{{asset('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
 	<script src="{{asset('js/function.js')}}"></script>
 	<!-- BEGIN CORE PLUGINS -->
 	<script src="{{asset('assets/global/plugins/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
@@ -104,8 +104,16 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+
 </script>
 	<!-- END THEME LAYOUT SCRIPTS -->
 	@yield('script.header')
+	
 </body>
 </html>
+
+<script>
+$('.datepicker').datepicker({
+    orientation: 'top left'
+});
+</script>

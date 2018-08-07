@@ -30,12 +30,22 @@ trait parseSearchFilter
 		if($request->has('daterange_from')){
 			$searchFilter['daterange_from'] = $request->input('daterange_from');
 		}else{
-			$searchFilter['daterange_from'] = Carbon::now()->firstOfMonth()->format('m/d/Y');
+// 			$searchFilter['daterange_from'] = Carbon::now()->firstOfMonth()->format('m/d/Y');
 		}
 		if($request->has('daterange_to')){
 			$searchFilter['daterange_to'] = $request->input('daterange_to');
 		}else{
-			$searchFilter['daterange_to'] = Carbon::now()->format('m/d/Y');
+// 			$searchFilter['daterange_to'] = Carbon::now()->format('m/d/Y');
+		}
+		if($request->has('start_date')){
+			$searchFilter['start_date'] = $request->input('start_date');
+		}else{
+// 			$searchFilter['start_date'] = Carbon::now()->format('m/d/Y');
+		}
+		if($request->has('end_date')){
+			$searchFilter['end_date'] = $request->input('end_date');
+		}else{
+// 			$searchFilter['end_date'] = Carbon::now()->format('m/d/Y');
 		}
 		return $searchFilter;
 		
@@ -43,7 +53,11 @@ trait parseSearchFilter
 	
 	public function buildTableFilter(Request $request)
 	{
-		$return = array_filter(array_pluck($request->columns, 'search.value','data'));
+		$return  = null;
+		if ($request->columns){
+			$return = array_filter(array_pluck($request->columns, 'search.value','data'));
+		}
 		return $return;
+		
 	}
 }

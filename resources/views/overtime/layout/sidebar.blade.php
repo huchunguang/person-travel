@@ -25,24 +25,23 @@
 					</a>
 				</li>
 				<li class="nav-item start ">
-					<a href="{{url('overtime/list')}}" class="nav-link ">
+					<a href="{{url('overtime/list?status=pending')}}" class="nav-link ">
 						<i class="glyphicon glyphicon-hand-right"></i>
 						<span class="title">Pending Overtime List</span>
 						<span class="badge badge-info">{{$overtimeRepository->countByStatus('pending')}}</span>
 					</a>
 				</li>
 				<li class="nav-item start ">
-					<a href="dashboard_3.html" class="nav-link ">
+					<a href="{{url('overtime/list?status=approved')}}" class="nav-link ">
 						<i class="fa fa-check-circle-o"></i>
 						<span class="title">Approved Overtime List</span>
 						<span class="badge badge-success">{{$overtimeRepository->countByStatus('approved')}}</span>
 					</a>
 				</li>
 				<li class="nav-item start ">
-					<a href="dashboard_3.html" class="nav-link ">
+					<a href="{{url('overtime/list')}}" class="nav-link ">
 						<i class="icon-graph"></i>
 						<span class="title">Status</span>
-						<span class="badge badge-danger">5</span>
 					</a>
 				</li>
 			</ul>
@@ -56,31 +55,23 @@
 			</a>
 			<ul class="sub-menu">
 				<li class="nav-item start">
-					<a href="index.html" class="nav-link ">
+					<a href="{{url('/overtime/approvalList/pending')}}" class="nav-link ">
 						<i class="fa fa-check"></i>
 						<span class="title">For My Approval</span>
 						<span class="selected"></span>
+						<span class="badge badge-success">{{$overtimeRepository->approvalCountByStatus('pending')}}</span>
 					</a>
 				</li>
 				<li class="nav-item start ">
-					<a href="dashboard_2.html" class="nav-link ">
-						<i class="icon-bulb"></i>
-						<span class="title">By Application</span>
-						<span class="badge badge-success">1</span>
-					</a>
-				</li>
-				<li class="nav-item start ">
-					<a href="dashboard_3.html" class="nav-link ">
+					<a href="{{url('/overtime/hr/report')}}" class="nav-link ">
 						<i class="fa fa-file-text-o"></i>
 						<span class="title">All Overtime</span>
-						<span class="badge badge-danger">5</span>
 					</a>
 				</li>
 				<li class="nav-item start ">
-					<a href="dashboard_3.html" class="nav-link ">
+					<a href="{{url('/overtime/approvalList')}}" class="nav-link ">
 						<i class="fa fa-square"></i>
 						<span class="title">By Status</span>
-						<span class="badge badge-danger">5</span>
 					</a>
 				</li>
 			</ul>
@@ -94,7 +85,7 @@
 			</a>
 			<ul class="sub-menu">
 				<li class="nav-item start">
-					<a href="index.html" class="nav-link ">
+					<a href="{{url('overtime/hr/report')}}" class="nav-link ">
 						<i class="fa fa-file-excel-o"></i>
 						<span class="title">Export To Excel</span>
 						<span class="selected"></span>
@@ -111,31 +102,28 @@
 			</a>
 			<ul class="sub-menu">
 				<li class="nav-item start">
-					<a href="index.html" class="nav-link ">
+					<a href="{{url('overtime/igg')}}" class="nav-link ">
 						<i class="icon-bar-chart"></i>
 						<span class="title">IGG</span>
 						<span class="selected"></span>
 					</a>
 				</li>
 				<li class="nav-item start ">
-					<a href="dashboard_2.html" class="nav-link ">
+					<a href="{{url('overtime/shift')}}" class="nav-link ">
 						<i class="icon-bulb"></i>
 						<span class="title">Shift</span>
-						<span class="badge badge-success">1</span>
 					</a>
 				</li>
 				<li class="nav-item start ">
-					<a href="dashboard_3.html" class="nav-link ">
+					<a href="{{url('overtime/rate')}}" class="nav-link ">
 						<i class="icon-graph"></i>
 						<span class="title">Rate</span>
-						<span class="badge badge-danger">5</span>
 					</a>
 				</li>
 				<li class="nav-item start ">
-					<a href="dashboard_3.html" class="nav-link ">
+					<a href="{{url('overtime/reason')}}" class="nav-link ">
 						<i class="icon-graph"></i>
 						<span class="title">Reason</span>
-						<span class="badge badge-danger">5</span>
 					</a>
 				</li>
 			</ul>

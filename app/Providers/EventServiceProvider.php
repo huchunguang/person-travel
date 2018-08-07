@@ -29,6 +29,9 @@ class EventServiceProvider extends ServiceProvider {
 		'App\Events\DelegationNotify'=>[
 			'App\Handlers\Events\EmailDelegationNotify'
 		],
+		'App\Events\OvertimeNotify'=>[
+			'App\Handlers\Events\EmailOvertimeNotify'
+		],
 	];
 
 	/**

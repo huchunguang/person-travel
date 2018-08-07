@@ -32,16 +32,7 @@
 			<div class="caption">
 				<i class="icon-settings font-dark"></i> <span class="caption-subject font-dark sbold uppercase">OverTime Request Form</span>
 			</div>
-			<div class="actions">
-				<div class="btn-group btn-group-devided" data-toggle="buttons">
-					<label class="btn btn-transparent dark btn-outline btn-circle btn-sm active">
-						<input type="radio" name="options" class="toggle" id="option1">Actions
-					</label>
-					<label class="btn btn-transparent dark btn-outline btn-circle btn-sm">
-						<input type="radio" name="options" class="toggle" id="option2">Settings
-					</label>
-				</div>
-			</div>
+			
 		</div>
 		<div class="portlet-body form">
 			<form class="form-horizontal" role="form" action="{{url('/overtime/store')}}" method="post">
@@ -75,8 +66,8 @@
 								<label class="col-md-3 control-label">IGG</label>
 								<div class="col-md-9">
 									<select class="form-control select2" name="igg">
-										@if(count($iggList))
-											@foreach($iggList as $iggItem)
+										@if(count($iggAll))
+											@foreach($iggAll as $iggItem)
 												<option value="{{$iggItem['id']}}">{{$iggItem['igg']}}</option>
 											@endforeach
 										@endif
@@ -121,8 +112,8 @@
 								<label class="col-md-3 control-label">Shift</label>
 								<div class="col-md-9">
 									<select class="form-control select2" name="shift">
-										@if(count($shiftList))
-											@foreach($shiftList as $shiftItem)
+										@if(count($shiftAll))
+											@foreach($shiftAll as $shiftItem)
 												<option value ="{{$shiftItem['id']}}">{{$shiftItem['shift']}}</option>
 											@endforeach
 										@endif
@@ -145,8 +136,8 @@
 								<label class="col-md-3 control-label">Rate</label>
 								<div class="col-md-9">
 									<select class="form-control select2" name="rate">
-										@if(count($rateList))
-											@foreach($rateList as $rateItem)
+										@if(count($rateAll))
+											@foreach($rateAll as $rateItem)
 												<option value ="{{$rateItem['id']}}">{{$rateItem['rate']}}</option>
 											@endforeach
 										@endif
@@ -159,8 +150,8 @@
 								<label class="col-md-3 control-label">Reason</label>
 								<div class="col-md-9">
 									<select class="form-control select2" name="reason">
-										@if(count($reasonList))
-											@foreach($reasonList as $reasonItem)
+										@if(count($reasonAll))
+											@foreach($reasonAll as $reasonItem)
 												<option value ="{{$reasonItem['id']}}">{{$reasonItem['reason_subject']}}</option>
 											@endforeach
 										@endif
@@ -175,7 +166,7 @@
 								<label class="col-md-3 control-label">Overtime Start Date</label>
 								<div class="col-md-9">
 									<div class="input-group date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+0d">
-										<input type="text" class="form-control" name="start_date"> <span class="input-group-btn">
+										<input type="text" class="form-control date-picker" name="start_date" data-date-format="yyyy-mm-dd" data-date-start-date="+0d"> <span class="input-group-btn">
 											<button class="btn default" type="button">
 												<i class="fa fa-calendar"></i>
 											</button>
@@ -189,7 +180,7 @@
 								<label class="col-md-3 control-label">Overtime End Date</label>
 								<div class="col-md-9">
 									<div class="input-group date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+0d">
-										<input type="text" class="form-control" name="end_date"> <span class="input-group-btn">
+										<input type="text" class="form-control date-picker" name="end_date" data-date-format="yyyy-mm-dd" data-date-start-date="+0d"> <span class="input-group-btn">
 											<button class="btn default" type="button">
 												<i class="fa fa-calendar"></i>
 											</button>
@@ -241,4 +232,6 @@
 		</div>
 	</div>
 </div>
+
 @endsection
+

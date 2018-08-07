@@ -33,6 +33,11 @@ class RouteServiceProvider extends ServiceProvider {
 		$router->model('airline', 'App\Airline');
 		$router->model('site', 'App\Site');
 		$router->model('overtime', 'App\Overtime');
+		$router->model('igg', 'App\Overtime_igg');
+		$router->model('shift', 'App\Overtime_shift');
+		$router->model('reason', 'App\Overtime_reason');
+		$router->model('rate', 'App\Overtime_rate');
+		
 // 		$router->bind('user', function($value) {
 // 			return User::where('name', $value)->first();
 // 		});

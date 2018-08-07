@@ -8,7 +8,7 @@ class ListController extends Controller {
 
 	public function index(Request $request) 
 	{
-		$status=$request->input('status','pending');
+		$status=$request->input('status','all');
 		return view('/overtime/list/index',compact('status'));
 	}
 }

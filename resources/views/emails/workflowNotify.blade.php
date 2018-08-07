@@ -273,7 +273,7 @@
         <table cellspacing="0" cellpadding="0" width="900" class="w320">
           <tr>
             <td class="header-lg">
-              E-Travel Notification
+              Overtime Notification
             </td>
           </tr>
           <tr>
@@ -309,7 +309,7 @@
                                 {{$trip->reference_id}} <br />
 
                                 <span class="header-sm">Date From:</span><br />
-                                {{$trip->daterange_from}} to {{$trip->daterange_to}}  <br />
+                                {{$overtime->start_date}} to {{$overtime->end_date}}  <br />
                               </td>
                             </tr>
                           </table>

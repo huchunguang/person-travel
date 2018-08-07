@@ -25,10 +25,10 @@ class OvertimeSiderBarComposer
 	public function compose(View $view)
 	{
 		$view->with('overtimeRepository', $this->overtime)
-			->with('shiftList', Overtime_shift::all())
-			->with('rateList',Overtime_rate::all())
-			->with('reasonList',Overtime_reason::all())
-			->with('iggList',Overtime_igg::all())
+			->with('shiftAll', Overtime_shift::all())
+			->with('rateAll',Overtime_rate::all())
+			->with('reasonAll',Overtime_reason::all())
+			->with('iggAll',Overtime_igg::all())
 			->with('currentUser',Auth::user())
 			->with('hrUserList',$this->user->getHrList());
 	}

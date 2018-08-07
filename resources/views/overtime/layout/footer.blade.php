@@ -1,3 +1,1 @@
-<p class="copyright-v2">
-	 Copyright © Arkema Corporation Communication &amp; Collaboration All Rights Reserved 2018
-</p>
+<p class="copyright-v2" style="width: 100%; position: fixed; bottom: 0;">Copyright © Arkema Corporation Communication &amp; Collaboration All Rights Reserved 2018</p>

@@ -23,4 +23,15 @@ class OvertimeRepository extends Repository
 		}
 		return $count; 
 	}
+	
+	public function approvalCountByStatus($status='')
+	{
+		$count=0;
+		if ($status){
+			$count=Overtime::ofStatus($status)->where('hr_approver',Auth::user()->UserID)->count();
+		}else{
+			$count=Overtime::where('user_id',Auth::user()->UserID)->count();
+		}
+		return $count;
+	}
 }

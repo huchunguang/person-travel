@@ -3,8 +3,8 @@
 		<tr>
 			<th>#</th>
 			<th>Reference #</th>
-			<th>Position</th>
 			<th>Start Date</th>
+			<th>Position</th>
 			<th>End Date</th>
 			<th>Head Count</th>
 			<th>Shift</th>
@@ -19,8 +19,8 @@
 		<tr>
 			<th>#</th>
 			<th>Reference #</th>
-			<th>Position</th>
 			<th>Start Date</th>
+			<th>Position</th>
 			<th>End Date</th>
 			<th>Head Count</th>
 			<th>Shift</th>

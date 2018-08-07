@@ -15,7 +15,7 @@
 						<button id="btnApproveValidate" style="margin-right: 10px;" type="button" data-toggle="modal" data-target="#forApproval" title="Approve Leave Request" class="btn green" <?php if($trip->trip_type=='2'){echo 'disabled';}?>>
 							<i class="fa fa-thumbs-up"></i> Approve
 						</button>
-						<button id="btnRejectTravel" type="button" class="btn red" disabled="" style="margin-right: 10px;">
+						<button id="btnRejectTravel" type="button" class="btn red" disabled style="margin-right: 10px;">
 							<i class="fa fa-thumbs-down"></i> Reject
 						</button>
 					</div>
