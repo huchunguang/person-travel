@@ -31,6 +31,8 @@ use App\Repositories\TripRepository;
 use App\Http\Apis\Classes\EhotelApi;
 use App\Trip_counter;
 use App\Repositories\UserRepository;
+use App\Http\Requests\CreateNationalRequest;
+use App\Http\Requests\CreateDomesticRequest;
 
 class TripController extends Controller
 {
@@ -45,7 +47,7 @@ class TripController extends Controller
      * @param Request $requset
      * @return \Illuminate\View\View
      */
-    public function create(Request $requset) 
+    public function create(CreateNationalRequest $requset) 
     {
 		$userList = User::all(['Email','FirstName','LastName']);
 		$userProfile = User::getUserProfile();
@@ -74,7 +76,7 @@ class TripController extends Controller
      * @param Request $requset
      * @return \Illuminate\View\View
      */
-    public function demosticCreate() 
+    public function demosticCreate(CreateDomesticRequest $request) 
     {
 		$userProfile = User::getUserProfile();
 		$purposeCategory = $this->user->purposeCatWithCompany();

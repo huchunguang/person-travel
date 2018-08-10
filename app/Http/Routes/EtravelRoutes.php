@@ -20,7 +20,7 @@ class EtravelRoutes
 			
 			$router->resource('site', 'SiteController');
 			
-			$router->group(['prefix'=>'etravel','namespace'=>'Etravel','domain'=>'www.arkema-etravels.com'],function($router){
+			$router->group(['prefix'=>'etravel','namespace'=>'Etravel','domain'=>'www.arkema-etravel.com'],function($router){
 				$router->get('unknownUser',['as'=>'unknownUser','uses'=>'DashboardController@unknownUser']);
 				$router->group(['middleware'=>'checkUser'],function($router){
 					#DashBoard
