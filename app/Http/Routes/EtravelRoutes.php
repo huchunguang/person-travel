@@ -7,6 +7,8 @@ class EtravelRoutes
 {
 	public function map(Registrar $router) 
 	{
+		
+		
 		$router->get('/', function (){
 			return redirect()->route('dashboard');
 		});
@@ -18,7 +20,7 @@ class EtravelRoutes
 			
 			$router->resource('site', 'SiteController');
 			
-			$router->group(['prefix'=>'etravel','namespace'=>'Etravel'],function($router){
+			$router->group(['prefix'=>'etravel','namespace'=>'Etravel','domain'=>'www.arkema-etravels.com'],function($router){
 				$router->get('unknownUser',['as'=>'unknownUser','uses'=>'DashboardController@unknownUser']);
 				$router->group(['middleware'=>'checkUser'],function($router){
 					#DashBoard
@@ -87,5 +89,7 @@ class EtravelRoutes
 						$router->get('download','FileController@download');
 						#Excel
 						$router->get('excel/export','ExcelController@exportTripList');
+						
+						
 	}
 }

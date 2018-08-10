@@ -233,7 +233,7 @@
 													<i class="fa fa-pencil"></i>Edit
 												</button>
 												@endif @if($overtime->user_id==$currentUser->UserID && ($overtime->status == 'pending'))
-												<button type="button" class="btn default" onclick="window.location.href='/overtime/32/cancel'">
+												<button type="button" class="btn default" onclick="window.location.href='/overtime/{{$overtime->id}}/cancel'">
 													<i class="fa fa-share"></i>Cancel
 												</button>
 												@endif

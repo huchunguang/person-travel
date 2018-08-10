@@ -21,7 +21,7 @@ class AuthController extends Controller {
 
 	use AuthenticatesAndRegistersUsers;
 	
-	protected $redirectPath= '/etravel/dashboard';
+	protected $redirectPath= '/overtime/dashboard';
 	
 	protected $redirectAfterLogout='/auth/login';
 	
@@ -36,7 +36,6 @@ class AuthController extends Controller {
 	{
 		$this->auth = $auth;
 		$this->registrar = $registrar;
-
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
 

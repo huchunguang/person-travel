@@ -4,7 +4,9 @@
 			<div class="havbar-header">
 				<!-- BEGIN LOGO -->
 				<a id="index" class="navbar-brand" href="{{url('overtime/dashboard')}}">
-					<img src="{{ asset('assets/layouts/layout6/img/logo.png') }}" style="width: 248px;" alt="Logo">
+					<div style="width: 248px;">
+						<img src="{{ asset('storage/arkema2.png') }}" style="margin-left: 25px;" alt="Logo">	
+					</div>
 				</a>
 				<!-- END LOGO -->
 				<!-- BEGIN TOPBAR ACTIONS -->

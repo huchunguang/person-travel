@@ -37,7 +37,7 @@ class EmailOvertimeNotify
 		$overtime= $event->overtime;
 		$overtimeCreater = $overtime->user()->first();
 		$request = $event->request;
-		$viewDetailUrl='';
+		$viewDetailUrl= route('overtimeDetail',['overtime'=>$overtime->id]);
 		$manager = $overtime->hr_approver()->first();
 		$recipient = $overtime->user()->first();
 		$subject = $this->getEmailSubject($actionType, $overtimeCreater, $overtime);
@@ -50,7 +50,7 @@ class EmailOvertimeNotify
 			'viewDetailUrl' => $viewDetailUrl
 		];
 		// dd($variables);
-		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject, $manager, $overtime, $overtimeCreater, $actionType) {
+		$flag = Mail::send('emails.overtimeNotify', $variables, function ($message) use ($subject, $manager, $overtime, $overtimeCreater, $actionType) {
 			
 			$cc = $overtime->cc ?: [ ];
 			if (Auth::user()->UserID == $overtime->user_id) {
