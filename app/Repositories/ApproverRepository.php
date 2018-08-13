@@ -17,8 +17,11 @@ class ApproverRepository extends Repository
 		$generalManager = array();
 		$res = Company_site::whereIn('countryID',$param)->get(['GeneralManagerID'])->filter(function($item){
 			return ($item->GeneralManagerID !== null);
-		})->unique();
-		$res = array_pluck($res, 'GeneralManagerID');
+		});
+			//->unique('GeneralManagerID')
+// 		dd($res->toArray());
+		$res = array_unique(array_pluck($res, 'GeneralManagerID'));
+// 		dd($res);
 		array_walk($res, ['App\User','checkIsDelegate']);
 		$generalManager = User::whereIn('UserID', $res)->get();
 		return $generalManager;

@@ -33,7 +33,8 @@ class EmailTripConfirmation {
 		$user_id=Auth::user()->UserID;
 		DB::transaction(function()use($trip,$user_id){
 			if ($trip->trip_type=='1'){
-				if ($user_id == $trip->overseas_approver || $trip->overseas_approver==''){
+// 				var_dump($trip->user_id==$trip->overseas_approver);die;
+				if ($user_id == $trip->overseas_approver || $trip->overseas_approver=='' || $trip->department_approver==$trip->overseas_approver || $trip->user_id==$trip->overseas_approver){
 					$trip->update(['status'=>'approved']);
 				}elseif ($user_id == $trip->department_approver){
 					$trip->update(['is_depart_approved'=>'1']);

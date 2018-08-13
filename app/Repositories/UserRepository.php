@@ -42,4 +42,10 @@ class UserRepository extends Repository
 		$res = Company_site::where('CompanyID',$user->CompanyID)->where('SiteID',$user->SiteID)->where('CountryID',$user->CountryAssignedID)->first();
 		return $res;
 	}
+	public function isOverseasApprover(User $user=null)
+	{
+		$user = $user?$user:Auth::user();
+		$res=Company_site::where('GeneralManagerID',$user->UserID)->exists();
+		
+	}
 }

@@ -72,11 +72,11 @@
 																<label class="control-label">Period of Travel From</label>
 															</p>
 															<div class="col-md-6" style="margin-left: 0px; padding: 0px;">
-																<input type="text" name="daterange_from" value="{{$trip->daterange_from}}" class="form-control singleDatePicker" disabled>
+																<input type="text" name="daterange_from" value="{{$trip->daterange_from}}" class="form-control" disabled>
 																<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 															</div>
 															<div class="col-md-6" style="padding-right: 0px;">
-																<input type="text" name="daterange_to" value="{{$trip->daterange_to}}" class="form-control singleDatePicker" disabled>
+																<input type="text" name="daterange_to" value="{{$trip->daterange_to}}" class="form-control" disabled>
 																<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 															</div>
 														</div>
