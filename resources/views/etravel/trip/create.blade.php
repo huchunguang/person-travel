@@ -17,7 +17,7 @@
 						<!-- BEGIN FORM-->
 						<form action="/etravel/trip/storeNational" method="post" class="horizontal-form" enctype="multipart/form-data" id="nationTripCreate">
 							<input type="hidden" name="_token" value="{{csrf_token()}}" />
-							<input type="hidden" name="workflow" value="{{$workflow}}"/>
+							<input type="hidden" name="workflow" value="{{$workflow}}" />
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
@@ -56,6 +56,48 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
+											<label class="control-label">Department</label>
+											<select id="department_id" name="department_id" class="select2 form-control">
+												@foreach($departmentList as $dep) @if($dep['DepartmentID']==Auth::user()->DepartmentID)
+												<option value="{{$dep['DepartmentID']}}" selected>{{$dep['Department'] }}</option>
+												@else
+												<option value="{{$dep['DepartmentID']}}">{{$dep['Department'] }}</option>
+												@endif @endforeach
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<p style="margin-bottom: 0px;">
+												<label class="control-label">Period of Travel From</label>
+											</p>
+											<div class="col-md-6" style="margin-left: 0px; padding: 0px;">
+												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
+													<input type="text" class="form-control" name="daterange_from" value="{{old('daterange_from')}}">
+													<span class="input-group-btn">
+														<button class="btn default" type="button">
+															<i class="fa fa-calendar"></i>
+														</button>
+													</span>
+												</div>
+											</div>
+											<div class="col-md-6" style="padding-right: 0px;">
+											
+												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
+													<input type="text" class="form-control" name="daterange_to" value="{{old('daterange_to')}}">
+													<span class="input-group-btn">
+														<button class="btn default" type="button">
+															<i class="fa fa-calendar"></i>
+														</button>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
 											<label class="control-label">Cost Center</label>
 											<select name="cost_center_id" class="form-control input-sm select2" required>
 												@if($costCenters) @foreach($costCenters as $costItem) @if(old('cost_center_id') == $costItem['CostCenterID'] || $costItem['CostCenterID']==$defaultCostCenterID)
@@ -71,21 +113,6 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<p style="margin-bottom: 0px;">
-												<label class="control-label">Period of Travel From</label>
-											</p>
-											<div class="col-md-6" style="margin-left: 0px; padding: 0px;">
-												<input type="text" name="daterange_from" value="{{old('daterange_from')}}" class="form-control singleDatePicker">
-												<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
-											</div>
-											<div class="col-md-6" style="padding-right: 0px;">
-												<input type="text" name="daterange_to" value="{{old('daterange_to')}}" class="form-control singleDatePicker">
-												<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
 											<label class="control-label">Project Code</label>
 											<select id="project_code" name="project_code" class="form-control select2">
 												<option disabled selected value></option>
@@ -94,6 +121,13 @@
 												@else
 												<option value="{{$item['wbs_id']}}">{{$item['wbs_code']}}</option>
 												@endif @endforeach @endif
+											</select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label">Overseas Approver</label>
+											<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
 											</select>
 										</div>
 									</div>
@@ -128,13 +162,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label class="control-label">Overseas Approver</label>
-											<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
-											</select>
-										</div>
-									</div>
+									<div class="col-md-6"></div>
 								</div>
 								<div class="row">
 									<div class="col-md-12 ">
@@ -274,20 +302,40 @@
 													</thead>
 													<tbody>
 														<tr>
-															<td class="text-center">Overseas Travel <input type="hidden" name="estimate_type[]" value="overseas" />
+															<td class="text-center">
+																Overseas Travel
+																<input type="hidden" name="estimate_type[]" value="overseas" />
 															</td>
-															<td><input type="text" name="employee_annual_budget[]" id="" placeholder="0.00" /></td>
-															<td><input type="text" name="employee_ytd_expenses[]" id="" placeholder="0.00" /></td>
-															<td><input type="text" name="available_amount[]" id="" placeholder="0.00" /></td>
-															<td><input type="text" name="required_amount[]" id="" placeholder="0.00" /></td>
+															<td>
+																<input type="text" name="employee_annual_budget[]" id="" placeholder="0.00" />
+															</td>
+															<td>
+																<input type="text" name="employee_ytd_expenses[]" id="" placeholder="0.00" />
+															</td>
+															<td>
+																<input type="text" name="available_amount[]" id="" placeholder="0.00" />
+															</td>
+															<td>
+																<input type="text" name="required_amount[]" id="" placeholder="0.00" />
+															</td>
 														</tr>
 														<tr>
-															<td class="text-center">Entertainment <input type="hidden" name="estimate_type[]" value="entertain" />
+															<td class="text-center">
+																Entertainment
+																<input type="hidden" name="estimate_type[]" value="entertain" />
 															</td>
-															<td><input type="text" name="employee_annual_budget[]" id="" placeholder="0.00" /></td>
-															<td><input type="text" name="employee_ytd_expenses[]" id="" placeholder="0.00" /></td>
-															<td><input type="text" name="available_amount[]" id="" placeholder="0.00" /></td>
-															<td><input type="text" name="required_amount[]" id="" placeholder="0.00" /></td>
+															<td>
+																<input type="text" name="employee_annual_budget[]" id="" placeholder="0.00" />
+															</td>
+															<td>
+																<input type="text" name="employee_ytd_expenses[]" id="" placeholder="0.00" />
+															</td>
+															<td>
+																<input type="text" name="available_amount[]" id="" placeholder="0.00" />
+															</td>
+															<td>
+																<input type="text" name="required_amount[]" id="" placeholder="0.00" />
+															</td>
 														</tr>
 													</tbody>
 												</table>
@@ -527,25 +575,6 @@
 										</div>
 									</div>
 								</div>
-								<!-- 								<div class="row form-group col-sm-12" > -->
-								<!-- 									<div class="portlet box default"> -->
-								<!-- 										<div class="portlet-title"> -->
-								<!-- 											<div class="caption">PRE-APPROVAL PURCHASE/REQUEST(RENT)</div> -->
-								<!-- 											<div class="tools"> -->
-								<!-- 												<a href="" class="collapse" data-original-title="" title=""> -->
-								<!-- 												</a> -->
-								<!-- 											</div> -->
-								<!-- 										</div> -->
-								<!-- 										<div class="portlet-body form"> -->
-								<!-- 											<div class="form-group"> -->
-								<!-- 												<select id="CostCenter" name="CostCenter" -->
-								<!-- 													class="cboSelect2 leave-control form-control" tabindex="-1"> -->
-								<!-- 													<option value="0">&lt;&nbsp;others&nbsp;&gt;</option> -->
-								<!-- 												</select> -->
-								<!-- 											</div> -->
-								<!-- 										</div> -->
-								<!-- 									</div> -->
-								<!-- 								</div> -->
 								<div class="row">
 									<div class="col-md-12">
 										<div class="portlet box default">

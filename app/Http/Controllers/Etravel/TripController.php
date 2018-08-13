@@ -33,8 +33,11 @@ use App\Trip_counter;
 use App\Repositories\UserRepository;
 use App\Http\Requests\CreateNationalRequest;
 use App\Http\Requests\CreateDomesticRequest;
+use App\Company_site;
+use App\Http\Controllers\Etravel\Admin\AdminController;
+use App\Department;
 
-class TripController extends Controller
+class TripController extends AdminController
 {
 	public function __construct(SystemVariable $system,TripRepository $trip,UserRepository $user) 
 	{
@@ -47,8 +50,9 @@ class TripController extends Controller
      * @param Request $requset
      * @return \Illuminate\View\View
      */
-    public function create(CreateNationalRequest $requset) 
+	public function create(Request $requset) 
     {
+//     	dd($this->getDepByCompanySite()->toArray());
 		$userList = User::all(['Email','FirstName','LastName']);
 		$userProfile = User::getUserProfile();
 		$countryList = Country::orderBy('Country')->select([ 
@@ -67,6 +71,7 @@ class TripController extends Controller
 			->with('costCenters', Costcenter::getAvailableCenters())
 			->with('countryList', $countryList)
 			->with('approvers', $userProfile['approvers'])
+			->with('departmentList',$this->getDepByCompanySite())
 			->with('airlineList', $airlineList)
 			->with('userList', $userList)
 			->with('hotelList', $hotelList)->with('workflow',$this->user->getWorkflowCfg()->workflow);
@@ -162,7 +167,7 @@ class TripController extends Controller
     {
 //     		header("Content-Type: ".Storage::mimeType($savePath));
 //     		echo Storage::get($savePath);
-// 			dd($request->all());
+//     	dd($request->input('department_id',$this->system->DepartmentID));
     		DB::beginTransaction();
     		try {
     			$trip=new Trip;
@@ -170,7 +175,7 @@ class TripController extends Controller
     			$trip->reference_id=Trip_counter::generateRefId();
     			$trip->cc=$request->input('cc');
     			$trip->user_id=Auth::user()->UserID;
-    			$trip->department_id=$this->system->DepartmentID;
+    			$trip->department_id=$request->input('department_id',$this->system->DepartmentID);
     			$trip->country_id=$this->system->CountryAssignedID;
     			$trip->site_id=$this->system->SiteID;
     			$trip->company_id=$this->system->CompanyID;
@@ -303,19 +308,20 @@ class TripController extends Controller
 // 		dd($destination->toArray());
 // 		dd($trip->purpose_file);
 		return view('/etravel/trip/tripNationalDetail', [
-			'userObjMdl'=>$userObjMdl,
+			'userObjMdl' => $userObjMdl,
 			'trip' => $trip,
-			'approver'=>$approver,
-			'overseas_approver'=>$overseas_approver,
+			'approver' => $approver,
+			'overseas_approver' => $overseas_approver,
 			'hotelData' => $hotelData,
-			'estimateExpenses'=>$estimateExpenses,
+			'estimateExpenses' => $estimateExpenses,
 			'flightData' => $flightData,
 			'insuranceData' => $insuranceData,
 			'destination' => $destination,
 			'rep_office' => $rep_office,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
-			'cc' => $trip->cc,
-			
+			'department' => $trip->department()->first()->Department,
+			'cc' => $trip->cc
+		
 		]);
 	}
 
@@ -351,7 +357,8 @@ class TripController extends Controller
 	{
 		$overseas_approver=[];
 		$userList = User::all(['Email','FirstName','LastName']);
-		$userProfile=User::getUserProfile();
+		$userProfile=User::getUserProfile($trip->department_id);
+// 		dd($userProfile);
 		$countryList = Country::orderBy('Country')->select(['CountryID','Country','IsAsia'])->get();
 		$purposeCategory = $this->user->purposeCatWithCompany();
 		if ($trip->overseas_approver){
@@ -389,6 +396,7 @@ class TripController extends Controller
 // 			'ccUser'=>$this->trip->getCcUser($trip)->toArray(),
 			'hotelList'=>$hotelList,
 			'airlineList' => Airline::all(),
+			'departmentList'=> $this->getDepByCompanySite(),
 			'userList'=>$userList,
 		]);
 	}
@@ -450,12 +458,13 @@ class TripController extends Controller
 	 */
 	public function nationalUpdate(UpdateNationalTripRequest $request,Trip $trip)
 	{
-// 		dd($request->all());
+// 		dd($request->input('department_id'));
 		DB::beginTransaction();
 		try {
 			$trip->user_id = Auth::user()->UserID;
 			$trip->status = $request->input('status') == 'rejected' ? 'pending' : $request->input('status');
 			$trip->destination_id = $request->input('destination');
+			$trip->department_id= $request->input('department_id');
 			$trip->cost_center_id = $request->input('cost_center_id');
 			$trip->daterange_from = $request->input('daterange_from');
 			$trip->daterange_to = $request->input('daterange_to');

@@ -10,11 +10,13 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use phpDocumentor\Reflection\Types\Static_;
+use App\Http\Traits\selectApprover;
+use Illuminate\Http\Request;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
 	
-	use Authenticatable, CanResetPassword;
+	use Authenticatable, CanResetPassword,selectApprover;
 
 	/**
 	 * The database table used by the model.
@@ -73,43 +75,22 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasOne('App\Company', 'CompanyID', 'CompanyID');
 	}
 
-	public static function getUserProfile()
+	public static function getUserProfile($request=null)
 	{
 		$approvers = $departmentFilter = [ ];
-		$user_id = Auth::user()->UserID;
+		
 		$userProfile = User::with('costcenter', 'department', 'site')->where('UserName', Auth::user()->UserName)->first();
 		$departmentFilter['SiteID'] = $userProfile['SiteID'];
-		$departmentFilter['DepartmentID'] = $userProfile['DepartmentID'];
-		$departmentFilter['CompanyID'] = $userProfile['CompanyID'];
-		if (Department_approver::where($departmentFilter)->exists()) {
-			$approvers = Department_approver::where($departmentFilter)->first([ 
-				
-				'Approver1'
-			])->toArray();
-			$userIds = explode(',', $approvers['Approver1']);
-			if (in_array($user_id, $userIds)) {
-				$approvers = Department_approver::where($departmentFilter)->first([ 
-					
-					'Approver2'
-				])->toArray();
-				
-				$userIds = explode(',', $approvers['Approver2']);
-				if (in_array($user_id, $userIds)) {
-					$approvers = Department_approver::where($departmentFilter)->first([ 
-						
-						'Approver3'
-					])->toArray();
-					
-					$userIds = explode(',', $approvers['Approver3']);
-				}
-			}
-			array_walk($userIds, [ 
-				
-				'self',
-				'checkIsDelegate'
-			]);
-			$approvers = User::whereIn('UserID', $userIds)->get()->toArray();
+		if ($request instanceof Request){
+			$departmentFilter['DepartmentID'] = $request->input('department_id',$userProfile['DepartmentID']);
+		}elseif(is_integer($request)){
+			$departmentFilter['DepartmentID']= $request;
+		}else{
+			$departmentFilter['DepartmentID'] = $userProfile['DepartmentID'];
 		}
+		
+		$departmentFilter['CompanyID'] = $userProfile['CompanyID'];
+		$approvers = self::getDepApprover($departmentFilter);
 		
 		return [ 
 			

@@ -52,6 +52,7 @@ class EtravelRoutes
 					
 					
 					$router->get('approver',['uses'=>'ApproverController@getOverseasApprover','as'=>'overseasApprover']);
+					$router->get('depApprover',['uses'=>'ApproverController@getApproverByFilter','as'=>'departmentApprover']);
 					
 					#Configuration
 					$router->resource('airline', 'AirlineController');

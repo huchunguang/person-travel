@@ -6,7 +6,6 @@ $('#destinationSel').on('change',function(){
 		countryIds.push(regionId);
 	});
 	if(countryIds.length!=0){
-		
 		if(workflow == 2||$.inArray('',countryIds)>=0||$.inArray(0,countryIds)>=0){
 			$.get('/etravel/approver',function(data){
 				var overseasOptions='';
@@ -26,6 +25,22 @@ $('#destinationSel').on('change',function(){
 	}
 	
 });
+
+$('#department_id').on('change',function(){
+	var department_id=$(this).val();
+//	alert(department_id);
+	$.get('/etravel/depApprover?department_id='+department_id,function(data){
+		var depApproverOptions='';
+		$.each(data,function(ind,val){
+			depApproverOptions+='<option value="'+val.UserID+'">'+val.LastName+' '+val.FirstName+'</option>';
+		});
+			$('#department_approver').empty().append(depApproverOptions);
+	});
+	
+});
+
+
+
 //to check whether sent a notify to the affairs
 $(':radio[name="is_sent_affairs"]').on('ifChecked',function(event){
 	var isChecked=parseInt($(this).val());

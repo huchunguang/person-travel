@@ -5,7 +5,7 @@
 		<div class="row">
 			<!-- BEGIN FORM-->
 			<form action="/etravel/tripapproval/{{$trip->trip_id}}" method="post" class="horizontal-form" id="national_approval">
-				@if($trip->status == 'pending' && ($trip->department_approver == Auth::user()->UserID || $trip->overseas_approver == Auth::user()->UserID) && $trip->is_depart_approved != 1) @include('etravel.layout.approverAction') @elseif($trip->status == 'pending' && $trip->overseas_approver == Auth::user()->UserID && $trip->is_depart_approved ==1 ) @include('etravel.layout.approverAction') @endif @include('etravel.layout.error')
+				@if($trip->status == 'pending' && ($trip->department_approver == Auth::user()->UserID || ($trip->overseas_approver == Auth::user()->UserID && $trip->overseas_approver!=$trip->user_id)) && $trip->is_depart_approved != 1) @include('etravel.layout.approverAction') @elseif($trip->status == 'pending' && $trip->overseas_approver == Auth::user()->UserID && $trip->is_depart_approved ==1 ) @include('etravel.layout.approverAction') @endif @include('etravel.layout.error')
 				<div class="col-md-12">
 					<!-- BEGIN VALIDATION STATES-->
 					@if($trip->status=='approved')
@@ -58,15 +58,16 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label">Cost Center</label>
-															<select name="cost_center_id" class="form-control input-sm select2" disabled>
-																<option value="1">{{$costCenterCode}}</option>
+															<label class="control-label">Department</label>
+															<select id="department_id" name="department_id" class="select2 form-control" disabled>
+																<option value="{{$department}}" selected>{{$department}}</option>
 															</select>
 														</div>
 													</div>
 												</div>
 												<div class="row">
 													<div class="col-md-6">
+														
 														<div class="form-group">
 															<p style="margin-bottom: 0px;">
 																<label class="control-label">Period of Travel From</label>
@@ -80,14 +81,54 @@
 																<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 															</div>
 														</div>
+													
 													</div>
 													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label">Cost Center</label>
+															<select name="cost_center_id" class="form-control input-sm select2" disabled>
+																<option value="1">{{$costCenterCode}}</option>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														
 														<div class="form-group">
 															<label class="control-label">Project Code</label>
 															<select id="project_code" disabled name="project_code" class="form-control input-sm select2">
 																<option value="{{$trip->project_code}}">{{$trip->wbsCode()->first()['wbs_code']}}</option>
 															</select>
 														</div>
+													
+													</div>
+													<div class="col-md-6">
+														
+														<div class="form-group">
+															<label class="control-label">Overseas Approver</label>
+															<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
+																@if($overseas_approver)
+																<option value="{{$overseas_approver->UserID}}">{{ $overseas_approver->LastName }} {{ $overseas_approver->FirstName }}</option>
+																@endif
+															</select>
+															@if($trip->is_depart_approved=='1')
+																<div style="background-color: #32c5d2; margin-top: 2px;">
+																@if($trip->status=='pending')
+																<span class="glyphicon glyphicon-hand-right" style="color: green"></span>
+																@elseif($trip->status=='approved')
+																<span class="fa fa-check-circle-o" style="color: green"></span>
+																@elseif($trip->status=='rejected')
+																<span class="glyphicon glyphicon-thumbs-down" style="color: red"></span>
+																@elseif($trip->status=='cancelled')
+																<span class="fa fa-exclamation-triangle" style="color: black"></span>
+																@elseif($trip->status=='partly-approved')
+																<span class="glyphicon glyphicon-check" style="color: yellow"></span>
+																@endif {{ ucfirst($trip->status)}} by: @if($trip->status != 'cancelled') {{ ucfirst($overseas_approver->LastName) }} {{ $overseas_approver->FirstName }} @else {{ ucfirst($userObjMdl->FirstName) }} {{ ucfirst($userObjMdl->LastName) }} @endif on {{$trip->updated_at}}
+															</div>
+															@endif
+														</div>
+													
 													</div>
 												</div>
 												<div class="row">
@@ -118,31 +159,7 @@
 															</div>
 														</div>
 													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Overseas Approver</label>
-															<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
-																@if($overseas_approver)
-																<option value="{{$overseas_approver->UserID}}">{{ $overseas_approver->LastName }} {{ $overseas_approver->FirstName }}</option>
-																@endif
-															</select>
-															@if($trip->is_depart_approved=='1')
-																<div style="background-color: #32c5d2; margin-top: 2px;">
-																@if($trip->status=='pending')
-																<span class="glyphicon glyphicon-hand-right" style="color: green"></span>
-																@elseif($trip->status=='approved')
-																<span class="fa fa-check-circle-o" style="color: green"></span>
-																@elseif($trip->status=='rejected')
-																<span class="glyphicon glyphicon-thumbs-down" style="color: red"></span>
-																@elseif($trip->status=='cancelled')
-																<span class="fa fa-exclamation-triangle" style="color: black"></span>
-																@elseif($trip->status=='partly-approved')
-																<span class="glyphicon glyphicon-check" style="color: yellow"></span>
-																@endif {{ ucfirst($trip->status)}} by: @if($trip->status != 'cancelled') {{ ucfirst($overseas_approver->LastName) }} {{ $overseas_approver->FirstName }} @else {{ ucfirst($userObjMdl->FirstName) }} {{ ucfirst($userObjMdl->LastName) }} @endif on {{$trip->updated_at}}
-															</div>
-															@endif
-														</div>
-													</div>
+													<div class="col-md-6"></div>
 												</div>
 												<div class="row">
 													<div class="col-md-12 ">

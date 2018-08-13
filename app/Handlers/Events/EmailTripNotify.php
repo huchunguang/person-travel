@@ -68,7 +68,9 @@ class EmailTripNotify {
 				array_push($cc,$tripCreater->Email);
 			}elseif ($trip->trip_type=='1' && Auth::user()->UserID == $trip->department_approver && $actionType == 'partly-approved'){
 				$to = $manager->Email;
-				array_push($cc, User::find($trip->department_approver)->Email);
+				if ($to!=User::find($trip->department_approver)->Email){
+					array_push($cc, User::find($trip->department_approver)->Email);
+				}
 				array_push($cc, $tripCreater->Email);
 			}else{
 				$to = $tripCreater->Email;
@@ -86,7 +88,7 @@ class EmailTripNotify {
 				
 			}
 // 			dd($cc);
-
+			
 			$message->to($to)->cc($cc)->subject("Etravel:".$subject);
 			
 		});

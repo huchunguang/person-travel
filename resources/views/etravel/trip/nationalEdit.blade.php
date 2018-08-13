@@ -21,7 +21,8 @@
 										@endif
 										<div class="portlet-title">
 											<div class="caption">
-												<i class="icon-bubble"></i> <span class="caption-subject bold uppercase">{{ $trip->status }}</span>
+												<i class="icon-bubble"></i>
+												<span class="caption-subject bold uppercase">{{ $trip->status }}</span>
 											</div>
 										</div>
 										<div class="portlet-body form">
@@ -62,6 +63,47 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
+															<label class="control-label">Department</label>
+															<select id="department_id" name="department_id" class="form-control">
+																@foreach($departmentList as $dep) @if($dep['DepartmentID']==$trip->department_id)
+																<option value="{{$dep['DepartmentID']}}" selected>{{$dep['Department'] }}</option>
+																@else
+																<option value="{{$dep['DepartmentID']}}">{{$dep['Department'] }}</option>
+																@endif @endforeach
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<p style="margin-bottom: 0px;">
+																<label class="control-label">Period of Travel From</label>
+															</p>
+															<div class="col-md-6" style="margin-left: 0px; padding: 0px;">
+																<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
+																	<input type="text" class="form-control" name="daterange_from" value="{{$trip->daterange_from}}">
+																	<span class="input-group-btn">
+																		<button class="btn default" type="button">
+																			<i class="fa fa-calendar"></i>
+																		</button>
+																	</span>
+																</div>
+															</div>
+															<div class="col-md-6" style="padding-right: 0px;">
+																<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
+																	<input type="text" class="form-control" name="daterange_to" value="{{$trip->daterange_to}}">
+																	<span class="input-group-btn">
+																		<button class="btn default" type="button">
+																			<i class="fa fa-calendar"></i>
+																		</button>
+																	</span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
 															<label class="control-label">Cost Center</label>
 															<select name="cost_center_id" class="form-control input-sm select2">
 																@foreach($costCenters as $costItem) @if(old('cost_center_id') == $costItem['CostCenterID'] || $costCenterCode == $costItem['CostCenterID'])
@@ -77,21 +119,6 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<p style="margin-bottom: 0px;">
-																<label class="control-label">Period of Travel From</label>
-															</p>
-															<div class="col-md-6" style="margin-left: 0px; padding: 0px;">
-																<input type="text" name="daterange_from" value="{{$trip->daterange_from}}" class="form-control singleDatePicker">
-																<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
-															</div>
-															<div class="col-md-6" style="padding-right: 0px;">
-																<input type="text" name="daterange_to" value="{{$trip->daterange_to}}" class="form-control singleDatePicker">
-																<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
 															<label class="control-label">Project Code</label>
 															<select id="project_code" name="project_code" class="form-control input-sm select2">
 																<option disabled selected value></option>
@@ -100,23 +127,6 @@
 																@else
 																<option value="{{$item['wbs_id']}}">{{$item['wbs_code']}}</option>
 																@endif @endforeach
-															</select>
-														</div>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Department Approver</label>
-															<select id="department_approver" name="department_approver" class="form-control input-sm select2">
-																@foreach ($approvers as $item) 
-																@if($item['UserID'] == old('department_approver') || $item['UserID'] == $approver->UserID)
-																<option value="{{ $item['UserID'] }}" selected="selected">
-																@else
-																<option value="{{ $item['UserID'] }}">
-																@endif {{$item['FirstName']}}
-																</option>
-																@endforeach
 															</select>
 														</div>
 													</div>
@@ -130,6 +140,22 @@
 															</select>
 														</div>
 													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label">Department Approver</label>
+															<select id="department_approver" name="department_approver" class="form-control input-sm select2">
+																@foreach ($approvers as $item) @if($item['UserID'] == old('department_approver') || $item['UserID'] == $approver->UserID)
+																<option value="{{ $item['UserID'] }}" selected="selected">@else
+																
+																
+																<option value="{{ $item['UserID'] }}">@endif {{$item['LastName']}} {{$item['FirstName']}}</option>
+																@endforeach
+															</select>
+														</div>
+													</div>
+													<div class="col-md-6"></div>
 												</div>
 												<div class="row">
 													<div class="col-md-12 ">
@@ -154,12 +180,21 @@
 																	<div class="fileinput fileinput-exists" data-provides="fileinput" style="margin-top: 5px;">
 																		<div class="input-group input-large">
 																			<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-																				<i class="fa fa-file fileinput-exists"></i>&nbsp; <span class="fileinput-filename">{{$trip->purpose_file}}</span>
+																				<i class="fa fa-file fileinput-exists"></i>&nbsp;
+																				<span class="fileinput-filename">{{$trip->purpose_file}}</span>
 																			</div>
-																			<span class="input-group-addon btn btn-file yellow-gold"> <span class="fileinput-new"> Select file </span> <span class="fileinput-exists"> Change </span> <input type="hidden" value="" name=""> @if($trip->purpose_file) <input type="file" name="purpose_file" value="{{Storage::get($trip->purpose_file)}}">
-																			</span> @else
+																			<span class="input-group-addon btn btn-file yellow-gold">
+																				<span class="fileinput-new"> Select file </span>
+																				<span class="fileinput-exists"> Change </span>
+																				<input type="hidden" value="" name="">
+																				@if($trip->purpose_file)
+																				<input type="file" name="purpose_file" value="{{Storage::get($trip->purpose_file)}}">
+																			</span>
+																			@else
 																			<input type="file" name="purpose_file" value="">
-																			</span> @endif <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+																			</span>
+																			@endif
+																			<a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 																		</div>
 																	</div>
 																</div>
@@ -170,15 +205,25 @@
 												<div class="row">
 													<div class="col-md-12">
 														<ul id="myTab" class="nav nav-tabs">
-															<li class="active"><a href="#home" data-toggle="tab">FLIGHT ITINERARY</a></li>
-															<li><a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a></li>
-															<li><a href="#teana" data-toggle="tab">HOTEL ACCOMMODATION</a></li>
-															<li><a href="#camry" data-toggle="tab">TRAVEL INSURANCE</a></li>
+															<li class="active">
+																<a href="#home" data-toggle="tab">FLIGHT ITINERARY</a>
+															</li>
+															<li>
+																<a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a>
+															</li>
+															<li>
+																<a href="#teana" data-toggle="tab">HOTEL ACCOMMODATION</a>
+															</li>
+															<li>
+																<a href="#camry" data-toggle="tab">TRAVEL INSURANCE</a>
+															</li>
 														</ul>
 														<div id="myTabContent" class="tab-content" style="border: 2px #dddddd solid;">
 															<div class="tab-pane fade in active" id="home">
 																<ul class="list-group">
-																	<li class="list-group-item">Notification To Be Sent General Affairs?: <label class="">
+																	<li class="list-group-item">
+																		Notification To Be Sent General Affairs?:
+																		<label class="">
 																			<div class="iradio_minimal-grey" style="position: relative;">
 																				@if($trip->flight_itinerary_prefer['is_sent_affairs']=='1')
 																				<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="1" checked>
@@ -188,7 +233,8 @@
 																				<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
 																			</div>
 																			YES
-																		</label> <label class="">
+																		</label>
+																		<label class="">
 																			<div class="iradio_minimal-grey" style="position: relative;">
 																				@if($trip->flight_itinerary_prefer['is_sent_affairs']=='0')
 																				<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="0" checked>
@@ -199,7 +245,8 @@
 																			</div>
 																			NO
 																		</label>
-																	</li> @if($trip->cc)
+																	</li>
+																	@if($trip->cc)
 																	<li class="list-group-item">
 																		<div class="row">
 																			<div class="col-md-6">
@@ -216,7 +263,8 @@
 																				</div>
 																			</div>
 																		</div>
-																	</li> @endif
+																	</li>
+																	@endif
 																</ul>
 																<div class="row" style="margin-left: 0px;">
 																	<div class="col-md-6">
@@ -254,14 +302,38 @@
 																		<tr id="tr_{{$flightItem['id']}}" onclick="showFlightItemOperate(this)" data-id="{{$flightItem['id']}}">
 																			<input type="hidden" name="air_code[]" value="{{$flightItem['air_code']}}" />
 																			<input type="hidden" name="flight_id[]" value="{{$flightItem['id']}}" />
-																			<td><input type="hidden" name="flight_date[]" value="{{$flightItem['flight_date']}}" />{{$flightItem['flight_date']}}</td>
-																			<td><input type="hidden" name="flight_from[]" value="{{$flightItem['flight_from']}}" />{{$flightItem['flight_from']}}</td>
-																			<td><input type="hidden" name="flight_to[]" value="{{$flightItem['flight_to']}}" />{{$flightItem['flight_to']}}</td>
-																			<td><input type="hidden" name="airline_or_train[]" value="{{$flightItem['airline_or_train']}}" /> @if($flightItem['airline_or_train']=='1') airline {{$flightItem['air_code']}} @else train @endif</td>
-																			<td><input type="hidden" name="etd_time[]" value="{{$flightItem['etd_time']}}" />{{$flightItem['etd_time']}}</td>
-																			<td><input type="hidden" name="eta_time[]" value="{{$flightItem['eta_time']}}" />{{$flightItem['eta_time']}}</td>
-																			<td><input type="hidden" name="class_flight[]" value="{{$flightItem['class_flight']}}" />{{$flightItem['class_flight']}}</td>
-																			<td><input type="hidden" name="is_visa[]" value="{{$flightItem['is_visa']}}" />{{ $flightItem['is_visa']==1 ? 'YES' : 'NO' }}</td>
+																			<td>
+																				<input type="hidden" name="flight_date[]" value="{{$flightItem['flight_date']}}" />
+																				{{$flightItem['flight_date']}}
+																			</td>
+																			<td>
+																				<input type="hidden" name="flight_from[]" value="{{$flightItem['flight_from']}}" />
+																				{{$flightItem['flight_from']}}
+																			</td>
+																			<td>
+																				<input type="hidden" name="flight_to[]" value="{{$flightItem['flight_to']}}" />
+																				{{$flightItem['flight_to']}}
+																			</td>
+																			<td>
+																				<input type="hidden" name="airline_or_train[]" value="{{$flightItem['airline_or_train']}}" />
+																				@if($flightItem['airline_or_train']=='1') airline {{$flightItem['air_code']}} @else train @endif
+																			</td>
+																			<td>
+																				<input type="hidden" name="etd_time[]" value="{{$flightItem['etd_time']}}" />
+																				{{$flightItem['etd_time']}}
+																			</td>
+																			<td>
+																				<input type="hidden" name="eta_time[]" value="{{$flightItem['eta_time']}}" />
+																				{{$flightItem['eta_time']}}
+																			</td>
+																			<td>
+																				<input type="hidden" name="class_flight[]" value="{{$flightItem['class_flight']}}" />
+																				{{$flightItem['class_flight']}}
+																			</td>
+																			<td>
+																				<input type="hidden" name="is_visa[]" value="{{$flightItem['is_visa']}}" />
+																				{{ $flightItem['is_visa']==1 ? 'YES' : 'NO' }}
+																			</td>
 																		</tr>
 																		@endforeach @endif
 																	</tbody>
@@ -282,12 +354,22 @@
 																		@if(count($estimateExpenses)>0) @foreach($estimateExpenses as $item)
 																		<tr>
 																			<input type="hidden" name="estimate_id[]" value="{{$item['expense_id']}}" />
-																			<td class="text-center">{{$item['estimate_type']}} Travel <input type="hidden" name="estimate_type[]" value="{{$item['estimate_type']}}" />
+																			<td class="text-center">
+																				{{$item['estimate_type']}} Travel
+																				<input type="hidden" name="estimate_type[]" value="{{$item['estimate_type']}}" />
 																			</td>
-																			<td><input type="text" name="employee_annual_budget[]" id="" placeholder="0.00" value="{{$item['employee_annual_budget']}}" /></td>
-																			<td><input type="text" name="employee_ytd_expenses[]" id="" placeholder="0.00" value="{{$item['employee_ytd_expenses']}}" /></td>
-																			<td><input type="text" name="available_amount[]" id="" placeholder="0.00" value="{{$item['available_amount']}}" /></td>
-																			<td><input type="text" name="required_amount[]" id="" placeholder="0.00" value="{{$item['required_amount']}}" /></td>
+																			<td>
+																				<input type="text" name="employee_annual_budget[]" id="" placeholder="0.00" value="{{$item['employee_annual_budget']}}" />
+																			</td>
+																			<td>
+																				<input type="text" name="employee_ytd_expenses[]" id="" placeholder="0.00" value="{{$item['employee_ytd_expenses']}}" />
+																			</td>
+																			<td>
+																				<input type="text" name="available_amount[]" id="" placeholder="0.00" value="{{$item['available_amount']}}" />
+																			</td>
+																			<td>
+																				<input type="text" name="required_amount[]" id="" placeholder="0.00" value="{{$item['required_amount']}}" />
+																			</td>
 																		</tr>
 																		@endforeach @endif
 																	</tbody>
@@ -319,7 +401,8 @@
 																				</div>
 																			</div>
 																		</div>
-																	</li> @endif
+																	</li>
+																	@endif
 																	<li class="list-group-item">
 																		<div class="form-group">
 																			<strong>User Preference:</strong>
@@ -452,10 +535,24 @@
 																	<tbody>
 																		@foreach($hotelData as $hotelItem)
 																		<tr id="tr_{{$hotelItem['accomodate_id']}}" onclick="showHotelItemOperate(this)" data-id="{{$hotelItem['accomodate_id']}}">
-																			<td><input type="hidden" name="accomodate_id[]" value="{{$hotelItem['accomodate_id']}}" /> <input type="hidden" name="hotel_id[]" value="{{$hotelItem['hotel_id']}}" /> <input type="hidden" name="hotel_name[]" value="{{$hotelItem['hotel_name']}}" />{{$hotelItem['hotel_name']}}</td>
-																			<td><input type="hidden" name="checkin_date[]" value="{{$hotelItem['checkin_date']}}" />{{$hotelItem['checkin_date']}}</td>
-																			<td><input type="hidden" name="checkout_date[]" value="{{$hotelItem['checkout_date']}}" />{{$hotelItem['checkout_date']}}</td>
-																			<td><input type="hidden" name="rate[]" value="{{$hotelItem['rate']}}" />{{$hotelItem['rate']}}</td>
+																			<td>
+																				<input type="hidden" name="accomodate_id[]" value="{{$hotelItem['accomodate_id']}}" />
+																				<input type="hidden" name="hotel_id[]" value="{{$hotelItem['hotel_id']}}" />
+																				<input type="hidden" name="hotel_name[]" value="{{$hotelItem['hotel_name']}}" />
+																				{{$hotelItem['hotel_name']}}
+																			</td>
+																			<td>
+																				<input type="hidden" name="checkin_date[]" value="{{$hotelItem['checkin_date']}}" />
+																				{{$hotelItem['checkin_date']}}
+																			</td>
+																			<td>
+																				<input type="hidden" name="checkout_date[]" value="{{$hotelItem['checkout_date']}}" />
+																				{{$hotelItem['checkout_date']}}
+																			</td>
+																			<td>
+																				<input type="hidden" name="rate[]" value="{{$hotelItem['rate']}}" />
+																				{{$hotelItem['rate']}}
+																			</td>
 																		</tr>
 																		@endforeach
 																	</tbody>

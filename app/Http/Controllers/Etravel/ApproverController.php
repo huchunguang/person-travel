@@ -15,9 +15,11 @@ use App\Events\TripWasPartlyApproved;
 use App\Repositories\ApproverRepository;
 use App\Events\TripNotify;
 use App\Contacts\SystemVariable;
+use App\Http\Traits\selectApprover;
 
 class ApproverController extends Controller {
 	
+	use selectApprover;
 	public function __construct(SystemVariable $system) 
 	{
 		$this->system = $system;
@@ -114,7 +116,7 @@ class ApproverController extends Controller {
 		$status= $request->input('status');
 		$trip->update(['approver_comment'=>$request->input('approver_comment')]);
 		
-// 		dd($request->all());
+		dd($status);
 		switch ($status){
 			case 'approved':
 				Event::fire(new TripWasApproved($trip,$request));break;
@@ -124,9 +126,11 @@ class ApproverController extends Controller {
 				Event::fire(new TripWasRejected($trip,$request));break;
 				
 		}
-		if ($trip->trip_type=='1' && $status==Trip::APPROVED && $this->user_id == $trip->department_approver){
+// 		dd($status);
+		if ($trip->trip_type=='1' && $status==Trip::APPROVED && $this->user_id == $trip->department_approver && $trip->department_approver!=$trip->overseas_approver && $trip->user_id!=$trip->overseas_approver){
 			$status='partly-approved';
 		}
+// 		dd($status);
 		if ($trip->trip_type=='2'){
 			Event::fire(new TripNotify($trip, $request, $status));
 			return redirect('/etravel/tripdemosticlist/' . $trip->trip_id);
@@ -149,5 +153,16 @@ class ApproverController extends Controller {
 		$generalManager = $approver->getGeneralManagerByCountryId((array) $countryId);
 		return response()->json($generalManager);
 	}
-
+	
+	
+	public function getApproverByFilter(Request $request,ApproverRepository $approver)
+	{
+		$depApprover =User::getUserProfile($request);
+		if(!empty($depApprover['approvers'])){
+			$depApprover=$depApprover['approvers'];
+// 			dd($depApprover);
+			return response()->json($depApprover);
+		}
+		
+	}
 }
