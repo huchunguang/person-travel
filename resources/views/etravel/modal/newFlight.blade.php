@@ -25,7 +25,7 @@
 								<label class="control-label">Date</label>
 								
 									<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
-										<input type="text" class="form-control" name="start_date"> <span class="input-group-btn">
+										<input type="text" class="form-control" name="flight_date[]"> <span class="input-group-btn">
 											<button class="btn default" type="button">
 												<i class="fa fa-calendar"></i>
 											</button>
