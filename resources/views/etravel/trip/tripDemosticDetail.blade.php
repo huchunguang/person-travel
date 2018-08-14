@@ -3,7 +3,7 @@
 	<div class="page-content-inner">
 		<div class="row">
 			<form action="/etravel/tripapproval/{{$trip->trip_id}}" method="post" class="horizontal-form" id="domestic_approval">
-				@if($trip->status == 'pending' && $trip->hr_approver == Auth::user()->UserID ) @include('etravel.layout.approverAction') @endif @include('etravel.layout.error')
+				@if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID ) @include('etravel.layout.approverAction') @endif @include('etravel.layout.error')
 				<div class="col-md-12">
 					<!-- BEGIN VALIDATION STATES-->
 					@if($trip->status=='approved')
@@ -67,7 +67,7 @@
 														<div class="form-group">
 															<label class="control-label">Department</label>
 															<select id="Department" name="Department" disabled class="select2 form-control">
-																<option value="0">{{ $userObjMdl->department()->first()['Department']}}</option>
+																<option value="0">{{$department}}</option>
 															</select>
 														</div>
 													</div>
@@ -79,11 +79,11 @@
 																<label class="control-label">Period of Travel From</label>
 															</p>
 															<div class="col-md-6" style="margin-left: 0px; padding: 0px;">
-																<input type="text" name="daterange_from" disabled value="{{ $trip->daterange_from }}" class="form-control singleDatePicker">
+																<input type="text" name="daterange_from" disabled value="{{ $trip->daterange_from }}" class="form-control">
 																<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 															</div>
 															<div class="col-md-6" style="padding-right: 0px;">
-																<input type="text" name="daterange_to" disabled value="{{ $trip->daterange_to }}" class="form-control singleDatePicker">
+																<input type="text" name="daterange_to" disabled value="{{ $trip->daterange_to }}" class="form-control">
 																<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 															</div>
 														</div>

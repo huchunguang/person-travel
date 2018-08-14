@@ -50,7 +50,7 @@ class TripController extends AdminController
      * @param Request $requset
      * @return \Illuminate\View\View
      */
-	public function create(Request $requset) 
+	public function create(CreateNationalRequest $requset) 
     {
 //     	dd($this->getDepByCompanySite()->toArray());
 		$userList = User::all(['Email','FirstName','LastName']);
@@ -81,13 +81,14 @@ class TripController extends AdminController
      * @param Request $requset
      * @return \Illuminate\View\View
      */
-    public function demosticCreate(CreateDomesticRequest $request) 
+	public function demosticCreate(CreateDomesticRequest $request) 
     {
 		$userProfile = User::getUserProfile();
 		$purposeCategory = $this->user->purposeCatWithCompany();
 		return view('/etravel/trip/demosticCreate')->with('userProfile', $userProfile['userProfile'])
 			->with('approvers', $userProfile['approvers'])
 			->with('purposeCats', $purposeCategory)
+			->with('departmentList',$this->getDepByCompanySite())
 			->with('costCenters', Costcenter::getAvailableCenters());
 	}
     
@@ -142,7 +143,7 @@ class TripController extends AdminController
 			'entertain_detail',
 		]));
 		DB::transaction(function()use($tripData,$demosticData,$request){
-			$tripData['department_id']=$this->system->DepartmentID;
+			$tripData['department_id']=$request->input('department_id',$this->system->DepartmentID);
 			$tripData['country_id']=$this->system->CountryAssignedID;
 			$tripData['site_id']=$this->system->SiteID;
 			$tripData['company_id']=$this->system->CompanyID;
@@ -269,19 +270,21 @@ class TripController extends AdminController
 	public function tripDemosticDetails(TripReadRequest $request, Trip $trip)
     {
 		$userObjMdl = User::where('UserID', $trip->user_id)->firstOrFail();
+// 		dd($trip->department_approver);
 		$approver = User::find($trip->department_approver);
 		$approvedCnt = $trip->demostic()->where(['is_approved'=>1])->count();
 		if (empty($approvedCnt)){
 			$approvedCnt=$trip->demostic()->count();
 		}
 		$demosticInfo = $trip->demostic()->get();
-// 		dd($approvedCnt);
+// 				dd($userObjMdl);
 		return view('/etravel/trip/tripDemosticDetail', [
 			'userObjMdl'=>$userObjMdl,
 			'trip' => $trip,
 			'approver'=>$approver,
 			'approvedCnt'=>$approvedCnt,
 			'demosticInfo' => $demosticInfo,
+			'department' => $trip->department()->first()->Department,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode
 		]);
 	}
@@ -344,6 +347,7 @@ class TripController extends AdminController
 			'approver'=>$approver,
 			'demosticInfo' => $demosticInfo,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
+			'departmentList'=> $this->getDepByCompanySite(),
 			'costCenters'=>Costcenter::getAvailableCenters(),
 		]);
 	}
@@ -423,9 +427,13 @@ class TripController extends AdminController
 		]));
 		DB::transaction(function()use($trip,$request,$demostic_data){
 			$trip->status=($request->input('status')=='partly-approved' || $request->input('status')=='rejected')?'pending':$request->input('status');
+			$trip->department_id=$request->input('department_id',$this->system->DepartmentID);
+			$trip->department_approver=$request->input('department_approver');
 			$trip->cost_center_id=$request->input('cost_center_id');
 			$trip->daterange_from=$request->input('daterange_from');
 			$trip->daterange_to=$request->input('daterange_to');
+			$trip->extra_comment=$request->input('extra_comment');
+			$trip->project_code=$request->input('project_code');
 			$trip->save();
 			foreach ($demostic_data as $item){
 				if (!empty($item['demostic_id'])) {
@@ -437,8 +445,8 @@ class TripController extends AdminController
 					$demostic_trip->customer_name = $item['customer_name'];
 					$demostic_trip->contact_name = $item['contact_name'];
 					$demostic_trip->purpose_desc = $item['purpose_desc']?:'';
-					$demostic_trip->travel_cost = number_format($item['travel_cost'], 2);
-					$demostic_trip->entertain_cost = number_format($item['entertain_cost'], 2);
+					$demostic_trip->travel_cost = isset($item['travel_cost'])?number_format($item['travel_cost'], 2):'';
+					$demostic_trip->entertain_cost = isset($item['entertain_cost'])?number_format($item['entertain_cost'], 2):'';
 					$demostic_trip->entertain_detail = $item['entertain_detail'];
 					$demostic_trip->save();
 				} else {

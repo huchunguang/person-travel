@@ -1,4 +1,17 @@
-	//Form validation
+$('#department_id').on('change',function(){
+	var department_id=$(this).val();
+//	alert(department_id);
+	$.get('/etravel/depApprover?department_id='+department_id,function(data){
+		var depApproverOptions='';
+		$.each(data,function(ind,val){
+			depApproverOptions+='<option value="'+val.UserID+'">'+val.LastName+' '+val.FirstName+'</option>';
+		});
+			$('#department_approver').empty().append(depApproverOptions);
+	});
+	
+});
+
+//Form validation
 	var FormValidation = function () {
 
 	    // basic validation

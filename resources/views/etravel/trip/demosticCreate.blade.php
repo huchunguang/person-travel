@@ -69,13 +69,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Department</label> 
-											<select id="Department" name="Department" class="select2 form-control" disabled>
-												<option value="0">
-												{{$userProfile['department']['Department'] }}
-												</option>
+											<select id="department_id" name="department_id" class="select2 form-control">
+												@foreach($departmentList as $dep) @if($dep['DepartmentID']==Auth::user()->DepartmentID)
+												<option value="{{$dep['DepartmentID']}}" selected>{{$dep['Department'] }}</option>
+												@else
+												<option value="{{$dep['DepartmentID']}}">{{$dep['Department'] }}</option>
+												@endif @endforeach
 											</select>
-
-
 										</div>
 									</div>
 									<!--/span-->
@@ -91,14 +91,25 @@
 											</p>
 
 											<div class="col-md-6" style="margin-left: 0px;padding:0px;">
-												<input type="text" name="daterange_from"
-													class="form-control singleDatePicker"> <i
-													class="glyphicon glyphicon-calendar fa fa-calendar"
-													style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
+												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
+													<input type="text" class="form-control" name="daterange_from" value="{{old('daterange_from')}}">
+													<span class="input-group-btn">
+														<button class="btn default" type="button">
+															<i class="fa fa-calendar"></i>
+														</button>
+													</span>
+												</div>
 											</div>
 											<div class="col-md-6" style="padding-right: 0px;">
-												<input type="text" name="daterange_to" class="form-control singleDatePicker"> 
-												<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
+											
+												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
+													<input type="text" class="form-control" name="daterange_to" value="{{old('daterange_to')}}">
+													<span class="input-group-btn">
+														<button class="btn default" type="button">
+															<i class="fa fa-calendar"></i>
+														</button>
+													</span>
+												</div>
 											</div>
 
 
@@ -193,7 +204,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Department Approver</label> 
-											<select name="department_approver" class="form-control input-sm select2">
+											<select id="department_approver" name="department_approver" class="form-control input-sm select2">
 												@foreach ($approvers as $item)
 												<option value="{{ $item['UserID'] }}">{{$item['LastName']}} {{$item['FirstName']}}</option> 
 												@endforeach
