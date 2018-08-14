@@ -89,7 +89,7 @@ class EmailTripNotify {
 			}
 // 			dd($cc);
 			
-			$message->to($to)->cc($cc)->subject("Etravel:".$subject);
+// 			$message->to($to)->cc($cc)->subject("Etravel:".$subject);
 			
 		});
 		if($flag){

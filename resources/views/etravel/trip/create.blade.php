@@ -18,6 +18,7 @@
 						<form action="/etravel/trip/storeNational" method="post" class="horizontal-form" enctype="multipart/form-data" id="nationTripCreate">
 							<input type="hidden" name="_token" value="{{csrf_token()}}" />
 							<input type="hidden" name="workflow" value="{{$workflow}}" />
+							
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
