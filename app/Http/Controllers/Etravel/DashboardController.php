@@ -1,14 +1,12 @@
 <?php
 namespace App\Http\Controllers\Etravel;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Trip;
-use Illuminate\Support\Facades\Auth;
 use App\Contacts\SystemVariable;
+use App\Http\Controllers\Controller;
 use App\Repositories\TripRepository;
+use App\Trip;
 use Carbon\Carbon;
-use App\Http\Apis\Classes\EhotelApi;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -25,7 +23,7 @@ class DashboardController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		$approvedRequests = [ ];
+		$approvedRequests = array();
 		$generalAnnouncement = $this->system->getAnnouncement();
 		$approvedRequests = $this->trip->getListByStatus('approved');
 		$pendingRequests = $this->trip->getListByStatus('pending');
@@ -33,25 +31,25 @@ class DashboardController extends Controller
 		
 		$incomingTrips = $approvedRequests->filter(function ($item) {
 			$daterange_from = Carbon::createFromFormat('m/d/Y', $item->daterange_from)->getTimestamp();
-			return $daterange_from >= time();
+			return $daterange_from <= time();
 		});
-// 		dd($staffTripList->toArray());
+		// dd($staffTripList->toArray());
 		return view('/etravel/dashboard/index', [ 
-			'staffTripList'=>$staffTripList,
+			
+			'staffTripList' => $staffTripList,
 			'approved_request' => $approvedRequests,
-			'pendingRequests'=>$pendingRequests,
+			'pendingRequests' => $pendingRequests,
 			'generalAnnouncement' => $generalAnnouncement,
-			'incomingTrips'=>$incomingTrips,
-			'staffTripCnt'=>count($this->trip->staffTripByStatus()),
+			'incomingTrips' => $incomingTrips,
+			'staffTripCnt' => count($this->trip->staffTripByStatus())
 		]);
-    }
+	}
     public function unknownUser(Request $request) 
     {
-        
         return view('/etravel/dashboard/unknownUser')->with('userName',$request->input('userName'));
     }
     /**
-     * @desc determine that would like to create trip type 
+     * @desc  create a travel request be determined by trip type id 
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */

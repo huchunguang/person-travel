@@ -123,7 +123,7 @@ use Carbon\Carbon;
 								<div class="col-md-6">
 									<div class="form-group">
 										<label class="control-label">To</label>
-										<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
+										<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" >
 											@if(old('daterange_to'))
 											<input id="hr_daterange_from" type="text" class="form-control" name="daterange_to" value="{{old('daterange_to')}}">
 											@else
