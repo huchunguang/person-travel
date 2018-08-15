@@ -90,11 +90,15 @@ use Carbon\Carbon;
                                         <div class="form-group form-md-line-input">
                                             <label for="start_date" class="col-md-4 control-label">Start Date</label>
                                             <div class="col-md-8">
-                                            	
-												<input type="text" name="DelegationStartDate" value="{{old('DelegationStartDate')}}"
-													class="form-control singleDatePicker delegate-date"> <i
-													class="glyphicon glyphicon-calendar fa fa-calendar"
-													style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
+                                            	<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
+													<input type="text" class="form-control delegate-date" name="DelegationStartDate" value="{{old('DelegationStartDate')}}">
+													<span class="input-group-btn">
+														<button class="btn default" type="button">
+															<i class="fa fa-calendar"></i>
+														</button>
+													</span>
+												</div>
+												
 											
                                             </div>
                                         </div>
@@ -102,12 +106,15 @@ use Carbon\Carbon;
                                         <div class="form-group form-md-line-input">
                                             <label for="end_date" class="col-md-4 control-label">End Date</label>
                                             <div class="col-md-8">
+                                            <div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
+													<input type="text" class="form-control delegate-date" name="DelegationEndDate" value="{{old('DelegationEndDate')}}">
+													<span class="input-group-btn">
+														<button class="btn default" type="button">
+															<i class="fa fa-calendar"></i>
+														</button>
+													</span>
+												</div>
                                             	
-												<input type="text" name="DelegationEndDate" value="{{old('DelegationEndDate')}}"
-													class="form-control singleDatePicker delegate-date" > <i
-													class="glyphicon glyphicon-calendar fa fa-calendar"
-													style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
-											
                                             </div>
                                         </div>
                                         <div class="form-group form-md-line-input">
