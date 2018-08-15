@@ -106,21 +106,35 @@ use Carbon\Carbon;
 								<div class="col-md-6">
 									<div class="form-group">
 										<label class="control-label">From</label>
-										@if(old('daterange_from'))
-										<input id="hr_daterange_from" type="text" name="daterange_from" value="{{old('daterange_from')}}" class="form-control singleDatePicker">
-										@else
-										<input id="hr_daterange_from" type="text" name="daterange_from" value="{{Carbon::now()->firstOfMonth()->format('m/d/Y')}}" class="form-control singleDatePicker">
-										@endif <i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 20px; right: 20px; top: auto; cursor: pointer;"></i>
+										<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" >
+											@if(old('daterange_from'))
+											<input id="hr_daterange_from" type="text" class="form-control" name="daterange_from" value="{{old('daterange_from')}}">
+											@else
+											<input id="hr_daterange_from" type="text" class="form-control" name="daterange_from" value="{{Carbon::now()->firstOfMonth()->format('m/d/Y')}}">
+											@endif
+											<span class="input-group-btn">
+												<button class="btn default" type="button">
+													<i class="fa fa-calendar"></i>
+												</button>
+											</span>
+										</div>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<label class="control-label">To</label>
-										@if(old('daterange_to'))
-										<input id="hr_daterange_from" type="text" name="daterange_to" value="{{old('daterange_to')}}" class="form-control singleDatePicker">
-										@else
-										<input id="hr_daterange_from" type="text" name="daterange_to" value="{{Carbon::now()->format('m/d/Y')}}" class="form-control singleDatePicker">
-										@endif <i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 20px; right: 20px; top: auto; cursor: pointer;"></i>
+										<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
+											@if(old('daterange_to'))
+											<input id="hr_daterange_from" type="text" class="form-control" name="daterange_to" value="{{old('daterange_to')}}">
+											@else
+											<input id="hr_daterange_from" type="text" class="form-control" name="daterange_to" value="{{Carbon::now()->format('m/d/Y')}}">
+											@endif
+											<span class="input-group-btn">
+												<button class="btn default" type="button">
+													<i class="fa fa-calendar"></i>
+												</button>
+											</span>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -150,9 +164,15 @@ use Carbon\Carbon;
 													<tr class="btn-info roundborder">
 														<th style="display: none"></th>
 														<th style="text-align: right">Search:</th>
-														<th colspan="2"><input id="txtEmployeeSearch" type="text" placeholder="Search by Employee" style="color: black"></th>
-														<th colspan="2"><input id="txtStartDateSearch" type="text" placeholder="Search By Start Date" style="color: black"></th>
-														<th colspan="2"><input id="txtEndDateSearch" type="text" placeholder="Search by End Date" style="color: black"></th>
+														<th colspan="2">
+															<input id="txtEmployeeSearch" type="text" placeholder="Search by Employee" style="color: black">
+														</th>
+														<th colspan="2">
+															<input id="txtStartDateSearch" type="text" placeholder="Search By Start Date" style="color: black">
+														</th>
+														<th colspan="2">
+															<input id="txtEndDateSearch" type="text" placeholder="Search by End Date" style="color: black">
+														</th>
 													</tr>
 													<tr class="btn-info roundborder">
 														<th>#</th>

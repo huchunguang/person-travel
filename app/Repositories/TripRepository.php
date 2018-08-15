@@ -78,7 +78,12 @@ class TripRepository extends Repository
 	{
 		if ($trip->trip_type == '1'){
 // 			dd(Country::find($trip->destination_id,['Country'])->implode('Country',','));
-			return Country::find($trip->destination_id,['Country'])->implode('Country',',');
+			$country = Country::find($trip->destination_id,['Country']);
+			if ($country){
+				return $country->implode('Country',',');
+			}else{
+				return null;
+			}
 		}elseif ($trip->trip_type == '2'){
 			return Trip::$traveltype[$trip->trip_type];
 		}

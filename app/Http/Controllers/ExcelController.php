@@ -39,6 +39,7 @@ class ExcelController extends Controller
 			$searchFilter['daterange_from'],
 			$searchFilter['daterange_to']
 		];
+		// dd($betweenFilter);
 		$cellData = Trip::where($baseFilter)->whereBetween('daterange_from', $betweenFilter)
 			->whereBetween('daterange_to', $betweenFilter)
 			->get();
@@ -46,7 +47,6 @@ class ExcelController extends Controller
 		$country = ($request->country_id) ? Country::find($request->country_id)->Country : '';
 		$site = ($request->site_id) ? Site::find($request->site_id)->Site : 'ALL SITES';
 		$company = ($request->company_id) ? Company::find($request->company_id)->CompanyName : 'ALL COMPANIES';
-		
 		$excel->sheet('HR Report List', function ($sheet) use ($cellData, $country, $site, $company) {
 			// $sheet->rows($cellData);
 			$sheet->cell('A1', function ($cell) {
@@ -128,44 +128,56 @@ class ExcelController extends Controller
 			));
 			$sheet->setAutoFilter('A5:J5'); // Auto Filter
 			$counter = 6; // Starts on Row 6 after the detailed header
-			for ($i = 0; $i < count($cellData); $i ++) {
-				$sheet->cell("A$counter", function ($cell) use ($cellData, $i) {
-					$cell->setValue($cellData[$i]['reference_id']);
-				});
-				$sheet->cell("B$counter", function ($cell) use ($cellData, $i) {
-					$cell->setValue($cellData[$i]['created_at']);
-				});
-				$sheet->cell("C$counter", function ($cell) use ($cellData, $i) {
-					$cell->setValue($this->trip->getUser($cellData[$i]));
-				});
-				$sheet->cell("D$counter", function ($cell) use ($cellData, $i) {
-					$cell->setValue($this->trip->getTravelType($cellData[$i]));
-				});
-				$sheet->cell("E$counter", function ($cell) use ($cellData, $i) {
-					$cell->setValue($cellData[$i]['daterange_from']);
-				});
-				$sheet->cell("F$counter", function ($cell) use ($cellData, $i) {
-					$cell->setValue($cellData[$i]['daterange_to']);
-				});
-				$sheet->cell("G$counter", function ($cell) use ($cellData, $i) {
-					$cell->setValue($this->trip->getDaysToApply($cellData[$i]))
-						->setAlignment('center');
-				});
-				$sheet->setColumnFormat(array ( 
+			              // dd($cellData->toArray());
+			try {
+				for ($i = 0; $i < count($cellData); $i ++) {
+					$sheet->cell("A$counter", function ($cell) use ($cellData, $i) {
+						$cell->setValue($cellData[$i]['reference_id']);
+					});
+					$sheet->cell("B$counter", function ($cell) use ($cellData, $i) {
+						$cell->setValue($cellData[$i]['created_at']);
+					});
+					$sheet->cell("C$counter", function ($cell) use ($cellData, $i) {
+						$cell->setValue($this->trip->getUser($cellData[$i]));
+					});
 					
-					"G$counter" => '#,##0.00'
-				));
-				$sheet->cell("H$counter", function ($cell) use ($cellData, $i) {
-					$cell->setValue($cellData[$i]['extra_comment']);
-				});
-				$sheet->cell("I$counter", function ($cell) use ($cellData, $i) {
-					$cell->setValue($this->trip->getTripDst($cellData[$i]));
-				});
-				$sheet->cell("J$counter", function ($cell) use ($cellData, $i) {
-					$cell->setValue($cellData[$i]['status']);
-				});
-				$counter ++;
+					$sheet->cell("D$counter", function ($cell) use ($cellData, $i) {
+						$cell->setValue($this->trip->getTravelType($cellData[$i]));
+					});
+					$sheet->cell("E$counter", function ($cell) use ($cellData, $i) {
+						$cell->setValue($cellData[$i]['daterange_from']);
+					});
+					$sheet->cell("F$counter", function ($cell) use ($cellData, $i) {
+						$cell->setValue($cellData[$i]['daterange_to']);
+					});
+					
+					$sheet->cell("G$counter", function ($cell) use ($cellData, $i) {
+						$cell->setValue($this->trip->getDaysToApply($cellData[$i]))
+							->setAlignment('center');
+					});
+					
+					$sheet->setColumnFormat(array ( 
+						
+						"G$counter" => '#,##0.00'
+					));
+					$sheet->cell("H$counter", function ($cell) use ($cellData, $i) {
+						$cell->setValue($cellData[$i]['extra_comment']);
+					});
+					$sheet->cell("I$counter", function ($cell) use ($cellData, $i) {
+						$cell->setValue($this->trip->getTripDst($cellData[$i]));
+					});
+					
+					$sheet->cell("J$counter", function ($cell) use ($cellData, $i) {
+						$cell->setValue($cellData[$i]['status']);
+					});
+					
+					$counter ++;
+				}
 			}
+			catch (\Throwable $e) {
+				dd($e);die;
+			}
+			
 			$sheet->cell("A$counter:J$counter", function ($cells) {
 				$cells->setBackground('#3385ff')
 					->setFontColor('#ffffff')
@@ -203,7 +215,7 @@ class ExcelController extends Controller
 		$country = ($request->country_id) ? Country::find($request->country_id)->Country : '';
 		$site = ($request->site_id) ? Site::find($request->site_id)->Site : 'ALL SITES';
 		$company = ($request->company_id) ? Company::find($request->company_id)->CompanyName : 'ALL COMPANIES';
-// 		dd($site);
+		// dd($site);
 		
 		$excel->sheet('HR Overtime Report List', function ($sheet) use ($cellData, $country, $site, $company) {
 			// $sheet->rows($cellData);
@@ -297,7 +309,7 @@ class ExcelController extends Controller
 			$sheet->setAutoFilter('A5:L5'); // Auto Filter
 			$counter = 6; // Starts on Row 6 after the detailed header
 			for ($i = 0; $i < count($cellData); $i ++) {
-// 				dd($cellData[$i]->igg()->first()->igg);
+				// dd($cellData[$i]->igg()->first()->igg);
 				$sheet->cell("A$counter", function ($cell) use ($cellData, $i) {
 					$cell->setValue($cellData[$i]->getUserName()); // Requestor
 				});
@@ -312,7 +324,8 @@ class ExcelController extends Controller
 						->first()->WorkPosition);
 				});
 				$sheet->cell("E$counter", function ($cell) use ($cellData, $i) {
-					$cell->setValue($cellData[$i]->shift()->first()->shift);
+					$cell->setValue($cellData[$i]->shift()
+						->first()->shift);
 				});
 				$sheet->cell("F$counter", function ($cell) use ($cellData, $i) {
 					$cell->setValue($cellData[$i]['head_count']);
@@ -326,7 +339,8 @@ class ExcelController extends Controller
 					"G$counter" => '#,##0.00'
 				));
 				$sheet->cell("H$counter", function ($cell) use ($cellData, $i) {
-					$cell->setValue($cellData[$i]->reason()->first()->reason_subject);
+					$cell->setValue($cellData[$i]->reason()
+						->first()->reason_subject);
 				});
 				$sheet->cell("I$counter", function ($cell) use ($cellData, $i) {
 					$cell->setValue($cellData[$i]['remark']);
