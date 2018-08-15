@@ -41,17 +41,18 @@ class TripController extends AdminController
 {
 	public function __construct(SystemVariable $system,TripRepository $trip,UserRepository $user) 
 	{
-		$this->system=$system;
-		$this->trip=$trip;
-		$this->user=$user;
+		$this->system = $system;
+		$this->trip = $trip;
+		$this->user = $user;
 	}
     /**
      * @desc create a international travel request 
      * @param Request $requset
      * @return \Illuminate\View\View
      */
-	public function create(CreateNationalRequest $requset) 
+	public function create(Request $requset) 
     {
+    	//CreateNational
 //     	dd($this->getDepByCompanySite()->toArray());
 		$userList = User::all(['Email','FirstName','LastName']);
 		$userProfile = User::getUserProfile();

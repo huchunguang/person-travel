@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Overtime;
 use App\Http\Traits\parseSearchFilter;
+use Illuminate\Support\Facades\Event;
+use App\Events\OvertimeNotify;
 
 class ApprovalController extends Controller
 {
@@ -58,7 +60,7 @@ class ApprovalController extends Controller
 		]);
 	}
 
-	public function list(Request $request, $status = null)
+	public function listAll(Request $request, $status = null)
 	{
 		return view('/overtime/approval/list', compact('status'));
 	}
@@ -122,8 +124,12 @@ class ApprovalController extends Controller
 		$updateData['status'] = 'rejected';
 		$updateData['hr_comment'] = $request->input('hr_reject_comment', '');
 // 		dd($updateData);
-		Overtime::find($request->input('chk_overtime_id'))->map(function ($item, $key) use ($updateData) {
+		$overtime=Overtime::find($request->input('chk_overtime_id'));
+		$overtime->map(function ($item, $key) use ($updateData,$request) {
 			$item->update($updateData);
+// 			dd($item);
+			Event::fire(new OvertimeNotify($item, $request, 'rejected'));
+			
 		});
 		return redirect()->route('approvalList', [ 
 			
@@ -143,10 +149,12 @@ class ApprovalController extends Controller
 		$updateData = [ ];
 		$updateData['status'] = 'approved';
 		$updateData['hr_comment'] = $request->input('hr_approval_comment', '');
-		Overtime::find($request->input('chk_overtime_id'))->map(function ($item, $key) use ($updateData) {
+		$overtime = Overtime::find($request->input('chk_overtime_id'));
+		$overtime->map(function ($item, $key) use ($updateData,$request) {
 			$item->update($updateData);
+// 			dd($item);
+			Event::fire(new OvertimeNotify($item, $request, 'approved'));
 		});
-		
 		return redirect()->route('approvalList', [ 
 			
 			'status' => 'approved'

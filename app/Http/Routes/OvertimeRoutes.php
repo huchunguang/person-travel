@@ -36,7 +36,7 @@ class OvertimeRoutes
 						
 					});
 						#Approval
-						$router->get('approvalList/{status?}',['uses'=>'ApprovalController@list','as'=>'approvalList']);
+						$router->get('approvalList/{status?}',['uses'=>'ApprovalController@listAll','as'=>'approvalList']);
 						$router->post('approval/{status?}','ApprovalController@index');
 						##approve
 						$router->post('approve','ApprovalController@approve');
