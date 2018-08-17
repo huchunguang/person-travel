@@ -50,7 +50,7 @@ class TripController extends AdminController
      * @param Request $requset
      * @return \Illuminate\View\View
      */
-	public function create(Request $requset) 
+	public function create(CreateNationalRequest $requset) 
     {
     	//CreateNational
 //     	dd($this->getDepByCompanySite()->toArray());

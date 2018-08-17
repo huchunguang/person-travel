@@ -75,7 +75,7 @@
 												<label class="control-label">Period of Travel From</label>
 											</p>
 											<div class="col-md-6" style="margin-left: 0px; padding: 0px;">
-												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
+												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" >
 													<input type="text" class="form-control" name="daterange_from" value="{{old('daterange_from')}}" readonly>
 													<span class="input-group-btn">
 														<button class="btn default" type="button">
@@ -86,7 +86,7 @@
 											</div>
 											<div class="col-md-6" style="padding-right: 0px;">
 											
-												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
+												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" >
 													<input type="text" class="form-control" name="daterange_to" value="{{old('daterange_to')}}" readonly>
 													<span class="input-group-btn">
 														<button class="btn default" type="button">

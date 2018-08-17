@@ -66,7 +66,7 @@
 				<li class="dropdown dropdown-extended dropdown-notification open" style="" id="header_notification_bar">
 					<div style="display: inline-block; padding-top: 5px; margin-right: 30px;">
 						<i class="flaticon-alert-1" style="font-size: 25px;"></i>
-						<a href="staff/travellist?status=pending">
+						<a href="{{url('etravel/staff/travellist?status=pending')}}">
 							<span class="badge badge-default" style="top: 9px; left: 16px; position: absolute; background-color: #f36a5a;"> {{count($forApproval['pending'])}} </span>
 						</a>
 					</div>

@@ -234,6 +234,7 @@ $('#btnRejectTravel').on('click',function(){
 $('input[name^="is_approve"]').on('ifChanged', function(event){
 	  var approved_num=$(":checkbox:checked").length;
 // 	 	alert(approved_num)
+// 	 	alert(total_approved_num)
 		if(approved_num == total_approved_num){
 			$('#btnApproveValidate').attr('disabled',false);
 			$('#PartlybtnApproveValidate').attr('disabled',true);
