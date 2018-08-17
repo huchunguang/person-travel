@@ -92,7 +92,7 @@
 
 											<div class="col-md-6" style="margin-left: 0px;padding:0px;">
 												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
-													<input type="text" class="form-control" name="daterange_from" value="{{old('daterange_from')}}">
+													<input type="text" class="form-control" name="daterange_from" value="{{old('daterange_from')}}" readonly>
 													<span class="input-group-btn">
 														<button class="btn default" type="button">
 															<i class="fa fa-calendar"></i>
@@ -103,7 +103,7 @@
 											<div class="col-md-6" style="padding-right: 0px;">
 											
 												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
-													<input type="text" class="form-control" name="daterange_to" value="{{old('daterange_to')}}">
+													<input type="text" class="form-control" name="daterange_to" value="{{old('daterange_to')}}" readonly>
 													<span class="input-group-btn">
 														<button class="btn default" type="button">
 															<i class="fa fa-calendar"></i>

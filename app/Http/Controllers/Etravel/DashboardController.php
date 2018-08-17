@@ -7,6 +7,8 @@ use App\Repositories\TripRepository;
 use App\Trip;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Trip_flight;
+use Illuminate\Queue\Console\RetryCommand;
 
 class DashboardController extends Controller
 {
@@ -28,12 +30,19 @@ class DashboardController extends Controller
 		$approvedRequests = $this->trip->getListByStatus('approved');
 		$pendingRequests = $this->trip->getListByStatus('pending');
 		$staffTripList = $this->trip->staffTripByStatus()->groupBy('status');
-		
-		$incomingTrips = $approvedRequests->filter(function ($item) {
-			$daterange_from = Carbon::createFromFormat('m/d/Y', $item->daterange_from)->getTimestamp();
-			return $daterange_from <= time();
+		$incomingTrips = $approvedRequests->toArray();
+// 		dd(($staffTripList['pending'][0]->toArray()));
+// 		->filter(function ($item) {
+// 			$daterange_from = Carbon::createFromFormat('m/d/Y', $item->daterange_from)->getTimestamp();
+// 			$daterange_to = Carbon::createFromFormat('m/d/Y', $item->daterange_to)->getTimestamp();
+// 			return $daterange_from <= time() && $daterange_to>=time();
+// 		})
+		$trip_ids=array_pluck($incomingTrips, 'trip_id');
+// 		dd($trip_ids);
+		$incomingTrips = Trip_flight::whereIn('trip_id',$trip_ids)->orderBy('flight_date','DESC')->limit(10)->get()->filter(function($item){
+			$flight_date= Carbon::createFromFormat('m/d/Y', $item->flight_date)->getTimestamp();
+			return $flight_date>=time();
 		});
-		// dd($staffTripList->toArray());
 		return view('/etravel/dashboard/index', [ 
 			
 			'staffTripList' => $staffTripList,
@@ -46,8 +55,8 @@ class DashboardController extends Controller
 	}
     public function unknownUser(Request $request) 
     {
-        return view('/etravel/dashboard/unknownUser')->with('userName',$request->input('userName'));
-    }
+		return view('/etravel/dashboard/unknownUser')->with('userName', $request->input('userName'));
+	}
     /**
      * @desc  create a travel request be determined by trip type id 
      * @param Request $request

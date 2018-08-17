@@ -3,7 +3,8 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">
-					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					<span aria-hidden="true">&times;</span>
+					<span class="sr-only">Close</span>
 				</button>
 				<h4 class="modal-title">Add New Flight</h4>
 			</div>
@@ -23,16 +24,15 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">Date</label>
-								
-									<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" data-date-start-date="+0d">
-										<input type="text" class="form-control" name="flight_date[]"> <span class="input-group-btn">
-											<button class="btn default" type="button">
-												<i class="fa fa-calendar"></i>
-											</button>
-										</span>
-									</div>
-								
-<!-- 								<input type="text" name="flight_date[]" class="form-control singleDatePicker">			
+								<div class="input-group date date-picker" data-date-format="mm/dd/yyyy">
+									<input type="text" class="form-control" name="flight_date[]" readonly>
+									<span class="input-group-btn">
+										<button class="btn default" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+									</span>
+								</div>
+								<!-- 								<input type="text" name="flight_date[]" class="form-control singleDatePicker">			
 					<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
  -->
 							</div>
@@ -63,7 +63,6 @@
 											<option value=""></option>
 											<option value="0">Train</option>
 											<option value="1" data-id="">Airline</option>
-											
 										</select>
 									</div>
 								</div>
@@ -74,13 +73,27 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">ETD</label>
-								<input type="text" name="etd_time[]" class="form-control" placeholder="">
+								<div class="input-group">
+									<input type="text" name="etd_time[]" class="form-control timepicker timepicker-no-seconds">
+									<span class="input-group-btn">
+										<button class="btn default" type="button">
+											<i class="fa fa-clock-o"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">ETA</label>
-								<input type="text" name="eta_time[]" class="form-control" placeholder="">
+								<div class="input-group">
+									<input type="text" name="eta_time[]" class="form-control timepicker timepicker-no-seconds">
+									<span class="input-group-btn">
+										<button class="btn default" type="button">
+											<i class="fa fa-clock-o"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 						</div>
 					</div>

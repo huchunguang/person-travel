@@ -6,12 +6,14 @@ use Illuminate\Contracts\View\View;
 use App\Services\SystemInfo;
 use Illuminate\Support\Facades\Auth;
 use App\Company_site;
+use App\Repositories\TripRepository;
 
 class CheckAdminComposer
 {
-	public function __construct(SystemVariable $system)
+	public function __construct(SystemVariable $system,TripRepository $trip)
 	{
 		$this->system=$system;
+		$this->trip=$trip;
 	}
 	/**
 	 * @param View $view
@@ -20,7 +22,8 @@ class CheckAdminComposer
 	{
 		if (Auth::check()){
 			$isEtravelAdmin = Company_site::where('EtravelAdminID',Auth::user()->UserID)->exists();
-			$view->with('isEtravelAdmin', $isEtravelAdmin);
+			$forApproval= $this->trip->staffTripByStatus()->groupBy('status');
+			$view->with('isEtravelAdmin', $isEtravelAdmin)->with('forApproval',$forApproval);
 		}
 	}
 }

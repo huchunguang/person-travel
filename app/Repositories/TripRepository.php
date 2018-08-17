@@ -66,12 +66,15 @@ class TripRepository extends Repository
 			}
 			return $res;
 		}
-		return [];
+		return [ ];
 	}
-	
+
 	public function staffTripByStatus()
 	{
-		return Trip::where(['department_approver'=>Auth::user()->UserID])->orWhere(['overseas_approver'=>Auth::user()->UserID])->orderBy('created_at','DESC')->get();
+		return Trip::where([ 'department_approver' => Auth::user()->UserID])->orWhere(function($query){
+			$query->where(['overseas_approver'=>Auth::user()->UserID])
+			->where(['is_depart_approved'=>'1']);
+		})->orderBy('created_at','DESC')->get();
 	}
 	
 	public function getTripDst(Trip $trip)

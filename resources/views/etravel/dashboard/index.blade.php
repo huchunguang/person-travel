@@ -43,7 +43,7 @@
 						<div class="icheck-inline">
 							<label for="domesticTrip">
 								<input type="radio" name="trip" class="icheck" value="2" id="domesticTrip">
-								<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">Domestic</span>
+								<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">Domestic Trip</span>
 							</label>
 						</div>
 					</div>
@@ -70,10 +70,11 @@
 						<div class="icheck-inline">
 							<label for="domesticTrip">
 								<input type="radio" name="trip" class="icheck" value="2" id="domesticTrip">
-								<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">Domestic</span>
+								<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">Domestic Trip</span>
 							</label>
 						</div>
 					</div>
+					<p></p>
 					<center>
 						<button id="btnLeaveControl-Delete" type="submit" accesskey="S" class="btn green">
 							<i class="glyphicon glyphicon-new-window"></i> <u>S</u>ubmit
@@ -89,35 +90,42 @@
 				</section>
 			</div>
 		</div>
-		<div class="portlet box" style="margin-top: 50px; border: 1px solid #74d4b3; background-color: #74d4b3;">
+		<div class="portlet box" style="margin-top: 20px; border: 1px solid #337ab7; background-color: #337ab7;">
 			<div class="portlet-title">
 				<div class="caption">
-					MY INCOMING TRIPS({{ sprintf('%2d',count($incomingTrips)) }}) <i class="glyphicon glyphicon-arrow-right"></i>
+					MY INCOMING TRIPS ({{sprintf('%02d',count($incomingTrips)) }}) <i class="glyphicon glyphicon-arrow-right"></i>
 				</div>
 				<div class="tools">
 					<a title="" class="fullscreen" href="" data-original-title=""> </a>
 				</div>
 			</div>
-			<div class="portlet-body policy-content portlet-collapsed" style="display: block; padding: 0px;">
+			<div class="portlet-body policy-content portlet-collapsed" style="display: block; padding: 0px; height: 347px;">
 				<div class="table-scrollable" style="overflow-y: auto; padding: 0px; margin: 0;">
 					<table class="table table-light">
+						<thead>
+							<tr class="">
+								<td class="">Date</td>
+								<td class="">To</td>
+								<td class="">AirLine Code</td>
+								<td class="">ETA</td>
+								<td class="">ETD</td>
+							</tr>
+						</thead>
 						<tbody>
 							@if(count($incomingTrips)) @foreach($incomingTrips as $item)
 							<tr>
-								<td class="highlight">
+								<td class="highlight" data-toggle="tooltip" title="ETD: {{$item['etd_time']}},ETA: {{$item['eta_time']}}">
 									<div class="success"></div>
-									@if($item['trip_type']=='1')
-									<a href="/etravel/tripnationallist/{{ $item['trip_id'] }}">{{isset($item->destination_name)?$item->destination_name:'Destination'}} </a>
-									@elseif($item['trip_type']=='2')
-									<a href="/etravel/tripdemosticlist/{{ $item['trip_id'] }}">{{isset($item->destination_name)?$item->destination_name:'Destination'}} </a>
-									@endif
+									<a href="/etravel/tripnationallist/{{ $item['trip_id'] }}">{{$item->flight_date}} </a>
 								</td>
-								<td class="hidden-xs">{{$item->daterange_from}}</td>
-								<td>{{$item->daterange_to}}</td>
+								<td>{{$item->flight_to}}</td>
+								<td>{{$item->air_code}}</td>
+								<td>{{$item->eta_time}}</td>
+								<td>{{$item->etd_time}}</td>
 							</tr>
 							@endforeach @else
 							<tr>
-								<td style="text-align: center; color: rgb(87, 142, 190);" colspan="3">No records found.</td>
+								<td style="text-align: center; color: rgb(87, 142, 190);" colspan="5">No records found.</td>
 								@endif
 							</tr>
 						</tbody>
@@ -324,18 +332,36 @@
 					</div>
 					<div class="portlet-body">
 						<div class="portlet box blue-soft">
+							
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="glyphicon glyphicon-arrow-right"></i>
-									<div style="display: inline-block;">
-										<lable style="width:20px;background-color:grey;border-radius:50%;border:2px solid grey;background-clip:content-box;padding:1px;"> {{ isset($staffTripList['pending'])?sprintf('%02d',count($staffTripList['pending'])):'00' }} </label>
-									
-									</div>
-									<div style="display: inline-block;">
-										<a class="accordion-toggle" href="staff/travellist?status=pending" style="color: white;"> Pending for my Approval</a>
-									</div>
+									<i class="fa fa-database"></i> Pending For My Approval
+								</div>
+								<div class="tools">
+									<a href="javascript:;" class="expand" data-original-title="" title=""> </a>
 								</div>
 							</div>
+							<div class="portlet-body portlet-collapsed">
+								<div class="table-scrollable">
+									<table class="table table-light">
+										<tbody>
+											
+											@if(isset($staffTripList['pending']) && count($staffTripList['pending'])) 
+											@for ($i = 0; $i < count($staffTripList['pending']); $i++) @if($i<7)
+											<tr>
+												<td>{{$staffTripList['pending'][$i]->user()->first()['FirstName']}}</td>
+												<td>{{$staffTripList['pending'][$i]['daterange_from']}}</td>
+												<td>{{$staffTripList['pending'][$i]['daterange_to']}}</td>
+											</tr>
+											@endif
+											@endfor
+											@endif 
+										</tbody>
+									</table>
+								</div>
+							</div>
+						
+						
 						</div>
 					</div>
 				</div>

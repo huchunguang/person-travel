@@ -10,9 +10,15 @@
 			<div class="modal-body">
 				<label for="">Select Carrier from the list</label>
 				@if(count($airlineList))
+				<?php $flag=true;?>
 				<select name="airlineSel" id="aircodeSel" class="form-control" multiple size="6">
 					@foreach($airlineList as $item)
+					@if($flag)
+					<option value="{{$item['id']}}" data-code="{{$item['airline_code']}}" selected>{{$item['airline_name']}}</option>
+					@else
 					<option value="{{$item['id']}}" data-code="{{$item['airline_code']}}">{{$item['airline_name']}}</option>
+					@endif
+					<?php $flag=false;?>
 					@endforeach
 				</select>
 				@endif

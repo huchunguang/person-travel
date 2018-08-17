@@ -9,7 +9,7 @@
 					@if($trip->status=='approved')
 					<div class="portlet box blue-steel">
 						@elseif($trip->status=='pending')
-						<div class="portlet box green">
+						<div class="portlet box blue">
 							@elseif($trip->status=='rejected')
 							<div class="portlet box red">
 								@elseif($trip->status=='partly-approved')
