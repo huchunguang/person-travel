@@ -341,7 +341,7 @@
 									<a href="javascript:;" class="expand" data-original-title="" title=""> </a>
 								</div>
 							</div>
-							<div class="portlet-body portlet-collapsed">
+							<div class="portlet-body">
 								<div class="table-scrollable">
 									<table class="table table-light">
 										<tbody>

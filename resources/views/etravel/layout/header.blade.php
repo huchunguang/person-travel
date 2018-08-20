@@ -55,7 +55,7 @@
 			
 				<li class="dropdown dropdown-extended dropdown-notification open" style="" id="header_notification_bar">
 					<div style="display: inline-block; padding-top: 5px; margin-right: 20px;">
-						<i class="flaticon-paper-plane" style="font-size: 25px;"></i>
+						<i class="flaticon-paper-plane" style="font-size: 25px;color:white;"></i>
 						<a href="">
 							<span class="badge badge-default" style="top: 9px; left: 16px; position: absolute; background-color: #f36a5a;"></span>
 						</a>
@@ -65,7 +65,7 @@
 				@if(isset($forApproval['pending']))
 				<li class="dropdown dropdown-extended dropdown-notification open" style="" id="header_notification_bar">
 					<div style="display: inline-block; padding-top: 5px; margin-right: 30px;">
-						<i class="flaticon-alert-1" style="font-size: 25px;"></i>
+						<i class="flaticon-alert-1" style="font-size: 25px;color:white;"></i>
 						<a href="{{url('etravel/staff/travellist?status=pending')}}">
 							<span class="badge badge-default" style="top: 9px; left: 16px; position: absolute; background-color: #f36a5a;"> {{count($forApproval['pending'])}} </span>
 						</a>

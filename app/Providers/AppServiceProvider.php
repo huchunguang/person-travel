@@ -13,6 +13,7 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
+		error_reporting(E_ALL^E_NOTICE^E_WARNING);
 		//
 // 		DB::listen(function($sql,$bindings,$time){
 // 			echo 'SQL语句执行：'.$sql.',参数：'.json_encode($bindings).',耗时：'.$time.'ms';

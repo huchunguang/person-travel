@@ -18,12 +18,11 @@ h2 { font-size: 22px; }
     padding: 5px 8px;
     font-size: 13px;
 }
-.btn, .breadcrumb { font-size: 13px; }
 html,body { font-size: 85%; }
 .portlet > .portlet-title > .caption { font-size: 16px; }
 .fc button { padding: 0.3em; }
 .fc .fc-toolbar > * > * { margin-left: 0; }
-.form-group, .form-group select, .form-group input, .form-control, output, .form-control, .input-group .form-control { font-size: 13px; margin-bottom: 5px;}
+.form-group, .form-group select, .form-group input, .form-control, output, .form-control, .input-group .form-control { font-size: 13px; }
 .form-group { margin-bottom: 8px; } 
 /*.portlet > .portlet-title > .tools > a, .box.portlet > .portlet-title > .tools > a.expand { color: #666 !important}*/
 .panel-default { background: #fff; border-color: #eee;}
