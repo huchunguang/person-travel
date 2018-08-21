@@ -32,15 +32,16 @@
 										</button>
 									</span>
 								</div>
-								<!-- 								<input type="text" name="flight_date[]" class="form-control singleDatePicker">			
-					<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 20px; top: auto; cursor: pointer;"></i>
- -->
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">From</label>
-								<input type="text" name="flight_from[]" id="" class="form-control" />
+								<select class="form-control select2 " id="flight_from" name="flight_from[]" style="width: 100%">
+									@foreach($cityAirportList as $airportItem)
+										<option value="{{$airportItem['airport']}}" >{{$airportItem['airport']}}</option>
+									@endforeach
+								</select>
 							</div>
 						</div>
 					</div>
@@ -48,7 +49,11 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">To</label>
-								<input type="text" name="flight_to[]" id="" class="form-control" />
+								<select class="form-control select2 " id="flight_to" name="flight_to[]" style="width: 100%">
+									@foreach($cityAirportList as $airportItem)
+										<option value="{{$airportItem['airport']}}" >{{$airportItem['airport']}}</option>
+									@endforeach
+								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -73,27 +78,132 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">ETD</label>
-								<div class="input-group">
-									<input type="text" name="etd_time[]" class="form-control timepicker timepicker-no-seconds">
-									<span class="input-group-btn">
-										<button class="btn default" type="button">
-											<i class="fa fa-clock-o"></i>
-										</button>
-									</span>
-								</div>
+								<select class="form-control select2" id="etd_time" name="etd_time[]" style="width: 100%">
+										<option value="12:00 AM" >12:00 AM</option>
+										<option value="12:30 AM" >12:30 AM</option>
+										<option value="1:00 AM" >1:00 AM</option>
+										<option value="1:30 AM" >1:30 AM</option>
+										<option value="2:00 AM" >2:00 AM</option>
+										<option value="2:30 AM" >2:30 AM</option>
+										<option value="3:00 AM" >3:00 AM</option>
+										<option value="3:30 AM" >3:30 AM</option>
+										<option value="4:00 AM" >4:00 AM</option>
+										<option value="4:30 AM" >4:30 AM</option>
+										<option value="5:00 AM" >5:00 AM</option>
+										<option value="5:30 AM" >5:30 AM</option>
+										<option value="6:00 AM" >6:00 AM</option>
+										<option value="6:30 AM" >6:30 AM</option>
+										<option value="7:00 AM" >7:00 AM</option>
+										<option value="7:30 AM" >7:30 AM</option>
+										<option value="8:00 AM" >8:00 AM</option>
+										<option value="8:30 AM" >8:30 AM</option>
+										<option value="9:00 AM" >9:00 AM</option>
+										<option value="9:30 AM" >9:30 AM</option>
+										<option value="10:00 AM" >10:00 AM</option>
+										<option value="10:30 AM" >10:30 AM</option>
+										<option value="11:00 AM" >11:00 AM</option>
+										<option value="11:30 AM" >11:30 AM</option>
+										<option value="12:00 AM" >12:00 PM</option>
+										<option value="12:30 AM" >12:30 PM</option>
+										<option value="1:00 PM" >1:00 PM</option>
+										<option value="1:30 PM" >1:30 PM</option>
+										<option value="1:30 PM" >1:30 PM</option>
+										<option value="2:00 PM" >2:00 PM</option>
+										<option value="2:30 PM" >2:30 PM</option>
+										<option value="3:00 PM" >3:00 PM</option>
+										<option value="3:30 PM" >3:30 PM</option>
+										<option value="4:00 PM" >4:00 PM</option>
+										<option value="4:30 PM" >4:30 PM</option>
+										<option value="5:00 PM" >5:00 PM</option>
+										<option value="5:30 PM" >5:30 PM</option>
+										<option value="6:00 PM" >6:00 PM</option>
+										<option value="6:30 PM" >6:30 PM</option>
+										<option value="7:00 PM" >7:00 PM</option>
+										<option value="7:30 PM" >7:30 PM</option>
+										<option value="8:00 PM" >8:00 PM</option>
+										<option value="8:30 PM" >8:30 PM</option>
+										<option value="9:00 PM" >9:00 PM</option>
+										<option value="9:30 PM" >9:30 PM</option>
+										<option value="10:00 PM" >10:00 PM</option>
+										<option value="10:30 PM" >10:30 PM</option>
+										<option value="11:00 PM" >11:00 PM</option>
+										<option value="11:30 PM" >11:30 PM</option>
+								</select>
+								
+<!-- 								<div class="input-group"> -->
+<!-- 									<input type="text" name="etd_time[]" class="form-control timepicker timepicker-no-seconds"> -->
+									
+<!-- 									<span class="input-group-btn"> -->
+<!-- 										<button class="btn default" type="button"> -->
+<!-- 											<i class="fa fa-clock-o"></i> -->
+<!-- 										</button> -->
+<!-- 									</span> -->
+<!-- 								</div> -->
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">ETA</label>
-								<div class="input-group">
-									<input type="text" name="eta_time[]" class="form-control timepicker timepicker-no-seconds">
-									<span class="input-group-btn">
-										<button class="btn default" type="button">
-											<i class="fa fa-clock-o"></i>
-										</button>
-									</span>
-								</div>
+								<select class="form-control select2 " id="eta_time" name="eta_time[]" style="width: 100%">
+										<option value="12:00 AM" >12:00 AM</option>
+										<option value="12:30 AM" >12:30 AM</option>
+										<option value="1:00 AM" >1:00 AM</option>
+										<option value="1:30 AM" >1:30 AM</option>
+										<option value="2:00 AM" >2:00 AM</option>
+										<option value="2:30 AM" >2:30 AM</option>
+										<option value="3:00 AM" >3:00 AM</option>
+										<option value="3:30 AM" >3:30 AM</option>
+										<option value="4:00 AM" >4:00 AM</option>
+										<option value="4:30 AM" >4:30 AM</option>
+										<option value="5:00 AM" >5:00 AM</option>
+										<option value="5:30 AM" >5:30 AM</option>
+										<option value="6:00 AM" >6:00 AM</option>
+										<option value="6:30 AM" >6:30 AM</option>
+										<option value="7:00 AM" >7:00 AM</option>
+										<option value="7:30 AM" >7:30 AM</option>
+										<option value="8:00 AM" >8:00 AM</option>
+										<option value="8:30 AM" >8:30 AM</option>
+										<option value="9:00 AM" >9:00 AM</option>
+										<option value="9:30 AM" >9:30 AM</option>
+										<option value="10:00 AM" >10:00 AM</option>
+										<option value="10:30 AM" >10:30 AM</option>
+										<option value="11:00 AM" >11:00 AM</option>
+										<option value="11:30 AM" >11:30 AM</option>
+										<option value="12:00 AM" >12:00 PM</option>
+										<option value="12:30 AM" >12:30 PM</option>
+										<option value="1:00 PM" >1:00 PM</option>
+										<option value="1:30 PM" >1:30 PM</option>
+										<option value="1:30 PM" >1:30 PM</option>
+										<option value="2:00 PM" >2:00 PM</option>
+										<option value="2:30 PM" >2:30 PM</option>
+										<option value="3:00 PM" >3:00 PM</option>
+										<option value="3:30 PM" >3:30 PM</option>
+										<option value="4:00 PM" >4:00 PM</option>
+										<option value="4:30 PM" >4:30 PM</option>
+										<option value="5:00 PM" >5:00 PM</option>
+										<option value="5:30 PM" >5:30 PM</option>
+										<option value="6:00 PM" >6:00 PM</option>
+										<option value="6:30 PM" >6:30 PM</option>
+										<option value="7:00 PM" >7:00 PM</option>
+										<option value="7:30 PM" >7:30 PM</option>
+										<option value="8:00 PM" >8:00 PM</option>
+										<option value="8:30 PM" >8:30 PM</option>
+										<option value="9:00 PM" >9:00 PM</option>
+										<option value="9:30 PM" >9:30 PM</option>
+										<option value="10:00 PM" >10:00 PM</option>
+										<option value="10:30 PM" >10:30 PM</option>
+										<option value="11:00 PM" >11:00 PM</option>
+										<option value="11:30 PM" >11:30 PM</option>
+								</select>
+								
+<!-- 								<div class="input-group"> -->
+<!-- 									<input type="text" name="eta_time[]" class="form-control timepicker timepicker-no-seconds"> -->
+<!-- 									<span class="input-group-btn"> -->
+<!-- 										<button class="btn default" type="button"> -->
+<!-- 											<i class="fa fa-clock-o"></i> -->
+<!-- 										</button> -->
+<!-- 									</span> -->
+<!-- 								</div> -->
 							</div>
 						</div>
 					</div>
@@ -101,7 +211,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">Class Fight</label>
-								<select class="form-control" name="class_flight[]" id="classFlightSel" required style="display: inline">
+								<select class="form-control select2" name="class_flight[]" id="classFlightSel" required style="display: inline">
 									<option value="">Select...</option>
 									<option value="Economy">Economy</option>
 									<option value="Economy Plus">Economy Plus</option>
@@ -114,7 +224,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">VISA</label>
-								<select class="form-control" name="is_visa" id="is_visa">
+								<select class="form-control select2" name="is_visa" id="is_visa">
 									<option value="1">YES</option>
 									<option value="0">NO</option>
 								</select>

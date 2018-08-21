@@ -81,7 +81,7 @@ class EmailTripNotify {
 // 				}
 				
 // 			}
-// 			if ($actionType== 'approved'){
+// 			if ($actionType== 'approved' || $actionType=='submitted'){
 				
 // 				if ($this->system->adminEmail && $this->system->adminEmail!=$to && !in_array($this->system->adminEmail, $cc)) {
 // 					array_push($cc, $this->system->adminEmail);
@@ -89,7 +89,7 @@ class EmailTripNotify {
 				
 // 			}
 // // 			dd($to);
-// // 			dd($cc);
+// 			dd($cc);
 // 			$message->to($to)->cc($cc)->subject("Etravel:".$subject);
 			
 // 		});

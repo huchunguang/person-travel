@@ -257,8 +257,47 @@ jQuery(document).ready(function() {
 	function formatUserSelection (user) {
 		  return user.text;
 	}
-	// Select2 Search
-	$('.js-data-example-ajax').select2({
+	// User Select2 Search
+	$('.repOfficeSea').select2({
+		ajax : {
+			url : '/user/search',
+			dataType : 'json',
+			delay : 250,
+			data: function (params) {
+				
+			      return {
+			        q: params.term, // search term
+			      };
+			    },
+		    processResults: function (data, params) {
+			      // parse the results into the format expected by Select2
+			      // since we are using custom formatting functions we do not
+					// need to
+			      // alter the remote JSON data, except to indicate that
+					// infinite
+			      // scrolling can be used
+		    	  params.page = params.page || 1;
+			      return {
+			        results: data.data,
+			        pagination: {
+			            more: (params.page * 30) < data.total
+			          }
+			      };
+			    },
+			    cache: false
+			 },
+		cache : false,
+		placeholder: 'Search user...',
+		escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+		minimumInputLength : 1,
+		templateResult: formatUserList,
+		templateSelection: formatUserSelection,
+
+		});
+	
+	
+	// City Airport Select2 Search
+	$('.repOfficeSea').select2({
 		ajax : {
 			url : '/user/search',
 			dataType : 'json',
@@ -296,7 +335,6 @@ jQuery(document).ready(function() {
 		});
 });
 $('.airlineSel').on('change',function(){
-	
 	var selVal=$(this).val();
 //	alert(selVal);
 	if(selVal == '1'){
@@ -418,15 +456,18 @@ function showFlight(){
 		$('#addNewFlight').modal('show');
 	});
 }
+
+
+
 var addFlightNum = 0;
 function addNewFlight(){
 	
 	var flight_date=$('.modal input[name="flight_date[]"]').val();
-	var flight_from=$('.modal input[name="flight_from[]"]').val();
+	var flight_from=$('.modal #flight_from').val();
 	var air_code=$('.modal input[name="air_code[]"]').val();
-	var flight_to=$('.modal input[name="flight_to[]"]').val();
-	var etd_time=$('.modal input[name="etd_time[]"]').val();
-	var eta_time=$('.modal input[name="eta_time[]"]').val();
+	var flight_to=$('.modal #flight_to').val();
+	var etd_time=$('.modal #etd_time').val();
+	var eta_time=$('.modal #eta_time').val();
 	var airline_or_train=$('.modal #airline_or_train').val();
 	var airline_or_train_text=$('.modal #airline_or_train').find('option:selected').text();
 	var class_flight=$('.modal #classFlightSel option:selected').val();
@@ -497,10 +538,15 @@ function editFlight()
 	$('.modal input[name="air_code[]"]').val(air_code);
 	$('.modal input[name="flight_id[]"]').val(flight_id);
 	$('.modal input[name="flight_date[]"]').val(flight_date);
-	$('.modal input[name="flight_from[]"]').val(flight_from);
-	$('.modal input[name="flight_to[]"]').val(flight_to);
-	$('.modal input[name="etd_time[]"]').val(etd_time);
-	$('.modal input[name="eta_time[]"]').val(eta_time);
+	$(".modal #flight_from").val(flight_from).select2();
+	$(".modal #flight_to").val(flight_to).select2();
+	$(".modal #etd_time").val(etd_time).select2();
+	$(".modal #eta_time").val(eta_time).select2();
+	//Update
+//	$('.modal input[name="flight_from[]"]').val(flight_from);
+//	$('.modal input[name="flight_to[]"]').val(flight_to);
+//	$('.modal input[name="etd_time[]"]').val(etd_time);
+//	$('.modal input[name="eta_time[]"]').val(eta_time);
 //	$('.modal input[name="class_flight[]"]').val(class_flight);
 	$('.modal #classFlightSel option[value="'+class_flight+'"]').attr("selected","selected");
 //	$('.modal #airline_or_train option[value="'+airline_or_train+'"]').attr("selected","selected");

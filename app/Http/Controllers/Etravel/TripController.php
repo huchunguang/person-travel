@@ -36,6 +36,8 @@ use App\Http\Requests\CreateDomesticRequest;
 use App\Company_site;
 use App\Http\Controllers\Etravel\Admin\AdminController;
 use App\Department;
+use App\City_airport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TripController extends AdminController
 {
@@ -75,6 +77,7 @@ class TripController extends AdminController
 			->with('departmentList',$this->getDepByCompanySite())
 			->with('airlineList', $airlineList)
 			->with('userList', $userList)
+			->with('cityAirportList',City_airport::all())
 			->with('hotelList', $hotelList)->with('workflow',$this->user->getWorkflowCfg()->workflow);
 	}
     /**
@@ -400,6 +403,7 @@ class TripController extends AdminController
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
 // 			'ccUser'=>$this->trip->getCcUser($trip)->toArray(),
 			'hotelList'=>$hotelList,
+			'cityAirportList'=>City_airport::all(),
 			'airlineList' => Airline::all(),
 			'departmentList'=> $this->getDepByCompanySite(),
 			'userList'=>$userList,

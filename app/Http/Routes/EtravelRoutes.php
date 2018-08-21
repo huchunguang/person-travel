@@ -57,7 +57,6 @@ class EtravelRoutes
 					#Configuration
 					$router->resource('airline', 'AirlineController');
 					
-					
 					#Etravel Admin
 					$router->resource('announcement', 'AnnouncementController');
 					$router->resource('purpose', 'PurposeController');
@@ -74,6 +73,8 @@ class EtravelRoutes
 				});
 					$router->group([],function($router){
 						$router->get('user/search','UserController@search');
+						$router->get('cityAirport/search', 'CityAirportController@search');
+						$router->resource('cityAirport', 'CityAirportController');
 						
 						$router->get('country-sites/{country}','CountryController@sites');
 						$router->get('sites/{country}','CountryController@sitesByAll');
