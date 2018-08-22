@@ -109,6 +109,20 @@ class CityAirportController extends Controller {
 		return response()->json(['res_info'=>['code'=>'100001','msg'=>'']]);
 	}
 	
+	public function search(Request $request)
+	{
+		$query=$request->input('q');
+		$res = City_airport::where('airport','like','%'.$query.'%')->get(['airport','id']);
+		$data=[];
+		foreach ($res as $item){
+			$item->id=$item->airport;
+			$item->name=$item->airport;
+			$data[]=$item->airport;
+			unset($item->airport);
+		}
+		// 		dd($res->toArray());
+		return response()->json($data);
+	}
 }
 
 

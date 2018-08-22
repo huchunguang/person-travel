@@ -11,7 +11,7 @@
 				<label for="">Select Carrier from the list</label>
 				@if(count($airlineList))
 				<?php $flag=true;?>
-				<select name="airlineSel" id="aircodeSel" class="form-control" multiple size="6">
+				<select name="airlineSel" id="aircodeSel" class="form-control" multiple size="6" autofocus>
 					@foreach($airlineList as $item)
 					@if($flag)
 					<option value="{{$item['id']}}" data-code="{{$item['airline_code']}}" selected>{{$item['airline_name']}}</option>

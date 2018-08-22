@@ -38,7 +38,6 @@
 							</label>
 						</div>
 					</div>
-					<p></p>
 					<div class="input-group">
 						<div class="icheck-inline">
 							<label for="domesticTrip">
@@ -65,7 +64,6 @@
 							</label>
 						</div>
 					</div>
-					<p></p>
 					<div class="input-group">
 						<div class="icheck-inline">
 							<label for="domesticTrip">
@@ -99,7 +97,7 @@
 					<a title="" class="fullscreen" href="" data-original-title=""> </a>
 				</div>
 			</div>
-			<div class="portlet-body policy-content portlet-collapsed" style="display: block; padding: 0px; height: 347px;">
+			<div class="portlet-body policy-content portlet-collapsed" style="display: block; padding: 0px; height: 377px;">
 				<div class="table-scrollable" style="overflow-y: auto; padding: 0px; margin: 0;">
 					<table class="table table-light">
 						<thead>

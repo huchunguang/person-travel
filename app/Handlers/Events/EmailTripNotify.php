@@ -76,17 +76,18 @@ class EmailTripNotify {
 // 			}else{
 // 				$to = $tripCreater->Email;
 // 				array_push($cc,$manager->Email);
-// 				if ($trip->trip_type=='1' && Auth::user()->UserID == $trip->overseas_approver && $actionType == 'approved'){
+// 				if ($trip->trip_type=='1' && Auth::user()->UserID == $trip->overseas_approver && $actionType == 'approved') {
 // 					array_push($cc, User::find($trip->department_approver)->Email);
 // 				}
-				
 // 			}
-// 			if ($actionType== 'approved' || $actionType=='submitted'){
-				
-// 				if ($this->system->adminEmail && $this->system->adminEmail!=$to && !in_array($this->system->adminEmail, $cc)) {
-// 					array_push($cc, $this->system->adminEmail);
+// 			if ($actionType == 'approved' || $actionType == 'submitted') {
+// 				if ($this->system->adminEmail) {
+// 					foreach ($this->system->adminEmail as $emailAddr) {
+// 						if ($emailAddr->Email && $emailAddr->Email != $to && ! in_array($emailAddr->Email, $cc)) {
+// 							array_push($cc, $emailAddr->Email);
+// 						}
+// 					}
 // 				}
-				
 // 			}
 // // 			dd($to);
 // 			dd($cc);

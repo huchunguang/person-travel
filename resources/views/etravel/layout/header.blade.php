@@ -27,6 +27,9 @@
 						<li>
 							<a href="/etravel/airline">AirLine</a>
 						</li>
+						<li>
+							<a href="{{url('cityAirport')}}">City Airport</a>
+						</li>
 					</ul>
 				</li>
 				@endif @if($isEtravelAdmin)

@@ -43,9 +43,10 @@ class SystemInfo implements SystemVariable{
 	public function getAdminEmail()
 	{
 		$etravelAdmin = Company_site::where('CompanyID',Auth::user()->CompanyID)->where('SiteID',Auth::user()->SiteID)->first();
+// 		dd($etravelAdmin->toArray());
 		if ($etravelAdmin){
-			$result = User::find($etravelAdmin->EtravelAdminID);
-			return isset($result->Email)?$result->Email:null;
+			$result = User::find(explode(',', $etravelAdmin->EtravelAdminID));
+			return isset($result)?$result:null;
 		}
 		return null;
 	}

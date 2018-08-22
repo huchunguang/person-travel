@@ -253,7 +253,21 @@ jQuery(document).ready(function() {
 	  markup += "</div>";
 
 	  return markup;
+	}
+	
+	function formatAirportList(airportList){
+		var markup = "<div class='select2-result-repository clearfix'>" +
+	      "<div class='select2-result-repository__title'>"+airportList.airport+"</div>";
+
+	  if (airportList.airport) {
+	    markup += "<div class='select2-result-repository__description'>"+airportList.airport+"</div>";
+	  }
+
+	  markup += "</div>";
+
+	  return markup;
 	} 
+	
 	function formatUserSelection (user) {
 		  return user.text;
 	}
@@ -296,43 +310,97 @@ jQuery(document).ready(function() {
 		});
 	
 	
-	// City Airport Select2 Search
-	$('.repOfficeSea').select2({
-		ajax : {
-			url : '/user/search',
-			dataType : 'json',
-			delay : 250,
-			data: function (params) {
-				
-			      return {
-			        q: params.term, // search term
-			      };
-			    },
-		    processResults: function (data, params) {
-			      // parse the results into the format expected by Select2
-			      // since we are using custom formatting functions we do not
-					// need to
-			      // alter the remote JSON data, except to indicate that
-					// infinite
-			      // scrolling can be used
-		    	  params.page = params.page || 1;
-			      return {
-			        results: data.data,
-			        pagination: {
-			            more: (params.page * 30) < data.total
-			          }
-			      };
-			    },
-			    cache: false
-			 },
-		cache : false,
-		placeholder: 'Search user...',
-		escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-		minimumInputLength : 1,
-		templateResult: formatUserList,
-		templateSelection: formatUserSelection,
+	function cityAirportSea(){
+		// City Airport Select2 Search
+		$('.cityAirportSea').select2({
+			ajax : {
+				url : '/cityAirport/search',
+				dataType : 'json',
+				delay : 50,
+				data: function (params) {
+					
+				      return {
+				        q: params.term, // search term
+				      };
+				    },
+			    processResults: function (data, params) {
+				      // parse the results into the format expected by Select2
+				      // since we are using custom formatting functions we do not
+						// need to
+				      // alter the remote JSON data, except to indicate that
+						// infinite
+				      // scrolling can be used
+			    	  params.page = params.page || 1;
+				      return {
+				        results: data.data,
+				        pagination: {
+				            more: (params.page * 30) < data.total
+				          }
+				      };
+				    },
+				    cache: false
+				 },
+			cache : false,
+			placeholder: 'Search City...',
+			escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+			minimumInputLength : 1,
+			templateResult: formatAirportList,
+			templateSelection: formatUserSelection,
 
-		});
+			});
+	};
+	cityAirportSea();
+	//Typeahead
+	$.get("/cityAirportSearch.txt", function(data){
+// 		var subjects = ['PHP', 'MySQL', 'SQL', 'PostgreSQL', 'HTML', 'CSS', 'HTML5', 'CSS3', 'JSON']; 
+
+ 		  $(".cityairport_search").typeahead({ 
+ 			  source:data,
+ 			  highlighter: function (item) {
+ 	        	 return '<strong style="font-size:14px;">' + item + '</strong>'
+
+ 	         },
+ 	         updater: function (item) {
+ 	             return item
+ 	         },
+ 	         afterSelect: function (item) {
+ 	             //选择项之后的时间，item是当前选中的项
+ 	             $("#product_search").attr("data-value",item.id);
+ 	         },
+ 	         delay:500,
+ 	         minLength:1,
+ 	         items: 7,   //显示10条
+ 	         delay: 0,  //延迟时间
+ 		  });
+ 		},'json');
+	
+	
+//	 jQuery('.cityairport_search').typeahead({
+//         source: function (query, process) {
+//             //query是输入值
+////             jQuery.getJSON('/cityAirport/search', { "query": query }, function (data) {
+////                 process(data);
+////             });
+//             
+//         },
+//         highlighter: function (item) {
+//        	 return '<strong style="font-size:14px;">' + item + '</strong>'
+//
+//         },
+//         updater: function (item) {
+//             return item
+//         },
+//         afterSelect: function (item) {
+//             //选择项之后的时间，item是当前选中的项
+//             $("#product_search").attr("data-value",item.id);
+//         },
+//         delay:500,
+//         minLength:1,
+//         items: 7,   //显示10条
+//         delay: 0,  //延迟时间
+//     });
+	 
+	 
 });
 $('.airlineSel').on('change',function(){
 	var selVal=$(this).val();
@@ -463,9 +531,9 @@ var addFlightNum = 0;
 function addNewFlight(){
 	
 	var flight_date=$('.modal input[name="flight_date[]"]').val();
-	var flight_from=$('.modal #flight_from').val();
+	var flight_from=$('.modal input[name="flight_from[]"]').val();
 	var air_code=$('.modal input[name="air_code[]"]').val();
-	var flight_to=$('.modal #flight_to').val();
+	var flight_to=$('.modal input[name="flight_to[]"]').val();
 	var etd_time=$('.modal #etd_time').val();
 	var eta_time=$('.modal #eta_time').val();
 	var airline_or_train=$('.modal #airline_or_train').val();
@@ -521,6 +589,11 @@ $('#addNewFlight').on('hide.bs.modal', function () {
 		$('.modal input').val('');
 	}
 });
+
+$('#airlineList').on('shown.bs.modal', function () {
+	$('#aircodeSel').focus();
+});
+
 function editFlight()
 {
 	var id=$('.prepareDelTr').data('id');
@@ -538,13 +611,13 @@ function editFlight()
 	$('.modal input[name="air_code[]"]').val(air_code);
 	$('.modal input[name="flight_id[]"]').val(flight_id);
 	$('.modal input[name="flight_date[]"]').val(flight_date);
-	$(".modal #flight_from").val(flight_from).select2();
-	$(".modal #flight_to").val(flight_to).select2();
+//	$(".modal #flight_from").val(flight_from).select2();
+//	$(".modal #flight_to").val(flight_to).select2();
 	$(".modal #etd_time").val(etd_time).select2();
 	$(".modal #eta_time").val(eta_time).select2();
 	//Update
-//	$('.modal input[name="flight_from[]"]').val(flight_from);
-//	$('.modal input[name="flight_to[]"]').val(flight_to);
+	$('.modal input[name="flight_from[]"]').val(flight_from);
+	$('.modal input[name="flight_to[]"]').val(flight_to);
 //	$('.modal input[name="etd_time[]"]').val(etd_time);
 //	$('.modal input[name="eta_time[]"]').val(eta_time);
 //	$('.modal input[name="class_flight[]"]').val(class_flight);

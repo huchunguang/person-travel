@@ -35,13 +35,13 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
+							<div class="form-group" style="margin-bottom: 0px;">
 								<label class="control-label">From</label>
-								<select class="form-control select2 " id="flight_from" name="flight_from[]" style="width: 100%">
-									@foreach($cityAirportList as $airportItem)
-										<option value="{{$airportItem['airport']}}" >{{$airportItem['airport']}}</option>
-									@endforeach
-								</select>
+								
+								 <input type="text" id="flight_from" name="flight_from[]" class="form-control cityairport_search"  data-provide="typeahead" data-value="" autocomplete="off" placeholder="Search by city">
+						<!-- 		<select class="form-control select2 cityAirportSea" id="flight_from" name="flight_from[]" style="width: 100%">
+									
+							</select> -->
 							</div>
 						</div>
 					</div>
@@ -49,11 +49,8 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">To</label>
-								<select class="form-control select2 " id="flight_to" name="flight_to[]" style="width: 100%">
-									@foreach($cityAirportList as $airportItem)
-										<option value="{{$airportItem['airport']}}" >{{$airportItem['airport']}}</option>
-									@endforeach
-								</select>
+								<input type="text" id="flight_to" name="flight_to[]" class="form-control cityairport_search"  data-provide="typeahead" data-value="" autocomplete="off" placeholder="Search by city">
+								
 							</div>
 						</div>
 						<div class="col-md-6">
