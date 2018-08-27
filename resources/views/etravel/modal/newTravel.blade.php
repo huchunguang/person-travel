@@ -13,7 +13,7 @@
 					<div class="input-group">
 						<div class="icheck-inline">
 							<label for="tabInternationalTrip"> 
-							<input type="radio" name="trip" class="icheck" value="1" id="tabInternationalTrip">
+							<input type="radio" name="trip" class="icheck" value="1" id="tabInternationalTrip" checked>
 							 <span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">International Trip</span>
 							</label>
 						</div>

@@ -126,8 +126,7 @@
 <!-- BEGIN PAGE LEVEL SCRIPTS(DATE TIME) -->
 <script src="{{asset('assets/pages/scripts/components-date-time-pickers.js')}}" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS(DATE TIME) -->
-    <script src="https://cdn.bootcss.com/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
-
+<script src="{{asset('/js/etravel/trip/bootstrap3-typeahead.min.js')}}"></script>
 </head>
 <body class="page-container-bg-solid page-header-menu-fixed">
 	<div class="page-wrapper">

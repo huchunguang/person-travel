@@ -30,54 +30,68 @@
 			<div class="tab-pane fade in active" id="home">
 				<form action="/etravel/trip" role="form" method="post">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<div class="input-group">
-						<div class="icheck-inline">
-							<label for="tabInternationalTrip">
-								<input type="radio" name="trip" class="icheck" value="1" id="tabInternationalTrip">
-								<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">International Trip</span>
-							</label>
+					<div class="row">
+						<div class="col-md-8">
+							<div class="input-group">
+								<div class="icheck-inline">
+									<label for="tabInternationalTrip">
+										<input type="radio" name="trip" class="icheck" value="1" id="tabInternationalTrip" checked>
+										<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">International Trip</span>
+									</label>
+								</div>
+							</div>
+							<div class="input-group">
+								<div class="icheck-inline">
+									<label for="domesticTrip">
+										<input type="radio" name="trip" class="icheck" value="2" id="domesticTrip">
+										<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">Domestic Trip</span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4" style="margin-top: 10px;">
+							<div>
+								<button id="btnLeaveControl-Delete" type="submit" accesskey="N" class="btn green">
+									<i class="glyphicon glyphicon-plus-sign"></i> <u>N</u>ew
+								</button>
+							</div>
 						</div>
 					</div>
-					<div class="input-group">
-						<div class="icheck-inline">
-							<label for="domesticTrip">
-								<input type="radio" name="trip" class="icheck" value="2" id="domesticTrip">
-								<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">Domestic Trip</span>
-							</label>
-						</div>
-					</div>
-					<center>
-						<button id="btnLeaveControl-Delete" type="submit" accesskey="N" class="btn green">
-							<i class="glyphicon glyphicon-plus-sign"></i> <u>N</u>ew
-						</button>
-					</center>
 				</form>
 			</div>
 			<div class="tab-pane fade" id="teana">
 				<form action="/etravel/trip" role="form" method="post">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<div class="input-group">
-						<div class="icheck-inline">
-							<label for="tabInternationalTrip">
-								<input type="radio" name="trip" class="icheck" value="1" id="tabInternationalTrip">
-								<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">International Trip</span>
-							</label>
+					<div class="row">
+						
+						<div class="col-md-8">
+							<div class="input-group">
+								<div class="icheck-inline">
+									<label for="tabInternationalTrip">
+										<input type="radio" name="trip" class="icheck" value="1" id="tabInternationalTrip" checked>
+										<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">International Trip</span>
+									</label>
+								</div>
+							</div>
+							<div class="input-group">
+								<div class="icheck-inline">
+									<label for="domesticTrip">
+										<input type="radio" name="trip" class="icheck" value="2" id="domesticTrip">
+										<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">Domestic Trip</span>
+									</label>
+								</div>
+							</div>
 						</div>
-					</div>
-					<div class="input-group">
-						<div class="icheck-inline">
-							<label for="domesticTrip">
-								<input type="radio" name="trip" class="icheck" value="2" id="domesticTrip">
-								<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">Domestic Trip</span>
-							</label>
+						<div class="col-md-4" style="margin-top: 10px;">
+							<div>
+								<button id="btnLeaveControl-Delete" type="submit" accesskey="N" class="btn green">
+									<i class="glyphicon glyphicon-plus-sign"></i> <u>N</u>ew
+								</button>
+							</div>
 						</div>
+					
 					</div>
-					<p></p>
-					<center>
-						<button id="btnLeaveControl-Delete" type="submit" accesskey="S" class="btn green">
-							<i class="glyphicon glyphicon-new-window"></i> <u>S</u>ubmit
-						</button>
-					</center>
+
 				</form>
 			</div>
 			<div class="tab-pane fade" id="camry">
@@ -97,7 +111,7 @@
 					<a title="" class="fullscreen" href="" data-original-title=""> </a>
 				</div>
 			</div>
-			<div class="portlet-body policy-content portlet-collapsed" style="display: block; padding: 0px; height: 377px;">
+			<div class="portlet-body policy-content portlet-collapsed" style="display: block; padding: 0px; height: 421px;">
 				<div class="table-scrollable" style="overflow-y: auto; padding: 0px; margin: 0;">
 					<table class="table table-light">
 						<thead>
@@ -105,8 +119,9 @@
 								<td class="">Date</td>
 								<td class="">To</td>
 								<td class="">AirLine Code</td>
-								<td class="">ETA</td>
-								<td class="">ETD</td>
+								<td class="" style="width: 78px">ETA</td>
+								<td class="" style="width: 78px">ETD</td>
+								
 							</tr>
 						</thead>
 						<tbody>
@@ -330,7 +345,6 @@
 					</div>
 					<div class="portlet-body">
 						<div class="portlet box blue-soft">
-							
 							<div class="portlet-title">
 								<div class="caption">
 									<i class="fa fa-database"></i> Pending For My Approval
@@ -343,23 +357,23 @@
 								<div class="table-scrollable">
 									<table class="table table-light">
 										<tbody>
-											
-											@if(isset($staffTripList['pending']) && count($staffTripList['pending'])) 
-											@for ($i = 0; $i < count($staffTripList['pending']); $i++) @if($i<7)
+											@if(isset($staffTripList['pending']) && count($staffTripList['pending'])) @for ($i = 0; $i < count($staffTripList['pending']); $i++) @if($i<7)
 											<tr>
-												<td>{{$staffTripList['pending'][$i]->user()->first()['FirstName']}}</td>
+												<td>
+													@if($staffTripList['pending'][$i]['trip_type']=='1')
+													<a href="/etravel/tripnationallist/{{ $staffTripList['pending'][$i]['trip_id'] }}">{{$staffTripList['pending'][$i]->user()->first()['FirstName']}}</a>
+													@elseif($staffTripList['pending'][$i]['trip_type']=='2')
+													<a href="/etravel/tripdemosticlist/{{ $staffTripList['pending'][$i]['trip_id'] }}">{{$staffTripList['pending'][$i]->user()->first()['FirstName']}}</a>
+													@endif
+												</td>
 												<td>{{$staffTripList['pending'][$i]['daterange_from']}}</td>
 												<td>{{$staffTripList['pending'][$i]['daterange_to']}}</td>
 											</tr>
-											@endif
-											@endfor
-											@endif 
+											@endif @endfor @endif
 										</tbody>
 									</table>
 								</div>
 							</div>
-						
-						
 						</div>
 					</div>
 				</div>
@@ -375,7 +389,7 @@
 							<a title="" class="fullscreen" href="" data-original-title=""> </a>
 						</div>
 					</div>
-					<div class="portlet-body policy-content portlet-collapsed" style="display: block;">{!! $generalAnnouncement['announcement'] or 'No Announcement' !!}</div>
+					<div class="portlet-body policy-content portlet-collapsed" style="display: block;height:66px;overflow-y:scroll;">{!! $generalAnnouncement['announcement'] or 'No Announcement' !!}</div>
 				</div>
 			</div>
 		</div>

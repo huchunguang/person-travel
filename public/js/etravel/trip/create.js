@@ -352,8 +352,6 @@ jQuery(document).ready(function() {
 	cityAirportSea();
 	//Typeahead
 	$.get("/cityAirportSearch.txt", function(data){
-// 		var subjects = ['PHP', 'MySQL', 'SQL', 'PostgreSQL', 'HTML', 'CSS', 'HTML5', 'CSS3', 'JSON']; 
-
  		  $(".cityairport_search").typeahead({ 
  			  source:data,
  			  highlighter: function (item) {
@@ -406,6 +404,7 @@ $('.airlineSel').on('change',function(){
 	var selVal=$(this).val();
 //	alert(selVal);
 	if(selVal == '1'){
+		$('.cityairport_search').typeahead('listen');
 		$('#addNewFlight').modal('hide');
 		$('#airlineList').modal('show');
 		$('#checkAirlineBtn').on('click',function(){
@@ -414,9 +413,12 @@ $('.airlineSel').on('change',function(){
 			$('.modal input[name="air_code[]"]').val(airlineCode);
 			$('#airlineList').modal('hide');
 			$('#addNewFlight').modal('show');
+			
 		});
 		
 	}else{
+		$('.cityairport_search').typeahead('destroy');
+		
 		$('.modal input[name="air_code[]"]').val('');
 	}
 	
@@ -521,6 +523,7 @@ function showFlight(){
 	});
 	$('#cancelAirlineBtn').on('click',function(){
 		$(".modal #airline_or_train").val("0").select2()
+//		$('.cityairport_search').typeahead('destroy');		
 		$('#addNewFlight').modal('show');
 	});
 }
@@ -588,6 +591,16 @@ $('#addNewFlight').on('hide.bs.modal', function () {
 	if(flag){
 		$('.modal input').val('');
 	}
+});
+
+$('#addNewFlight').on('shown.bs.modal', function () {
+	var isTrain=$('.modal #airline_or_train').val();
+	if(isTrain==0){
+		$('.cityairport_search').typeahead('destroy');
+	}else if(isTrain==1){
+		
+	}
+	
 });
 
 $('#airlineList').on('shown.bs.modal', function () {
