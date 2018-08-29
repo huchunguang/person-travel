@@ -63,7 +63,6 @@
 				<form action="/etravel/trip" role="form" method="post">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<div class="row">
-						
 						<div class="col-md-8">
 							<div class="input-group">
 								<div class="icheck-inline">
@@ -89,9 +88,7 @@
 								</button>
 							</div>
 						</div>
-					
 					</div>
-
 				</form>
 			</div>
 			<div class="tab-pane fade" id="camry">
@@ -121,7 +118,6 @@
 								<td class="">AirLine Code</td>
 								<td class="" style="width: 78px">ETA</td>
 								<td class="" style="width: 78px">ETD</td>
-								
 							</tr>
 						</thead>
 						<tbody>
@@ -179,7 +175,13 @@
 											<i class="fa fa-arrow-right" style="color: orange;"></i>
 										</td>
 									</tr>
-									@endforeach @else
+									@endforeach
+									<tr>
+										<td colspan="4" align="right">
+											<a href="/etravel/{{Auth::user()->UserID}}/triplist?status=pending" target="_blank">See More</a>
+										</td>
+									</tr>
+									@else
 									<tr>
 										<td style="text-align: center; color: rgb(87, 142, 190);" colspan="3">No records found.</td>
 									</tr>
@@ -221,7 +223,13 @@
 											<i class="fa fa-check" style="color: green;"></i>
 										</td>
 									</tr>
-									@endforeach @else
+									@endforeach
+									<tr>
+										<td colspan="4" align="right">
+											<a href="/etravel/{{Auth::user()->UserID}}/triplist?status=approved" target="_blank">See More</a>
+										</td>
+									</tr>
+									 @else
 									<tr>
 										<td style="text-align: center; color: rgb(87, 142, 190);" colspan="3">No records found.</td>
 										@endif
@@ -389,7 +397,7 @@
 							<a title="" class="fullscreen" href="" data-original-title=""> </a>
 						</div>
 					</div>
-					<div class="portlet-body policy-content portlet-collapsed" style="display: block;height:66px;overflow-y:scroll;">{!! $generalAnnouncement['announcement'] or 'No Announcement' !!}</div>
+					<div class="portlet-body policy-content portlet-collapsed" style="display: block; height: 66px; overflow-y: scroll;">{!! $generalAnnouncement['announcement'] or 'No Announcement' !!}</div>
 				</div>
 			</div>
 		</div>

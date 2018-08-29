@@ -39,29 +39,31 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label">Name Of Traveller</label>
-															<input disabled type="text" class="form-control" placeholder="{{ $userObjMdl->FirstName }} {{ $userObjMdl->LastName }}-{{ $userObjMdl->UserName }}">
+															<label class="control-label">Applicant</label>
+															<input disabled type="text" class="form-control" placeholder="{{ $applicantUser->FirstName }} {{ $applicantUser->LastName }}-{{ $applicantUser->UserName }}">
 														</div>
 													</div>
 													<!--/span-->
 													<div class="col-md-6">
+													
 														<div class="form-group">
-															<label class="control-label">Site</label>
-															<select id="Site" name="Site" disabled class="select2 form-control">
-																<option value="0">{{ $userObjMdl->site()->first()['Site'] }}</option>
-															</select>
+															<label class="control-label">Request For</label>
+															<input disabled type="text" class="form-control" placeholder="{{ $userObjMdl->FirstName }} {{ $userObjMdl->LastName }}-{{ $userObjMdl->UserName }}">
 														</div>
+														
+														
 													</div>
 													<!--/span-->
 												</div>
 												<div class="row">
 													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Cost Center</label>
-															<select name="cost_center_id" class="select2 form-control" disabled>
-																<option>{{ $costCenterCode }}</option>
+													<div class="form-group">
+															<label class="control-label">Site</label>
+															<select id="Site" name="Site" disabled class="select2 form-control">
+																<option value="0">{{ $userObjMdl->site()->first()['Site'] }}</option>
 															</select>
 														</div>
+														
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
@@ -88,6 +90,17 @@
 															</div>
 														</div>
 													</div>
+													<div class="col-md-6">
+													<div class="form-group">
+															<label class="control-label">Cost Center</label>
+															<select name="cost_center_id" class="select2 form-control" disabled>
+																<option>{{ $costCenterCode }}</option>
+															</select>
+														</div>
+														
+													</div>
+												</div>
+												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
 															<label class="control-label">Project Code</label>
@@ -197,11 +210,11 @@
 												</div>
 											</div>
 											<div class="row form-actions text-right">
-												@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
+												@if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
 												<button id="TravelTypeEdit" type="button" accesskey="I" onclick="window.location.href='/etravel/trip/edit/{{$trip->trip_id}}'" class="btn yellow-gold leave-type-button">
 													<i class="fa fa-pencil"></i> Ed<u>i</u>t
 												</button>
-												@endif @if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved'))
+												@endif @if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved'))
 												<button id=TravelTypeCancel type="button" accesskey="D" onclick="window.location.href='/etravel/trip/cancel/{{$trip->trip_id}}'" class="btn default">
 													<i class="fa fa-share"></i> <u>C</u>ancel
 												</button>

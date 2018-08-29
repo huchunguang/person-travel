@@ -1,7 +1,9 @@
 $('#department_id').on('change',function(){
 	var department_id=$(this).val();
 //	alert(department_id);
-	$.get('/etravel/depApprover?department_id='+department_id,function(data){
+	var user_id=$('#user_id option:selected').val();
+//	alert(user_id)
+	$.get('/etravel/depApprover/'+user_id+'?department_id='+department_id,function(data){
 		var depApproverOptions='';
 		$.each(data,function(ind,val){
 			depApproverOptions+='<option value="'+val.UserID+'">'+val.LastName+' '+val.FirstName+'</option>';
@@ -9,7 +11,83 @@ $('#department_id').on('change',function(){
 			$('#department_approver').empty().append(depApproverOptions);
 	});
 	
+	
+	
+	
 });
+
+$('#user_id').on('change',function(){
+	var user_id=$(this).val();
+	$.get('/userManager/'+user_id,function(data){
+		if(data.LastName){
+			var userManager=data.LastName+' '+data.FirstName;
+			$('#addNotify').empty().append(userManager);
+		}else{
+			$('#addNotify').empty();
+		}
+		
+	});
+//	alert(user_id);
+	$.get('/userTravelOfPurpose/'+user_id,function(data){
+		var travelOfPurpose='';
+		$.each(data,function(ind,val){
+			if(val.purpose_id){
+				travelOfPurpose+='<option value="'+val.purpose_id+'">'+val.purpose_catgory+'</option>';
+			}
+			
+		});
+		$('#purpose_id').empty().append(travelOfPurpose);
+	});
+	
+	$.get('/company-departments/'+user_id,function(data){
+		var depOptions='';
+		$.each(data,function(ind,val){
+			if(val.selected==1){
+				depOptions+='<option value="'+val.DepartmentID+'" selected>'+val.Department+'</option>';
+			}else{
+				depOptions+='<option value="'+val.DepartmentID+'">'+val.Department+'</option>';
+			}
+			
+		});
+		$('#department_id').empty().append(depOptions);
+	});
+	
+	$.get('/costcenter-list/'+user_id,function(data){
+		var costCenterOptions='';
+		$.each(data,function(ind,val){
+			costCenterOptions+='<option value="'+val.CostCenterID+'">'+val.CostCenterCode+'</option>';
+		});
+			$('#cost_center_id').empty().append(costCenterOptions);
+	});
+	
+	$.get('/userList/'+user_id,function(data){
+		var department_id=data.DepartmentID;
+		$('#Site').empty().append('<option>'+data.siteStr+'</option>');
+//		alert(department_id);
+		$.get('/etravel/depApprover/'+user_id+'?department_id='+department_id,function(data){
+			var depApproverOptions='';
+			$.each(data,function(ind,val){
+				depApproverOptions+='<option value="'+val.UserID+'">'+val.LastName+' '+val.FirstName+'</option>';
+			});
+				$('#department_approver').empty().append(depApproverOptions);
+			
+		});
+		var company_id=data.CompanyID;
+		$.get('/company-wbscodes/'+company_id,function(data){
+
+			var wbsCodeOptions='';
+			$.each(data,function(ind,val){
+				wbsCodeOptions+='<option value="'+val.wbs_id+'">'+val.wbs_code+'</option>';
+			});
+				$('#project_code').empty().append(wbsCodeOptions);
+			
+		
+		});
+	});
+	
+	
+});
+
 
 //Form validation
 	var FormValidation = function () {

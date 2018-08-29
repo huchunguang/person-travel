@@ -100,9 +100,10 @@ class SystemInfo implements SystemVariable{
 		$curDate=date('m/d/Y',time());
 		return Trip_announcement::with('announceType')->where('site_id',$this->getSiteId())->where('date_effectivity','<=',$curDate)->where('date_expired','>=',$curDate)->first();
 	}
-	public function getWbscodeList()
+	public function getWbscodeList($company_id=null)
 	{
-		return Company::find(Auth::user()->CompanyID)->wbscode()->orderBy('project_type','ASC')->orderBy('status','DESC')->get()?:[];
+		$company_id = $company_id?$company_id:Auth::user()->CompanyID;
+		return Company::find($company_id)->wbscode()->orderBy('project_type','ASC')->orderBy('status','DESC')->get()?:[];
 	} 
 	
 	public function __get($name)

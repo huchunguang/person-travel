@@ -8,17 +8,20 @@ use App\User;
 
 trait selectApprover
 {
-	public static function getDepApprover($departmentFilter)
+	public static function getDepApprover($departmentFilter,$user=null)
 	{
-		$user_id = Auth::user()->UserID;
+		$user=$user?$user:Auth::user();
+		$user_id = $user->UserID;
 		$approvers=[];
 		if (Department_approver::where($departmentFilter)->exists()) {
 			$approvers = Department_approver::where($departmentFilter)->first([
 				
 				'Approver1'
 			])->toArray();
-			
+// 			dd($approvers);
 			$userIds = explode(',', $approvers['Approver1']);
+// 			dd($user_id);
+// 			dd($userIds);
 			if (in_array($user_id, $userIds)) {
 				$approvers = Department_approver::where($departmentFilter)->first([
 					
@@ -42,7 +45,7 @@ trait selectApprover
 					'checkIsDelegate'
 				]);
 			}
-			
+// 			dd($userIds);
 			$approvers = User::whereIn('UserID', $userIds)->get()->toArray();
 		}
 		

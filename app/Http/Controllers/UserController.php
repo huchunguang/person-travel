@@ -3,17 +3,25 @@
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use App\Repositories\UserRepository;
 
 class UserController extends Controller {
 
+	public function __construct(UserRepository $user) 
+	{
+		$this->user=$user;
+	}
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	
+	public function index(User $user)
 	{
-		//
+		$user->workflow=$this->user->getWorkflowCfg($user)->workflow;
+		$user->siteStr=$user->site()->first()->Site;
+		return response()->json($user);
 	}
 
 	/**
@@ -90,5 +98,26 @@ class UserController extends Controller {
 		}
 // 		dd($res->toArray());
 		return response()->json($res->toArray());	
+	}
+	
+	public function userSite(User $user)
+	{
+		
+		return response()->json($user->site()->first());
+	}
+	
+	public function getManager(User $user)
+	{
+		return response()->json($user->manager()->first());
+	}
+	
+	public function getWorkflow(User $user=null)
+	{
+		return response()->json($this->user->getWorkflowCfg($user)->workflow);
+	}
+	
+	public function tripOfPurpose(User $user)
+	{
+		return response()->json($this->user->purposeCatWithCompany($user));
 	}
 }

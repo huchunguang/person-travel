@@ -9,6 +9,7 @@ use App\Finance_optimization;
 use App\Company_site;
 use App\Company;
 use Illuminate\Database\Eloquent\Collection;
+use App\User;
 class AdminController extends Controller
 {
 	/**
@@ -85,6 +86,19 @@ class AdminController extends Controller
 		$company_id=$company_id?:$this->system->CompanyID;
 		$return = Company::find($company_id)->department()->where(['SiteID'=>$site_id])->get();
 		return $return;
+	}
+	public function getDepByUserId(User $user)
+	{
+		$site_id=$user->SiteID;
+		$company_id=$user->CompanyID;
+		$return =$this->getDepByCompanySite($site_id,$company_id)->each(function($item,$key)use($user){
+			if ($item['DepartmentID']==$user->DepartmentID){
+				$item['selected']=1;
+			}
+		});
+		
+// 		dd($return);
+		return response()->json($return);
 	}
 	
 }

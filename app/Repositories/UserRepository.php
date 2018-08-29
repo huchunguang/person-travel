@@ -15,11 +15,12 @@ class UserRepository extends Repository
 		return 'App\User';
 	}
 	
-	public function purposeCatWithCompany() 
+	public function purposeCatWithCompany($user=null) 
 	{
+		$user = $user?$user:Auth::user();
 		$filter=[
-			'site_id'=>Auth::user()->SiteID,
-			'company_id'=>Auth::user()->CompanyID
+			'site_id'=>$user->SiteID,
+			'company_id'=>$user->CompanyID
 		];
 		return Trip_purpose::where($filter)->get();
 	}

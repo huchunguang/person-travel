@@ -21,7 +21,8 @@
 										@endif
 										<div class="portlet-title">
 											<div class="caption">
-												<i class="icon-bubble"></i> <span class="caption-subject bold uppercase">{{ $trip->status }} @if($trip->is_depart_approved && $trip->department_approver == Auth::user()->UserID) TO {{$trip->overseasApprover()->first()['FirstName']}} @endif</span>
+												<i class="icon-bubble"></i>
+												<span class="caption-subject bold uppercase">{{ $trip->status }} @if($trip->is_depart_approved && $trip->department_approver == Auth::user()->UserID) TO {{$trip->overseasApprover()->first()['FirstName']}} @endif</span>
 											</div>
 										</div>
 										<div class="portlet-body form">
@@ -32,16 +33,14 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label">Name Of Traveller</label>
-															<input disabled type="text" class="form-control" placeholder="{{ $userObjMdl->FirstName }} {{ $userObjMdl->LastName }}-{{ $userObjMdl->UserName }}">
+															<label class="control-label">Applicant</label>
+															<input disabled type="text" class="form-control" placeholder="{{ $applicantUser->FirstName }} {{ $applicantUser->LastName }}-{{ $applicantUser->UserName }}">
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label">Site</label>
-															<select id="Site" class="form-control input-sm select2" disabled>
-																<option>{{ $userObjMdl->site()->first()['Site'] }}</option>
-															</select>
+															<label class="control-label">Request For</label>
+															<input disabled type="text" class="form-control" placeholder="{{ $userObjMdl->FirstName }} {{ $userObjMdl->LastName }}-{{ $userObjMdl->UserName }}">
 														</div>
 													</div>
 												</div>
@@ -57,17 +56,17 @@
 														</div>
 													</div>
 													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Department</label>
-															<select id="department_id" name="department_id" class="select2 form-control" disabled>
-																<option value="{{$department}}" selected>{{$department}}</option>
+													<div class="form-group">
+															<label class="control-label">Site</label>
+															<select id="Site" class="form-control input-sm select2" disabled>
+																<option>{{ $userObjMdl->site()->first()['Site'] }}</option>
 															</select>
 														</div>
+														
 													</div>
 												</div>
 												<div class="row">
 													<div class="col-md-6">
-														
 														<div class="form-group">
 															<p style="margin-bottom: 0px;">
 																<label class="control-label">Period of Travel From</label>
@@ -81,54 +80,35 @@
 																<i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; bottom: 10px; right: 10px; top: auto; cursor: pointer;"></i>
 															</div>
 														</div>
-													
 													</div>
 													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Cost Center</label>
-															<select name="cost_center_id" class="form-control input-sm select2" disabled>
-																<option value="1">{{$costCenterCode}}</option>
+													<div class="form-group">
+															<label class="control-label">Department</label>
+															<select id="department_id" name="department_id" class="select2 form-control" disabled>
+																<option value="{{$department}}" selected>{{$department}}</option>
 															</select>
 														</div>
+														
 													</div>
 												</div>
 												<div class="row">
 													<div class="col-md-6">
-														
 														<div class="form-group">
 															<label class="control-label">Project Code</label>
 															<select id="project_code" disabled name="project_code" class="form-control input-sm select2">
 																<option value="{{$trip->project_code}}">{{$trip->wbsCode()->first()['wbs_code']}}</option>
 															</select>
 														</div>
-													
 													</div>
 													<div class="col-md-6">
-														
-														<div class="form-group">
-															<label class="control-label">Overseas Approver</label>
-															<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
-																@if($overseas_approver)
-																<option value="{{$overseas_approver->UserID}}">{{ $overseas_approver->LastName }} {{ $overseas_approver->FirstName }}</option>
-																@endif
+													<div class="form-group">
+															<label class="control-label">Cost Center</label>
+															<select name="cost_center_id" class="form-control input-sm select2" disabled>
+																<option value="1">{{$costCenterCode}}</option>
 															</select>
-															@if($trip->is_depart_approved=='1')
-																<div style="background-color: #32c5d2; margin-top: 2px;">
-																@if($trip->status=='pending')
-																<span class="glyphicon glyphicon-hand-right" style="color: green"></span>
-																@elseif($trip->status=='approved')
-																<span class="fa fa-check-circle-o" style="color: green"></span>
-																@elseif($trip->status=='rejected')
-																<span class="glyphicon glyphicon-thumbs-down" style="color: red"></span>
-																@elseif($trip->status=='cancelled')
-																<span class="fa fa-exclamation-triangle" style="color: black"></span>
-																@elseif($trip->status=='partly-approved')
-																<span class="glyphicon glyphicon-check" style="color: yellow"></span>
-																@endif {{ ucfirst($trip->status)}} by: @if($trip->status != 'cancelled') {{ ucfirst($overseas_approver->LastName) }} {{ $overseas_approver->FirstName }} @else {{ ucfirst($userObjMdl->FirstName) }} {{ ucfirst($userObjMdl->LastName) }} @endif on {{$trip->updated_at}}
-															</div>
-															@endif
 														</div>
-													
+														
+														
 													</div>
 												</div>
 												<div class="row">
@@ -149,17 +129,35 @@
 																<span class="fa fa-exclamation-triangle" style="color: black"></span>
 																@elseif($trip->status=='partly-approved')
 																<span class="glyphicon glyphicon-check" style="color: yellow"></span>
-																@endif 
-																@if($trip->is_depart_approved=='1')
-																	Approved
-																@else
-																{{ ucfirst($trip->status)}}
-																@endif 
-																by: @if($trip->status != 'cancelled') {{ ucfirst($approver->LastName) }} {{ $approver->FirstName }} @else {{ ucfirst($userObjMdl->FirstName) }} {{ ucfirst($userObjMdl->LastName) }} @endif on {{$trip->updated_at}}
+																@endif @if($trip->is_depart_approved=='1') Approved @else {{ ucfirst($trip->status)}} @endif by: @if($trip->status != 'cancelled') {{ ucfirst($approver->LastName) }} {{ $approver->FirstName }} @else {{ ucfirst($userObjMdl->FirstName) }} {{ ucfirst($userObjMdl->LastName) }} @endif on {{$trip->updated_at}}
 															</div>
 														</div>
 													</div>
-													<div class="col-md-6"></div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label">Overseas Approver</label>
+															<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
+																@if($overseas_approver)
+																<option value="{{$overseas_approver->UserID}}">{{ $overseas_approver->LastName }} {{ $overseas_approver->FirstName }}</option>
+																@endif
+															</select>
+															@if($trip->is_depart_approved=='1')
+															<div style="background-color: #32c5d2; margin-top: 2px;">
+																@if($trip->status=='pending')
+																<span class="glyphicon glyphicon-hand-right" style="color: green"></span>
+																@elseif($trip->status=='approved')
+																<span class="fa fa-check-circle-o" style="color: green"></span>
+																@elseif($trip->status=='rejected')
+																<span class="glyphicon glyphicon-thumbs-down" style="color: red"></span>
+																@elseif($trip->status=='cancelled')
+																<span class="fa fa-exclamation-triangle" style="color: black"></span>
+																@elseif($trip->status=='partly-approved')
+																<span class="glyphicon glyphicon-check" style="color: yellow"></span>
+																@endif {{ ucfirst($trip->status)}} by: @if($trip->status != 'cancelled') {{ ucfirst($overseas_approver->LastName) }} {{ $overseas_approver->FirstName }} @else {{ ucfirst($userObjMdl->FirstName) }} {{ ucfirst($userObjMdl->LastName) }} @endif on {{$trip->updated_at}}
+															</div>
+															@endif
+														</div>
+													</div>
 												</div>
 												<div class="row">
 													<div class="col-md-12 ">
@@ -192,15 +190,25 @@
 												<div class="row">
 													<div class="col-md-12">
 														<ul id="myTab" class="nav nav-tabs">
-															<li class="active"><a href="#home" data-toggle="tab">FLIGHT ITINERARY</a></li>
-															<li><a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a></li>
-															<li><a href="#teana" data-toggle="tab">HOTEL ACCOMMODATION</a></li>
-															<li><a href="#camry" data-toggle="tab">TRAVEL INSURANCE</a></li>
+															<li class="active">
+																<a href="#home" data-toggle="tab">FLIGHT ITINERARY</a>
+															</li>
+															<li>
+																<a href="#ios" data-toggle="tab">ESTIMATED EXPENSES</a>
+															</li>
+															<li>
+																<a href="#teana" data-toggle="tab">HOTEL ACCOMMODATION</a>
+															</li>
+															<li>
+																<a href="#camry" data-toggle="tab">TRAVEL INSURANCE</a>
+															</li>
 														</ul>
 														<div id="myTabContent" class="tab-content" style="border: 2px #dddddd solid;">
 															<div class="tab-pane fade in active" id="home">
 																<ul class="list-group">
-																	<li class="list-group-item">Notification To Be Sent General Affairs?: <label class="">
+																	<li class="list-group-item">
+																		Notification To Be Sent General Affairs?:
+																		<label class="">
 																			<div class="iradio_minimal-grey" style="position: relative;">
 																				@if($trip->flight_itinerary_prefer['is_sent_affairs']=='1')
 																				<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="1" checked disabled>
@@ -210,7 +218,8 @@
 																				<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
 																			</div>
 																			YES
-																		</label> <label class="">
+																		</label>
+																		<label class="">
 																			<div class="iradio_minimal-grey" style="position: relative;">
 																				@if($trip->flight_itinerary_prefer['is_sent_affairs']=='0')
 																				<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="0" checked>
@@ -221,7 +230,8 @@
 																			</div>
 																			NO
 																		</label>
-																	</li> @if($cc)
+																	</li>
+																	@if($cc)
 																	<li class="list-group-item">
 																		<div class="row">
 																			<div class="col-md-6">
@@ -235,7 +245,8 @@
 																				</div>
 																			</div>
 																		</div>
-																	</li> @endif
+																	</li>
+																	@endif
 																</ul>
 																<table id="flightLtinerary" class="table table-bordered table-striped table-condensed flip-content">
 																	<thead>
@@ -316,7 +327,8 @@
 																				</div>
 																			</div>
 																		</div>
-																	</li> @endif
+																	</li>
+																	@endif
 																	<li class="list-group-item">
 																		<div class="form-group">
 																			<strong>User Preference:</strong>
@@ -533,11 +545,11 @@
 												</div>
 											</div>
 											<div class="row form-actions text-right">
-												@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
+												@if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
 												<button type="button" accesskey="I" onclick="window.location.href='/etravel/trip/nationalEdit/{{$trip->trip_id}}'" class="btn yellow-gold leave-type-button">
 													<i class="fa fa-pencil"></i> Ed<u>i</u>t
 												</button>
-												@endif @if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved'))
+												@endif @if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved'))
 												<button type="button" accesskey="C" onclick="window.location.href='/etravel/trip/nationalCancel/{{$trip->trip_id}}'" class="btn default">
 													<i class="fa fa-share"></i> <u>C</u>ancel
 												</button>

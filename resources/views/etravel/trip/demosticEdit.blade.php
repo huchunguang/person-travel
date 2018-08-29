@@ -38,17 +38,15 @@
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="control-label">Name Of Traveller</label>
-														<input disabled type="text" class="form-control" placeholder="{{ $userObjMdl->FirstName }} {{ $userObjMdl->LastName }}-{{ $userObjMdl->UserName }}">
+														<label class="control-label">Applicant</label>
+														<input disabled type="text" class="form-control" placeholder="{{ $applicantUser->FirstName }} {{ $applicantUser->LastName }}-{{ $applicantUser->UserName }}">
 													</div>
 												</div>
 												<!--/span-->
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="control-label">Site</label>
-														<select id="Site" name="Site" class="select2 form-control" disabled>
-															<option value="0">{{ $userObjMdl->site()->first()['Site'] }}</option>
-														</select>
+														<label class="control-label">Request For</label>
+														<input disabled type="text" class="form-control" placeholder="{{ $userObjMdl->FirstName }} {{ $userObjMdl->LastName }}-{{ $userObjMdl->UserName }}">
 													</div>
 												</div>
 												<!--/span-->
@@ -56,12 +54,9 @@
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="control-label">Cost Center</label>
-														<select name="cost_center_id" class="select2 form-control">
-															@foreach($costCenters as $costItem)
-															<option value="{{ $costItem['CostCenterID'] }}">{{ $costItem['CostCenterCode'] }}</option>
-															@endforeach
-															<option value="{{$costCenterCode}}">{{ $costCenterCode }}</option>
+														<label class="control-label">Site</label>
+														<select id="Site" name="Site" class="select2 form-control" disabled>
+															<option value="0">{{ $userObjMdl->site()->first()['Site'] }}</option>
 														</select>
 													</div>
 												</div>
@@ -87,17 +82,17 @@
 															<label class="control-label">Period of Travel From</label>
 														</p>
 														<div class="col-md-6" style="margin-left: 0px; padding: 0px;">
-												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" >
-													<input type="text" class="form-control" name="daterange_from" value="{{$trip->daterange_from}}" readonly>
-													<span class="input-group-btn">
-														<button class="btn default" type="button">
-															<i class="fa fa-calendar"></i>
-														</button>
-													</span>
-												</div>
-											</div>
+															<div class="input-group date date-picker" data-date-format="mm/dd/yyyy">
+																<input type="text" class="form-control" name="daterange_from" value="{{$trip->daterange_from}}" readonly>
+																<span class="input-group-btn">
+																	<button class="btn default" type="button">
+																		<i class="fa fa-calendar"></i>
+																	</button>
+																</span>
+															</div>
+														</div>
 														<div class="col-md-6" style="padding-right: 0px;">
-															<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" >
+															<div class="input-group date date-picker" data-date-format="mm/dd/yyyy">
 																<input type="text" class="form-control" name="daterange_to" value="{{$trip->daterange_to}}" readonly>
 																<span class="input-group-btn">
 																	<button class="btn default" type="button">
@@ -110,10 +105,23 @@
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
+														<label class="control-label">Cost Center</label>
+														<select name="cost_center_id" class="select2 form-control">
+															@foreach($costCenters as $costItem)
+															<option value="{{ $costItem['CostCenterID'] }}">{{ $costItem['CostCenterCode'] }}</option>
+															@endforeach
+															<option value="{{$costCenterCode}}">{{ $costCenterCode }}</option>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
 														<label class="control-label">Project Code</label>
 														<select id="project_code" name="project_code" class="form-control input-sm select2">
 															<option disabled selected value></option>
-															@foreach ($wbscodeList as $item) @if($item['wbs_id']==old('project_code') || $item['wbs_id']==$trip->project_code)
+															@foreach ($wbsList as $item) @if($item['wbs_id']==old('project_code') || $item['wbs_id']==$trip->project_code)
 															<option value="{{$item['wbs_id']}}" selected="selected">{{$item['wbs_code']}}</option>
 															@else
 															<option value="{{$item['wbs_id']}}">{{$item['wbs_code']}}</option>
@@ -175,14 +183,65 @@
 																</td>
 																<td>
 																	@if(($trip->status == 'pending') || ($trip->status == 'rejected') || ($trip->status == 'partly-approved' && $item->is_approved == '0'))
-																	<div class="input-group">
-																		<input type="text" name="datetime_time[]" class="form-control timepicker timepicker-default time-input" placeholder="" value="{{ $item['datetime_time'] }}">
-																		<span class="input-group-btn">
-																			<button class="btn default" type="button">
-																				<i class="fa fa-clock-o"></i>
-																			</button>
-																		</span>
-																	</div>
+																	<!-- 																	<div class="input-group"> -->
+																	<!-- 																		<input type="text" name="datetime_time[]" class="form-control timepicker timepicker-default time-input" placeholder="" value="{{ $item['datetime_time'] }}"> -->
+																	<!-- 																		<span class="input-group-btn"> -->
+																	<!-- 																			<button class="btn default" type="button"> -->
+																	<!-- 																				<i class="fa fa-clock-o"></i> -->
+																	<!-- 																			</button> -->
+																	<!-- 																		</span> -->
+																	<!-- 																	</div> -->
+																	<select class="form-control select2" id="datetime_time" name="datetime_time[]" style="width: 100%">
+																		<option value="12:00 AM">12:00 AM</option>
+																		<option value="12:30 AM">12:30 AM</option>
+																		<option value="1:00 AM">1:00 AM</option>
+																		<option value="1:30 AM">1:30 AM</option>
+																		<option value="2:00 AM">2:00 AM</option>
+																		<option value="2:30 AM">2:30 AM</option>
+																		<option value="3:00 AM">3:00 AM</option>
+																		<option value="3:30 AM">3:30 AM</option>
+																		<option value="4:00 AM">4:00 AM</option>
+																		<option value="4:30 AM">4:30 AM</option>
+																		<option value="5:00 AM">5:00 AM</option>
+																		<option value="5:30 AM">5:30 AM</option>
+																		<option value="6:00 AM">6:00 AM</option>
+																		<option value="6:30 AM">6:30 AM</option>
+																		<option value="7:00 AM">7:00 AM</option>
+																		<option value="7:30 AM">7:30 AM</option>
+																		<option value="8:00 AM">8:00 AM</option>
+																		<option value="8:30 AM">8:30 AM</option>
+																		<option value="9:00 AM">9:00 AM</option>
+																		<option value="9:30 AM">9:30 AM</option>
+																		<option value="10:00 AM">10:00 AM</option>
+																		<option value="10:30 AM">10:30 AM</option>
+																		<option value="11:00 AM">11:00 AM</option>
+																		<option value="11:30 AM">11:30 AM</option>
+																		<option value="12:00 AM">12:00 PM</option>
+																		<option value="12:30 AM">12:30 PM</option>
+																		<option value="1:00 PM">1:00 PM</option>
+																		<option value="1:30 PM">1:30 PM</option>
+																		<option value="1:30 PM">1:30 PM</option>
+																		<option value="2:00 PM">2:00 PM</option>
+																		<option value="2:30 PM">2:30 PM</option>
+																		<option value="3:00 PM">3:00 PM</option>
+																		<option value="3:30 PM">3:30 PM</option>
+																		<option value="4:00 PM">4:00 PM</option>
+																		<option value="4:30 PM">4:30 PM</option>
+																		<option value="5:00 PM">5:00 PM</option>
+																		<option value="5:30 PM">5:30 PM</option>
+																		<option value="6:00 PM">6:00 PM</option>
+																		<option value="6:30 PM">6:30 PM</option>
+																		<option value="7:00 PM">7:00 PM</option>
+																		<option value="7:30 PM">7:30 PM</option>
+																		<option value="8:00 PM">8:00 PM</option>
+																		<option value="8:30 PM">8:30 PM</option>
+																		<option value="9:00 PM">9:00 PM</option>
+																		<option value="9:30 PM">9:30 PM</option>
+																		<option value="10:00 PM">10:00 PM</option>
+																		<option value="10:30 PM">10:30 PM</option>
+																		<option value="11:00 PM">11:00 PM</option>
+																		<option value="11:30 PM">11:30 PM</option>
+																	</select>
 																	@else {{ $item['datetime_time'] }} @endif
 																</td>
 																<td>
@@ -273,7 +332,7 @@
 												</div>
 											</div>
 										</div>
-										@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
+										@if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
 										<div class="row form-actions text-right">
 											<button type="submit" accesskey="D" class="btn red-mint">
 												<i class="glyphicon glyphicon-new-window"></i> Resubmit

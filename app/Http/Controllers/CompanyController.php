@@ -95,4 +95,10 @@ class CompanyController extends AdminController {
 		});
 		return response()->json($return);
 	}
+	
+	public function getCompanyWbsCode($company_id)
+	{
+		return response()->json($this->system->getWbscodeList($company_id));
+		
+	}
 }

@@ -25,7 +25,7 @@ class StoreNationalTripRequest extends Request {
 			'destination'=>'required|array',
 			'cost_center_id'=>'required|integer',
 			'daterange_from'=>'required|date',
-			'daterange_to'=>'required|date|after:daterange_from',
+// 			'daterange_to'=>'required|date|after:daterange_from',
 			'department_approver'=>'required|integer',
 			'overseas_approver'=>'required_if:workflow,2',
 			'approver_comment'=>'string',

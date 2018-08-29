@@ -37,7 +37,8 @@
 var addnewLineNum = 0;
 function addNewLine(){
 	var datetime_date=$('.modal input[name="datetime_date[]"]').val();
-	var datetime_time=$('.modal input[name="datetime_time[]"]').val();
+	var datetime_time=$('.modal #datetime_time').val();
+//	alert(datetime_time)
 	var location=$('.modal input[name="location[]"]').val();
 	var customer_name=$('.modal input[name="customer_name[]"]').val();
 	var contact_name=$('.modal input[name="contact_name[]"]').val();
@@ -101,7 +102,7 @@ function editNewLine()
 	var entertain_detail=$('#tr_'+id+' input[name="entertain_detail[]"]').val();
 	
 	$('.modal input[name="datetime_date[]"]').val(datetime_date);
-	$('.modal input[name="datetime_time[]"]').val(datetime_time);
+	$('.modal #datetime_time').val(datetime_time);
 	$('.modal input[name="location[]"]').val(location);
 	$('.modal input[name="customer_name[]"]').val(customer_name);
 	$('.modal input[name="contact_name[]"]').val(contact_name);

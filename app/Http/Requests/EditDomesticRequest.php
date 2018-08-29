@@ -14,7 +14,11 @@ class EditDomesticRequest extends Request {
 	public function authorize()
 	{
 		$trip = $this->route('trip');
-		return Trip::where('trip_id',$trip->trip_id)->where('user_id',Auth::user()->UserID)->exists();
+		$user_id=Auth::user()->UserID;
+		return Trip::where('trip_id',$trip->trip_id)->where(function($query)use($user_id){
+			$query->where(['user_id'=>$user_id])
+			->orWhere(['applicant_id'=>$user_id]);
+		})->exists();
 	}
 
 	/**

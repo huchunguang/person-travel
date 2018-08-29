@@ -75,11 +75,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasOne('App\Company', 'CompanyID', 'CompanyID');
 	}
 
-	public static function getUserProfile($request=null)
+	public static function getUserProfile($request=null,$user=null)
 	{
 		$approvers = $departmentFilter = [ ];
-		
-		$userProfile = User::with('costcenter', 'department', 'site')->where('UserName', Auth::user()->UserName)->first();
+		$user=$user?$user:Auth::user();
+// 		dd($user->toArray());
+		$userProfile = User::with('costcenter', 'department', 'site')->where('UserName', $user->UserName)->first();
 		$departmentFilter['SiteID'] = $userProfile['SiteID'];
 		if ($request instanceof Request){
 			$departmentFilter['DepartmentID'] = $request->input('department_id',$userProfile['DepartmentID']);
@@ -90,7 +91,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		}
 		
 		$departmentFilter['CompanyID'] = $userProfile['CompanyID'];
-		$approvers = self::getDepApprover($departmentFilter);
+// 		dd($departmentFilter);
+		$approvers = self::getDepApprover($departmentFilter,$user);
 		
 		return [ 
 			

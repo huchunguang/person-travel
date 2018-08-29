@@ -1,43 +1,40 @@
 <?php
 namespace App\Http\Controllers\Etravel;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\User;
-use App\Department_approver;
-use App\Trip;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Auth;
+use App\Airline;
+use App\City_airport;
+use App\Contacts\SystemVariable;
 use App\Costcenter;
-use Illuminate\Support\Facades\DB;
-use App\Trip_demostic;
 use App\Country;
-use App\Http\Requests\StoreNationalTripRequest;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\UpdateNationalTripRequest;
-use App\Trip_flight;
-use App\Trip_accomodation;
-use App\Trip_estimate_expense;
-use App\Http\Requests\UpdateDomesticRequest;
+use App\Department;
+use App\Department_approver;
+use App\Events\TripNotify;
+use App\Http\Apis\Classes\EhotelApi;
+use App\Http\Controllers\Etravel\Admin\AdminController;
+use App\Http\Requests\CreateDomesticRequest;
+use App\Http\Requests\CreateNationalRequest;
 use App\Http\Requests\EditDomesticRequest;
 use App\Http\Requests\EditNationalRequest;
+use App\Http\Requests\StoreNationalTripRequest;
 use App\Http\Requests\TripCancelRequest;
 use App\Http\Requests\TripReadRequest;
-use App\Trip_insurance;
-use App\Contacts\SystemVariable;
-use App\Airline;
-use App\Events\TripNotify;
+use App\Http\Requests\UpdateDomesticRequest;
+use App\Http\Requests\UpdateNationalTripRequest;
 use App\Repositories\TripRepository;
-use App\Http\Apis\Classes\EhotelApi;
-use App\Trip_counter;
 use App\Repositories\UserRepository;
-use App\Http\Requests\CreateNationalRequest;
-use App\Http\Requests\CreateDomesticRequest;
-use App\Company_site;
-use App\Http\Controllers\Etravel\Admin\AdminController;
-use App\Department;
-use App\City_airport;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Trip;
+use App\Trip_accomodation;
+use App\Trip_counter;
+use App\Trip_demostic;
+use App\Trip_estimate_expense;
+use App\Trip_flight;
+use App\Trip_insurance;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Storage;
 
 class TripController extends AdminController
 {
@@ -54,9 +51,7 @@ class TripController extends AdminController
      */
 	public function create(CreateNationalRequest $requset) 
     {
-    	//CreateNational
-//     	dd($this->getDepByCompanySite()->toArray());
-		$userList = User::all(['Email','FirstName','LastName']);
+		$userList = User::all(['Email','FirstName','LastName','UserID']);
 		$userProfile = User::getUserProfile();
 		$countryList = Country::orderBy('Country')->select([ 
 			
@@ -88,10 +83,12 @@ class TripController extends AdminController
 	public function demosticCreate(CreateDomesticRequest $request) 
     {
 		$userProfile = User::getUserProfile();
+		$userList = User::all(['Email','FirstName','LastName','UserID']);
 		$purposeCategory = $this->user->purposeCatWithCompany();
 		return view('/etravel/trip/demosticCreate')->with('userProfile', $userProfile['userProfile'])
 			->with('approvers', $userProfile['approvers'])
 			->with('purposeCats', $purposeCategory)
+			->with('userList', $userList)
 			->with('departmentList',$this->getDepByCompanySite())
 			->with('costCenters', Costcenter::getAvailableCenters());
 	}
@@ -109,7 +106,11 @@ class TripController extends AdminController
    	 	if ($status){
    	 		$filter['status']=$status;
    	 	}
-   	 	$tripList = $user->tripList()->where($filter)->orderBy('created_at','DESC')->paginate(PAGE_SIZE);
+   	 	$tripList = Trip::where($filter)->where(function($query)use($user){
+   	 		$query->where(['user_id'=>$user->UserID])
+   	 		->orWhere(['applicant_id'=>$user->UserID]);
+   	 	})->orderBy('created_at','DESC')->paginate(PAGE_SIZE);
+//    	 	dd($tripList->toArray());
 		return view('etravel/trip/index', [ 
 			'status'=>$status?$status:'all',
 			'tripList' => $tripList,
@@ -132,7 +133,8 @@ class TripController extends AdminController
 			'approver_comment',
 			'project_code'
 		]);
-		$tripData = array_merge($tripData, ['user_id' => Auth::user()->UserID,'trip_type' => 2]);
+		$user_id = $request->input('user_id',Auth::user()->UserID);
+		$tripData = array_merge($tripData, ['applicant_id'=>Auth::user()->UserID,'user_id' => $user_id,'trip_type' => 2]);
 		$demosticData = array_bound_key($request->only([ 
 			
 			'datetime_date',
@@ -146,12 +148,14 @@ class TripController extends AdminController
 			'entertain_cost',
 			'entertain_detail',
 		]));
-		DB::transaction(function()use($tripData,$demosticData,$request){
+		$user=User::find($user_id);
+		DB::transaction(function()use($tripData,$demosticData,$request,$user){
 			$tripData['department_id']=$request->input('department_id',$this->system->DepartmentID);
-			$tripData['country_id']=$this->system->CountryAssignedID;
-			$tripData['site_id']=$this->system->SiteID;
-			$tripData['company_id']=$this->system->CompanyID;
+			$tripData['country_id']=$user->CountryAssignedID;
+			$tripData['site_id']=$user->SiteID;
+			$tripData['company_id']=$user->CompanyID;
 			$tripData['reference_id']=Trip_counter::generateRefId();
+// 			dd($tripData);
 			$tripObjMdl = Trip::create($tripData);
 			foreach ($demosticData as $item){
 				$tripObjMdl->demostic()->create($item);
@@ -179,11 +183,14 @@ class TripController extends AdminController
     			$trip->trip_type=1;
     			$trip->reference_id=Trip_counter::generateRefId();
     			$trip->cc=$request->input('cc');
-    			$trip->user_id=Auth::user()->UserID;
+    			$trip->applicant_id=Auth::user()->UserID;
+    			$trip->user_id=$request->input('user_id',Auth::user()->UserID);
     			$trip->department_id=$request->input('department_id',$this->system->DepartmentID);
-    			$trip->country_id=$this->system->CountryAssignedID;
-    			$trip->site_id=$this->system->SiteID;
-    			$trip->company_id=$this->system->CompanyID;
+    			$user=User::find($trip->user_id);
+//     			dd($user->CountryAssignedID);
+    			$trip->country_id=$user->CountryAssignedID;
+    			$trip->site_id=$user->SiteID;
+    			$trip->company_id=$user->CompanyID;
     			$trip->project_code=$request->input('project_code');
     			$trip->destination_id=$request->input('destination');
     			$trip->cost_center_id=$request->input('cost_center_id');
@@ -273,6 +280,7 @@ class TripController extends AdminController
 	 */
 	public function tripDemosticDetails(TripReadRequest $request, Trip $trip)
     {
+    	$applicantUser = User::where('UserID', $trip->applicant_id)->firstOrFail();
 		$userObjMdl = User::where('UserID', $trip->user_id)->firstOrFail();
 // 		dd($trip->department_approver);
 		$approver = User::find($trip->department_approver);
@@ -284,6 +292,7 @@ class TripController extends AdminController
 // 				dd($userObjMdl);
 		return view('/etravel/trip/tripDemosticDetail', [
 			'userObjMdl'=>$userObjMdl,
+			'applicantUser'=>$applicantUser,
 			'trip' => $trip,
 			'approver'=>$approver,
 			'approvedCnt'=>$approvedCnt,
@@ -300,6 +309,7 @@ class TripController extends AdminController
 	public function tripNationalDetails(TripReadRequest $request,Trip $trip) 
 	{
 		$overseas_approver=[];
+		$applicantUser = User::where('UserID', $trip->applicant_id)->firstOrFail();
 		$userObjMdl = User::where('UserID',$trip->user_id)->firstOrFail();
 		if ($trip->overseas_approver){
 			$overseas_approver=User::find($trip->overseas_approver);
@@ -316,6 +326,7 @@ class TripController extends AdminController
 // 		dd($trip->purpose_file);
 		return view('/etravel/trip/tripNationalDetail', [
 			'userObjMdl' => $userObjMdl,
+			'applicantUser'=>$applicantUser,
 			'trip' => $trip,
 			'approver' => $approver,
 			'overseas_approver' => $overseas_approver,
@@ -340,18 +351,21 @@ class TripController extends AdminController
 	public function demosticEdit(EditDomesticRequest $request, Trip $trip)
 	{
 		$userObjMdl = User::where('UserID', $trip->user_id)->firstOrFail();
+		$applicantUser = User::where('UserID', $trip->applicant_id)->firstOrFail();
 		$approver = User::find($trip->department_approver);
 		$demosticInfo = $trip->demostic()->get();
-		
+// 		dd($trip->project_code);
 		return view('/etravel/trip/demosticEdit', [ 
 			
 			'userObjMdl' => $userObjMdl,
+			'applicantUser'=>$applicantUser,
 			'trip' => $trip,
-			'purposeCats' => $this->user->purposeCatWithCompany(),
+			'purposeCats' => $this->user->purposeCatWithCompany($trip->user()->first()),
 			'approver'=>$approver,
 			'demosticInfo' => $demosticInfo,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
 			'departmentList'=> $this->getDepByCompanySite(),
+			'wbsList'=>$this->system->getWbscodeList($trip->company_id),
 			'costCenters'=>Costcenter::getAvailableCenters(),
 		]);
 	}
@@ -364,8 +378,9 @@ class TripController extends AdminController
 	public function nationalEdit(EditNationalRequest $request,Trip $trip)
 	{
 		$overseas_approver=[];
+		$applicantUser = User::where('UserID', $trip->applicant_id)->firstOrFail();
 		$userList = User::all(['Email','FirstName','LastName']);
-		$userProfile=User::getUserProfile($trip->department_id);
+		$userProfile=User::getUserProfile($trip->department_id,User::find($trip->user_id));
 // 		dd($userProfile);
 		$countryList = Country::orderBy('Country')->select(['CountryID','Country','IsAsia'])->get();
 		$purposeCategory = $this->user->purposeCatWithCompany();
@@ -381,15 +396,15 @@ class TripController extends AdminController
 			->keys()
 			->toArray();
 		$rep_office = User::find($trip->hotel_prefer['rep_office']);
-
 		$hotelList = new EhotelApi();
 		$hotelList=$hotelList->getHotelList();
 		return view('/etravel/trip/nationalEdit',[
 			'userObjMdl'=>$userProfile['userProfile'],
+			'applicantUser'=>$applicantUser,
 			'overseas_approver'=>$overseas_approver,
 			'approvers'=>$userProfile['approvers'],
 			'purposeCats'=>$purposeCategory,
-			'costCenters'=>Costcenter::getAvailableCenters(),
+			'costCenters'=>Costcenter::getAvailableCenters($trip->company_id),
 			'countryList'=>$countryList,
 			'approvers'=>$userProfile['approvers'],
 			'approver'=>$approver,
@@ -405,8 +420,9 @@ class TripController extends AdminController
 			'hotelList'=>$hotelList,
 			'cityAirportList'=>City_airport::all(),
 			'airlineList' => Airline::all(),
-			'departmentList'=> $this->getDepByCompanySite(),
+			'departmentList'=> $this->getDepByCompanySite($trip->site_id,$trip->company_id),
 			'userList'=>$userList,
+			'wbsList'=>$this->system->getWbscodeList($trip->company_id),
 		]);
 	}
 	/**
@@ -474,7 +490,7 @@ class TripController extends AdminController
 // 		dd($request->input('department_id'));
 		DB::beginTransaction();
 		try {
-			$trip->user_id = Auth::user()->UserID;
+// 			$trip->user_id = Auth::user()->UserID;
 			$trip->status = $request->input('status') == 'rejected' ? 'pending' : $request->input('status');
 			$trip->destination_id = $request->input('destination');
 			$trip->department_id= $request->input('department_id');

@@ -146,17 +146,18 @@ class ApproverController extends Controller {
 	 * @param ApproverRepository $approver
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function getOverseasApprover(Request $request,ApproverRepository $approver)
+	public function getOverseasApprover(User $user,Request $request,ApproverRepository $approver)
 	{
-		$countryId = Auth::user()->CountryAssignedID;
+		$countryId = $user->CountryAssignedID;
+// 		dd($countryId);
 		$generalManager = $approver->getGeneralManagerByCountryId((array) $countryId);
 		return response()->json($generalManager);
 	}
 	
 	
-	public function getApproverByFilter(Request $request,ApproverRepository $approver)
+	public function getApproverByFilter(User $user,Request $request,ApproverRepository $approver)
 	{
-		$depApprover =User::getUserProfile($request);
+		$depApprover =User::getUserProfile($request,$user);
 		if(!empty($depApprover['approvers'])){
 			$depApprover=$depApprover['approvers'];
 // 			dd($depApprover);

@@ -18,7 +18,6 @@
 						<form action="/etravel/trip/storeNational" method="post" class="horizontal-form" enctype="multipart/form-data" id="nationTripCreate">
 							<input type="hidden" name="_token" value="{{csrf_token()}}" />
 							<input type="hidden" name="workflow" value="{{$workflow}}" />
-							
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
@@ -31,15 +30,21 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">Name Of Traveller</label>
+											<label class="control-label">Applicant</label>
 											<input type="text" class="form-control" placeholder="{{ $userProfile['FirstName'] }} {{ $userProfile['LastName'] }}-{{ $userProfile['UserName'] }}" disabled>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">Site</label>
-											<select id="Site" class="form-control input-sm select2" disabled>
-												<option>{{ $userProfile['site']['Site']}}</option>
+											<label class="control-label">Request For</label>
+											<select id="user_id" name="user_id" class="form-control select2">
+												@foreach($userList as $user)
+												@if($user['UserID']==Auth::user()->UserID)
+												<option value="{{$user['UserID']}}" selected>{{$user['LastName']}} {{$user['FirstName']}}-{{ $userProfile['UserName'] }}</option>
+												@else
+												<option value="{{$user['UserID']}}">{{$user['LastName']}} {{$user['FirstName']}}-{{ $userProfile['UserName'] }}</option>
+												@endif
+												@endforeach
 											</select>
 										</div>
 									</div>
@@ -56,16 +61,15 @@
 										</div>
 									</div>
 									<div class="col-md-6">
+									
 										<div class="form-group">
-											<label class="control-label">Department</label>
-											<select id="department_id" name="department_id" class="select2 form-control">
-												@foreach($departmentList as $dep) @if($dep['DepartmentID']==Auth::user()->DepartmentID)
-												<option value="{{$dep['DepartmentID']}}" selected>{{$dep['Department'] }}</option>
-												@else
-												<option value="{{$dep['DepartmentID']}}">{{$dep['Department'] }}</option>
-												@endif @endforeach
+											<label class="control-label">Site</label>
+											<select id="Site" class="form-control input-sm select2" disabled>
+												<option>{{ $userProfile['site']['Site']}}</option>
 											</select>
 										</div>
+									
+										
 									</div>
 								</div>
 								<div class="row">
@@ -75,7 +79,7 @@
 												<label class="control-label">Period of Travel From</label>
 											</p>
 											<div class="col-md-6" style="margin-left: 0px; padding: 0px;">
-												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" >
+												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy">
 													<input type="text" class="form-control" name="daterange_from" value="{{old('daterange_from')}}" readonly>
 													<span class="input-group-btn">
 														<button class="btn default" type="button">
@@ -85,8 +89,7 @@
 												</div>
 											</div>
 											<div class="col-md-6" style="padding-right: 0px;">
-											
-												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" >
+												<div class="input-group date date-picker" data-date-format="mm/dd/yyyy">
 													<input type="text" class="form-control" name="daterange_to" value="{{old('daterange_to')}}" readonly>
 													<span class="input-group-btn">
 														<button class="btn default" type="button">
@@ -98,17 +101,17 @@
 										</div>
 									</div>
 									<div class="col-md-6">
-										<div class="form-group">
-											<label class="control-label">Cost Center</label>
-											<select name="cost_center_id" class="form-control input-sm select2" required>
-												@if($costCenters) @foreach($costCenters as $costItem) @if(old('cost_center_id') == $costItem['CostCenterID'] || $costItem['CostCenterID']==$defaultCostCenterID)
-												<option value="{{ $costItem['CostCenterID'] }}" selected="selected">@else
-												
-												
-												<option value="{{ $costItem['CostCenterID'] }}">@endif {{$costItem['CostCenterCode'] }}</option>
-												@endforeach @endif
+									<div class="form-group">
+											<label class="control-label">Department</label>
+											<select id="department_id" name="department_id" class="select2 form-control">
+												@foreach($departmentList as $dep) @if($dep['DepartmentID']==Auth::user()->DepartmentID)
+												<option value="{{$dep['DepartmentID']}}" selected>{{$dep['Department'] }}</option>
+												@else
+												<option value="{{$dep['DepartmentID']}}">{{$dep['Department'] }}</option>
+												@endif @endforeach
 											</select>
 										</div>
+										
 									</div>
 								</div>
 								<div class="row">
@@ -126,11 +129,19 @@
 										</div>
 									</div>
 									<div class="col-md-6">
-										<div class="form-group">
-											<label class="control-label">Overseas Approver</label>
-											<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
+									<div class="form-group">
+											<label class="control-label">Cost Center</label>
+											<select id="cost_center_id" name="cost_center_id" class="form-control input-sm select2" required>
+												@if($costCenters) @foreach($costCenters as $costItem) @if(old('cost_center_id') == $costItem['CostCenterID'] || $costItem['CostCenterID']==$defaultCostCenterID)
+												<option value="{{ $costItem['CostCenterID'] }}" selected="selected">@else
+												
+												
+												<option value="{{ $costItem['CostCenterID'] }}">@endif {{$costItem['CostCenterCode'] }}</option>
+												@endforeach @endif
 											</select>
 										</div>
+										
+										
 									</div>
 								</div>
 								<div class="row">
@@ -153,17 +164,23 @@
 										<div class="form-group">
 											<label class="control-label">Add'l Notification</label>
 											<div class="row" style="background-color: #eef1f5; margin-left: 1px; height: 34px; margin-right: 1px;">
-												<div class="col-md-8" style="margin-top: 10px;">
+												<div class="col-md-10" style="margin-top: 10px;">
 													<span class="icon icon-user-tie"></span>
 													{{ isset($currentUser->manager()->first()->LastName)? $currentUser->manager()->first()->LastName :'' }} {{ isset($currentUser->manager()->first()->FirstName)? $currentUser->manager()->first()->FirstName :'' }}
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-2">
 													<input type="text" class="form-control" disabled style="border: none;" />
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="col-md-6"></div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label">Overseas Approver</label>
+											<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
+											</select>
+										</div>
+									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-12 ">

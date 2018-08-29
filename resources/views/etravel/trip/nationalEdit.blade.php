@@ -34,18 +34,14 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label">Name Of Traveller</label>
+															<label class="control-label">Applicant</label>
+															<input disabled type="text" class="form-control" placeholder="{{ $applicantUser->FirstName }} {{ $applicantUser->LastName }}-{{ $applicantUser->UserName }}">
+														</div>
+													</div>
+													<div class="col-md-6"><div class="form-group">
+															<label class="control-label">Request For</label>
 															<input disabled type="text" class="form-control" placeholder="{{ $userObjMdl->FirstName }} {{ $userObjMdl->LastName }}-{{ $userObjMdl->UserName }}">
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Site</label>
-															<select id="Site" class="form-control input-sm select2" disabled>
-																<option>{{ $userObjMdl->site()->first()['Site'] }}</option>
-															</select>
-														</div>
-													</div>
+														</div></div>
 												</div>
 												<div class="row">
 													<div class="col-md-6">
@@ -62,16 +58,13 @@
 														</div>
 													</div>
 													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Department</label>
-															<select id="department_id" name="department_id" class="form-control">
-																@foreach($departmentList as $dep) @if($dep['DepartmentID']==$trip->department_id)
-																<option value="{{$dep['DepartmentID']}}" selected>{{$dep['Department'] }}</option>
-																@else
-																<option value="{{$dep['DepartmentID']}}">{{$dep['Department'] }}</option>
-																@endif @endforeach
+													<div class="form-group">
+															<label class="control-label">Site</label>
+															<select id="Site" class="form-control input-sm select2" disabled>
+																<option>{{ $userObjMdl->site()->first()['Site'] }}</option>
 															</select>
 														</div>
+														
 													</div>
 												</div>
 												<div class="row">
@@ -81,7 +74,7 @@
 																<label class="control-label">Period of Travel From</label>
 															</p>
 															<div class="col-md-6" style="margin-left: 0px; padding: 0px;">
-																<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" >
+																<div class="input-group date date-picker" data-date-format="mm/dd/yyyy">
 																	<input type="text" class="form-control" name="daterange_from" value="{{$trip->daterange_from}}" readonly>
 																	<span class="input-group-btn">
 																		<button class="btn default" type="button">
@@ -91,7 +84,8 @@
 																</div>
 															</div>
 															<div class="col-md-6" style="padding-right: 0px;">
-																<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" >
+															
+																<div class="input-group date date-picker" data-date-format="mm/dd/yyyy">
 																	<input type="text" class="form-control" name="daterange_to" value="{{$trip->daterange_to}}" readonly>
 																	<span class="input-group-btn">
 																		<button class="btn default" type="button">
@@ -103,7 +97,36 @@
 														</div>
 													</div>
 													<div class="col-md-6">
+													<div class="form-group">
+															<label class="control-label">Department</label>
+															<select id="department_id" name="department_id" class="form-control">
+																@foreach($departmentList as $dep) @if($dep['DepartmentID']==$trip->department_id)
+																<option value="{{$dep['DepartmentID']}}" selected>{{$dep['Department'] }}</option>
+																@else
+																<option value="{{$dep['DepartmentID']}}">{{$dep['Department'] }}</option>
+																@endif @endforeach
+															</select>
+														</div>
+														
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
 														<div class="form-group">
+															<label class="control-label">Project Code</label>
+															<select id="project_code" name="project_code" class="form-control input-sm select2">
+																<option disabled selected value></option>
+																@foreach ($wbsList as $item) @if($item['wbs_id']==old('project_code') || $item['wbs_id']==$trip->project_code)
+																<option value="{{$item['wbs_id']}}" selected="selected">{{$item['wbs_code']}}</option>
+																@else
+																<option value="{{$item['wbs_id']}}">{{$item['wbs_code']}}</option>
+																@endif @endforeach
+															</select>
+														</div>
+													</div>
+													
+													<div class="col-md-6">
+													<div class="form-group">
 															<label class="control-label">Cost Center</label>
 															<select name="cost_center_id" class="form-control input-sm select2">
 																@foreach($costCenters as $costItem) @if(old('cost_center_id') == $costItem['CostCenterID'] || $costCenterCode == $costItem['CostCenterID'])
@@ -114,31 +137,7 @@
 																@endforeach
 															</select>
 														</div>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Project Code</label>
-															<select id="project_code" name="project_code" class="form-control input-sm select2">
-																<option disabled selected value></option>
-																@foreach ($wbscodeList as $item) @if($item['wbs_id']==old('project_code') || $item['wbs_id']==$trip->project_code)
-																<option value="{{$item['wbs_id']}}" selected="selected">{{$item['wbs_code']}}</option>
-																@else
-																<option value="{{$item['wbs_id']}}">{{$item['wbs_code']}}</option>
-																@endif @endforeach
-															</select>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label">Overseas Approver</label>
-															<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
-																@if($overseas_approver)
-																<option value="{{$overseas_approver['UserID']}}">{{$overseas_approver->LastName}} {{$overseas_approver->FirstName}}</option>
-																@endif
-															</select>
-														</div>
+														
 													</div>
 												</div>
 												<div class="row">
@@ -155,7 +154,16 @@
 															</select>
 														</div>
 													</div>
-													<div class="col-md-6"></div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label">Overseas Approver</label>
+															<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
+																@if($overseas_approver)
+																<option value="{{$overseas_approver['UserID']}}">{{$overseas_approver->LastName}} {{$overseas_approver->FirstName}}</option>
+																@endif
+															</select>
+														</div>
+													</div>
 												</div>
 												<div class="row">
 													<div class="col-md-12 ">
@@ -656,7 +664,7 @@
 													</div>
 												</div>
 											</div>
-											@if($trip->user_id == Auth::user()->UserID && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
+											@if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
 											<div class="row form-actions text-right">
 												<button type="submit" accesskey="D" class="btn red-mint">
 													<i class="glyphicon glyphicon-new-window"></i> Resubmit

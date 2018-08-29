@@ -51,8 +51,8 @@ class EtravelRoutes
 					$router->put('tripapproval/{trip}','ApproverController@approval');
 					
 					
-					$router->get('approver',['uses'=>'ApproverController@getOverseasApprover','as'=>'overseasApprover']);
-					$router->get('depApprover',['uses'=>'ApproverController@getApproverByFilter','as'=>'departmentApprover']);
+					$router->get('approver/{user}',['uses'=>'ApproverController@getOverseasApprover','as'=>'overseasApprover']);
+					$router->get('depApprover/{user}',['uses'=>'ApproverController@getApproverByFilter','as'=>'departmentApprover']);
 					
 					#Configuration
 					$router->resource('airline', 'AirlineController');
@@ -85,7 +85,23 @@ class EtravelRoutes
 						$router->get('site-companys/{site_id}','CompanyController@getSiteCompanys');
 						
 						$router->get('site-company-departments/{site_id}/{company_id}','DepartmentController@getDepListBySiteIdCpId');
+						#Department
+						$router->get('company-departments/{user}','DepartmentController@getDepByUserId');
+						#CostCenter
+						$router->get('costcenter-list/{user}','CostCenterController@getListByUserId');
+						#User
+						$router->get('userList/{user}','UserController@index');
+						$router->get('userSite/{user}','UserController@userSite');
+						#User Manager
+						$router->get('userManager/{user}','UserController@getManager');
+						#WbsCode
+						$router->get('company-wbscodes/{company_id}','CompanyController@getCompanyWbsCode');
+						#User WorkFlow
+						$router->get('userWorkflow/{user}','UserController@getWorkflow');
+						#User Travel of Purpose
+						$router->get('userTravelOfPurpose/{user}','UserController@tripOfPurpose');
 					});
+					
 						
 						#Download
 						$router->get('download','FileController@download');

@@ -4,11 +4,11 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use App\Site;
 use App\Http\Controllers\Etravel\Admin\AdminController;
+use App\Costcenter;
 use App\User;
 
-class SiteController extends AdminController {
+class CostCenterController extends AdminController {
 
 	/**
 	 * Display a listing of the resource.
@@ -46,9 +46,9 @@ class SiteController extends AdminController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show(Request $request,$id)
+	public function show($id)
 	{
-		return Site::find($id)->toJson();
+		//
 	}
 
 	/**
@@ -83,19 +83,10 @@ class SiteController extends AdminController {
 	{
 		//
 	}
-	public function getAccessDeps(Site $site)
+	
+	public function getListByUserId(User $user)
 	{
-		$companyList = $this->getCompanyListHRSecurity($site->SiteID)->toArray();
-		$companyList=array_pluck($companyList, 'company');
-// 		dd($companyList);		
-		return response()->json($companyList);
+		return response()->json(Costcenter::getAvailableCenters($user->CompanyID));
 	}
-	public function users(Site $site)
-	{
-		return response()->json($site->users()->get(['UserID','FirstName','LastName']));
-	}
-	public function userSite(User $user)
-	{
-		return response()->json($user->site()->first());
-	}
+
 }
