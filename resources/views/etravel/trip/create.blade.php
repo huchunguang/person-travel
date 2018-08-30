@@ -15,7 +15,7 @@
 					</div>
 					<div class="portlet-body form">
 						<!-- BEGIN FORM-->
-						<form action="/etravel/trip/storeNational" method="post" class="horizontal-form" enctype="multipart/form-data" id="nationTripCreate">
+						<form action="{{url('/etravel/trip/storeNational')}}" method="post" enctype="multipart/form-data" id="nationTripCreate" class="horizontal-form">
 							<input type="hidden" name="_token" value="{{csrf_token()}}" />
 							<input type="hidden" name="workflow" value="{{$workflow}}" />
 							<div class="form-body">

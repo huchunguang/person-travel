@@ -8,6 +8,7 @@ use App\Trip_announcement;
 use App\Company;
 use App\Company_site;
 use App\User;
+use App\Trip;
 
 class SystemInfo implements SystemVariable{
 	public $user_id='';
@@ -40,10 +41,10 @@ class SystemInfo implements SystemVariable{
 	{
 		return Auth::user()->CountryAssignedID;
 	}
-	public function getAdminEmail()
+	public function getAdminEmail($trip=null)
 	{
-		
-		$etravelAdmin = Company_site::where('CompanyID',Auth::user()->CompanyID)->where('SiteID',Auth::user()->SiteID)->first();
+		$user=$trip?User::find($trip->user_id):Auth::user();
+		$etravelAdmin = Company_site::where('CompanyID',$user->CompanyID)->where('SiteID',$user->SiteID)->first();
 // 		dd($etravelAdmin->toArray());
 		if ($etravelAdmin){
 			$result = User::find(explode(',', $etravelAdmin->EtravelAdminID));

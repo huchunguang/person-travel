@@ -34,6 +34,7 @@ class EmailTripNotify {
 		$actionType = $event->actionType;
 		$trip = $event->trip;
 		$tripCreater = User::find($trip->user_id);
+		$tripApplicant= User::find($trip->applicant_id);
 		$request = $event->request;
 		if ($trip->trip_type==1){
 			$travelType = 'International';
@@ -80,17 +81,22 @@ class EmailTripNotify {
 					array_push($cc, User::find($trip->department_approver)->Email);
 				}
 			}
-// 			if ($actionType == 'approved' || $actionType == 'submitted') {
-// 				if ($this->system->adminEmail) {
-// 					foreach ($this->system->adminEmail as $emailAddr) {
-// 						if ($emailAddr->Email && $emailAddr->Email != $to && ! in_array($emailAddr->Email, $cc)) {
-// // 							array_push($cc, $emailAddr->Email);
-// 							$message->to('')->cc($cc)->subject("Etravel:".$subject);
+			$res=$this->system->getAdminEmail($trip);
+// 			dd($res);
+			if ($actionType == 'approved' || $actionType == 'submitted') {
+				if ($this->system->adminEmail) {
+					foreach ($this->system->adminEmail as $emailAddr) {
+						if ($emailAddr->Email && $emailAddr->Email != $to && ! in_array($emailAddr->Email, $cc)) {
+// 							array_push($cc, $emailAddr->Email);
+							$message->to('')->cc($cc)->subject("Etravel:".$subject);
 							
-// 						}
-// 					}
-// 				}
-// 			}
+						}
+					}
+				}
+			}
+			if ($trip->applicant_id!=$trip->user_id && !in_array($tripApplicant->Email, $cc)){
+				array_push($cc, $tripApplicant->Email);	
+			} 
 			foreach (['huchunguang123@gmail.com','15152364392@163.com'] as $emailAddr) {
 // 				dd($emailAddr);
 				$message->cc($emailAddr)->subject("Etravel:".$subject);
