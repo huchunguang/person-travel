@@ -35,23 +35,27 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class TripController extends AdminController
 {
-	public function __construct(SystemVariable $system,TripRepository $trip,UserRepository $user) 
+
+	public function __construct(SystemVariable $system, TripRepository $trip, UserRepository $user)
 	{
 		$this->system = $system;
 		$this->trip = $trip;
 		$this->user = $user;
 	}
-    /**
-     * @desc create a international travel request 
-     * @param Request $requset
-     * @return \Illuminate\View\View
-     */
-	public function create(CreateNationalRequest $requset) 
-    {
-		$userList = User::all(['Email','FirstName','LastName','UserID']);
+
+	/**
+	 * create a international travel request
+	 * 
+	 * @param Request $requset        	
+	 * @return \Illuminate\View\View
+	 */
+	public function create(CreateNationalRequest $requset)
+	{
+		$userList = User::all(['Email','FirstName','LastName','UserName','UserID']);
 		$userProfile = User::getUserProfile();
 		$countryList = Country::orderBy('Country')->select([ 
 			
@@ -83,7 +87,7 @@ class TripController extends AdminController
 	public function demosticCreate(CreateDomesticRequest $request) 
     {
 		$userProfile = User::getUserProfile();
-		$userList = User::all(['Email','FirstName','LastName','UserID']);
+		$userList = User::all(['Email','FirstName','LastName','UserName','UserID']);
 		$purposeCategory = $this->user->purposeCatWithCompany();
 		return view('/etravel/trip/demosticCreate')->with('userProfile', $userProfile['userProfile'])
 			->with('approvers', $userProfile['approvers'])
@@ -191,7 +195,8 @@ class TripController extends AdminController
     			$trip->country_id=$user->CountryAssignedID;
     			$trip->site_id=$user->SiteID;
     			$trip->company_id=$user->CompanyID;
-    			$trip->project_code=$request->input('project_code');
+    			$projectCode=$request->input('project_code');
+    			$trip->project_code=$projectCode=='none'?'':$projectCode;
     			$trip->destination_id=$request->input('destination');
     			$trip->cost_center_id=$request->input('cost_center_id');
     			$trip->daterange_from=$request->input('daterange_from');
@@ -493,6 +498,7 @@ class TripController extends AdminController
 // 			$trip->user_id = Auth::user()->UserID;
 			$trip->status = $request->input('status') == 'rejected' ? 'pending' : $request->input('status');
 			$trip->destination_id = $request->input('destination');
+			$trip->cc=$request->input('cc');
 			$trip->department_id= $request->input('department_id');
 			$trip->cost_center_id = $request->input('cost_center_id');
 			$trip->daterange_from = $request->input('daterange_from');
@@ -624,4 +630,19 @@ class TripController extends AdminController
 		return redirect('/etravel/tripnationallist/' . $trip->trip_id);
 	}
 	
+	/**
+	 * @desc setting incoming trip notification's switch for user
+	 * @param Request $request
+	 */
+	public function notifySettings(Request $request)
+	{
+		$switch=$request->input('switch');
+		if ($switch=='1'){
+			Auth::user()->update(['is_notify_trip'=>1]);
+		}else{
+			Auth::user()->update(['is_notify_trip'=>0]);
+			
+		}
+		return response()->json(['res_info'=>['code'=>'100000','msg'=>'correct']]);
+	}
 }

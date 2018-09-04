@@ -39,7 +39,7 @@
 												@foreach($userList as $user) @if($user['UserID']==Auth::user()->UserID)
 												<option value="{{$user['UserID']}}" selected>{{$user['LastName']}} {{$user['FirstName']}}-{{ $userProfile['UserName'] }}</option>
 												@else
-												<option value="{{$user['UserID']}}">{{$user['LastName']}} {{$user['FirstName']}}-{{ $userProfile['UserName'] }}</option>
+												<option value="{{$user['UserID']}}">{{$user['LastName']}} {{$user['FirstName']}}-{{ $user['UserName'] }}</option>
 												@endif @endforeach
 											</select>
 										</div>

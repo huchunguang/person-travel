@@ -99,7 +99,7 @@ $('#user_id').on('change',function(){
 		var company_id=data.CompanyID;
 		$.get('/company-wbscodes/'+company_id,function(data){
 
-			var wbsCodeOptions='';
+			var wbsCodeOptions='<option value="none" selected></option>';
 			$.each(data,function(ind,val){
 				wbsCodeOptions+='<option value="'+val.wbs_id+'">'+val.wbs_code+'</option>';
 			});
@@ -150,6 +150,9 @@ var FormValidation = function () {
                     select_multi: {
                         maxlength: jQuery.validator.format("Max {0} items allowed for selection"),
                         minlength: jQuery.validator.format("At least {0} items must be selected")
+                    },
+                    purpose_desc:{
+                    	required: jQuery.validator.format("Please fill-in the purpose field"),
                     }
                 },
                 rules: {
@@ -162,6 +165,7 @@ var FormValidation = function () {
                         required: true
                     },
                     purpose_desc: {
+                    	required: true,
                     	maxlength:255
                     },
 //                    extra_comment: {

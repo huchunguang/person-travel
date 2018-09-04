@@ -40,9 +40,9 @@
 											<select id="user_id" name="user_id" class="form-control select2">
 												@foreach($userList as $user)
 												@if($user['UserID']==Auth::user()->UserID)
-												<option value="{{$user['UserID']}}" selected>{{$user['LastName']}} {{$user['FirstName']}}-{{ $userProfile['UserName'] }}</option>
+												<option value="{{$user['UserID']}}" selected>{{$user['LastName']}} {{$user['FirstName']}}-{{ $user['UserName'] }}</option>
 												@else
-												<option value="{{$user['UserID']}}">{{$user['LastName']}} {{$user['FirstName']}}-{{ $userProfile['UserName'] }}</option>
+												<option value="{{$user['UserID']}}">{{$user['LastName']}} {{$user['FirstName']}}-{{ $user['UserName'] }}</option>
 												@endif
 												@endforeach
 											</select>
@@ -119,9 +119,10 @@
 										<div class="form-group">
 											<label class="control-label">Project Code</label>
 											<select id="project_code" name="project_code" class="form-control select2">
-												<option disabled selected value></option>
+												<option value="none" selected></option>
 												@if($wbscodeList) @foreach ($wbscodeList as $item) @if($item['wbs_id']==old('project_code'))
 												<option value="{{$item['wbs_id']}}" selected="selected">{{$item['wbs_code']}}</option>
+												
 												@else
 												<option value="{{$item['wbs_id']}}">{{$item['wbs_code']}}</option>
 												@endif @endforeach @endif
@@ -628,4 +629,5 @@
 </div>
 @include('etravel.modal.airlineList') @include('etravel.modal.newAccommodation') @include('etravel.modal.newFlight') @include('etravel.modal.hotel')
 <script src="{{asset('/js/etravel/trip/create.js')}}"></script>
+
 @endsection

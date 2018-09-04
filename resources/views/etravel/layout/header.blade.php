@@ -51,24 +51,37 @@
 					</ul>
 				</li>
 				@endif
+				<li>
+					<a href="" style="color: white;">
+						<i class="fa fa-question"></i>Help
+					</a>
+				</li>
 			</ul>
 		</div>
 		<div class="col-md-3">
 			<ul class="nav navbar-nav pull-right">
-			
-				<li class="dropdown dropdown-extended dropdown-notification open" style="" id="header_notification_bar">
-					<div style="display: inline-block; padding-top: 5px; margin-right: 20px;">
-						<i class="flaticon-paper-plane" style="font-size: 25px;color:white;"></i>
-						<a href="">
+				<li class="dropdown dropdown-user" style="" id="header_notification_bar">
+					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false" style="color: white; padding: 3px;">
+						<div style="display: inline-block; padding-top: 8px; margin-right: 20px;">
+							<i class="flaticon-paper-plane" style="font-size: 25px; color: white;"></i>
 							<span class="badge badge-default" style="top: 9px; left: 16px; position: absolute; background-color: #f36a5a;"></span>
-						</a>
-					</div>
+						</div>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-default" style="top: 50px;">
+						<li class="external" style="background-color: #eaedf2;">
+							<span class="" style="color: #62878f; font-weight: 300;">Notification:</span>
+							@if(Auth::user()->is_notify_trip)
+							<input type="checkbox" id="tripNotifySwitch" class="make-switch" data-on-color="success" data-off-color="warning" value="1" checked>
+							@else
+							<input type="checkbox" id="tripNotifySwitch" class="make-switch" data-on-color="success" data-off-color="warning" value="1">
+							@endif
+						</li>
+					</ul>
 				</li>
-				
 				@if(isset($forApproval['pending']))
 				<li class="dropdown dropdown-extended dropdown-notification open" style="" id="header_notification_bar">
 					<div style="display: inline-block; padding-top: 5px; margin-right: 30px;">
-						<i class="flaticon-alert-1" style="font-size: 25px;color:white;"></i>
+						<i class="flaticon-alert-1" style="font-size: 25px; color: white;"></i>
 						<a href="{{url('etravel/staff/travellist?status=pending')}}">
 							<span class="badge badge-default" style="top: 9px; left: 16px; position: absolute; background-color: #f36a5a;"> {{count($forApproval['pending'])}} </span>
 						</a>
@@ -77,7 +90,6 @@
 				@endif
 				<li class="dropdown dropdown-user" style="border-left: 1px solid grey;">
 					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false" style="color: white; padding: 3px;">
-						
 						@if(Auth::user()->GenderID == 2)
 						<img alt="" class="img-circle" src="{{ asset('storage/global/layout3/img/avatar.png') }}">
 						@else
@@ -133,3 +145,21 @@
 		<span class="app-title policies-text bold" style="font-size: 20px;">e-Travel Application</span>
 	</div>
 </div>
+<script>
+
+$('input[type=checkbox]').bootstrapSwitch({ onSwitchChange:function(e, data){
+	var $el = $(data.el);
+//   console.log(e, $el);
+	console.log(data);
+	if(data===true){
+		$.post('/etravel/tripSettings/notify',{'switch':'1','_method':'POST'},function(data){
+			
+		});
+	}
+	else if(data===false){
+		$.post('/etravel/tripSettings/notify',{'switch':'0','_method':'POST'},function(data){
+			
+		});
+	}
+} });
+</script>

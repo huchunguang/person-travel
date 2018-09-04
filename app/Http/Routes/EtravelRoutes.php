@@ -64,6 +64,8 @@ class EtravelRoutes
 						$router->match(['get','post'],'hr-listing','TriplistController@index');
 						
 					});
+					$router->post('tripSettings/notify',['uses'=>'TripController@notifySettings']);
+					
 				});
 			});
 				//

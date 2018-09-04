@@ -32,6 +32,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		'Pwd',
 		'remember_token'
 	);
+	protected $guarded = [
+		
+		''
+	];
 
 	/**
 	 *
@@ -69,7 +73,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	{
 		return $this->hasMany('App\Trip', 'user_id', 'UserID');
 	}
-
 	public function company()
 	{
 		return $this->hasOne('App\Company', 'CompanyID', 'CompanyID');

@@ -47,7 +47,7 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<label class="control-label">Destination</label>
-															<select id="destinationSel" name="destination[]" class="form-control input-sm select2" multiple>
+															<select id="destinationSel" name="destination[]" class="form-control input-sm select2" multiple disabled>
 																@foreach($countryList as $countryItem) @if(old('destination') == $countryItem['CountryID'] || in_array($countryItem['CountryID'],$destination))
 																<option data-region="{{$countryItem['IsAsia']}}" value="{{$countryItem['CountryID']}}" selected="selected">@else
 																
@@ -260,7 +260,7 @@
 																			<div class="col-md-6">
 																				<div class="form-group">
 																					<label class="control-label">CC</label>
-																					<select name="CC" class="form-control select2" multiple>
+																					<select id="cc" name="cc[]" class="form-control select2" multiple>
 																						@foreach($userList as $user) @if(in_array($user['Email'],$trip->cc))
 																						<option value="{{$user['Email']}}" selected>@else
 																						

@@ -12,6 +12,7 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected $commands = [
 		'App\Console\Commands\Inspire',
+		'App\Console\Commands\SendTripEmails'
 	];
 
 	/**
@@ -22,8 +23,10 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-		$schedule->command('inspire')
-				 ->hourly();
+// 		$schedule->command('inspire')->hourly();
+// 		$schedule->command('tripEmails:send')->daily();
+		$schedule->command('queue:listen')->withoutOverlapping();
+		$schedule->command('tripEmails:send --queue')->withoutOverlapping();
 	}
 
 }

@@ -107,7 +107,7 @@
 <script src="{{asset('assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('assets/pages/scripts/components-select2.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('assets/pages/scripts/components-select2.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/icheck/icheck.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/pages/scripts/form-icheck.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/pages/scripts/form-validation.min.js') }}" type="text/javascript"></script>

@@ -62,51 +62,51 @@ class EmailTripNotify {
 			'viewDetailUrl'=>$viewDetailUrl,
 		];
 // 		dd($variables);
-		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject,$manager,$trip,$tripCreater,$actionType) {
+// 		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject,$manager,$trip,$tripCreater,$actionType) {
 			
-			$cc = $trip->cc ?: [ ];
-			if (Auth::user()->UserID == $trip->user_id) {
-				$to = $manager->Email;
-				array_push($cc,$tripCreater->Email);
-			}elseif ($trip->trip_type=='1' && Auth::user()->UserID == $trip->department_approver && $actionType == 'partly-approved'){
-				$to = $manager->Email;
-				if ($to!=User::find($trip->department_approver)->Email){
-					array_push($cc, User::find($trip->department_approver)->Email);
-				}
-				array_push($cc, $tripCreater->Email);
-			}else{
-				$to = $tripCreater->Email;
-				array_push($cc,$manager->Email);
-				if ($trip->trip_type=='1' && Auth::user()->UserID == $trip->overseas_approver && $actionType == 'approved') {
-					array_push($cc, User::find($trip->department_approver)->Email);
-				}
-			}
-			$res=$this->system->getAdminEmail($trip);
-// 			dd($res);
-			if ($actionType == 'approved' || $actionType == 'submitted') {
-				if ($this->system->adminEmail) {
-					foreach ($this->system->adminEmail as $emailAddr) {
-						if ($emailAddr->Email && $emailAddr->Email != $to && ! in_array($emailAddr->Email, $cc)) {
-// 							array_push($cc, $emailAddr->Email);
-							$message->to('')->cc($cc)->subject("Etravel:".$subject);
+// 			$cc = $trip->cc ?: [ ];
+// 			if (Auth::user()->UserID == $trip->user_id) {
+// 				$to = $manager->Email;
+// 				array_push($cc,$tripCreater->Email);
+// 			}elseif ($trip->trip_type=='1' && Auth::user()->UserID == $trip->department_approver && $actionType == 'partly-approved'){
+// 				$to = $manager->Email;
+// 				if ($to!=User::find($trip->department_approver)->Email){
+// 					array_push($cc, User::find($trip->department_approver)->Email);
+// 				}
+// 				array_push($cc, $tripCreater->Email);
+// 			}else{
+// 				$to = $tripCreater->Email;
+// 				array_push($cc,$manager->Email);
+// 				if ($trip->trip_type=='1' && Auth::user()->UserID == $trip->overseas_approver && $actionType == 'approved') {
+// 					array_push($cc, User::find($trip->department_approver)->Email);
+// 				}
+// 			}
+// 			$res=$this->system->getAdminEmail($trip);
+// // 			dd($res);
+// 			if ($actionType == 'approved' || $actionType == 'submitted') {
+// 				if ($this->system->adminEmail) {
+// 					foreach ($this->system->adminEmail as $emailAddr) {
+// 						if ($emailAddr->Email && $emailAddr->Email != $to && ! in_array($emailAddr->Email, $cc)) {
+// // 							array_push($cc, $emailAddr->Email);
+// 							$message->to('')->cc($cc)->subject("Etravel:".$subject);
 							
-						}
-					}
-				}
-			}
-			if ($trip->applicant_id!=$trip->user_id && !in_array($tripApplicant->Email, $cc)){
-				array_push($cc, $tripApplicant->Email);	
-			} 
-			foreach (['huchunguang123@gmail.com','15152364392@163.com'] as $emailAddr) {
-// 				dd($emailAddr);
-				$message->cc($emailAddr)->subject("Etravel:".$subject);
-			}
+// 						}
+// 					}
+// 				}
+// 			}
+// 			if ($trip->applicant_id!=$trip->user_id && !in_array($tripApplicant->Email, $cc)){
+// 				array_push($cc, $tripApplicant->Email);	
+// 			} 
+// 			foreach (['huchunguang123@gmail.com','15152364392@163.com'] as $emailAddr) {
+// // 				dd($emailAddr);
+// 				$message->cc($emailAddr)->subject("Etravel:".$subject);
+// 			}
 
-// 			dd($to);
-// 			dd($cc);
-			$message->to($to)->subject("Etravel:".$subject);
+// // 			dd($to);
+// // 			dd($cc);
+// 			$message->to($to)->subject("Etravel:".$subject);
 			
-		});
+// 		});
 // 		if($flag){
 // 			Log::info('send notify email successfully', ['id' => $trip->trip_id,'variables'=>$variables]);
 // 		}else{

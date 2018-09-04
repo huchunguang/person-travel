@@ -13,6 +13,7 @@ trait selectApprover
 		$user=$user?$user:Auth::user();
 		$user_id = $user->UserID;
 		$approvers=[];
+// 		dd($departmentFilter);
 		if (Department_approver::where($departmentFilter)->exists()) {
 			$approvers = Department_approver::where($departmentFilter)->first([
 				
@@ -22,14 +23,14 @@ trait selectApprover
 			$userIds = explode(',', $approvers['Approver1']);
 // 			dd($user_id);
 // 			dd($userIds);
-			if (in_array($user_id, $userIds)) {
+			if (in_array($user_id, $userIds) || empty($userIds)) {
 				$approvers = Department_approver::where($departmentFilter)->first([
 					
 					'Approver2'
 				])->toArray();
 				
 				$userIds = explode(',', $approvers['Approver2']);
-				if (in_array($user_id, $userIds)) {
+				if (in_array($user_id, $userIds) || empty($userIds)) {
 					$approvers = Department_approver::where($departmentFilter)->first([
 						
 						'Approver3'
