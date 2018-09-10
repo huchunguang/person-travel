@@ -77,7 +77,13 @@ $('#user_id').on('change',function(){
 	$.get('/costcenter-list/'+user_id,function(data){
 		var costCenterOptions='';
 		$.each(data,function(ind,val){
-			costCenterOptions+='<option value="'+val.CostCenterID+'">'+val.CostCenterCode+'</option>';
+			
+			if(val.selected==1){
+				costCenterOptions+='<option value="'+val.CostCenterID+'" selected>'+val.CostCenterCode+'</option>';
+			}else{
+				costCenterOptions+='<option value="'+val.CostCenterID+'">'+val.CostCenterCode+'</option>';
+			}
+			
 		});
 			$('#cost_center_id').empty().append(costCenterOptions);
 	});

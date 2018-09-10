@@ -27,7 +27,7 @@
 											<div class="form-body">
 												<input type="hidden" name="_token" value="{{ csrf_token() }}">
 												<input type="hidden" name="_method" value="PUT" />
-												<input type="hidden" name="status" value="rejected" />
+												<input type="hidden" name="status" value="approved" />
 												<div class="alert alert-danger display-hide">
 													<button class="close" data-close="alert"></button>
 													You have some form errors. Please check below.
@@ -153,7 +153,7 @@
 																			<div class="icheck-inline">
 																				<label class="">
 																					<div class="icheckbox_minimal-grey" style="position: relative;">
-																						<input type="checkbox" class="icheck" name="is_approve_{{$item['id']}}" style="position: absolute; opacity: 0;">
+																						<input type="checkbox" class="icheck domesticIcheck" name="is_approve_{{$item['id']}}" style="position: absolute; opacity: 0;" checked>
 																						<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
 																					</div>
 																					YES
@@ -245,7 +245,7 @@ $('#btnRejectTravel').on('click',function(){
 });
 
 $('input[name^="is_approve"]').on('ifChanged', function(event){
-	  var approved_num=$(":checkbox:checked").length;
+	  var approved_num=$("#domestic_approval :checkbox:checked").length;
 // 	 	alert(approved_num)
 // 	 	alert(total_approved_num)
 		if(approved_num == total_approved_num){

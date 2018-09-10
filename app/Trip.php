@@ -87,7 +87,6 @@ class Trip extends Model
 		if (empty($param)) return $query;
 		return $query->where('status', $param);
 	}
-
 	public function setFlightItineraryPreferAttribute($value)
 	{
 		$this->attributes['flight_itinerary_prefer'] = json_encode($value);

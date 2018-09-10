@@ -84,7 +84,7 @@ class TripController extends AdminController
      * @param Request $requset
      * @return \Illuminate\View\View
      */
-	public function demosticCreate(CreateDomesticRequest $request) 
+	public function demosticCreate(Request $request) 
     {
 		$userProfile = User::getUserProfile();
 		$userList = User::all(['Email','FirstName','LastName','UserName','UserID']);

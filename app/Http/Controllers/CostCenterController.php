@@ -86,7 +86,12 @@ class CostCenterController extends AdminController {
 	
 	public function getListByUserId(User $user)
 	{
-		return response()->json(Costcenter::getAvailableCenters($user->CompanyID));
+		$return =Costcenter::getAvailableCenters($user->CompanyID)->each(function($item,$key)use($user){
+			if ($item['CostCenterID']==$user->DefaultCostCenterID){
+				$item['selected']=1;
+			}
+		});
+		return response()->json($return);
 	}
 
 }
