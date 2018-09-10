@@ -148,7 +148,7 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">LTINERARY</label>
+											<label class="control-label">ITINERARY</label>
 										</div>
 									</div>
 								</div>
@@ -160,13 +160,13 @@
 													<td class="text-center" class="">Date</td>
 													<td class="text-center" class="">Time</td>
 													<td class="text-center" class="">Location</td>
-													<td class="text-center" class="">Customer Name</td>
+													<td class="text-center" class="">Company Name</td>
 													<td class="text-center" class="">Contact Name</td>
 													<td class="text-center" class="">Purpose of Visit Category</td>
 													<td class="text-center" class="">Purpose of Visit Description</td>
 													<td class="text-center" class="">Estimated Travel Cost</td>
 													<td class="text-center" class="">Estimated Entertainment Cost</td>
-													<td class="text-center" class="">Estimated Details</td>
+													<td class="text-center" class="">Details</td>
 												</tr>
 											</thead>
 											<tbody>

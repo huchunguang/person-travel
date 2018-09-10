@@ -145,7 +145,7 @@
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="control-label">LTINERARY</label>
+														<label class="control-label">ITINERARY</label>
 													</div>
 												</div>
 											</div>
@@ -157,13 +157,13 @@
 																<td class="text-center">Date</td>
 																<td class="text-center">Time</td>
 																<td class="text-center">Location</td>
-																<td class="text-center">Customer Name</td>
+																<td class="text-center">Company Name</td>
 																<td class="text-center">Contact Name</td>
 																<td class="text-center">Purpose of Visit Category</td>
 																<td class="text-center">Purpose of Visit Description</td>
 																<td class="text-center">Estimated Travel Cost</td>
 																<td class="text-center">Estimated Entertainment Cost</td>
-																<td class="text-center">Estimated Details</td>
+																<td class="text-center">Details</td>
 																@if($trip->status == 'partly-approved')
 																<td class="text-center">Approved?</td>
 																@endif
@@ -429,7 +429,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Customer Name</label>
+								<label class="control-label">Company Name</label>
 								<input type="text" name="customer_name[]" class="form-control" />
 							</div>
 						</div>
@@ -475,7 +475,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label for="">Estimated Details</label>
+								<label for="">Details</label>
 								<input type="text" name="entertain_detail[]" class="form-control" />
 							</div>
 						</div>

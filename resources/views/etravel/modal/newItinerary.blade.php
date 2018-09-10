@@ -104,7 +104,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Customer Name</label>
+								<label class="control-label">Company Name</label>
 								<input type="text" name="customer_name[]" class="form-control" />
 							</div>
 						</div>
@@ -150,7 +150,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label for="">Estimated Details</label>
+								<label for="">Details</label>
 								<input type="text" name="entertain_detail[]" class="form-control" />
 							</div>
 						</div>

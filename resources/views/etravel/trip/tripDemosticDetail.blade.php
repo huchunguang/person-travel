@@ -112,7 +112,7 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label">LTINERARY</label>
+															<label class="control-label">ITINERARY</label>
 														</div>
 													</div>
 												</div>
@@ -124,13 +124,13 @@
 																	<td class="text-center">Date</td>
 																	<td class="text-center">Time</td>
 																	<td class="text-center">Location</td>
-																	<td class="text-center">Customer Name</td>
+																	<td class="text-center">Company Name</td>
 																	<td class="text-center">Contact Name</td>
 																	<td class="text-center">Purpose of Visit Category</td>
 																	<td class="text-center">Purpose of Visit Description</td>
 																	<td class="text-center">Estimated Travel Cost</td>
 																	<td class="text-center">Estimated Entertainment Cost</td>
-																	<td class="text-center">Estimated Details</td> @if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID )
+																	<td class="text-center">Details</td> @if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID )
 																	<td class="text-center text-danger">Approved?</td> @elseif($trip->status == 'approved' || $trip->status=='partly-approved')
 																	<td class="text-center">Approved?</td> @endif
 																</tr>
@@ -250,15 +250,18 @@ $('input[name^="is_approve"]').on('ifChanged', function(event){
 // 	 	alert(total_approved_num)
 		if(approved_num == total_approved_num){
 			$('#btnApproveValidate').attr('disabled',false);
+			$('#btnRejectTravel').attr('disabled',false);
 			$('#PartlybtnApproveValidate').attr('disabled',true);
 			$('input[name="status"]').val('approved');
 		}else if(approved_num > 0 && approved_num < total_approved_num){
 			$('#btnApproveValidate').attr('disabled',true);
+			$('#btnRejectTravel').attr('disabled',true)
 			$('#PartlybtnApproveValidate').attr('disabled',false);
 			$('input[name="status"]').val('partly-approved');
 		}else{
 			$('#btnApproveValidate').attr('disabled',true);
 			$('#PartlybtnApproveValidate').attr('disabled',true);
+			$('#btnRejectTravel').attr('disabled',false)
 			
 		}
 });

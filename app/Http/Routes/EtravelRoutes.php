@@ -65,6 +65,7 @@ class EtravelRoutes
 						
 					});
 					$router->post('tripSettings/notify',['uses'=>'TripController@notifySettings']);
+					$router->get('helper',['uses'=>'HelpController@index']);
 					
 				});
 			});
