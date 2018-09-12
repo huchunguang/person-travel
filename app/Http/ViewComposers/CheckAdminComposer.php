@@ -21,7 +21,7 @@ class CheckAdminComposer
 	public function compose(View $view)
 	{
 		if (Auth::check()){
-			$isEtravelAdmin = Company_site::where('EtravelAdminID',Auth::user()->UserID)->exists();
+			$isEtravelAdmin = $this->system->isAdmin;
 			$forApproval= $this->trip->staffTripByStatus()->groupBy('status');
 			$view->with('isEtravelAdmin', $isEtravelAdmin)->with('forApproval',$forApproval);
 		}

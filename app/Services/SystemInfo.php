@@ -54,16 +54,20 @@ class SystemInfo implements SystemVariable{
 	}
 	public function getIsAdmin()
 	{
-		return Company_site::where('EtravelAdminID',Auth::user()->UserID)->exists();
+		return \DB::table('company_sites')->whereRaw('FIND_IN_SET('.Auth::user()->UserID.',EtravelAdminID)')
+		->exists();
+// 		return Company_site::whereIn('EtravelAdminID',[Auth::user()->UserID])->exists();
 	}
 	public function getAccessSiteIds()
 	{
 		if($this->getIsAdmin()){
-			$result = Company_site::where('EtravelAdminID',Auth::user()->UserID)->get(['SiteID']);
+			$result = \DB::table('company_sites')->whereRaw('FIND_IN_SET('.Auth::user()->UserID.',EtravelAdminID)')->get(['SiteID']);
+// 			dd(Auth::user()->UserID);
 			if ($result){
-				$result=$result->toArray();
+// 				$result=$result->toArray();
 				$accessSiteIds=array_unique(array_pluck($result, 'SiteID'));
 			}
+// 			var_dump($accessSiteIds);die;
 			return $accessSiteIds;
 		}
 		return [];
@@ -71,9 +75,9 @@ class SystemInfo implements SystemVariable{
 	public function getAccessCountryIds()
 	{
 		if($this->getIsAdmin()){
-			$result = Company_site::where('EtravelAdminID',Auth::user()->UserID)->get(['CountryID']);
+			$result = \DB::table('company_sites')->whereRaw('FIND_IN_SET('.Auth::user()->UserID.',EtravelAdminID)')->get(['CountryID']);
 			if ($result){
-				$result=$result->toArray();
+// 				$result=$result->toArray();
 				$accessCountryIds=array_unique(array_pluck($result, 'CountryID'));
 			}
 			return $accessCountryIds;
@@ -83,9 +87,9 @@ class SystemInfo implements SystemVariable{
 	public function getAccessCompanyIds()
 	{
 		if($this->getIsAdmin()){
-			$result = Company_site::where('EtravelAdminId',Auth::user()->UserID)->get(['CompanyID']);
+			$result = \DB::table('company_sites')->whereRaw('FIND_IN_SET('.Auth::user()->UserID.',EtravelAdminID)')->get(['CompanyID']);
 			if ($result){
-				$result=$result->toArray();
+// 				$result=$result->toArray();
 				$accessCompanyIds=array_unique(array_pluck($result, 'CompanyID'));
 			}
 			return $accessCompanyIds;
