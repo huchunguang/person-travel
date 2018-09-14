@@ -25,15 +25,16 @@ class UserRepository extends Repository
 		return Trip_purpose::where($filter)->get();
 	}
 
-	public function getHrList()
+	public function getHrList($columns=['*'])
 	{
 		$hrUserList = array();
-		$res = DB::select('SELECT * FROM tbl_hr_access  where find_in_set(:site_id,`SiteIDs`) and find_in_set(:company_id,`CompanyIDs`) and `HRRoleID`=1;',$filter=[
+// 		dd(Auth::user()->SiteID);
+		$res = DB::select('SELECT * FROM tbl_hr_access  where find_in_set(:site_id,`SiteIDs`) and `HRRoleID`=1;',$filter=[
 			'site_id'=>Auth::user()->SiteID,
-			'company_id'=>Auth::user()->CompanyID
 		]);
+// 		dd($res);
 		$hrIds = array_pluck($res, 'HRID');
-		$hrUserList = User::whereIn('UserID',$hrIds)->get();
+		$hrUserList = User::whereIn('UserID',$hrIds)->get($columns);
 // 		dd($hrUserList->toArray());
 		return $hrUserList;
 	}

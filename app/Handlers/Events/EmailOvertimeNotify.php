@@ -10,6 +10,7 @@ use App\Contacts\SystemVariable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\User;
+use App\Repositories\UserRepository;
 
 class EmailOvertimeNotify
 {
@@ -19,10 +20,11 @@ class EmailOvertimeNotify
 	 * 
 	 * @return void
 	 */
-	public function __construct(Mail $mail, SystemVariable $system)
+	public function __construct(Mail $mail, SystemVariable $system,UserRepository $user)
 	{
 		$this->mail = $mail;
 		$this->system = $system;
+		$this->user = $user;
 	}
 
 	/**
@@ -52,17 +54,20 @@ class EmailOvertimeNotify
 		// dd($variables);
 		$flag = Mail::send('emails.overtimeNotify', $variables, function ($message) use ($subject, $manager, $overtime, $overtimeCreater, $actionType) {
 			
+			$hrEmailList = $this->user->getHrList(['Email'])->toArray();
+			$hrEmailList = array_pluck($hrEmailList, 'Email');
+// 			dd($hrEmailList);
 			$cc = $overtime->cc ?: [ ];
 			if (Auth::user()->UserID == $overtime->user_id) {
-				$to = $manager->Email;
+				$to = $hrEmailList;
 				array_push($cc, $overtimeCreater->Email);
 			}else {
 				$to = $overtimeCreater->Email;
-				array_push($cc, $manager->Email);
+				array_push($cc, $hrEmailList);
 			}
 			
 			// dd($cc);
-			
+// 			dd($to);
 			$message->to($to)
 				->cc($cc)
 				->subject("Overtime:" . $subject);
