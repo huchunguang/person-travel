@@ -225,6 +225,7 @@ var FormValidation = function () {
                     success1.show();
                     error1.hide();
                     form.submit();
+                    $('#nationalSubmit').prop('disabled',true);
                 }
 
             });

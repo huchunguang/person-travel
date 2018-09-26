@@ -613,7 +613,7 @@
 							<div class="form-actions right">
 								<div class="row">
 									<div class="col-md-offset-3 col-md-9">
-										<button type="submit" class="btn green">Submit</button>
+										<button type="submit" class="btn green" id="nationalSubmit">Submit</button>
 										<button type="button" class="btn default">Cancel</button>
 									</div>
 								</div>
