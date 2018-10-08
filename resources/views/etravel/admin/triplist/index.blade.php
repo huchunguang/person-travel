@@ -19,7 +19,7 @@ use Carbon\Carbon;
 										<div class="input-group">
 											<select id="country_id" name="country_id" class="form-control input-sm select2">
 												<option value="">Select...</option>
-												@foreach($countryList as $countryItem) @if($CountryAssignedID && $CountryAssignedID==$countryItem['CountryID'])
+												@foreach($countryList as $countryItem) @if(($CountryAssignedID && $CountryAssignedID==$countryItem['CountryID']) || $country_id==$countryItem['CountryID'])
 												<option value="{{$countryItem['CountryID']}}" selected>{{$countryItem['Country']}}</option>
 												@else
 												<option value="{{$countryItem['CountryID']}}">{{$countryItem['Country']}}</option>
@@ -34,7 +34,7 @@ use Carbon\Carbon;
 										<div class="input-group">
 											<select id="site_id" name="site_id" class="form-control input-sm select2">
 												<option value="">Select...</option>
-												@foreach($siteList as $siteItem) @if($SiteID==$siteItem['SiteID'])
+												@foreach($siteList as $siteItem) @if($SiteID==$siteItem['SiteID'] || $site_id==$siteItem['SiteID'])
 												<option value="{{$siteItem['SiteID']}}" selected>{{$siteItem['Site']}}</option>
 												@else
 												<option value="{{$siteItem['SiteID']}}">{{$siteItem['Site']}}</option>
@@ -51,7 +51,7 @@ use Carbon\Carbon;
 										<div class="input-group">
 											<select id="company_id" name="company_id" class="form-control input-sm select2">
 												<option value="">Select...</option>
-												@foreach($companyList as $company) @if($CompanyID == $company['company']['CompanyID'])
+												@foreach($companyList as $company) @if($CompanyID == $company['company']['CompanyID'] || $company_id==$company['company']['CompanyID'])
 												<option value="{{$company['company']['CompanyID']}}" selected>{{$company['company']['CompanyCode']}}-{{$company['company']['CompanyName']}}</option>
 												@else
 												<option value="{{$company['company']['CompanyID']}}">{{$company['company']['CompanyCode']}}-{{$company['company']['CompanyName']}}</option>
@@ -81,8 +81,8 @@ use Carbon\Carbon;
 										<div class="input-group">
 											<select id="trip_type" name="trip_type" class="form-control input-sm select2">
 												<option value="">Select...</option>
-												<option value="1">INTERNATIONAL</option>
-												<option value="2">DOMESTIC</option>
+												<option value="1" <?php if ($trip_type=='1')echo 'selected';?>>INTERNATIONAL</option>
+												<option value="2" <?php if ($trip_type=='2')echo 'selected';?>>DOMESTIC</option>
 											</select>
 										</div>
 									</div>
@@ -93,10 +93,10 @@ use Carbon\Carbon;
 										<div class="input-group">
 											<select id="status" name="status" class="form-control input-sm select2">
 												<option value="">Select...</option>
-												<option value="pending">pending</option>
-												<option value="approved">approved</option>
-												<option value="cancelled">cancelled</option>
-												<option value="rejected">rejected</option>
+												<option value="pending" <?php if ($status=='pending')echo 'selected';?>>pending</option>
+												<option value="approved" <?php if ($status=='approved')echo 'selected';?>>approved</option>
+												<option value="cancelled" <?php if ($status=='cancelled')echo 'selected';?>>cancelled</option>
+												<option value="rejected" <?php if ($status=='rejected')echo 'selected';?>>rejected</option>
 											</select>
 										</div>
 									</div>
@@ -107,8 +107,8 @@ use Carbon\Carbon;
 									<div class="form-group">
 										<label class="control-label">From</label>
 										<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" >
-											@if(old('daterange_from'))
-											<input id="hr_daterange_from" type="text" class="form-control" name="daterange_from" value="{{old('daterange_from')}}">
+											@if($daterange_from)
+											<input id="hr_daterange_from" type="text" class="form-control" name="daterange_from" value="{{$daterange_from}}">
 											@else
 											<input id="hr_daterange_from" type="text" class="form-control" name="daterange_from" value="{{Carbon::now()->firstOfMonth()->format('m/d/Y')}}">
 											@endif
@@ -124,8 +124,8 @@ use Carbon\Carbon;
 									<div class="form-group">
 										<label class="control-label">To</label>
 										<div class="input-group date date-picker" data-date-format="mm/dd/yyyy" >
-											@if(old('daterange_to'))
-											<input id="hr_daterange_from" type="text" class="form-control" name="daterange_to" value="{{old('daterange_to')}}">
+											@if($daterange_to)
+											<input id="hr_daterange_from" type="text" class="form-control" name="daterange_to" value="{{$daterange_to}}">
 											@else
 											<input id="hr_daterange_from" type="text" class="form-control" name="daterange_to" value="{{Carbon::now()->format('m/d/Y')}}">
 											@endif

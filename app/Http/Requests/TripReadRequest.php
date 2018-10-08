@@ -16,7 +16,7 @@ class TripReadRequest extends Request {
 	{
 		$trip = $this->route('trip');
 		$user_id=Auth::user()->UserID;
-		$isEtravelAdmin = Company_site::where('EtravelAdminID',Auth::user()->UserID)->exists();
+		$isEtravelAdmin = Company_site::whereRaw('FIND_IN_SET(?,EtravelAdminID)',[Auth::user()->UserID])->exists();
 // 		$ccUser = $trip->cc;
 // 		dd(Auth::user()->Email);
 // 		dd($ccUser);
