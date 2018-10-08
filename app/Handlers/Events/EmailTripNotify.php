@@ -48,7 +48,6 @@ class EmailTripNotify {
 		{
 			$manager = User::find($trip->overseas_approver);
 		}else{
-			
 			$manager = User::find($trip->department_approver);
 		}
 		$recipient=$trip->user()->first();
@@ -58,60 +57,94 @@ class EmailTripNotify {
 			
 			'trip' => $trip,
 			'subject'=>$subject,
-			'recipient' => Auth::user()->UserID == $trip->user_id?$manager:$recipient,
+		    'recipient' => Auth::user()->UserID == $trip->user_id || Auth::user()->UserID == $trip->applicant_id?$manager:$recipient,
 			'viewDetailUrl'=>$viewDetailUrl,
 		];
 // 		dd($variables);
-// 		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject,$manager,$trip,$tripCreater,$actionType) {
+        
+		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject,$manager,$trip,$tripCreater,$actionType,$tripApplicant) {
 			
-// 			$cc = $trip->cc ?: [ ];
-// 			if (Auth::user()->UserID == $trip->user_id) {
-// 				$to = $manager->Email;
-// 				array_push($cc,$tripCreater->Email);
-// 			}elseif ($trip->trip_type=='1' && Auth::user()->UserID == $trip->department_approver && $actionType == 'partly-approved'){
-// 				$to = $manager->Email;
-// 				if ($to!=User::find($trip->department_approver)->Email){
-// 					array_push($cc, User::find($trip->department_approver)->Email);
-// 				}
-// 				array_push($cc, $tripCreater->Email);
-// 			}else{
-// 				$to = $tripCreater->Email;
-// 				array_push($cc,$manager->Email);
-// 				if ($trip->trip_type=='1' && Auth::user()->UserID == $trip->overseas_approver && $actionType == 'approved') {
-// 					array_push($cc, User::find($trip->department_approver)->Email);
-// 				}
-// 			}
-// 			$res=$this->system->getAdminEmail($trip);
-// // 			dd($res);
-// 			if ($actionType == 'approved' || $actionType == 'submitted') {
-// 				if ($this->system->adminEmail) {
-// 					foreach ($this->system->adminEmail as $emailAddr) {
-// 						if ($emailAddr->Email && $emailAddr->Email != $to && ! in_array($emailAddr->Email, $cc)) {
-// // 							array_push($cc, $emailAddr->Email);
-// 							$message->to('')->cc($cc)->subject("Etravel:".$subject);
-							
-// 						}
-// 					}
-// 				}
-// 			}
-// 			if ($trip->applicant_id!=$trip->user_id && !in_array($tripApplicant->Email, $cc)){
-// 				array_push($cc, $tripApplicant->Email);	
-// 			} 
-// 			foreach (['huchunguang123@gmail.com','15152364392@163.com'] as $emailAddr) {
-// // 				dd($emailAddr);
-// 				$message->cc($emailAddr)->subject("Etravel:".$subject);
-// 			}
-
-// // 			dd($to);
-// // 			dd($cc);
-// 			$message->to($to)->subject("Etravel:".$subject);
+			$cc = $trip->cc ?: [ ];
 			
-// 		});
-// 		if($flag){
-// 			Log::info('send notify email successfully', ['id' => $trip->trip_id,'variables'=>$variables]);
-// 		}else{
-// 			Log::info('failed to send notify email', ['id' => $trip->trip_id,'variables'=>$variables]);
-// 		}
+			if (Auth::user()->UserID == $trip->user_id || Auth::user()->UserID == $trip->applicant_id) {
+				$to = $manager->Email;
+				array_push($cc,$tripCreater->Email);
+				
+			}elseif ($trip->trip_type=='1' && Auth::user()->UserID == $trip->department_approver && $actionType == 'partly-approved'){
+			    
+				$to = $manager->Email;
+				if ($to!=User::find($trip->department_approver)->Email){
+					array_push($cc, User::find($trip->department_approver)->Email);
+				}
+				array_push($cc, $tripCreater->Email);
+			}else{
+			    
+				$to = $tripCreater->Email;
+				array_push($cc,$manager->Email);
+				
+				if ($trip->trip_type=='1' && Auth::user()->UserID == $trip->overseas_approver && $actionType == 'approved'){
+					array_push($cc, User::find($trip->department_approver)->Email);
+				}
+			}
+			
+			if ($trip->applicant_id!=$trip->user_id && !in_array($tripApplicant->Email, $cc)){
+			    array_push($cc, $tripApplicant->Email);
+			}
+// 					    dd($to);
+// 			array_push($cc, 'chunguang.hu@arkema.com');
+// 					    dd($cc);
+			$cc=array_where($cc,function($key,$value)use($to){
+			    return $value!=$to;
+			});
+			$message->to($to)->cc($cc)->subject("Etravel:  ".$subject);
+			
+		});
+		    $flag_cc_admin = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject,$manager,$trip,$tripCreater,$actionType) {
+		        $cc = $trip->cc ?: [ ];
+		        if (Auth::user()->UserID == $trip->user_id) {
+		            $to = $manager->Email;
+		            array_push($cc,$tripCreater->Email);
+		        }elseif ($trip->trip_type=='1' && Auth::user()->UserID == $trip->department_approver && $actionType == 'partly-approved'){
+		            $to = $manager->Email;
+		            if ($to!=User::find($trip->department_approver)->Email){
+		                array_push($cc, User::find($trip->department_approver)->Email);
+		            }
+		            array_push($cc, $tripCreater->Email);
+		        }else{
+		            $to = $tripCreater->Email;
+		            array_push($cc,$manager->Email);
+		            if ($trip->trip_type=='1' && Auth::user()->UserID == $trip->overseas_approver && $actionType == 'approved'){
+		                array_push($cc, User::find($trip->department_approver)->Email);
+		            }
+		        }
+		        if ($actionType== 'approved' || $actionType== 'submitted'){
+		            $emailAddrList = $this->system->getAdminEmail($trip);
+		            // 		            dd($emailAddrList);
+		            if ($emailAddrList) {
+		                
+		                foreach ($emailAddrList as $emailAddr) {
+		                    if ($emailAddr->Email && $emailAddr->Email != $to && ! in_array($emailAddr->Email, $cc)) {
+		                        $adminEmailArr[]=$emailAddr->Email;
+		                    }
+		                }
+		            }
+		        }
+		        // 		        dd($adminEmailArr);
+		        if (isset($adminEmailArr) && !empty($adminEmailArr)){
+		            // 		            dd($adminEmailArr);
+		            $message->cc($adminEmailArr)->subject("Etravel:  ".$subject);
+		        }else {
+		            $message->to('arkema-etravel@arkema.com')->subject("Etravel:  ".$subject);
+		        }
+		        
+		        
+		    });
+		    
+		if($flag){
+			Log::info('send notify email successfully', ['id' => $trip->trip_id,'variables'=>$variables]);
+		}else{
+			Log::info('failed to send notify email', ['id' => $trip->trip_id,'variables'=>$variables]);
+		}
 	}
 	public function getEmailSubject($travelType,$actionType,$tripCreater,$trip)
 	{

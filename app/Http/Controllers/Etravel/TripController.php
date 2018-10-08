@@ -67,7 +67,14 @@ class TripController extends AdminController
 		$airlineList = Airline::all();
 		$hotelList = new EhotelApi();
 		$hotelList = $hotelList->getHotelList();
-		return view('/etravel/trip/create')->with('userProfile', $userProfile['userProfile'])
+		$transit=$requset->get('transit');
+		if ($transit=='byCar'){
+			$template='/etravel/trip/createByCar';
+		}
+		else{
+			$template='/etravel/trip/create';
+		}
+		return view($template)->with('userProfile', $userProfile['userProfile'])
 			->with('approvers', $userProfile['approvers'])
 			->with('purposeCats', $this->user->purposeCatWithCompany())
 			->with('costCenters', Costcenter::getAvailableCenters())
@@ -185,6 +192,7 @@ class TripController extends AdminController
     		try {
     			$trip=new Trip;
     			$trip->trip_type=1;
+    			$trip->is_by_car=$request->get('is_by_car',0);
     			$trip->reference_id=Trip_counter::generateRefId();
     			$trip->cc=$request->input('cc');
     			$trip->applicant_id=Auth::user()->UserID;
@@ -329,7 +337,13 @@ class TripController extends AdminController
 		$rep_office = User::find($trip->hotel_prefer['rep_office']);
 // 		dd($destination->toArray());
 // 		dd($trip->purpose_file);
-		return view('/etravel/trip/tripNationalDetail', [
+		if ($trip->is_by_car==1){
+			$template='/etravel/trip/tripNationalByCarDetail';
+			
+		}else{
+			$template='/etravel/trip/tripNationalDetail';
+		}
+		return view($template, [
 			'userObjMdl' => $userObjMdl,
 			'applicantUser'=>$applicantUser,
 			'trip' => $trip,
@@ -403,7 +417,12 @@ class TripController extends AdminController
 		$rep_office = User::find($trip->hotel_prefer['rep_office']);
 		$hotelList = new EhotelApi();
 		$hotelList=$hotelList->getHotelList();
-		return view('/etravel/trip/nationalEdit',[
+		if ($trip->is_by_car==1){
+			$template='/etravel/trip/nationalByCarEdit';
+		}else{
+			$template='/etravel/trip/nationalEdit';
+		}
+		return view($template,[
 			'userObjMdl'=>$userProfile['userProfile'],
 			'applicantUser'=>$applicantUser,
 			'overseas_approver'=>$overseas_approver,
@@ -497,7 +516,7 @@ class TripController extends AdminController
 		try {
 // 			$trip->user_id = Auth::user()->UserID;
 			$trip->status = $request->input('status') == 'rejected' ? 'pending' : $request->input('status');
-			$trip->destination_id = $request->input('destination');
+// 			$trip->destination_id = $request->input('destination');
 			$trip->cc=$request->input('cc');
 			$trip->department_id= $request->input('department_id');
 			$trip->cost_center_id = $request->input('cost_center_id');

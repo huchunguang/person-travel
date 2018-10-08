@@ -30,7 +30,7 @@ class UpdateNationalTripRequest extends Request {
 	{
 		
 		return [
-			'destination'=>'required|array',
+// 			'destination'=>'required|array',
 			'cost_center_id'=>'required|integer',
 			'daterange_from'=>'required|date',
 			'daterange_to'=>'required|date|after:daterange_from',

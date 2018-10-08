@@ -62,6 +62,7 @@
 			<div class="tab-pane fade" id="teana">
 				<form action="/etravel/trip" role="form" method="post">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<input type="hidden" name="bycar" value="1">
 					<div class="row">
 						<div class="col-md-8">
 							<div class="input-group">

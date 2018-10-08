@@ -17,6 +17,7 @@ class ComposerServiceProvider extends ServiceProvider {
 			'/etravel/delegate/index',
 			'/etravel/trip/demosticCreate',
 			'/etravel/trip/create',
+			'/etravel/trip/createByCar',
 			'/etravel/trip/nationalEdit',
 			'/etravel/admin/triplist/index',
 			'/etravel/trip/demosticEdit',

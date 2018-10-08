@@ -67,7 +67,16 @@ class DashboardController extends Controller
 		if ($request->input('trip') == '2') {
 			return redirect()->route('demosticCreate');
 		} elseif ($request->input('trip') == '1') {
-			return redirect()->route('internationalCreate');
+// 			dd($request->all());
+// 			dd($request->input('bycar'));
+			if ($request->input('bycar')=='1'){
+// 				dd($request->all());
+				return redirect()->route('internationalCreate',['transit'=>'byCar']);
+				
+			}else{
+				return redirect()->route('internationalCreate');
+				
+			}
 		}
 	}
 }
