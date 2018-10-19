@@ -120,10 +120,21 @@
 								<i class="fa fa-check"></i> For My Approval
 							</a>
 						</li>
-						<!-- 						<li class="divider"></li> -->
-						<!-- 						<li><a href="/password/email"> <i class="icon-key"></i> Reset Password -->
-						<!-- 						</a></li> -->
+						@if(str_contains(Auth::user()->UserName, config('auth.temp_account_identifier')))
 						<li class="divider"></li>
+						<li>
+							<a href="/password/email">
+								<i class="icon-key"></i> Change Password
+							</a>
+						</li>
+						@endif
+						<li class="divider"></li>
+						<li>
+							<a href="/auth/logout">
+								<i class="fa fa-sign-out"></i> Logon Non NEO Account
+							</a>
+						</li>
+						
 						<li>
 							<a href="/auth/logout">
 								<i class="fa fa-sign-out"></i> Log Out

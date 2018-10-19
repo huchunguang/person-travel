@@ -48,6 +48,6 @@ class UserRepository extends Repository
 	{
 		$user = $user?$user:Auth::user();
 		$res=Company_site::where('GeneralManagerID',$user->UserID)->exists();
-		
+		return $res;
 	}
 }

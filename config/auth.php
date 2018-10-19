@@ -63,5 +63,7 @@ return [
 		'table' => 'password_resets',
 		'expire' => 60,
 	],
-
+	
+	'temp_account_identifier' => 'TEMP',
+	
 ];

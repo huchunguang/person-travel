@@ -35,7 +35,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
 
 class TripController extends AdminController
 {
