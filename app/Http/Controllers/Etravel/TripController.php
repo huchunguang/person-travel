@@ -138,6 +138,7 @@ class TripController extends AdminController
 			'cost_center_id',
 			'daterange_from',
 			'daterange_to',
+			'is_cash_advance',
 			'extra_comment',
 			'department_approver',
 			'approver_comment',
@@ -186,7 +187,7 @@ class TripController extends AdminController
     {
 //     		header("Content-Type: ".Storage::mimeType($savePath));
 //     		echo Storage::get($savePath);
-//     	dd($request->input('department_id',$this->system->DepartmentID));
+//     	dd($request->all());
     		DB::beginTransaction();
     		try {
     			$trip=new Trip;
@@ -212,6 +213,7 @@ class TripController extends AdminController
     			$trip->overseas_approver=$request->input('overseas_approver');
     			$trip->department_approver=$request->input('department_approver');
     			$trip->approver_comment=$request->input('approver_comment');
+    			$trip->is_cash_advance=$request->input('is_cash_advance',0);
     			$trip->extra_comment=$request->input('extra_comment');
     			$trip->entertainment_details=$request->input('entertainment_details');
     			
@@ -476,6 +478,7 @@ class TripController extends AdminController
 			$trip->cost_center_id=$request->input('cost_center_id');
 			$trip->daterange_from=$request->input('daterange_from');
 			$trip->daterange_to=$request->input('daterange_to');
+			$trip->is_cash_advance=$request->input('is_cash_advance','0');
 			$trip->extra_comment=$request->input('extra_comment');
 			$trip->project_code=$request->input('project_code');
 			$trip->save();
@@ -524,6 +527,7 @@ class TripController extends AdminController
 			$trip->purpose_desc = $request->input('purpose_desc');
 			$trip->department_approver = $request->input('department_approver');
 			$trip->approver_comment = $request->input('approver_comment');
+			$trip->is_cash_advance=$request->input('is_cash_advance',0);
 			$trip->extra_comment = $request->input('extra_comment');
 			if($request->hasFile('purpose_file')){
 				$file=$request->file('purpose_file');

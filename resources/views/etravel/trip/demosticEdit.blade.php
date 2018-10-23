@@ -296,6 +296,35 @@
 													</table>
 												</div>
 											</div>
+											<div class="row" style="margin-top: 8px;">
+													<div class="col-md-12">
+														<div class="form-group">
+															Do you need Cash Advance?:
+															<label class="">
+																<div class="iradio_minimal-grey" style="position: relative;">
+																	@if($trip->is_cash_advance=='1')
+																		<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="1" checked>
+																	@else
+																		<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="1">
+																	@endif
+																	<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+																</div>
+																YES
+															</label>
+															<label class="">
+																<div class="iradio_minimal-grey" style="position: relative;">
+																	@if($trip->is_cash_advance=='0')
+																		<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="0" checked>
+																	@else
+																		<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="0">
+																	@endif
+																	<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+																</div>
+																NO
+															</label>
+														</div>
+													</div>
+												</div>
 											<div class="row">
 												<div class="col-md-12 ">
 													<div class="form-group">

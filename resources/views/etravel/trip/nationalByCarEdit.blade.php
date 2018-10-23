@@ -38,10 +38,12 @@
 															<input disabled type="text" class="form-control" placeholder="{{ $applicantUser->FirstName }} {{ $applicantUser->LastName }}-{{ $applicantUser->UserName }}">
 														</div>
 													</div>
-													<div class="col-md-6"><div class="form-group">
+													<div class="col-md-6">
+														<div class="form-group">
 															<label class="control-label">Request For</label>
 															<input disabled type="text" class="form-control" placeholder="{{ $userObjMdl->FirstName }} {{ $userObjMdl->LastName }}-{{ $userObjMdl->UserName }}">
-														</div></div>
+														</div>
+													</div>
 												</div>
 												<div class="row">
 													<div class="col-md-6">
@@ -58,13 +60,12 @@
 														</div>
 													</div>
 													<div class="col-md-6">
-													<div class="form-group">
+														<div class="form-group">
 															<label class="control-label">Site</label>
 															<select id="Site" class="form-control input-sm select2" disabled>
 																<option>{{ $userObjMdl->site()->first()['Site'] }}</option>
 															</select>
 														</div>
-														
 													</div>
 												</div>
 												<div class="row">
@@ -84,7 +85,6 @@
 																</div>
 															</div>
 															<div class="col-md-6" style="padding-right: 0px;">
-															
 																<div class="input-group date date-picker" data-date-format="mm/dd/yyyy">
 																	<input type="text" class="form-control" name="daterange_to" value="{{$trip->daterange_to}}" readonly>
 																	<span class="input-group-btn">
@@ -97,7 +97,7 @@
 														</div>
 													</div>
 													<div class="col-md-6">
-													<div class="form-group">
+														<div class="form-group">
 															<label class="control-label">Department</label>
 															<select id="department_id" name="department_id" class="form-control">
 																@foreach($departmentList as $dep) @if($dep['DepartmentID']==$trip->department_id)
@@ -107,7 +107,6 @@
 																@endif @endforeach
 															</select>
 														</div>
-														
 													</div>
 												</div>
 												<div class="row">
@@ -124,9 +123,8 @@
 															</select>
 														</div>
 													</div>
-													
 													<div class="col-md-6">
-													<div class="form-group">
+														<div class="form-group">
 															<label class="control-label">Cost Center</label>
 															<select name="cost_center_id" class="form-control input-sm select2">
 																@foreach($costCenters as $costItem) @if(old('cost_center_id') == $costItem['CostCenterID'] || $costCenterCode == $costItem['CostCenterID'])
@@ -137,7 +135,6 @@
 																@endforeach
 															</select>
 														</div>
-														
 													</div>
 												</div>
 												<div class="row">
@@ -324,12 +321,7 @@
 																			</td>
 																			<td>
 																				<input type="hidden" name="airline_or_train[]" value="{{$flightItem['airline_or_train']}}" />
-																				@if($flightItem['airline_or_train']=='1') 
-																					airline {{$flightItem['air_code']}}
-																				@elseif($flightItem['airline_or_train']=='2')
-																					By Car 
-																				@else train 
-																				@endif
+																				@if($flightItem['airline_or_train']=='1') airline {{$flightItem['air_code']}} @elseif($flightItem['airline_or_train']=='2') By Car @else train @endif
 																			</td>
 																			<td>
 																				<input type="hidden" name="etd_time[]" value="{{$flightItem['etd_time']}}" />
@@ -652,7 +644,35 @@
 														</div>
 													</div>
 												</div>
-												<p></p>
+												<div class="row" style="margin-top: 8px;">
+													<div class="col-md-12">
+														<div class="form-group">
+															Do you need Cash Advance?:
+															<label class="">
+																<div class="iradio_minimal-grey" style="position: relative;">
+																	@if($trip->is_cash_advance=='1')
+																		<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="1" checked>
+																	@else
+																		<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="1">
+																	@endif
+																	<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+																</div>
+																YES
+															</label>
+															<label class="">
+																<div class="iradio_minimal-grey" style="position: relative;">
+																	@if($trip->is_cash_advance=='0')
+																		<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="0" checked>
+																	@else
+																		<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="0">
+																	@endif
+																	<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+																</div>
+																NO
+															</label>
+														</div>
+													</div>
+												</div>
 												<div class="row">
 													<div class="col-md-12">
 														<div class="portlet box default">
@@ -689,7 +709,7 @@
 		</div>
 	</div>
 </div>
- @include('etravel.modal.newAccommodation') @include('etravel.modal.newByCar') @include('etravel.modal.hotel')
+@include('etravel.modal.newAccommodation') @include('etravel.modal.newByCar') @include('etravel.modal.hotel')
 <script src="{{asset('js/etravel/trip/tripNationalDetail.js')}}"></script>
 <script src="{{asset('/js/etravel/trip/createByCar.js')}}"></script>
 @endsection
