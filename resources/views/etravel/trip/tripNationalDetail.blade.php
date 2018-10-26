@@ -523,6 +523,7 @@
 														</div>
 													</div>
 												</div>
+												
 												<div class="row" style="margin-top: 8px;">
 													<div class="col-md-12">
 														<div class="form-group">
@@ -530,9 +531,9 @@
 															<label class="">
 																<div class="iradio_minimal-grey" style="position: relative;">
 																	@if($trip->is_cash_advance=='1')
-																		<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="1" checked>
+																		<input disabled type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="1" checked>
 																	@else
-																		<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="1">
+																		<input disabled type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="1">
 																	@endif
 																	<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
 																</div>
@@ -541,9 +542,9 @@
 															<label class="">
 																<div class="iradio_minimal-grey" style="position: relative;">
 																	@if($trip->is_cash_advance=='0')
-																		<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="0" checked>
+																		<input disabled type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="0" checked>
 																	@else
-																		<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="0">
+																		<input disabled type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="0">
 																	@endif
 																	<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
 																</div>
@@ -552,6 +553,30 @@
 														</div>
 													</div>
 												</div>
+												@if($trip->is_cash_advance=='1')
+												<div id="advance_amount_section" class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label">Advance Amount</label>
+															<input disabled type="text" class="form-control" id="advance_amount" name="advance_amount" value="{{$trip->advance_amount}}">
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label">Amount Currency</label>
+															<select id="amount_currency" name="amount_currency" class="form-control input-sm select2" disabled>
+																@foreach($currencyList as $currencyItem)
+																@if($currencyItem['CurrencyID']==$trip->amount_currency)
+																<option value="{{$currencyItem['CurrencyID']}}" selected>{{$currencyItem['Currency']}}</option>
+																@else
+																<option value="{{$currencyItem['CurrencyID']}}">{{$currencyItem['Currency']}}</option>
+																@endif
+																@endforeach
+															</select>
+														</div>
+													</div>
+												</div>
+												@endif
 												<div class="row">
 													<div class="col-md-12">
 														<div class="portlet box default">

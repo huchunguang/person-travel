@@ -15,6 +15,14 @@ $('#department_id').on('change',function(){
 	
 	
 });
+//to check whether enable those amount fields
+$(':radio[name="is_cash_advance"]').on('ifChecked',function(event){
+	var isChecked=parseInt($(this).val());
+	localStorage.setItem('name','Item');
+	$('#advance_amount_section').css('display',Boolean(isChecked)?'block':'none');
+	$('#advance_amount').prop('disabled',!Boolean(isChecked));
+	$('#amount_currency').prop('disabled',!Boolean(isChecked));
+});
 
 $('#user_id').on('change',function(){
 	var user_id=$(this).val();

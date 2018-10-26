@@ -18,6 +18,7 @@ class CommonComposer
 	public function compose(View $view)
 	{
 		$view->with('wbscodeList', $this->system->wbscodeList)
+			->with('currencyList',$this->system->currencyList)
 			->with('defaultCostCenterID', $this->system->defaultCostCenterID)
 			->with('CountryAssignedID',$this->system->CountryAssignedID)
 			->with('SiteID',$this->system->SiteID)

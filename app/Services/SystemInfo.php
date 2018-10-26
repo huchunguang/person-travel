@@ -9,6 +9,7 @@ use App\Company;
 use App\Company_site;
 use App\User;
 use App\Trip;
+use App\Currencys;
 
 class SystemInfo implements SystemVariable{
 	public $user_id='';
@@ -40,6 +41,10 @@ class SystemInfo implements SystemVariable{
 	public function getCountryId()
 	{
 		return Auth::user()->CountryAssignedID;
+	}
+	public function getCurrencyList()
+	{
+		return Currencys::all();
 	}
 	public function getAdminEmail($trip=null)
 	{

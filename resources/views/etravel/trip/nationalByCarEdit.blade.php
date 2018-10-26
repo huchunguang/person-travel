@@ -673,6 +673,30 @@
 														</div>
 													</div>
 												</div>
+												@if($trip->is_cash_advance=='1')
+												<div id="advance_amount_section" class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label">Advance Amount</label>
+															<input type="text" class="form-control" id="advance_amount" name="advance_amount" value="{{$trip->advance_amount}}">
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label">Amount Currency</label>
+															<select id="amount_currency" name="amount_currency" class="form-control input-sm select2">
+																@foreach($currencyList as $currencyItem)
+																@if($currencyItem['CurrencyID']==$trip->amount_currency)
+																<option value="{{$currencyItem['CurrencyID']}}" selected>{{$currencyItem['Currency']}}</option>
+																@else
+																<option value="{{$currencyItem['CurrencyID']}}">{{$currencyItem['Currency']}}</option>
+																@endif
+																@endforeach
+															</select>
+														</div>
+													</div>
+												</div>
+												@endif
 												<div class="row">
 													<div class="col-md-12">
 														<div class="portlet box default">

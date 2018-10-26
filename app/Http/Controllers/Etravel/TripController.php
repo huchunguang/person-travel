@@ -134,11 +134,14 @@ class TripController extends AdminController
      */
     public function store(Request $request) 
     {
+//     	dd($request->all());
 		$tripData = $request->only([ 
 			'cost_center_id',
 			'daterange_from',
 			'daterange_to',
 			'is_cash_advance',
+			'advance_amount',
+			'amount_currency',
 			'extra_comment',
 			'department_approver',
 			'approver_comment',
@@ -214,6 +217,8 @@ class TripController extends AdminController
     			$trip->department_approver=$request->input('department_approver');
     			$trip->approver_comment=$request->input('approver_comment');
     			$trip->is_cash_advance=$request->input('is_cash_advance',0);
+    			$trip->advance_amount=$request->input('advance_amount');
+    			$trip->amount_currency=$request->input('amount_currency');
     			$trip->extra_comment=$request->input('extra_comment');
     			$trip->entertainment_details=$request->input('entertainment_details');
     			
@@ -479,6 +484,8 @@ class TripController extends AdminController
 			$trip->daterange_from=$request->input('daterange_from');
 			$trip->daterange_to=$request->input('daterange_to');
 			$trip->is_cash_advance=$request->input('is_cash_advance','0');
+			$trip->advance_amount=$request->input('advance_amount');
+			$trip->amount_currency=$request->input('amount_currency');
 			$trip->extra_comment=$request->input('extra_comment');
 			$trip->project_code=$request->input('project_code');
 			$trip->save();
@@ -513,7 +520,7 @@ class TripController extends AdminController
 	 */
 	public function nationalUpdate(UpdateNationalTripRequest $request,Trip $trip)
 	{
-// 		dd($request->input('department_id'));
+// 		dd($request->all());
 		DB::beginTransaction();
 		try {
 // 			$trip->user_id = Auth::user()->UserID;
@@ -528,6 +535,8 @@ class TripController extends AdminController
 			$trip->department_approver = $request->input('department_approver');
 			$trip->approver_comment = $request->input('approver_comment');
 			$trip->is_cash_advance=$request->input('is_cash_advance',0);
+			$trip->advance_amount=$request->input('advance_amount');
+			$trip->amount_currency=$request->input('amount_currency');
 			$trip->extra_comment = $request->input('extra_comment');
 			if($request->hasFile('purpose_file')){
 				$file=$request->file('purpose_file');

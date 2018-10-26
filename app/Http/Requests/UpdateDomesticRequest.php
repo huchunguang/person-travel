@@ -38,7 +38,7 @@ class UpdateDomesticRequest extends Request {
 			'customer_name'=>'required',
 			'contact_name'=>'required',
 			'purpose_desc'=>'required',
-			'demostic_id'=>'required'
+// 			'demostic_id'=>'required'
 		];
 		
 	}

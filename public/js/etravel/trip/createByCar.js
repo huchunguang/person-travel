@@ -6,7 +6,7 @@ $('#destinationSel').on('change',function(){
 		var regionId=$(this).data('region');
 		countryIds.push(regionId);
 	});
-	if(countryIds.length!=0){
+	if(countryIds.length!=0 && workflow != 3){
 		if(workflow == 2||$.inArray('',countryIds)>=0||$.inArray(0,countryIds)>=0){
 			var user_id =$('#user_id option:selected').val();
 //			alert(user_id);
@@ -133,6 +133,14 @@ $(':radio[name="is_sent_affairs"]').on('ifChecked',function(event){
 	var isChecked=parseInt($(this).val());
 	localStorage.setItem('name','Item');
 	$('#cc').prop('disabled',!Boolean(isChecked));
+});
+//to check whether enable those amount fields
+$(':radio[name="is_cash_advance"]').on('ifChecked',function(event){
+	var isChecked=parseInt($(this).val());
+	localStorage.setItem('name','Item');
+	$('#advance_amount_section').css('display',Boolean(isChecked)?'block':'none');
+	$('#advance_amount').prop('disabled',!Boolean(isChecked));
+	$('#amount_currency').prop('disabled',!Boolean(isChecked));
 });
 
 //Form validation

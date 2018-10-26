@@ -19,11 +19,15 @@ class ComposerServiceProvider extends ServiceProvider {
 			'/etravel/trip/create',
 			'/etravel/trip/createByCar',
 			'/etravel/trip/nationalEdit',
+			'/etravel/trip/nationalByCarEdit',
 			'/etravel/admin/triplist/index',
 			'/etravel/trip/demosticEdit',
 			'/overtime/index/create',
 			'/overtime/index/show',
 			'/overtime/hr/report/index',
+			'/etravel/trip/tripNationalDetail',
+			'/etravel/trip/tripNationalByCarDetail',
+			'/etravel/trip/tripDemosticDetail',
 		], 'App\Http\ViewComposers\CommonComposer');
 		view()->composer([ 
 			

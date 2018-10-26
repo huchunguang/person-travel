@@ -19,7 +19,7 @@ class UserController extends Controller {
 	
 	public function index(User $user)
 	{
-		$user->workflow=$this->user->isOverseasApprover($user)?1:$this->user->getWorkflowCfg($user)->workflow;
+		$user->workflow=$this->user->isOverseasApprover($user)?3:$this->user->getWorkflowCfg($user)->workflow;
 		$user->siteStr=$user->site()->first()->Site;
 		return response()->json($user);
 	}
