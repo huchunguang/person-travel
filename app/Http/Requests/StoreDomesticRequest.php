@@ -33,6 +33,7 @@ class StoreDomesticRequest extends Request {
 			'purpose_desc' => 'required',
 			'department_approver' => 'required|integer',
 // 			'project_code' => 'required',
+			'advance_amount'=>'required_if:is_cash_advance,1',
 			
 		];
 	}

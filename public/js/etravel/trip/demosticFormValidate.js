@@ -136,6 +136,14 @@ $('#user_id').on('change',function(){
 	                    department_approver: {
 	                    	required: true
 	                    },
+	                    advance_amount: {
+	                    	required: {
+	                    		depends : function(element) {
+	                    			return $(':radio[name="is_cash_advance"]:checked').val()==1;
+	                            }
+	                    	}
+	                    	
+	                    },
 	                },
 
 	                invalidHandler: function (event, validator) { //display error alert on form submit              

@@ -183,6 +183,16 @@ var FormValidation = function () {
                     	required: true,
                     	maxlength:255
                     },
+                    advance_amount: {
+                    	required: {
+                    		depends : function(element) {
+                    			  
+                    	          return $(':radio[name="is_cash_advance"]:checked').val()==1;
+                            }
+                    	}
+                    	
+                    },
+                    
 //                    extra_comment: {
 //                        required: true
 //                    },

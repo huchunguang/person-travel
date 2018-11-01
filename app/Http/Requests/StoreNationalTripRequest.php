@@ -43,6 +43,7 @@ class StoreNationalTripRequest extends Request {
 			'smoking'=>'integer',
 			'purpose_file' => 'mimes:txt,doc,xlsx,pdf,docx,xls,jpg,jpeg,png,gif,bmp,ppt,pptx',
 // 			'project_code'=>'required',
+			'advance_amount'=>'required_if:is_cash_advance,1',
 			
 		];
 	}

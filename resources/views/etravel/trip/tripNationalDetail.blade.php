@@ -169,10 +169,18 @@
 															<div class="portlet-title">
 																<div class="caption" style="font-size: 14px;">PURPOSE OF TRAVEL</div>
 																<div class="tools">
+																	@if($trip->status=='pending')
 																	<a href="" class="collapse" data-original-title="" title=""> </a>
+																	@else
+																	<a href="" class="expand" data-original-title="" title=""> </a>
+																	@endif
 																</div>
 															</div>
+															@if($trip->status=='pending')
 															<div class="portlet-body form">
+															@else
+															<div class="portlet-body form portlet-collapsed">
+															@endif
 																<div class="form-group">
 																	<textarea class="form-control" rows="4" placeholder="purpose" style="padding-top: 0; overflow-y: scroll;" disabled>{{$trip->purpose_desc}}</textarea>
 																	@if($trip->purpose_file)

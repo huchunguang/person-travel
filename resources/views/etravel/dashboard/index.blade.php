@@ -230,7 +230,7 @@
 											<a href="/etravel/{{Auth::user()->UserID}}/triplist?status=approved" target="_blank">See More</a>
 										</td>
 									</tr>
-									 @else
+									@else
 									<tr>
 										<td style="text-align: center; color: rgb(87, 142, 190);" colspan="3">No records found.</td>
 										@endif
@@ -273,7 +273,13 @@
 											</tr>
 											@if(isset($staffTripList['pending']) && count($staffTripList['pending'])) @for ($i = 0; $i < count($staffTripList['pending']); $i++) @if($i<5)
 											<tr>
-												<td>{{$staffTripList['pending'][$i]->user()->first()['FirstName']}}</td>
+												<td>
+													@if($staffTripList['pending'][$i]['trip_type']=='1')
+													<a href="/etravel/tripnationallist/{{ $staffTripList['pending'][$i]['trip_id'] }}">{{$staffTripList['pending'][$i]->user()->first()['FirstName']}}</a>
+													@elseif($staffTripList['pending'][$i]['trip_type']=='2')
+													<a href="/etravel/tripdemosticlist/{{ $staffTripList['pending'][$i]['trip_id'] }}">{{$staffTripList['pending'][$i]->user()->first()['FirstName']}}</a>
+													@endif
+												</td>
 												<td>{{$staffTripList['pending'][$i]['daterange_from']}}</td>
 												<td>{{$staffTripList['pending'][$i]['daterange_to']}}</td>
 											</tr>
@@ -289,7 +295,13 @@
 											</tr>
 											@if(isset($staffTripList['approved']) && count($staffTripList['approved'])) @for ($i = 0; $i < count($staffTripList['approved']); $i++) @if($i<5)
 											<tr>
-												<td>{{$staffTripList['approved'][$i]->user()->first()['FirstName']}}</td>
+											<td>
+													@if($staffTripList['approved'][$i]['trip_type']=='1')
+													<a href="/etravel/tripnationallist/{{ $staffTripList['approved'][$i]['trip_id'] }}">{{$staffTripList['approved'][$i]->user()->first()['FirstName']}}</a>
+													@elseif($staffTripList['approved'][$i]['trip_type']=='2')
+													<a href="/etravel/tripdemosticlist/{{ $staffTripList['approved'][$i]['trip_id'] }}">{{$staffTripList['approved'][$i]->user()->first()['FirstName']}}</a>
+													@endif
+												</td>
 												<td>{{$staffTripList['approved'][$i]['daterange_from']}}</td>
 												<td>{{$staffTripList['approved'][$i]['daterange_to']}}</td>
 											</tr>
@@ -305,7 +317,13 @@
 											</tr>
 											@if(isset($staffTripList['partly-approved']) && count($staffTripList['partly-approved'])) @for ($i = 0; $i < count($staffTripList['partly-approved']); $i++) @if($i<5)
 											<tr>
-												<td>{{$staffTripList['partly-approved'][$i]->user()->first()['FirstName']}}</td>
+												<td>
+													@if($staffTripList['partly-approved'][$i]['trip_type']=='1')
+													<a href="/etravel/tripnationallist/{{ $staffTripList['partly-approved'][$i]['trip_id'] }}">{{$staffTripList['partly-approved'][$i]->user()->first()['FirstName']}}</a>
+													@elseif($staffTripList['partly-approved'][$i]['trip_type']=='2')
+													<a href="/etravel/tripdemosticlist/{{ $staffTripList['partly-approved'][$i]['trip_id'] }}">{{$staffTripList['partly-approved'][$i]->user()->first()['FirstName']}}</a>
+													@endif
+												</td>
 												<td>{{$staffTripList['partly-approved'][$i]['daterange_from']}}</td>
 												<td>{{$staffTripList['partly-approved'][$i]['daterange_to']}}</td>
 											</tr>
@@ -321,7 +339,13 @@
 											</tr>
 											@if(isset($staffTripList['rejected']) && count($staffTripList['rejected'])) @for ($i = 0; $i < count($staffTripList['rejected']); $i++) @if($i<5)
 											<tr>
-												<td>{{$staffTripList['rejected'][$i]->user()->first()['FirstName']}}</td>
+												<td>
+													@if($staffTripList['rejected'][$i]['trip_type']=='1')
+													<a href="/etravel/tripnationallist/{{ $staffTripList['rejected'][$i]['trip_id'] }}">{{$staffTripList['rejected'][$i]->user()->first()['FirstName']}}</a>
+													@elseif($staffTripList['rejected'][$i]['trip_type']=='2')
+													<a href="/etravel/tripdemosticlist/{{ $staffTripList['rejected'][$i]['trip_id'] }}">{{$staffTripList['rejected'][$i]->user()->first()['FirstName']}}</a>
+													@endif
+												</td>
 												<td>{{$staffTripList['rejected'][$i]['daterange_from']}}</td>
 												<td>{{$staffTripList['rejected'][$i]['daterange_to']}}</td>
 											</tr>
@@ -337,7 +361,13 @@
 											</tr>
 											@if(isset($staffTripList['cancelled']) && count($staffTripList['cancelled'])) @for ($i = 0; $i < count($staffTripList['cancelled']); $i++) @if($i<5)
 											<tr>
-												<td>{{$staffTripList['cancelled'][$i]->user()->first()['FirstName']}}</td>
+												<td>
+													@if($staffTripList['cancelled'][$i]['trip_type']=='1')
+													<a href="/etravel/tripnationallist/{{ $staffTripList['cancelled'][$i]['trip_id'] }}">{{$staffTripList['cancelled'][$i]->user()->first()['FirstName']}}</a>
+													@elseif($staffTripList['cancelled'][$i]['trip_type']=='2')
+													<a href="/etravel/tripdemosticlist/{{ $staffTripList['cancelled'][$i]['trip_id'] }}">{{$staffTripList['cancelled'][$i]->user()->first()['FirstName']}}</a>
+													@endif
+												</td>
 												<td>{{$staffTripList['cancelled'][$i]['daterange_from']}}</td>
 												<td>{{$staffTripList['cancelled'][$i]['daterange_to']}}</td>
 											</tr>
