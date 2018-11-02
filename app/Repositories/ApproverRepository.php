@@ -15,7 +15,8 @@ class ApproverRepository extends Repository
 	public function getGeneralManagerByCountryId($param)
 	{
 		$generalManager = array();
-		$res = Company_site::whereIn('countryID',$param)->get(['GeneralManagerID'])->filter(function($item){
+// 		dd($param);
+		$res = Company_site::where('countryID',$param['countryId'])->where('SiteId',$param['siteId'])->where('CompanyId',$param['companyId'])->get(['GeneralManagerID'])->filter(function($item){
 			return ($item->GeneralManagerID !== null);
 		});
 			//->unique('GeneralManagerID')

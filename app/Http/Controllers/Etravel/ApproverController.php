@@ -149,8 +149,10 @@ class ApproverController extends Controller {
 	public function getOverseasApprover(User $user,Request $request,ApproverRepository $approver)
 	{
 		$countryId = $user->CountryAssignedID;
+		$siteId= $user->SiteID;
+		$companyId=$user->CompanyID;
 // 		dd($countryId);
-		$generalManager = $approver->getGeneralManagerByCountryId((array) $countryId);
+		$generalManager = $approver->getGeneralManagerByCountryId(compact('countryId','siteId','companyId'));
 		return response()->json($generalManager);
 	}
 	
