@@ -38,13 +38,11 @@
 										<div class="form-group">
 											<label class="control-label">Request For</label>
 											<select id="user_id" name="user_id" class="form-control select2">
-												@foreach($userList as $user)
-												@if($user['UserID']==Auth::user()->UserID)
+												@foreach($userList as $user) @if($user['UserID']==Auth::user()->UserID)
 												<option value="{{$user['UserID']}}" selected>{{$user['LastName']}} {{$user['FirstName']}}-{{ $user['UserName'] }}</option>
 												@else
 												<option value="{{$user['UserID']}}">{{$user['LastName']}} {{$user['FirstName']}}-{{ $user['UserName'] }}</option>
-												@endif
-												@endforeach
+												@endif @endforeach
 											</select>
 										</div>
 									</div>
@@ -61,15 +59,12 @@
 										</div>
 									</div>
 									<div class="col-md-6">
-									
 										<div class="form-group">
 											<label class="control-label">Site</label>
 											<select id="Site" class="form-control input-sm select2" disabled>
 												<option>{{ $userProfile['site']['Site']}}</option>
 											</select>
 										</div>
-									
-										
 									</div>
 								</div>
 								<div class="row">
@@ -101,7 +96,7 @@
 										</div>
 									</div>
 									<div class="col-md-6">
-									<div class="form-group">
+										<div class="form-group">
 											<label class="control-label">Department</label>
 											<select id="department_id" name="department_id" class="select2 form-control">
 												@foreach($departmentList as $dep) @if($dep['DepartmentID']==Auth::user()->DepartmentID)
@@ -111,7 +106,6 @@
 												@endif @endforeach
 											</select>
 										</div>
-										
 									</div>
 								</div>
 								<div class="row">
@@ -122,7 +116,6 @@
 												<option value="none" selected></option>
 												@if($wbscodeList) @foreach ($wbscodeList as $item) @if($item['wbs_id']==old('project_code'))
 												<option value="{{$item['wbs_id']}}" selected="selected">{{$item['wbs_code']}}</option>
-												
 												@else
 												<option value="{{$item['wbs_id']}}">{{$item['wbs_code']}}</option>
 												@endif @endforeach @endif
@@ -130,7 +123,7 @@
 										</div>
 									</div>
 									<div class="col-md-6">
-									<div class="form-group">
+										<div class="form-group">
 											<label class="control-label">Cost Center</label>
 											<select id="cost_center_id" name="cost_center_id" class="form-control input-sm select2" required>
 												@if($costCenters) @foreach($costCenters as $costItem) @if(old('cost_center_id') == $costItem['CostCenterID'] || $costItem['CostCenterID']==$defaultCostCenterID)
@@ -141,8 +134,6 @@
 												@endforeach @endif
 											</select>
 										</div>
-										
-										
 									</div>
 								</div>
 								<div class="row">
@@ -234,9 +225,11 @@
 											<li>
 												<a href="#teana" data-toggle="tab">HOTEL ACCOMMODATION</a>
 											</li>
+											@if(Auth::user()->CountryAssignedID!=15)
 											<li>
 												<a href="#camry" data-toggle="tab">TRAVEL INSURANCE</a>
 											</li>
+											@endif
 										</ul>
 										<div id="myTabContent" class="tab-content" style="border: 2px #dddddd solid;">
 											<div class="tab-pane fade in active" id="home">
@@ -245,7 +238,11 @@
 														Notification To Be Sent General Affairs?:
 														<label class="">
 															<div class="iradio_minimal-grey" style="position: relative;">
+																@if(Auth::user()->CountryAssignedID ==15)
+																<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="1" checked>
+																@else
 																<input type="radio" name="is_sent_affairs" class="icheck" style="position: absolute; opacity: 0;" value="1">
+																@endif
 																<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
 															</div>
 															YES
@@ -263,10 +260,18 @@
 															<div class="col-md-6">
 																<div class="form-group">
 																	<label class="control-label" for="cc">CC</label>
+																	@if(Auth::user()->CountryAssignedID ==15)
+																	<select id="cc" name="cc[]" class="form-control select2" multiple>
+																	@else
 																	<select id="cc" name="cc[]" class="form-control select2" multiple disabled>
+																	@endif
 																		<option value="">Select an option</option>
 																		@foreach($userList as $user)
-																		<option value="{{$user['Email']}}">{{$user['LastName']}} {{$user['FirstName']}}</option>
+																			@if(Auth::user()->CountryAssignedID ==15 && $user['Email']=='hiroko.yamada@arkema.com')
+																				<option value="{{$user['Email']}}" selected>{{$user['LastName']}} {{$user['FirstName']}}</option>
+																			@else
+																				<option value="{{$user['Email']}}">{{$user['LastName']}} {{$user['FirstName']}}</option>
+																			@endif
 																		@endforeach
 																	</select>
 																</div>
@@ -367,6 +372,7 @@
 													</div>
 												</div>
 											</div>
+											@if(Auth::user()->CountryAssignedID!=15)
 											<div class="tab-pane fade" id="camry">
 												<ul class="list-group">
 													<li class="list-group-item">
@@ -444,6 +450,7 @@
 													</li>
 												</ul>
 											</div>
+											@endif
 											<div class="tab-pane fade" id="teana">
 												<ul class="list-group">
 													<li class="list-group-item">
@@ -597,29 +604,25 @@
 								<div class="row" style="margin-top: 8px;">
 									<div class="col-md-12">
 										<div class="form-group">
-												Do you need Cash Advance?:
-												<label class="">
-													<div class="iradio_minimal-grey" style="position: relative;">
-														<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="1">
-														<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-													</div>
-													YES
-												</label>
-												<label class="">
-													<div class="iradio_minimal-grey" style="position: relative;">
-														<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="0" checked>
-														<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-													</div>
-													NO
-												</label>
-											</div>
-										
-											
-										
-										
+											Do you need Cash Advance?:
+											<label class="">
+												<div class="iradio_minimal-grey" style="position: relative;">
+													<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="1">
+													<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+												</div>
+												YES
+											</label>
+											<label class="">
+												<div class="iradio_minimal-grey" style="position: relative;">
+													<input type="radio" name="is_cash_advance" class="icheck" style="position: absolute; opacity: 0;" value="0" checked>
+													<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+												</div>
+												NO
+											</label>
+										</div>
 									</div>
 								</div>
-								<div id="advance_amount_section" class="row" style="display:none;">
+								<div id="advance_amount_section" class="row" style="display: none;">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Advance Amount</label>
@@ -672,5 +675,4 @@
 </div>
 @include('etravel.modal.airlineList') @include('etravel.modal.newAccommodation') @include('etravel.modal.newFlight') @include('etravel.modal.hotel')
 <script src="{{asset('/js/etravel/trip/create.js')}}"></script>
-
 @endsection

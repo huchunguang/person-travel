@@ -20,14 +20,16 @@
 
 					</div>
 					<p></p>
+					@if(Auth::user()->CountryAssignedID!=15)
 					<div class="input-group">
 						<div class="icheck-inline">
 							<label for="domesticTrip"> 
 							<input type="radio" name="trip" class="icheck" value="2" id="domesticTrip"> 
-							<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">Domestic</span>
+							<span style="font-size: 16px; padding-left: 13px; color: #337ab7;" class="bold">Domestic Trip</span>
 							</label>
 						</div>
 					</div>
+					@endif
 
 			</div>
 			<div class="modal-footer">

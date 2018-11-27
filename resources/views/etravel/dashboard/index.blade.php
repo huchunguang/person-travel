@@ -40,6 +40,7 @@
 									</label>
 								</div>
 							</div>
+							@if(Auth::user()->CountryAssignedID!=15)
 							<div class="input-group">
 								<div class="icheck-inline">
 									<label for="domesticTrip">
@@ -48,6 +49,7 @@
 									</label>
 								</div>
 							</div>
+							@endif
 						</div>
 						<div class="col-md-4" style="margin-top: 10px;">
 							<div>
@@ -73,6 +75,7 @@
 									</label>
 								</div>
 							</div>
+							@if(Auth::user()->CountryAssignedID!=15)
 							<div class="input-group">
 								<div class="icheck-inline">
 									<label for="domesticTrip">
@@ -81,6 +84,7 @@
 									</label>
 								</div>
 							</div>
+							@endif
 						</div>
 						<div class="col-md-4" style="margin-top: 10px;">
 							<div>
@@ -295,7 +299,7 @@
 											</tr>
 											@if(isset($staffTripList['approved']) && count($staffTripList['approved'])) @for ($i = 0; $i < count($staffTripList['approved']); $i++) @if($i<5)
 											<tr>
-											<td>
+												<td>
 													@if($staffTripList['approved'][$i]['trip_type']=='1')
 													<a href="/etravel/tripnationallist/{{ $staffTripList['approved'][$i]['trip_id'] }}">{{$staffTripList['approved'][$i]->user()->first()['FirstName']}}</a>
 													@elseif($staffTripList['approved'][$i]['trip_type']=='2')

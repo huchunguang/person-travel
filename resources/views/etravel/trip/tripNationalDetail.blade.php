@@ -203,9 +203,11 @@
 															<li>
 																<a href="#teana" data-toggle="tab">HOTEL ACCOMMODATION</a>
 															</li>
+															@if(Auth::user()->CountryAssignedID!=15)
 															<li>
 																<a href="#camry" data-toggle="tab">TRAVEL INSURANCE</a>
 															</li>
+															@endif
 														</ul>
 														<div id="myTabContent" class="tab-content" style="border: 2px #dddddd solid;">
 															<div class="tab-pane fade in active" id="home">
@@ -451,6 +453,7 @@
 																	</tbody>
 																</table>
 															</div>
+															@if(Auth::user()->CountryAssignedID!=15)
 															<div class="tab-pane fade" id="camry">
 																<ul class="list-group">
 																	<li class="list-group-item">
@@ -528,6 +531,7 @@
 																	</li>
 																</ul>
 															</div>
+															@endif
 														</div>
 													</div>
 												</div>
