@@ -47,8 +47,14 @@ class EmailTripNotify {
 		if ($trip->overseas_approver && $trip->is_depart_approved)
 		{
 			$manager = User::find($trip->overseas_approver);
+			if ($trip->original_overseas_approver){
+				$originalManager= User::find($trip->original_overseas_approver);
+			}
 		}else{
 			$manager = User::find($trip->department_approver);
+			if ($trip->original_department_approver){
+				$originalManager= User::find($trip->original_department_approver);
+			}
 		}
 		$recipient=$trip->user()->first();
 		$subject = $this->getEmailSubject($travelType, $actionType, $tripCreater,$trip);
@@ -62,7 +68,7 @@ class EmailTripNotify {
 		];
 // 		dd($variables);
         
-		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject,$manager,$trip,$tripCreater,$actionType,$tripApplicant) {
+		$flag = Mail::send('emails.workflowNotify', $variables, function ($message) use ($subject,$manager,$trip,$tripCreater,$actionType,$tripApplicant,$originalManager) {
 			
 			$cc = $trip->cc ?: [ ];
 			
@@ -75,27 +81,42 @@ class EmailTripNotify {
 				$to = $manager->Email;
 				if ($to!=User::find($trip->department_approver)->Email){
 					array_push($cc, User::find($trip->department_approver)->Email);
+					if ($trip->original_department_approver){
+						array_push($cc, User::find($trip->original_department_approver)->Email);
+					}
 				}
 				array_push($cc, $tripCreater->Email);
+				
 			}else{
-			    
 				$to = $tripCreater->Email;
 				array_push($cc,$manager->Email);
 				
 				if ($trip->trip_type=='1' && Auth::user()->UserID == $trip->overseas_approver && $actionType == 'approved'){
 					array_push($cc, User::find($trip->department_approver)->Email);
+					if ($trip->original_department_approver){
+						array_push($cc, User::find($trip->original_department_approver)->Email);
+					}
 				}
 			}
 			
 			if ($trip->applicant_id!=$trip->user_id && !in_array($tripApplicant->Email, $cc)){
 			    array_push($cc, $tripApplicant->Email);
 			}
-// 					    dd($to);
-// 			array_push($cc, 'chunguang.hu@arkema.com');
-// 					    dd($cc);
-			$cc=array_where($cc,function($key,$value)use($to){
+			
+			if ($originalManager){
+				array_push($cc, $originalManager->Email);
+			}
+			// dd($to);
+			// array_push($cc, 'chunguang.hu@arkema.com');
+			// dd($cc);
+			$cc = array_where($cc, function ($key, $value) use ($to) {
 			    return $value!=$to;
 			});
+// 			dd($tripCreater->manager()->exists());
+			if ($tripCreater->manager()->exists() && ! in_array($tripCreater->manager()->first()->Email, $cc)){
+					array_push($cc, $tripCreater->manager()->first()->Email);
+				}
+// 			dd($cc);
 			$message->to($to)->cc($cc)->subject("Etravel:  ".$subject);
 			
 		});

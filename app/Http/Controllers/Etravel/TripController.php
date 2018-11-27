@@ -35,10 +35,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Traits\selectApprover;
+use App\Http\Controllers\Etravel\ApproverController as ApproverApi;
+use App\Repositories\ApproverRepository;
 
 class TripController extends AdminController
 {
-
+   	use selectApprover;
 	public function __construct(SystemVariable $system, TripRepository $trip, UserRepository $user)
 	{
 		$this->system = $system;
@@ -52,10 +55,11 @@ class TripController extends AdminController
 	 * @param Request $requset        	
 	 * @return \Illuminate\View\View
 	 */
-	public function create(CreateNationalRequest $requset)
+	public function create(Request $requset)
 	{
 		$userList = User::all(['Email','FirstName','LastName','UserName','UserID']);
 		$userProfile = User::getUserProfile();
+// 		dd(User::$approverAssocOrigin);
 		$countryList = Country::orderBy('Country')->select([ 
 			
 			'IsAsia',
@@ -90,7 +94,7 @@ class TripController extends AdminController
      * @param Request $requset
      * @return \Illuminate\View\View
      */
-	public function demosticCreate(CreateDomesticRequest $request) 
+	public function demosticCreate(Request $request) 
     {
 		$userProfile = User::getUserProfile();
 		$userList = User::all(['Email','FirstName','LastName','UserName','UserID']);
@@ -132,10 +136,11 @@ class TripController extends AdminController
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request) 
-    {
-//     	dd($request->all());
+    public function store(Request $request)
+	{
+		// dd($request->all());
 		$tripData = $request->only([ 
+			
 			'cost_center_id',
 			'daterange_from',
 			'daterange_to',
@@ -169,6 +174,13 @@ class TripController extends AdminController
 			$tripData['site_id']=$user->SiteID;
 			$tripData['company_id']=$user->CompanyID;
 			$tripData['reference_id']=Trip_counter::generateRefId();
+			User::getUserProfile($request,$user);
+			$approverAssocOrigin = User::$approverAssocOrigin;
+			$department_approver = $request->input('department_approver');
+// 			dd($approverAssocOrigin);
+			if (array_key_exists($department_approver, $approverAssocOrigin)) {
+				$tripData['original_department_approver'] = $approverAssocOrigin[$department_approver];
+			}
 // 			dd($tripData);
 			$tripObjMdl = Trip::create($tripData);
 			foreach ($demosticData as $item){
@@ -186,7 +198,7 @@ class TripController extends AdminController
      * @param StoreNationalTripRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function storeNational(StoreNationalTripRequest $request) 
+    public function storeNational(StoreNationalTripRequest $request,ApproverApi $approverApi,ApproverRepository $approver) 
     {
 //     		header("Content-Type: ".Storage::mimeType($savePath));
 //     		echo Storage::get($savePath);
@@ -221,7 +233,19 @@ class TripController extends AdminController
     			$trip->amount_currency=$request->input('amount_currency');
     			$trip->extra_comment=$request->input('extra_comment');
     			$trip->entertainment_details=$request->input('entertainment_details');
+    			User::getUserProfile($user);
+    			$approverAssocOrigin = User::$approverAssocOrigin;
+    			if (array_key_exists($trip->department_approver, $approverAssocOrigin)) {
+    				$trip->original_department_approver = $approverAssocOrigin[$trip->department_approver];
+    			}
     			
+    			$approverApi->getOverseasApprover($user, $request,$approver);
+//     			dd($approver::$overseaApproverAssocOrigin);
+    			$overseaApproverAssocOrigin=$approver::$overseaApproverAssocOrigin;
+    			if (array_key_exists($trip->overseas_approver, $overseaApproverAssocOrigin)) {
+    				$trip->original_overseas_approver= $overseaApproverAssocOrigin[$trip->overseas_approver];
+    			}
+//     			dd($trip);
     			if ($request->hasFile('purpose_file')){
     				$file=$request->file('purpose_file');
     				if(!$file->isValid()){

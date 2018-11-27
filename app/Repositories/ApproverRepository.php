@@ -7,6 +7,7 @@ use App\User;
 
 class ApproverRepository extends Repository
 {
+	public static $overseaApproverAssocOrigin=array();
 	public function model() 
 	{
 		return 'App\Company_site';
@@ -16,15 +17,22 @@ class ApproverRepository extends Repository
 	{
 		$generalManager = array();
 // 		dd($param);
-		$res = Company_site::where('countryID',$param['countryId'])->where('SiteId',$param['siteId'])->where('CompanyId',$param['companyId'])->get(['GeneralManagerID'])->filter(function($item){
+		$delegatedOverseaApprover =$overseaApproverOrigin= Company_site::where('countryID',$param['countryId'])->where('SiteId',$param['siteId'])->where('CompanyId',$param['companyId'])->get(['GeneralManagerID'])->filter(function($item){
 			return ($item->GeneralManagerID !== null);
 		});
-			//->unique('GeneralManagerID')
-// 		dd($res->toArray());
-		$res = array_unique(array_pluck($res, 'GeneralManagerID'));
-// 		dd($res);
-		array_walk($res, ['App\User','checkIsDelegate']);
-		$generalManager = User::whereIn('UserID', $res)->get();
+			// 		dd($delegatedOverseaApprover->toArray());
+		$delegatedOverseaApprover = array_unique(array_pluck($delegatedOverseaApprover, 'GeneralManagerID'));
+		$overseaApproverOrigin = array_unique(array_pluck($overseaApproverOrigin, 'GeneralManagerID'));
+// 		dd($overseaApproverOrigin);
+// 		dd($res); 
+		array_walk($delegatedOverseaApprover, ['App\User','checkIsDelegate']);
+// 		dd($delegatedOverseaApprover);
+
+		self::$overseaApproverAssocOrigin = array_combine(array_diff($delegatedOverseaApprover, $overseaApproverOrigin), array_diff($overseaApproverOrigin,$delegatedOverseaApprover));
+// 		dd(self::$overseaApproverAssocOrigin );
+		$generalManager = User::whereIn('UserID', $delegatedOverseaApprover)->get();
 		return $generalManager;
 	}
+	
+	
 }

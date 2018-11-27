@@ -96,7 +96,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		$departmentFilter['CompanyID'] = $userProfile['CompanyID'];
 // 		dd($departmentFilter);
 		$approvers = self::getDepApprover($departmentFilter,$user);
-		
+// 		$originalApprovers=self::check
 		return [ 
 			
 			'userProfile' => $userProfile,
@@ -105,7 +105,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 
 	/**
-	 * @brief replace approvers with delegate user
+	 * @brief replace approvers to the delegate user
 	 * 
 	 * @param unknown $value        	
 	 * @param unknown $key        	
@@ -117,8 +117,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 			'ManagerID' => $value,
 			'EnableDelegation' => 1
 		])->exists()) {
-			$delegation = Delegation::where(['ManagerID'=>$value])->first();
+			$delegation = Delegation::where(['ManagerID'=>$value,'EnableDelegation' => 1])->orderBy('DelegationID','DESC')->first();
 			$currentDate = Carbon::now();
+// 			dd(Carbon::parse($delegation->DelegationEndDate));
 			if($currentDate->lte(Carbon::parse($delegation->DelegationEndDate)) && $currentDate->gte(Carbon::parse($delegation->DelegationStartDate))){
 				$value = $delegation->ManagerDelegationID;
 			}
