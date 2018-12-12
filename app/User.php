@@ -30,7 +30,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	protected $hidden = array ( 
 		
 		'Pwd',
-		'remember_token'
+		'remember_token',
+		'Signature',
 	);
 	protected $guarded = [
 		

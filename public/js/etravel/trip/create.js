@@ -11,9 +11,16 @@ $('#destinationSel').on('change',function(){
 			var user_id =$('#user_id option:selected').val();
 //			alert(workflow);
 			$.get('/etravel/approver/'+user_id,function(data){
-				var overseasOptions='';
+				if(data.createrCountryID==15){
+					var overseasOptions='<option></option>';
+				}else{
+					var overseasOptions='';
+				}
+				
 				$.each(data,function(ind,val){
-					overseasOptions+='<option value="'+val.UserID+'">'+val.LastName+' '+val.FirstName+'</option>';
+					if(val.UserID!=undefined){
+						overseasOptions+='<option value="'+val.UserID+'">'+val.LastName+' '+val.FirstName+'</option>';
+					}
 				});
 				if(overseasOptions!=''){
 					$('#overseas_approver').attr('disabled',false).empty().append(overseasOptions);

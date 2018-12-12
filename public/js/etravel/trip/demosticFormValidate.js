@@ -176,6 +176,7 @@ $('#user_id').on('change',function(){
 	                    success1.show();
 	                    error1.hide();
 	                    form.submit();
+	                    $('#submitBtnForDemostic').prop('disabled',true);
 	                }
 
 	            });

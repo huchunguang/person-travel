@@ -17,20 +17,16 @@ class ApproverRepository extends Repository
 	{
 		$generalManager = array();
 // 		dd($param);
-		$delegatedOverseaApprover =$overseaApproverOrigin= Company_site::where('countryID',$param['countryId'])->where('SiteId',$param['siteId'])->where('CompanyId',$param['companyId'])->get(['GeneralManagerID'])->filter(function($item){
-			return ($item->GeneralManagerID !== null);
-		});
-			// 		dd($delegatedOverseaApprover->toArray());
-		$delegatedOverseaApprover = array_unique(array_pluck($delegatedOverseaApprover, 'GeneralManagerID'));
-		$overseaApproverOrigin = array_unique(array_pluck($overseaApproverOrigin, 'GeneralManagerID'));
-// 		dd($overseaApproverOrigin);
-// 		dd($res); 
-		array_walk($delegatedOverseaApprover, ['App\User','checkIsDelegate']);
-// 		dd($delegatedOverseaApprover);
-
-		self::$overseaApproverAssocOrigin = array_combine(array_diff($delegatedOverseaApprover, $overseaApproverOrigin), array_diff($overseaApproverOrigin,$delegatedOverseaApprover));
-// 		dd(self::$overseaApproverAssocOrigin );
-		$generalManager = User::whereIn('UserID', $delegatedOverseaApprover)->get();
+		$delegatedOverseaApprover =$overseaApproverOrigin= Company_site::where('countryID',$param['countryId'])->where('SiteId',$param['siteId'])->where('CompanyId',$param['companyId'])->first(['GeneralManagerID']);
+		if ($delegatedOverseaApprover['GeneralManagerID']){
+			$delegatedOverseaApprover =$overseaApproverOrigin= explode(',', $delegatedOverseaApprover['GeneralManagerID']);
+			array_walk($delegatedOverseaApprover, ['App\User','checkIsDelegate']);
+			self::$overseaApproverAssocOrigin = array_combine(array_diff($delegatedOverseaApprover, $overseaApproverOrigin), array_diff($overseaApproverOrigin,$delegatedOverseaApprover));
+			$generalManager = User::whereIn('UserID', $delegatedOverseaApprover)->get();
+			
+			$generalManager->put('createrCountryID',$param['countryId']);
+		}
+// 		dd($generalManager);
 		return $generalManager;
 	}
 	

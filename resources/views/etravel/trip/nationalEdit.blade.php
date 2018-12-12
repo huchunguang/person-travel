@@ -4,7 +4,7 @@
 	<div class="page-content-inner">
 		<div class="row">
 			<!-- BEGIN FORM-->
-			<form action="/etravel/trip/nationalUpdate/{{$trip->trip_id}}" method="post" class="horizontal-form" enctype="multipart/form-data">
+			<form action="/etravel/trip/nationalUpdate/{{$trip->trip_id}}" method="post" class="horizontal-form" enctype="multipart/form-data" id="nationalEditForm">
 				@if($trip->status == 'pending' && $trip->department_approver == Auth::user()->UserID ) @include('etravel.layout.approverAction') @endif @include('etravel.layout.error')
 				<div class="col-md-12">
 					<!-- BEGIN VALIDATION STATES-->
@@ -746,7 +746,7 @@
 											</div>
 											@if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
 											<div class="row form-actions text-right">
-												<button type="submit" accesskey="D" class="btn red-mint">
+												<button onclick="disableResubmit()" accesskey="D" class="btn red-mint" id="nationalResubmitBtn">
 													<i class="glyphicon glyphicon-new-window"></i> Resubmit
 												</button>
 											</div>
@@ -764,6 +764,12 @@
 		</div>
 	</div>
 </div>
+<script>
+function disableResubmit(){
+	$('#nationalEditForm').submit();
+	$('#nationalResubmitBtn').prop('disabled',true);
+}
+</script>
 @include('etravel.modal.airlineList') @include('etravel.modal.newAccommodation') @include('etravel.modal.newFlight') @include('etravel.modal.hotel')
 <script src="{{asset('js/etravel/trip/tripNationalDetail.js')}}"></script>
 <script src="{{asset('/js/etravel/trip/create.js')}}"></script>

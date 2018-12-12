@@ -288,13 +288,16 @@
 var total_approved_num = {{$approvedCnt}};
 $('#approveBtn').on('click',function(){
 	$('#domestic_approval').submit();
+	$('#approveBtn').prop('disabled',true);
 });
 $('#partlyApproveBtn').on('click',function(){
 	$('#domestic_approval').submit();
+	$('#partlyApproveBtn').prop('disabled',true);
 });
 $('#btnRejectTravel').on('click',function(){
 	$('input[name="status"]').val('rejected');
 	$('#domestic_approval').submit();
+	$('#btnRejectTravel').prop('disabled',true);
 });
 
 $('input[name^="is_approve"]').on('ifChanged', function(event){

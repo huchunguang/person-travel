@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Traits\selectApprover;
 use App\Http\Controllers\Etravel\ApproverController as ApproverApi;
 use App\Repositories\ApproverRepository;
+use App\Delegation;
 
 class TripController extends AdminController
 {
@@ -627,8 +628,11 @@ class TripController extends AdminController
 				foreach ($hotelData as $hotelItem)
 				{
 					if (!empty($hotelItem['accomodate_id'])) {
-						Trip_accomodation::find($hotelItem['accomodate_id'])->update(array_except($hotelItem, ['accomodate_id']));
-					}else{
+						Trip_accomodation::find($hotelItem['accomodate_id'])->update(array_except($hotelItem, [ 
+							
+							'accomodate_id'
+						]));
+					} else {
 						$trip->accomodation()->create($hotelItem);
 					}
 				}
@@ -666,11 +670,13 @@ class TripController extends AdminController
 	 */
 	public function demosticCancel(TripCancelRequest $request,Trip $trip) 
 	{
-		$user_id=Auth::user()->UserID;
-		$trip->status='cancelled';
-		$trip->save();
-		Event::fire(new TripNotify($trip, $request, $trip->status));
-		return redirect('/etravel/'.$user_id.'/triplist?status=cancelled');
+		if ($trip->status != 'cancelled') {
+			$user_id = Auth::user()->UserID;
+			$trip->status = 'cancelled';
+			$trip->save();
+			Event::fire(new TripNotify($trip, $request, $trip->status));
+		}
+		return redirect('/etravel/' . $user_id . '/triplist?status=cancelled');
 	}
 	/**
 	 * @param TripCancelRequest $request
@@ -679,9 +685,11 @@ class TripController extends AdminController
 	 */
 	public function nationalCancel(TripCancelRequest $request,Trip $trip)
 	{
-		$trip->status = 'cancelled';
-		$trip->save();
-		Event::fire(new TripNotify($trip, $request, $trip->status));
+		if ($trip->status != 'cancelled'){
+			$trip->status = 'cancelled';
+			$trip->save();
+			Event::fire(new TripNotify($trip, $request, $trip->status));
+		}
 		return redirect('/etravel/tripnationallist/' . $trip->trip_id);
 	}
 	

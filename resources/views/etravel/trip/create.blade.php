@@ -169,7 +169,11 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Overseas Approver</label>
+											@if(Auth::user()->CountryAssignedID==15)
+											<select id="overseas_approver" name="overseas_approver" class="form-control select2" data-placeholder="Select a approver">
+											@else
 											<select id="overseas_approver" name="overseas_approver" class="form-control select2" disabled>
+											@endif
 											</select>
 										</div>
 									</div>
