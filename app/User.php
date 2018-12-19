@@ -47,6 +47,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->belongsTo('App\Costcenter', 'DefaultCostCenterID', 'CostCenterID');
 	}
 
+	
+	public function employmentstatus(){
+		return $this->belongsTo('App\Employmentstatus', 'EmploymentStatusID', 'EmploymentStatusID');
+		
+	}
+	
+	public function employmentcategory(){
+		return $this->belongsTo('App\Employmentcategory', 'EmploymentCategoryID', 'EmploymentCategoryID');
+		
+	}
 	/**
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -129,6 +139,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 			//to do something what you need 
 		}
 	}
+	
+	public function getSignatureAttribute($value, $mime_type='image/jpeg')
+	{
+		
+		$result = '';
+		if (!empty($mime_type) && !empty($value)){
+			$result = 'data:'.$mime_type.';base64,'.base64_encode($value);
+		}
+		return $result;
+		
+	}
+	
 	
 }
 

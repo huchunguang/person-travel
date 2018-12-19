@@ -88,15 +88,15 @@
 					</div>
 				</li>
 				@endif
-				<li class="dropdown dropdown-user" style="border-left: 1px solid grey;">
-					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false" style="color: white; padding: 3px;">
-						@if(Auth::user()->GenderID == 2)
-						<img alt="" class="img-circle" src="{{ asset('storage/global/layout3/img/avatar.png') }}">
-						@else
-						<img alt="" class="img-circle" src="{{ asset('storage/global/layout3/img/avatar.png') }}">
-						@endif
-						<span>Hi,{{Auth::user()->FirstName}}</span>
-					</a>
+				<li style="border-left: 1px solid grey;">
+					@if(Auth::user()->Signature == '')
+					<img id="userPic" alt="the avatar of user" class="img-circle" src="{{ asset('storage/global/layout3/img/avatar.png') }}">
+					@else
+					<img id="userPic" alt="the avatar of user" class="img-circle" src="{{ Auth::user()->Signature }}" height="50px" width="50px">
+					@endif
+				</li>
+				<li class="dropdown dropdown-user">
+					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false" style="color: white;"> Hi,{{Auth::user()->FirstName}} </a>
 					<ul class="dropdown-menu dropdown-menu-default">
 						<li>
 							<a href="#newTravel" data-toggle="modal">
@@ -134,7 +134,6 @@
 								<i class="fa fa-sign-out"></i> Logon Non NEO Account
 							</a>
 						</li>
-						
 						<li>
 							<a href="/auth/logout">
 								<i class="fa fa-sign-out"></i> Log Out
@@ -173,4 +172,8 @@ $('input[type=checkbox]').bootstrapSwitch({ onSwitchChange:function(e, data){
 		});
 	}
 } });
+
+$('#userPic').click(function(){
+	$('#userProfileModal').modal('show');
+});
 </script>

@@ -4,9 +4,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Repositories\UserRepository;
+use App\Http\Traits\GDI;
+
 
 class UserController extends Controller {
-
+	use GDI;
 	public function __construct(UserRepository $user) 
 	{
 		$this->user=$user;
@@ -67,14 +69,26 @@ class UserController extends Controller {
 	}
 
 	/**
-	 * Update the specified resource in storage.
+	 * Update the specified the profile of user resource
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(User $user,Request $request)
 	{
-		//
+		$updateData = array ();
+		if ($request->hasFile('Signature')) {
+			$file = $request->file('Signature');
+			if (! $file->isValid()) {
+				exit('Signature upload occur errors');
+			}
+			$Signature_Filename = $file->getRealPath() . '.jpg';
+			self::ImageToJpeg($file->getRealPath(), $file->getMimeType(), $Signature_Filename);
+			$updateData['Signature'] = file_get_contents($Signature_Filename);
+			$user->update($updateData);
+		}
+		
+		return redirect()->route('dashboard');
 	}
 
 	/**

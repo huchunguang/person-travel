@@ -137,7 +137,9 @@
 					<div class="page-content">@yield('content')</div>
 				</div>
 			</div>
-			@include('etravel.modal.newTravel') @include("etravel.layout.footer")
+			@include('etravel.modal.newTravel')
+			@include("etravel.modal.userProfile") 
+			@include("etravel.layout.footer")
 		</div>
 	</div>
 	<script src="{{asset('js/etravel/trip/demosticCreate.js')}}"></script>

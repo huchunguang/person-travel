@@ -158,7 +158,7 @@
 											<div class="row" style="background-color: #eef1f5; margin-left: 1px; height: 34px; margin-right: 1px;">
 												<div class="col-md-10" style="margin-top: 10px;">
 													<span class="icon icon-user-tie"></span>
-													{{ isset($currentUser->manager()->first()->LastName)? $currentUser->manager()->first()->LastName :'' }} {{ isset($currentUser->manager()->first()->FirstName)? $currentUser->manager()->first()->FirstName :'' }}
+													{{ isset(Auth::user()->manager()->first()->LastName)? Auth::user()->manager()->first()->LastName :'' }} {{ isset(Auth::user()->manager()->first()->FirstName)? Auth::user()->manager()->first()->FirstName :'' }}
 												</div>
 												<div class="col-md-2">
 													<input type="text" class="form-control" disabled style="border: none;" />

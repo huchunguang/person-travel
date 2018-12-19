@@ -103,6 +103,11 @@ class EtravelRoutes
 						$router->get('userWorkflow/{user}','UserController@getWorkflow');
 						#User Travel of Purpose
 						$router->get('userTravelOfPurpose/{user}','UserController@tripOfPurpose');
+						
+						#Update the profile of user
+						$router->post('userUpdate/{user}','UserController@update');
+						
+						
 					});
 					
 						
