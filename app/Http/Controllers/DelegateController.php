@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Events\DelegationNotify;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Cookie;
 
 class DelegateController extends Controller {
 
@@ -27,14 +28,10 @@ class DelegateController extends Controller {
 	 */
 	public function index(Request $request)
 	{
-		$breadcrumb='delegation';
-		$countryId = $request->input('country_id',old('country_id')?old('country_id'):$this->system->countryId);
-		$siteId = $request->input('site_id',old('site_id')?old('site_id'):$this->system->siteId);
-		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
-		$siteList =  Site::where(['CountryID'=>$countryId])->get();
-		$userListBySite = User::where('SiteID',$siteId)->get(['FirstName','LastName','UserID']);
-		$delegateUser = User::find(old('ManagerDelegationID'));
-		return view('/etravel/delegate/index',compact('breadcrumb','countryList','siteList','userListBySite','delegateUser'));
+		$delegateList=Delegation::where(['ManagerID'=>Auth::user()->UserID])->paginate(PAGE_SIZE);
+// 		dd($delegateList->toArray());
+		return view('/etravel/delegate/index',compact('delegateList'));
+		
 	}
 
 	/**
@@ -44,7 +41,12 @@ class DelegateController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		$breadcrumb='delegation';
+		$countryList = Country::orderBy('Country')->select(['CountryID','Country'])->get();
+		$userListBySite = User::get(['FirstName','LastName','UserID']);
+		$delegateUser = User::find(old('ManagerDelegationID'));
+		return view('/etravel/delegate/create',compact('breadcrumb','countryList','userListBySite','delegateUser'));
+		
 	}
 
 	/**
@@ -56,17 +58,20 @@ class DelegateController extends Controller {
 	{
 		
 		$delegationId=$request->input('delegationId');
+// 		dd($request->all());
 		if (!$delegationId){
-			if (Delegation::where(['ManagerID'=>Auth::user()->UserID])->exists()){
+			if (Delegation::where(['ManagerID'=>Auth::user()->UserID,'country_id'=>$request->input('country_id')])->exists()){
 				$delegationId = Delegation::where(['ManagerID'=>Auth::user()->UserID])->first()->DelegationID;
+// 				dd($delegationId);
 				goto update;
 			}
 			$delegation = Delegation::create($request->all());
 		}else{
 // 			dd($request->all());
 			update:
-			$updata = $request->only(['ManagerID','ManagerDelegationID','DelegationStartDate','DelegationEndDate','EnableDelegation']);
+			$updata = $request->only(['country_id','ManagerID','ManagerDelegationID','DelegationStartDate','DelegationEndDate','EnableDelegation']);
 			$delegation = Delegation::find($delegationId);
+// 			dd($updata);
 			$delegation->update($updata);
 		}
 // 		dd($delegation->DelegationEndDate);

@@ -31,7 +31,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		
 		'Pwd',
 		'remember_token',
-		'Signature',
+	    'Signature',
 	);
 	protected $guarded = [
 		
@@ -46,17 +46,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	{
 		return $this->belongsTo('App\Costcenter', 'DefaultCostCenterID', 'CostCenterID');
 	}
-
 	
 	public function employmentstatus(){
-		return $this->belongsTo('App\Employmentstatus', 'EmploymentStatusID', 'EmploymentStatusID');
-		
+	    return $this->belongsTo('App\Employmentstatus', 'EmploymentStatusID', 'EmploymentStatusID');
+	    
 	}
 	
 	public function employmentcategory(){
-		return $this->belongsTo('App\Employmentcategory', 'EmploymentCategoryID', 'EmploymentCategoryID');
-		
+	    return $this->belongsTo('App\Employmentcategory', 'EmploymentCategoryID', 'EmploymentCategoryID');
+	    
 	}
+
 	/**
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -123,34 +123,45 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	public static function checkIsDelegate(&$value, $key)
 	{
-		if (Delegation::where([ 
-			
-			'ManagerID' => $value,
-			'EnableDelegation' => 1
-		])->exists()) {
-			$delegation = Delegation::where(['ManagerID'=>$value,'EnableDelegation' => 1])->orderBy('DelegationID','DESC')->first();
-			$currentDate = Carbon::now();
-// 			dd(Carbon::parse($delegation->DelegationEndDate));
-			if($currentDate->lte(Carbon::parse($delegation->DelegationEndDate)) && $currentDate->gte(Carbon::parse($delegation->DelegationStartDate))){
-				$value = $delegation->ManagerDelegationID;
-			}
-			
-		}else{
-			//to do something what you need 
-		}
+	    $whereFilter=[
+	        
+	        'ManagerID' => $value,
+	        'country_id'=>Auth::user()->CountryAssignedID,
+	        'EnableDelegation' => 1,
+	    ];
+	    
+	    
+	    if (Delegation::where($whereFilter)->exists()) {
+	        
+	        $currentDate = Carbon::now()->format('Y-m-d');
+	        $delegation = Delegation::where($whereFilter)
+	        ->where('DelegationStartDate','<=',$currentDate)
+	        ->where('DelegationEndDate','>=',$currentDate)
+	        ->orderBy('DelegationID','DESC')->first();
+	        
+	        // 			dd($delegation->DelegationStartDate);
+	        $value = $delegation->ManagerDelegationID;
+	        
+	    }else{
+	        //to do something what you need
+	    }
+	    
+	    
+	    // 		if ($value==5469){
+	    // 		print_r($whereFilter);die;
+	    // 		}
 	}
 	
 	public function getSignatureAttribute($value, $mime_type='image/jpeg')
 	{
-		
-		$result = '';
-		if (!empty($mime_type) && !empty($value)){
-			$result = 'data:'.$mime_type.';base64,'.base64_encode($value);
-		}
-		return $result;
-		
+	    
+	    $result = '';
+	    if (!empty($mime_type) && !empty($value)){
+	        $result = 'data:'.$mime_type.';base64,'.base64_encode($value);
+	    }
+	    return $result;
+	    
 	}
-	
 	
 }
 

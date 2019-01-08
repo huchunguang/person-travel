@@ -7,7 +7,7 @@ class Delegation extends Model {
 	protected $table='delegation';
 	protected $primaryKey='DelegationID';
 	protected $fillable = [ 
-		
+		'country_id',
 		'DelegationID',
 		'ManagerID',
 		'ManagerDelegationID',
@@ -25,6 +25,11 @@ class Delegation extends Model {
 		return $this->belongsTo('App\User','ManagerID','UserID');
 	}
 	
+	public function delegatedCountry()
+	{
+		return $this->belongsTo('App\Country','country_id','CountryID');
+	}
+	
 	public function delegatedApprover()
 	{
 		return $this->belongsTo('App\User','ManagerDelegationID','UserID');	
@@ -38,5 +43,14 @@ class Delegation extends Model {
 	public function setDelegationEndDateAttribute($value)
 	{
 		$this->attributes['DelegationEndDate'] = preg_replace('/(\d{2})\/(\d{2})\/(\d{4})/', '$3-$1-$2', $value);
+	}
+	
+	public function getEnableDelegationAttribute($value)
+	{
+		if ($value==1){
+			return $this->attributes['EnableDelegation']='enable';
+		}else{
+			return $this->attributes['EnableDelegation']='disabled';
+		}
 	}
 }

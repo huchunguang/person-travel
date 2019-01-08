@@ -1,7 +1,7 @@
 jQuery(document).ready(function() {
 	$('input[name="start_date"]').prop('disabled',true);
 	$('input[name="end_date"]').prop('disabled',true);
-	$('#delegate_id').prop('disabled',true);
+	$('.delegate_id').prop('disabled',true);
 	$('input[name="EnableDelegation"]').iCheck('disable');
 	$('input').iCheck({checkboxClass: 'icheckbox_minimal-green'});
 	$(".leave-date").prop('disabled',true);
@@ -80,7 +80,7 @@ $("#delegateEdit").on('click', function () {
 });
 function enableDelegationControl(df){
 	$(".leave-date").prop('disabled',!df);
-    $("#delegate_id").prop('disabled', !df);
+    $(".delegate_id").prop('disabled', !df);
     $('input[name="EnableDelegation"]').iCheck('enable');
 }
 
@@ -89,7 +89,7 @@ $('.delegate-date').on('apply.daterangepicker', function(ev, picker) {
 	enableDelegationSave();
 });
 
-$("#delegate_id").change(function () {
+$(".delegate_id").change(function () {
     enableDelegationSave();
 });
 $('input[name="EnableDelegation"]').on('ifClicked',function(){

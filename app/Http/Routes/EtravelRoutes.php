@@ -72,6 +72,8 @@ class EtravelRoutes
 				//
 				$router->group(['middleware'=>'checkUser'],function($router){
 					$router->get('delegate/index','DelegateController@index');
+					$router->get('delegate/create','DelegateController@create');
+					
 					$router->post('delegate/store','DelegateController@store');
 				});
 					$router->group([],function($router){
