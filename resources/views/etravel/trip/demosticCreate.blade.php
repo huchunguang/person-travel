@@ -126,6 +126,24 @@
 											</select>
 										</div>
 									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label">CC</label>
+											@if(Auth::user()->CountryAssignedID ==15)
+											<select id="cc" name="cc[]" class="form-control select2" multiple>
+												@else
+												<select id="cc" name="cc[]" class="form-control select2" multiple>
+													@endif
+													<option value="">Select an option</option>
+													@foreach($userList as $user) @if(Auth::user()->CountryAssignedID ==15 && $user['Email']=='hiroko.yamada@arkema.com')
+													<option value="{{$user['Email']}}" selected>{{$user['LastName']}} {{$user['FirstName']}}</option>
+													@else
+													<option value="{{$user['Email']}}">{{$user['LastName']}} {{$user['FirstName']}}</option>
+													@endif @endforeach
+												</select>
+										
+										</div>
+									</div>
 								</div>
 								<hr class="divider" />
 								<div class="row">
@@ -195,7 +213,7 @@
 										</div>
 									</div>
 								</div>
-								<div id="advance_amount_section" class="row" style="display:none;">
+								<div id="advance_amount_section" class="row" style="display: none;">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Advance Amount</label>

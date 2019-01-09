@@ -107,6 +107,18 @@
 															<input type="text" name="project_code" class="form-control" disabled value="{{ $trip->wbsCode()->first()['wbs_code'] }}" />
 														</div>
 													</div>
+													<div class="col-md-6">
+														@if($trip->cc)
+														<div class="form-group">
+															<label class="control-label">CC</label>
+															<select name="CC" class="form-control select2" disabled multiple>
+																@foreach($trip->cc as $item)
+																<option value="{{$item}}" selected>{{$item}}</option>
+																@endforeach
+															</select>
+														</div>
+														@endif
+													</div>
 												</div>
 												<hr class="divider" />
 												<div class="row">

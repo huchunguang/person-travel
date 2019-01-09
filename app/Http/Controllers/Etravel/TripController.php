@@ -175,6 +175,7 @@ class TripController extends AdminController
 			$tripData['site_id']=$user->SiteID;
 			$tripData['company_id']=$user->CompanyID;
 			$tripData['reference_id']=Trip_counter::generateRefId();
+			$tripData['cc']=$request->input('cc');
 			User::getUserProfile($request,$user);
 			$approverAssocOrigin = User::$approverAssocOrigin;
 			$department_approver = $request->input('department_approver');
@@ -333,7 +334,6 @@ class TripController extends AdminController
 			$approvedCnt=$trip->demostic()->count();
 		}
 		$demosticInfo = $trip->demostic()->get();
-// 				dd($userObjMdl);
 		return view('/etravel/trip/tripDemosticDetail', [
 			'userObjMdl'=>$userObjMdl,
 			'applicantUser'=>$applicantUser,
@@ -342,7 +342,7 @@ class TripController extends AdminController
 			'approvedCnt'=>$approvedCnt,
 			'demosticInfo' => $demosticInfo,
 			'department' => $trip->department()->first()->Department,
-			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode
+			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
 		]);
 	}
 	/**
