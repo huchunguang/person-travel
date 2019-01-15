@@ -541,27 +541,48 @@ $('.airlineSel').on('change',function(){
 	}
 	
 });
-$('.modal input[name="hotel_name[]"]').on('click',function(){
-	$('#hotelList').modal('show');
+
+
+
+
+
+$(':radio[name="hotel_is_corporate"]').on('ifChecked',function(event){
+	var isChecked=parseInt($(this).val());
+	if(Boolean(isChecked)){
+		$('.modal input[name="hotel_name[]"]').on('click',function(){
+			$('#hotelList').modal('show');
+		});
+		$('.rateSelectBox').css('display','block');
+		$('.rateTextField').css('display','none');
+	}else{
+		$('.modal input[name="hotel_name[]"]').off('click');
+		$('.rateSelectBox').css('display','none');
+		$('.rateTextField').css('display','block');
+	}
 });
+
 //New Accommodation
 var addnewLineNum = 0;
 function addNewAccommodation(){
 	var hotel_id=$('.modal input[name="hotel_id[]"]').val();
 	var hotel_name=$('.modal input[name="hotel_name[]"]').val();
-	var rate=$('.modal #rate').val();
 	var checkin_date=$('.modal input[name="checkin_date[]"]').val();
 	var checkout_date=$('.modal input[name="checkout_date[]"]').val();
+	var hotel_is_corporate=$('.hotel_is_corporate:checked').val();
+	if(hotel_is_corporate==1){
+		var rate=$('.rateSelectBox').val();
+	}else{
+		var rate=$('.rateTextField').val();
+	}
 	if(hotel_name=='' || checkin_date=='' || checkout_date==''){
 		return false;
 	}	
 	addnewLineNum++;
-
 	 var rowTem = '<tr id="tr_' + addnewLineNum + '" onclick="showHotelItemOperate(this)" data-id="'+ addnewLineNum +'">'
      + '<td><input type="hidden" name="hotel_id[]" value="'+hotel_id+'"/><input type="hidden" name="hotel_name[]" value="'+hotel_name+'"/>'+hotel_name+'</td>'
      + '<td><input type="hidden" name="checkin_date[]" value="'+checkin_date+'"/>'+checkin_date+'</td>'
      + '<td><input type="hidden" name="checkout_date[]" value="'+checkout_date+'"/>'+checkout_date+'</td>'
-     + '<td><input type="hidden" name="rate[]" value="'+rate+'"/>'+rate+'</td>'
+     + '<td><input type="hidden" name="rate[]" value="'+rate+'"/>'+rate+'<input type="hidden" name="hotel_is_corporate[]" value="'+hotel_is_corporate+'"/></td>'
      + '</tr>';
 	 var editId=$('.modal input[name="tr_id"]').val();
 	 if(editId){
@@ -569,7 +590,7 @@ function addNewAccommodation(){
 		 rowTem = '<td><input type="hidden" name="hotel_id[]" value="'+hotel_id+'"/><input type="hidden" name="accomodate_id[]"value="'+accomodate_id+'" /><input type="hidden" name="hotel_name[]" value="'+hotel_name+'"/>'+hotel_name+'</td>'
 	     + '<td><input type="hidden" name="checkin_date[]" value="'+checkin_date+'"/>'+checkin_date+'</td>'
 	     + '<td><input type="hidden" name="checkout_date[]" value="'+checkout_date+'"/>'+checkout_date+'</td>'
-	     + '<td><input type="hidden" name="rate[]" value="'+rate+'"/>'+rate+'</td>';
+	     + '<td><input type="hidden" name="rate[]" value="'+rate+'"/>'+rate+'</td><input type="hidden" name="hotel_is_corporate[]" value="'+hotel_is_corporate+'"/>';
 		 
 		 	$tr = $('#tr_'+editId).html(rowTem);
 		 	
@@ -580,7 +601,22 @@ function addNewAccommodation(){
 }
 
 $('#addNewAccommodation').on('hide.bs.modal', function () {
-	$('.modal input').val('');
+	$('.modal input:not(.hotel_is_corporate)').val('');
+});
+
+$('#addNewAccommodation').on('shown.bs.modal', function () {
+	if($('.hotel_is_corporate:checked').val()==1){
+		$('.modal input[name="hotel_name[]"]').on('click',function(){
+			$('#hotelList').modal('show');
+		});
+		$('.rateSelectBox').css('display','block');
+		$('.rateTextField').css('display','none');
+	}
+else{
+		$('.modal input[name="hotel_name[]"]').off('click');
+		$('.rateSelectBox').css('display','none');
+		$('.rateTextField').css('display','block');
+	}
 });
 function editHotel()
 {
@@ -591,12 +627,23 @@ function editHotel()
 	var checkin_date=$('#tr_'+id+' input[name="checkin_date[]"]').val();
 	var checkout_date=$('#tr_'+id+' input[name="checkout_date[]"]').val();
 	var rate=$('#tr_'+id+' input[name="rate[]"]').val();
+	var hotel_is_corporate=$('#tr_'+id+' input[name="hotel_is_corporate[]"]').val();
+	if(hotel_is_corporate==1){
+		$('.modal #hotel__corporate').iCheck('check');
+		$('.rateSelectBox').css('display','block');
+		$('.rateTextField').css('display','none');
+		$('.modal #rate').empty().append("<option value='"+rate+"'>"+rate+"</option>");
+	}else{
+		$('.modal #hotel_non_corporate').iCheck('check');
+		$('.rateSelectBox').css('display','none');
+		$('.rateTextField').css('display','block').val(rate);
+	}
 	
 	$('.modal input[name="hotel_id[]"]').val(hotel_id);
 	$('.modal input[name="hotel_name[]"]').val(hotel_name);
 	$('.modal input[name="checkin_date[]"]').val(checkin_date);
 	$('.modal input[name="checkout_date[]"]').val(checkout_date);
-	$('.modal #rate').empty().append("<option value='"+rate+"'>"+rate+"</option>");
+	
 	$('.modal input[name="tr_id"]').val(id);
 	//
 	$('#addNewAccommodation').modal('show');
@@ -629,7 +676,7 @@ function delHotelItem(){
 
 //New Flight
 function showFlight(){
-	$('.modal input').val('');
+	$('.modal input:not(.hotel_is_corporate)').val('');
 	$(".modal #airline_or_train").val("1").select2()
 //	$('#addNewFlight').modal("show");
 	$('#airlineList').modal('show');
@@ -707,7 +754,7 @@ $('#addNewFlight').on('hide.bs.modal', function () {
 //	}
 	var flag = $('.modal #modalFlag').val();
 	if(flag){
-		$('.modal input').val('');
+		$('.modal input:not(.hotel_is_corporate)').val('');
 	}
 });
 

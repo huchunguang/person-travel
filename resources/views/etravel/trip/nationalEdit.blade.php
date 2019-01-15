@@ -561,6 +561,7 @@
 																			</td>
 																			<td>
 																				<input type="hidden" name="rate[]" value="{{$hotelItem['rate']}}" />
+																				<input type="hidden" name="hotel_is_corporate[]" value="{{$hotelItem['hotel_is_corporate']}}" />
 																				{{$hotelItem['rate']}}
 																			</td>
 																		</tr>

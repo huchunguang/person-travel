@@ -268,7 +268,7 @@ class TripController extends AdminController
     			$trip->save();
     			$flightData=$request->only(['air_code','flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
     			$flightData=array_bound_key($flightData);
-    			$hotelData=$request->only(['hotel_id','hotel_name','checkin_date','checkout_date','rate']);
+    			$hotelData=$request->only(['hotel_id','hotel_is_corporate','hotel_name','checkin_date','checkout_date','rate']);
     			$hotelData=array_bound_key($hotelData);
     			$estimateExpenses=$request->only(['estimate_type','employee_annual_budget','employee_ytd_expenses','available_amount','required_amount']);
     			$estimateExpenses=array_bound_key($estimateExpenses);
@@ -587,7 +587,7 @@ class TripController extends AdminController
 			$flightData=$request->only(['air_code','flight_id','flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
 			$flightData=array_bound_key($flightData);
 // 			dd($flightData);
-			$hotelData=$request->only(['hotel_id','accomodate_id','hotel_name','checkin_date','checkout_date','rate']);
+			$hotelData=$request->only(['hotel_id','accomodate_id','hotel_is_corporate','hotel_name','checkin_date','checkout_date','rate']);
 // 			dd($hotelData);
 			$hotelData=array_bound_key($hotelData);
 // 			dd($hotelData);
