@@ -126,4 +126,8 @@ class Trip extends Model
 	{
 		return $value ? json_decode($value, true) : [ ];
 	}
+	public function isNationalTrip(Trip $trip)
+	{
+		return $trip->trip_type==1?true:false;
+	}
 }

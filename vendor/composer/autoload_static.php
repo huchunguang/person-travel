@@ -70,6 +70,10 @@ class ComposerStaticInit6e25a876f3dfc689cbaa9fbf331f1cfd
         array (
             'League\\Flysystem\\' => 17,
         ),
+        'K' => 
+        array (
+            'Knp\\Snappy\\' => 11,
+        ),
         'I' => 
         array (
             'Intervention\\Image\\' => 19,
@@ -91,6 +95,10 @@ class ComposerStaticInit6e25a876f3dfc689cbaa9fbf331f1cfd
         array (
             'Cron\\' => 5,
             'ClassPreloader\\' => 15,
+        ),
+        'B' => 
+        array (
+            'Barryvdh\\Snappy\\' => 16,
         ),
         'A' => 
         array (
@@ -173,6 +181,10 @@ class ComposerStaticInit6e25a876f3dfc689cbaa9fbf331f1cfd
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
         ),
+        'Knp\\Snappy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy',
+        ),
         'Intervention\\Image\\' => 
         array (
             0 => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image',
@@ -212,6 +224,10 @@ class ComposerStaticInit6e25a876f3dfc689cbaa9fbf331f1cfd
         'ClassPreloader\\' => 
         array (
             0 => __DIR__ . '/..' . '/classpreloader/classpreloader/src',
+        ),
+        'Barryvdh\\Snappy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src',
         ),
         'App\\' => 
         array (
@@ -414,6 +430,7 @@ class ComposerStaticInit6e25a876f3dfc689cbaa9fbf331f1cfd
         'App\\Http\\Requests\\UpdateOvertimeRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateOvertimeRequest.php',
         'App\\Http\\Routes\\EtravelRoutes' => __DIR__ . '/../..' . '/app/Http/Routes/EtravelRoutes.php',
         'App\\Http\\Routes\\OvertimeRoutes' => __DIR__ . '/../..' . '/app/Http/Routes/OvertimeRoutes.php',
+        'App\\Http\\Traits\\GDI' => __DIR__ . '/../..' . '/app/Http/Traits/GDI.php',
         'App\\Http\\Traits\\counterSeries' => __DIR__ . '/../..' . '/app/Http/Traits/counterSeries.php',
         'App\\Http\\Traits\\parseSearchFilter' => __DIR__ . '/../..' . '/app/Http/Traits/parsesearchFilter.php',
         'App\\Http\\Traits\\readRequestCreator' => __DIR__ . '/../..' . '/app/Http/Traits/readRequestCreator.php',
@@ -459,6 +476,14 @@ class ComposerStaticInit6e25a876f3dfc689cbaa9fbf331f1cfd
         'App\\Trip_purpose' => __DIR__ . '/../..' . '/app/Trip_purpose.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'App\\Wbscode' => __DIR__ . '/../..' . '/app/Wbscode.php',
+        'Barryvdh\\Snappy\\Facades\\SnappyImage' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/Facades/SnappyImage.php',
+        'Barryvdh\\Snappy\\Facades\\SnappyPdf' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/Facades/SnappyPdf.php',
+        'Barryvdh\\Snappy\\IlluminateSnappyImage' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/IlluminateSnappyImage.php',
+        'Barryvdh\\Snappy\\IlluminateSnappyPdf' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/IlluminateSnappyPdf.php',
+        'Barryvdh\\Snappy\\ImageWrapper' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/ImageWrapper.php',
+        'Barryvdh\\Snappy\\LumenServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/LumenServiceProvider.php',
+        'Barryvdh\\Snappy\\PdfWrapper' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/PdfWrapper.php',
+        'Barryvdh\\Snappy\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/ServiceProvider.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
         'Carbon\\CarbonPeriod' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonPeriod.php',
@@ -1246,6 +1271,11 @@ class ComposerStaticInit6e25a876f3dfc689cbaa9fbf331f1cfd
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
         'JsonSerializable' => __DIR__ . '/..' . '/nesbot/carbon/src/JsonSerializable.php',
+        'Knp\\Snappy\\AbstractGenerator' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/AbstractGenerator.php',
+        'Knp\\Snappy\\Exception\\FileAlreadyExistsException' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Exception/FileAlreadyExistsException.php',
+        'Knp\\Snappy\\GeneratorInterface' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/GeneratorInterface.php',
+        'Knp\\Snappy\\Image' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Image.php',
+        'Knp\\Snappy\\Pdf' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Pdf.php',
         'League\\Flysystem\\AdapterInterface' => __DIR__ . '/..' . '/league/flysystem/src/AdapterInterface.php',
         'League\\Flysystem\\Adapter\\AbstractAdapter' => __DIR__ . '/..' . '/league/flysystem/src/Adapter/AbstractAdapter.php',
         'League\\Flysystem\\Adapter\\AbstractFtpAdapter' => __DIR__ . '/..' . '/league/flysystem/src/Adapter/AbstractFtpAdapter.php',
