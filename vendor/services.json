@@ -30,7 +30,8 @@
         "App\\Providers\\SystemServiceProvider",
         "App\\Providers\\ComposerServiceProvider",
         "App\\Providers\\ResponseMacroServiceProvider",
-        "Maatwebsite\\Excel\\ExcelServiceProvider"
+        "Maatwebsite\\Excel\\ExcelServiceProvider",
+        "Barryvdh\\Snappy\\ServiceProvider"
     ],
     "eager": [
         "Illuminate\\Auth\\AuthServiceProvider",
@@ -52,7 +53,8 @@
         "App\\Providers\\SystemServiceProvider",
         "App\\Providers\\ComposerServiceProvider",
         "App\\Providers\\ResponseMacroServiceProvider",
-        "Maatwebsite\\Excel\\ExcelServiceProvider"
+        "Maatwebsite\\Excel\\ExcelServiceProvider",
+        "Barryvdh\\Snappy\\ServiceProvider"
     ],
     "deferred": {
         "command.app.name": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",

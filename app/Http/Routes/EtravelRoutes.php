@@ -117,6 +117,10 @@ class EtravelRoutes
 						$router->get('download','FileController@download');
 						#Excel
 						$router->get('excel/export','ExcelController@exportTripList');
+						#Priting
+						$router->get('trip/printing/{trip}','PritingController@index');
+						$router->get('trip/printing-national/{trip}','PritingController@showNationalTrip');
+						$router->get('trip/printing-domestic/{trip}','PritingController@showDomesticTrip');
 						
 						
 	}

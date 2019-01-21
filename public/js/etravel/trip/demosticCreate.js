@@ -5,7 +5,7 @@
 			$('.singleDatePicker').daterangepicker({
 		        startDate: moment(),
 		        endDate: moment().endOf('month'),
-		        drops: "up",
+		        drops: "down",
 		        singleDatePicker:true,
 		    },
 		    function(start, end) {

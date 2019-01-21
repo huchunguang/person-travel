@@ -284,6 +284,9 @@
 													<i class="fa fa-share"></i> <u>C</u>ancel
 												</button>
 												@endif
+												<button id="TravelTypeCancel" type="button" accesskey="P" onclick="window.location.href='/trip/printing/{{$trip->trip_id}}'" class="btn btn-primary">
+													<i class=" <u> P</u>rint"></i> <u>P</u>rint
+												</button>
 											</div>
 										</div>
 									</div>
