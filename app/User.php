@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use phpDocumentor\Reflection\Types\Static_;
 use App\Http\Traits\selectApprover;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -161,6 +162,21 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	    }
 	    return $result;
 	    
+	}
+	
+	public function getHrList($columns=['*'])
+	{
+		$hrUserList = array();
+		// 		dd(Auth::user()->SiteID);
+		$res = DB::select('SELECT * FROM tbl_hr_access  where find_in_set(:site_id,`SiteIDs`) and `HRRoleID`=1;',$filter=[
+			'site_id'=>$this->SiteID,
+		]);
+		// 		dd($res);
+		$hrIds = array_pluck($res, 'HRID');
+// 		dd($hrIds);
+		$hrUserList = User::whereIn('UserID',$hrIds)->get($columns);
+		// 		dd($hrUserList->toArray());
+		return $hrUserList;
 	}
 	
 }

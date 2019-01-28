@@ -39,6 +39,7 @@ use App\Http\Traits\selectApprover;
 use App\Http\Controllers\Etravel\ApproverController as ApproverApi;
 use App\Repositories\ApproverRepository;
 use App\Delegation;
+use App\Trip_log;
 
 class TripController extends AdminController
 {
@@ -58,6 +59,7 @@ class TripController extends AdminController
 	 */
 	public function create(Request $requset)
 	{
+		
 		$userList = User::all(['Email','FirstName','LastName','UserName','UserID']);
 		$userProfile = User::getUserProfile();
 // 		dd(User::$approverAssocOrigin);
@@ -68,7 +70,7 @@ class TripController extends AdminController
 			'Country',
 			'RegionID'
 		])->get();
-		$airlineList = Airline::all();
+		$airlineList = Airline::orderBy('airline_name','ASC')->get();
 		$hotelList = new EhotelApi();
 		$hotelList = $hotelList->getHotelList();
 		$transit=$requset->get('transit');
@@ -169,7 +171,7 @@ class TripController extends AdminController
 			'entertain_detail',
 		]));
 		$user=User::find($user_id);
-		DB::transaction(function()use($tripData,$demosticData,$request,$user){
+		return DB::transaction(function()use($tripData,$demosticData,$request,$user){
 			$tripData['department_id']=$request->input('department_id',$this->system->DepartmentID);
 			$tripData['country_id']=$user->CountryAssignedID;
 			$tripData['site_id']=$user->SiteID;
@@ -190,9 +192,11 @@ class TripController extends AdminController
 			}
 			Trip_counter::updateSeries();
 			Event::fire(new TripNotify($tripObjMdl, $request, 'submitted'));
+			return redirect()->route('triplist',['user'=>Auth::user()->UserID])->with('trip',$tripObjMdl);
+			
+			
 		});
-		
-    	return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
+			
     }
     
     /**
@@ -266,14 +270,14 @@ class TripController extends AdminController
     			$trip->flight_itinerary_prefer=$request->only(['is_sent_affairs','CC']);
     			$trip->hotel_prefer=$request->only(['rep_office','room_type','smoking','foods','per_hotel_name','rate_per_night','no_of_nights','total_amount']);
     			$trip->save();
-    			$flightData=$request->only(['air_code','flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
+    			$flightData=$request->only(['air_code','flight_date','flight_from','flight_to','flight_no','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
     			$flightData=array_bound_key($flightData);
     			$hotelData=$request->only(['hotel_id','hotel_is_corporate','hotel_name','checkin_date','checkout_date','rate']);
     			$hotelData=array_bound_key($hotelData);
     			$estimateExpenses=$request->only(['estimate_type','employee_annual_budget','employee_ytd_expenses','available_amount','required_amount']);
     			$estimateExpenses=array_bound_key($estimateExpenses);
     			$insuranceData=$request->only(['insurance_type','nominee_name','passport_fullname','nric_no','nric_num','elationship']);
-    			
+//     			dd($flightData);
     			foreach ($flightData as $flightItem)
     			{
     				$trip->flight()->create($flightItem);
@@ -292,7 +296,7 @@ class TripController extends AdminController
     			Trip_counter::updateSeries();
     			DB::commit();
     			Event::fire(new TripNotify($trip, $request, 'submitted'));
-    			return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
+    			return redirect()->route('triplist',['user'=>Auth::user()->UserID])->with('trip',$trip);
     		} catch (Exception $e) {
     			DB::rollBack();
     		}
@@ -343,6 +347,7 @@ class TripController extends AdminController
 			'demosticInfo' => $demosticInfo,
 			'department' => $trip->department()->first()->Department,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
+			'workflowInfo'=>$trip->workflow()->get(),
 		]);
 	}
 	/**
@@ -388,8 +393,8 @@ class TripController extends AdminController
 			'rep_office' => $rep_office,
 			'costCenterCode' => $trip->costcenter()->first()->CostCenterCode,
 			'department' => $trip->department()->first()->Department,
-			'cc' => $trip->cc
-		
+			'cc' => $trip->cc,
+			'workflowInfo'=>$trip->workflow()->get(),
 		]);
 	}
 
@@ -474,7 +479,7 @@ class TripController extends AdminController
 // 			'ccUser'=>$this->trip->getCcUser($trip)->toArray(),
 			'hotelList'=>$hotelList,
 			'cityAirportList'=>City_airport::all(),
-			'airlineList' => Airline::all(),
+			'airlineList' => Airline::orderBy('airline_name','ASC')->get(),
 			'departmentList'=> $this->getDepByCompanySite($trip->site_id,$trip->company_id),
 			'userList'=>$userList,
 			'wbsList'=>$this->system->getWbscodeList($trip->company_id),
@@ -502,7 +507,7 @@ class TripController extends AdminController
 			
 		]));
 		DB::transaction(function()use($trip,$request,$demostic_data){
-			$trip->status=($request->input('status')=='partly-approved' || $request->input('status')=='rejected')?'pending':$request->input('status');
+			$trip->status=($request->input('status')=='partly-approved' || $request->input('status')=='rejected' || $request->input('status')=='approved')?'pending':$request->input('status');
 			$trip->department_id=$request->input('department_id',$this->system->DepartmentID);
 			$trip->department_approver=$request->input('department_approver');
 			$trip->cost_center_id=$request->input('cost_center_id');
@@ -535,7 +540,7 @@ class TripController extends AdminController
 			Event::fire(new TripNotify($trip, $request, $trip->status));
 		});
 		$user_id=Auth::user()->UserID;
-		return redirect('/etravel/'.$user_id.'/triplist?status=pending');
+		return redirect('/etravel/'.$user_id.'/triplist?status=pending')->with('trip',$trip);
 	}
 	/**
 	 * @desc store demostic update data by it owner creater(Resubmit)
@@ -549,7 +554,7 @@ class TripController extends AdminController
 		DB::beginTransaction();
 		try {
 // 			$trip->user_id = Auth::user()->UserID;
-			$trip->status = $request->input('status') == 'rejected' ? 'pending' : $request->input('status');
+			$trip->status = $request->input('status') == 'rejected' || $request->input('status') == 'approved'? 'pending' : $request->input('status');
 // 			$trip->destination_id = $request->input('destination');
 			$trip->cc=$request->input('cc');
 			$trip->department_id= $request->input('department_id');
@@ -584,7 +589,7 @@ class TripController extends AdminController
 				$trip->is_depart_approved='0';
 			}
 			$trip->save();
-			$flightData=$request->only(['air_code','flight_id','flight_date','flight_from','flight_to','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
+			$flightData=$request->only(['air_code','flight_id','flight_date','flight_from','flight_to','flight_no','airline_or_train','etd_time','eta_time','class_flight','is_visa']);
 			$flightData=array_bound_key($flightData);
 // 			dd($flightData);
 			$hotelData=$request->only(['hotel_id','accomodate_id','hotel_is_corporate','hotel_name','checkin_date','checkout_date','rate']);
@@ -658,7 +663,7 @@ class TripController extends AdminController
 			DB::commit();
 			Event::fire(new TripNotify($trip, $request, $trip->status));
 			
-			return redirect()->route('triplist',['user'=>Auth::user()->UserID]);
+			return redirect()->route('triplist',['user'=>Auth::user()->UserID])->with('trip',$trip);
 		} catch (Exception $e) {
 			DB::rollBack();
 		}
@@ -676,7 +681,7 @@ class TripController extends AdminController
 			$trip->save();
 			Event::fire(new TripNotify($trip, $request, $trip->status));
 		}
-		return redirect('/etravel/' . $user_id . '/triplist?status=cancelled');
+		return redirect('/etravel/' . $user_id . '/triplist?status=cancelled')->with('trip',$trip);
 	}
 	/**
 	 * @param TripCancelRequest $request
@@ -690,7 +695,7 @@ class TripController extends AdminController
 			$trip->save();
 			Event::fire(new TripNotify($trip, $request, $trip->status));
 		}
-		return redirect('/etravel/tripnationallist/' . $trip->trip_id);
+		return redirect('/etravel/tripnationallist/' . $trip->trip_id)->with('trip',$trip);
 	}
 	
 	/**

@@ -264,6 +264,7 @@
 																			<td class="text-center text-danger">ETD</td>
 																			<td class="text-center text-danger">ETA</td>
 																			<td class="text-center text-danger">Class Fight</td>
+																			<td class="text-center text-danger">Fight No</td>
 																			<td class="text-center text-danger">Visa?</td>
 																		</tr>
 																	</thead>
@@ -277,6 +278,7 @@
 																			<td>{{$flightItem['etd_time']}}</td>
 																			<td>{{$flightItem['eta_time']}}</td>
 																			<td>{{$flightItem['class_flight']}}</td>
+																			<td>{{$flightItem['flight_no']}}</td>
 																			<td>@if($flightItem['is_visa']=='1') YES @elseif($flightItem['is_visa']=='0') NO @endif</td>
 																		</tr>
 																		@endforeach @endif
@@ -606,7 +608,7 @@
 												</div>
 											</div>
 											<div class="row form-actions text-right">
-												@if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
+												@if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected' || $trip->status == 'approved'))
 												<button type="button" accesskey="I" onclick="window.location.href='/etravel/trip/nationalEdit/{{$trip->trip_id}}'" class="btn yellow-gold leave-type-button">
 													<i class="fa fa-pencil"></i> Ed<u>i</u>t
 												</button>
@@ -615,6 +617,13 @@
 													<i class="fa fa-share"></i> <u>C</u>ancel
 												</button>
 												@endif
+												
+<!-- 												@if($userObjMdl->getHrList()->contains(Auth::user()) &&$trip->status!='pending') 												<button id=TravelTypeCancel type="button" accesskey="D" onclick="window.location.href='/etravel/trip/hrnationalCancel/{{$trip->trip_id}}'" class="btn default">
+-->
+<!-- 													<i class="fa fa-share"></i> HR <u>C</u>ancel -->
+<!-- 												</button> -->
+<!-- 												@endif -->
+												<button type="button" onclick='ShowWokFlow()' data-toggle="tooltip" data-placement="bottom" title="Show Workflow" class="btn blue-steel"><i class="fa fa-tasks"></i> WorkFlow</button>
 												<button id="TravelTypeCancel" type="button" accesskey="P" onclick="window.location.href='/trip/printing/{{$trip->trip_id}}'" class="btn btn-primary">
 													<i class=" <u> P</u>rint"></i> <u>P</u>rint
 												</button>
@@ -632,6 +641,6 @@
 		</div>
 	</div>
 </div>
-@include('etravel.modal.forApproval') @include('etravel.modal.forPartlyApproval')
+@include('etravel.modal.forApproval') @include('etravel.modal.forPartlyApproval')@include('etravel.modal.workflow')
 <script src="{{asset('js/etravel/trip/tripNationalDetail.js')}}"></script>
 @endsection

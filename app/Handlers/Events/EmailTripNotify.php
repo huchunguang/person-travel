@@ -97,6 +97,9 @@ class EmailTripNotify {
 						array_push($cc, User::find($trip->original_department_approver)->Email);
 					}
 				}
+				if ($tripCreater->getHrList()->contains(Auth::user()) &&$trip->status==Trip::PENDING){
+					array_push($cc, Auth::user()->Email);
+				}
 			}
 			
 			if ($trip->applicant_id!=$trip->user_id && !in_array($tripApplicant->Email, $cc)){
@@ -106,9 +109,10 @@ class EmailTripNotify {
 			if ($originalManager){
 				array_push($cc, $originalManager->Email);
 			}
-			// dd($to);
+// 			dd($to);
+// 			dd($subject);
 			// array_push($cc, 'chunguang.hu@arkema.com');
-			// dd($cc);
+// 			dd($cc);
 			$cc = array_where($cc, function ($key, $value) use ($to) {
 			    return $value!=$to;
 			});

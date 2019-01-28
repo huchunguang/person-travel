@@ -132,10 +132,10 @@ class ApproverController extends Controller {
 // 		dd($status);
 		if ($trip->trip_type=='2'){
 			Event::fire(new TripNotify($trip, $request, $status));
-			return redirect('/etravel/tripdemosticlist/' . $trip->trip_id);
+			return redirect('/etravel/tripdemosticlist/' . $trip->trip_id)->with('trip',$trip);
 		} elseif ($trip->trip_type == '1') {
 			Event::fire(new TripNotify($trip, $request, $status));
-			return redirect('/etravel/tripnationallist/'.$trip->trip_id);
+			return redirect('/etravel/tripnationallist/'.$trip->trip_id)->with('trip',$trip);
 		}
 		
 	}

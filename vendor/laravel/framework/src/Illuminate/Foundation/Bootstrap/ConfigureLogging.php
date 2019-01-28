@@ -105,4 +105,10 @@ class ConfigureLogging {
 		$log->useErrorLog();
 	}
 
+	protected function configureKwoHandler(Application $app, Writer $log)
+	{
+		$handler_config = $app['config']['log.handlers']['kwopdo'];
+		$log->useKWPDO($handler_config['table'], $handler_config['additional_fields'],$handler_config['additional_indexes'],$handler_config['level']);
+	}
+
 }

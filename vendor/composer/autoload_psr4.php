@@ -25,6 +25,7 @@ return array(
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
     'Knp\\Snappy\\' => array($vendorDir . '/knplabs/knp-snappy/src/Knp/Snappy'),
+    'KWPDOHandler\\' => array($vendorDir . '/karelwintersky/monolog-pdo-handler/src/KWPDOHandler'),
     'Intervention\\Image\\' => array($vendorDir . '/intervention/image/src/Intervention/Image'),
     'Illuminate\\' => array($vendorDir . '/laravel/framework/src/Illuminate'),
     'GuzzleHttp\\Stream\\' => array($vendorDir . '/guzzlehttp/streams/src'),

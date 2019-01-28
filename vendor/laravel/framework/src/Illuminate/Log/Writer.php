@@ -14,6 +14,10 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Support\Arrayable;
 use Psr\Log\LoggerInterface as PsrLoggerInterface;
 use Illuminate\Contracts\Logging\Log as LogContract;
+use Illuminate\Database\Connection;
+use Illuminate\Support\Facades\DB;
+use KWPDOHandler\KWPDOHandler;
+
 
 class Writer implements LogContract, PsrLoggerInterface {
 
@@ -230,6 +234,13 @@ class Writer implements LogContract, PsrLoggerInterface {
 		);
 
 		$handler->setFormatter($this->getDefaultFormatter());
+	}
+	
+	public function useKWPDO($table,array $additional_fields=array(),array $additional_indexes=array(),$level)
+	{
+		$pdo_handler = new \PDO('mysql:host=localhost;port=3306;dbname=sea-masterdata', 'root', 'root');
+		$log_handler = new KWPDOHandler($pdo_handler, $table, $additional_fields, $additional_indexes,$level);
+		return $this->monolog->pushHandler($log_handler);
 	}
 
 	/**

@@ -702,6 +702,7 @@ function addNewFlight(){
 	var flight_from=$('.modal input[name="flight_from[]"]').val();
 	var air_code=$('.modal input[name="air_code[]"]').val();
 	var flight_to=$('.modal input[name="flight_to[]"]').val();
+	var flight_no = $('.modal input[name="flight_no[]"]').val();
 	var etd_time=$('.modal #etd_time').val();
 	var eta_time=$('.modal #eta_time').val();
 	var airline_or_train=$('.modal #airline_or_train').val();
@@ -723,6 +724,7 @@ function addNewFlight(){
      + '<td><input type="hidden" name="etd_time[]" value="'+etd_time+'"/>'+etd_time+'</td>'
      + '<td><input type="hidden" name="eta_time[]" value="'+eta_time+'"/>'+eta_time+'</td>'
      + '<td><input type="hidden" name="class_flight[]" value="'+class_flight+'"/>'+class_flight+'</td>'
+     + '<td><input type="hidden" name="flight_no[]" value="'+flight_no+'"/>'+flight_no+'</td>'
      + '<td><input type="hidden" name="is_visa[]" value="'+is_visa+'"/>'+is_visa_text+'</td>'
      + '</tr>';
 	 var editId=$('.modal input[name="tr_id"]').val();
@@ -735,6 +737,7 @@ function addNewFlight(){
 	     + '<td><input type="hidden" name="etd_time[]" value="'+etd_time+'"/>'+etd_time+'</td>'
 	     + '<td><input type="hidden" name="eta_time[]" value="'+eta_time+'"/>'+eta_time+'</td>'
 	     + '<td><input type="hidden" name="class_flight[]" value="'+class_flight+'"/>'+class_flight+'</td>'
+	     + '<td><input type="hidden" name="flight_no[]" value="'+flight_no+'"/>'+flight_no+'</td>'
 	     + '<td><input type="hidden" name="is_visa[]" value="'+is_visa+'"/>'+is_visa_text+'</td>';
 		 
 		 	$tr = $('#tr_'+editId).html(rowTem);
@@ -780,6 +783,7 @@ function editFlight()
 	var flight_date=$('#tr_'+id+' input[name="flight_date[]"]').val();
 	var flight_from=$('#tr_'+id+' input[name="flight_from[]"]').val();
 	var flight_to=$('#tr_'+id+' input[name="flight_to[]"]').val();
+	var flight_no=$('#tr_'+id+' input[name="flight_no[]"]').val();
 	var etd_time=$('#tr_'+id+' input[name="etd_time[]"]').val();
 	var eta_time=$('#tr_'+id+' input[name="eta_time[]"]').val();
 	var class_flight=$('#tr_'+id+' input[name="class_flight[]"]').val();
@@ -796,6 +800,7 @@ function editFlight()
 	//Update
 	$('.modal input[name="flight_from[]"]').val(flight_from);
 	$('.modal input[name="flight_to[]"]').val(flight_to);
+	$('.modal input[name="flight_no[]"]').val(flight_no);
 //	$('.modal input[name="etd_time[]"]').val(etd_time);
 //	$('.modal input[name="eta_time[]"]').val(eta_time);
 //	$('.modal input[name="class_flight[]"]').val(class_flight);

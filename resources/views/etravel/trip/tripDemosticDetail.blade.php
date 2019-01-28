@@ -275,7 +275,7 @@
 												</div>
 											</div>
 											<div class="row form-actions text-right">
-												@if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
+												@if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected' || $trip->status == 'approved'))
 												<button id="TravelTypeEdit" type="button" accesskey="I" onclick="window.location.href='/etravel/trip/edit/{{$trip->trip_id}}'" class="btn yellow-gold leave-type-button">
 													<i class="fa fa-pencil"></i> Ed<u>i</u>t
 												</button>
@@ -284,6 +284,16 @@
 													<i class="fa fa-share"></i> <u>C</u>ancel
 												</button>
 												@endif
+												
+												
+<!-- 												@if($userObjMdl->getHrList()->contains(Auth::user()) &&$trip->status!='pending') 
+												<button id=TravelTypeCancel type="button" accesskey="D" onclick="window.location.href='/etravel/trip/hrcancel/{{$trip->trip_id}}'" class="btn default">
+-->
+<!-- 													<i class="fa fa-share"></i> HR <u>C</u>ancel -->
+<!-- 												</button> -->
+<!-- 												@endif -->
+												<button type="button" onclick='ShowWokFlow()' data-toggle="tooltip" data-placement="bottom" title="Show Workflow" class="btn blue-steel"><i class="fa fa-tasks"></i> WorkFlow</button>
+												
 												<button id="TravelTypeCancel" type="button" accesskey="P" onclick="window.location.href='/trip/printing/{{$trip->trip_id}}'" class="btn btn-primary">
 													<i class=" <u> P</u>rint"></i> <u>P</u>rint
 												</button>
@@ -298,7 +308,7 @@
 			<!-- END FORM-->
 		</div>
 	</div>
-	@include('etravel.modal.forApproval') @include('etravel.modal.forPartlyApproval')
+	@include('etravel.modal.forApproval') @include('etravel.modal.forPartlyApproval')@include('etravel.modal.workflow')
 	<script>
 var total_approved_num = {{$approvedCnt}};
 $('#approveBtn').on('click',function(){

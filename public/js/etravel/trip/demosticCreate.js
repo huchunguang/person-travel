@@ -14,8 +14,10 @@
 		);
 	}
 	
-	
-	
+	function ShowWokFlow(){
+		$('#workflowModal').modal('show');
+
+	}
 	
 	initializeDateSettings();
 	$('#addLineItem').on('click',function(){

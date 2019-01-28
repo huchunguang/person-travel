@@ -30,25 +30,39 @@ class EtravelRoutes
 					#Create
 					$router->get('trip/create',['as'=>'internationalCreate','uses'=>'TripController@create']);
 					$router->get('trip/create/demostic',['as'=>'demosticCreate','uses'=>'TripController@demosticCreate']);
-					#Store
-					$router->post('trip/store','TripController@store');
-					$router->post('trip/storeNational','TripController@storeNational');
+					$router->group(['middleware'=>'workflow'],function($router){
+						#Store
+						$router->post('trip/store','TripController@store');
+						$router->post('trip/storeNational','TripController@storeNational');
+						
+						$router->get('trip/cancel/{trip}','TripController@demosticCancel');
+						$router->get('trip/hrcancel/{trip}','HrController@demosticCancel');
+						$router->put('trip/update/{trip}','TripController@demosticUpdate');
+						
+						$router->get('trip/nationalCancel/{trip}','TripController@nationalCancel');
+						$router->get('trip/hrnationalCancel/{trip}','HrController@nationalCancel');
+						$router->put('trip/nationalUpdate/{trip}','TripController@nationalUpdate');
+						
+						#Manager Approval Section
+						$router->put('tripapproval/{trip}','ApproverController@approval');
+						
+						
+					});
 					#List
 					$router->get('{user}/triplist',['as'=>'triplist','uses'=>'TripController@index']);
 					$router->get('triplist/{trip}','TripController@tripDetails');
 					$router->get('tripdemosticlist/{trip}',['as'=>'domesticDetail','uses'=>'TripController@tripDemosticDetails']);
 					$router->get('tripnationallist/{trip}',['as'=>'internationalDetail','uses'=>'TripController@tripNationalDetails']);
 					$router->get('trip/edit/{trip}','TripController@demosticEdit');
-					$router->get('trip/cancel/{trip}','TripController@demosticCancel');
-					$router->put('trip/update/{trip}','TripController@demosticUpdate');
+					
+					
+					
 					
 					$router->get('trip/nationalEdit/{trip}','TripController@nationalEdit');
-					$router->get('trip/nationalCancel/{trip}','TripController@nationalCancel');
-					$router->put('trip/nationalUpdate/{trip}','TripController@nationalUpdate');
 					
-					#Manager Section
+					
+					#Manager Listing Section
 					$router->get('staff/travellist','ApproverController@index');
-					$router->put('tripapproval/{trip}','ApproverController@approval');
 					
 					
 					$router->get('approver/{user}',['uses'=>'ApproverController@getOverseasApprover','as'=>'overseasApprover']);

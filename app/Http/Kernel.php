@@ -30,6 +30,7 @@ class Kernel extends HttpKernel {
 		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
 		'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
 		'checkUser' => 'App\Http\Middleware\checkUserMiddleware',
+		'workflow'=>'App\Http\Middleware\LogWorkflowMiddleware',
 	];
 
 }

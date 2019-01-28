@@ -218,6 +218,16 @@
 								<!-- 								<input type="text" name="class_flight[]" id="" class="form-control"/> -->
 							</div>
 						</div>
+						
+						<div class="col-md-6">
+							<div class="form-group" style="margin-bottom: 0px;">
+								<label class="control-label">Fight No</label>
+								<input type="text" id="flight_from" name="flight_no[]" class="form-control" placeholder="">
+							</div>
+						</div>
+						
+					</div>
+					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">VISA</label>

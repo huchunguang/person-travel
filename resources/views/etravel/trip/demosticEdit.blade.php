@@ -397,7 +397,7 @@
 												</div>
 											</div>
 										</div>
-										@if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
+										@if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected' || $trip->status == 'approved'))
 										<div class="row form-actions text-right">
 											<button type="submit" accesskey="D" class="btn red-mint">
 												<i class="glyphicon glyphicon-new-window"></i> Resubmit

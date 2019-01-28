@@ -303,6 +303,7 @@
 																			<td class="text-center text-danger">ETD</td>
 																			<td class="text-center text-danger">ETA</td>
 																			<td class="text-center text-danger">Class Fight</td>
+																			<td class="text-center text-danger">Fight No</td>
 																			<td class="text-center text-danger">Visa?</td>
 																		</tr>
 																	</thead>
@@ -339,6 +340,10 @@
 																			<td>
 																				<input type="hidden" name="class_flight[]" value="{{$flightItem['class_flight']}}" />
 																				{{$flightItem['class_flight']}}
+																			</td>
+																			<td>
+																				<input type="hidden" name="flight_no[]" value="{{$flightItem['flight_no']}}" />
+																				{{$flightItem['flight_no']}}
 																			</td>
 																			<td>
 																				<input type="hidden" name="is_visa[]" value="{{$flightItem['is_visa']}}" />
@@ -745,7 +750,7 @@
 													</div>
 												</div>
 											</div>
-											@if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected'))
+											@if(($trip->user_id == Auth::user()->UserID || $trip->applicant_id == Auth::user()->UserID) && ($trip->status == 'pending' || $trip->status == 'partly-approved' || $trip->status == 'rejected' || $trip->status == 'approved'))
 											<div class="row form-actions text-right">
 												<button onclick="disableResubmit()" accesskey="D" class="btn red-mint" id="nationalResubmitBtn">
 													<i class="glyphicon glyphicon-new-window"></i> Resubmit

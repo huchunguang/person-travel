@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use PhpParser\Node\Const_;
 
 class Trip extends Model
 {
@@ -18,6 +19,8 @@ class Trip extends Model
 	const PARTLY_APPROVED = 'partly-approved';
 
 	const REJECTED = 'rejected';
+	
+	const PENDING='pending';
 
 	protected $primaryKey = 'trip_id';
 
@@ -74,6 +77,11 @@ class Trip extends Model
 	public function department()
 	{
 		return $this->belongsTo('App\Department', 'department_id', 'DepartmentID');
+	}
+	
+	public function workflow()
+	{
+		return $this->hasMany('App\Trip_log', 'trip_id', 'trip_id');
 	}
 
 	/**

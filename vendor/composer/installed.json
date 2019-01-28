@@ -839,6 +839,54 @@
         ]
     },
     {
+        "name": "karelwintersky/monolog-pdo-handler",
+        "version": "0.1",
+        "version_normalized": "0.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/KarelWintersky/monolog-pdo-handler.git",
+            "reference": "f5d6a57be7e4fa05da112eb1cf81b04f55dfb202"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/KarelWintersky/monolog-pdo-handler/zipball/f5d6a57be7e4fa05da112eb1cf81b04f55dfb202",
+            "reference": "f5d6a57be7e4fa05da112eb1cf81b04f55dfb202",
+            "shasum": ""
+        },
+        "require": {
+            "ext-pdo_mysql": "*",
+            "monolog/monolog": ">1.4.0",
+            "php": "^7.0"
+        },
+        "time": "2017-12-07T07:33:25+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "KWPDOHandler\\": "src/KWPDOHandler"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Karel Wintersky",
+                "email": "karel.wintersky@gmail.com"
+            }
+        ],
+        "description": "A handler for Monolog that stores data via PDO driver to Database",
+        "homepage": "https://github.com/KarelWintersky/monolog.KW-PDO-Handler",
+        "keywords": [
+            "database",
+            "log",
+            "logging",
+            "monolog",
+            "pdo"
+        ]
+    },
+    {
         "name": "knplabs/knp-snappy",
         "version": "v1.0.4",
         "version_normalized": "1.0.4.0",

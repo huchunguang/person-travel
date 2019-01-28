@@ -27,7 +27,7 @@ if (!function_exists('array_bound_key')) {
 			$i = 0;
 			if (!is_array($item))continue;
 			foreach ($item as $val) {
-				if (''==$val) continue 2;
+// 				if (''==$val) continue 2;
 				$newArr[$i][$key] = $val;
 				$i ++;
 			}
