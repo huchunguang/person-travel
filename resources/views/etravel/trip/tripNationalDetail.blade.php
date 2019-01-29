@@ -263,8 +263,8 @@
 																			<td class="text-center text-danger">Airline/Train</td>
 																			<td class="text-center text-danger">ETD</td>
 																			<td class="text-center text-danger">ETA</td>
-																			<td class="text-center text-danger">Class Fight</td>
-																			<td class="text-center text-danger">Fight No</td>
+																			<td class="text-center text-danger">Class Flight</td>
+																			<td class="text-center text-danger">Flight No.</td>
 																			<td class="text-center text-danger">Visa?</td>
 																		</tr>
 																	</thead>

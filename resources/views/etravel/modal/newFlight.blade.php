@@ -207,7 +207,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Class Fight</label>
+								<label class="control-label">Class Flight</label>
 								<select class="form-control select2" name="class_flight[]" id="classFlightSel" required style="display: inline">
 									<option value="">Select...</option>
 									<option value="Economy">Economy</option>
@@ -221,7 +221,7 @@
 						
 						<div class="col-md-6">
 							<div class="form-group" style="margin-bottom: 0px;">
-								<label class="control-label">Fight No</label>
+								<label class="control-label">Flight No.</label>
 								<input type="text" id="flight_from" name="flight_no[]" class="form-control" placeholder="">
 							</div>
 						</div>
